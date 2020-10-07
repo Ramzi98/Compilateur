@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-        <artifactId>vm-project-parent</artifactId>
+        <artifactId>vm-project</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
