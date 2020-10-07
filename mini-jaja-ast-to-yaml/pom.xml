@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+        <artifactId>vm-project-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mini-jaja-ast-to-yaml</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>MiniJaja to Yaml</name>
+    <description>Walk Through a MiniJaja AST to Pretty Print in Yaml</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>ast</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>mini-jaja-node-structure</artifactId>
+        </dependency>
+
+        <!-- YamlGenerator dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+    </dependencies>
+</project>
