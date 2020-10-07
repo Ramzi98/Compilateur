@@ -18,6 +18,15 @@
         </developer>
     </developers>
 
+    <modules>
+	<module>ast</module>
+	<module>jaja-code-node-structure</module>
+	<module>jaja-code-parser</module>
+	<module>mini-jaja-node-structure</module>
+	<module>mini-jaja-parser</module>
+	<module>mini-jaja-ast-to-yaml</module>
+    </modules>
+
     <dependencyManagement>
         <!-- lexers and parsers -->
         <dependencies>
