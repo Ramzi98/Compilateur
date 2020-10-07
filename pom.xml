@@ -30,9 +30,16 @@
 	    <module>mini-jaja-ast-to-yaml</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
+
     <distributionManagement>
         <repository>
-           <id>nexus-deptinfo</id>
+            <id>nexus-deptinfo</id>
 	        <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/releases/</url>
 	    </repository>
     	<snapshotRepository>
@@ -184,6 +191,12 @@
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr4-maven-plugin</artifactId>
                     <version>4.7.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
