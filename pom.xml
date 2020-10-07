@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-    <artifactId>vm-project-parent</artifactId>
+    <artifactId>vm-project</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -16,26 +16,29 @@
         <developer>
             <name>Bonneau Antoine</name>
         </developer>
+        <developer>
+            <name>Tourneret Vincent</name>
+        </developer>
     </developers>
 
     <modules>
-	<module>ast</module>
-	<module>jaja-code-node-structure</module>
-	<module>jaja-code-parser</module>
-	<module>mini-jaja-node-structure</module>
-	<module>mini-jaja-parser</module>
-	<module>mini-jaja-ast-to-yaml</module>
+	    <module>ast</module>
+	    <module>jaja-code-node-structure</module>
+	    <module>jaja-code-parser</module>
+	    <module>mini-jaja-node-structure</module>
+	    <module>mini-jaja-parser</module>
+	    <module>mini-jaja-ast-to-yaml</module>
     </modules>
 
     <distributionManagement>
         <repository>
            <id>nexus-deptinfo</id>
-	   <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/releases/</url>
-	</repository>
+	        <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/releases/</url>
+	    </repository>
     	<snapshotRepository>
-	   <id>nexus-deptinfo-snapshots</id>
-	   <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/snapshots/</url>
-	</snapshotRepository>
+	        <id>nexus-deptinfo-snapshots</id>
+	        <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
     
    <dependencyManagement>
