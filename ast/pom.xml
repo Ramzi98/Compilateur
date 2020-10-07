@@ -28,6 +28,11 @@
     <description>Embed AST Definition and Basic Yaml Visitor</description>
 
     <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
         <!-- YamlGenerator dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

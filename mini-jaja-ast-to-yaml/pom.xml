@@ -18,6 +18,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>ast</artifactId>
         </dependency>
