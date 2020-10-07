@@ -30,13 +30,6 @@
 	    <module>mini-jaja-ast-to-yaml</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2/</url>
-        </repository>
-    </repositories>
-
     <distributionManagement>
         <repository>
             <id>nexus-deptinfo</id>
