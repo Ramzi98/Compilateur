@@ -10,10 +10,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jaja-code-parser</artifactId>
+    <artifactId>mini-jaja-parser</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>JajaCode Parser</name>
+    <name>MiniJaja Parser</name>
 
     <dependencies>
         <dependency>
@@ -64,7 +64,7 @@
                         </goals>
                         <configuration>
                             <visitor>true</visitor>
-                            <sourceDirectory>${project.basedir}/src/main/resources</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/resources</sourceDirectory>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
                         </configuration>
                     </execution>
