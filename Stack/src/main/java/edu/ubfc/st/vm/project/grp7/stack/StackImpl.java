@@ -19,7 +19,8 @@ public class StackImpl {
     }
 
     public Quadruplet findQuadrupletInStack(String ident){
-        
+
+        return null;
     }
 
     public void editQuadrupletInStack(String ident, Quadruplet quadruplet){
