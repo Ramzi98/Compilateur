@@ -29,7 +29,18 @@
 	    <module>mini-jaja-parser</module>
 	    <module>mini-jaja-ast-to-yaml</module>
     </modules>
-    
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-deptinfo</id>
+            <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-deptinfo-snapshots</id>
+            <url>https://disc.univ-fcomte.fr/m1gl-nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
    <dependencyManagement>
         <!-- lexers and parsers -->
         <dependencies>
