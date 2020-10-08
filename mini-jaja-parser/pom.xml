@@ -10,10 +10,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jaja-code-parser</artifactId>
+    <artifactId>MiniJaja-parser</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>JajaCode Parser</name>
+    <name>MiniJaja Parser</name>
 
     <dependencies>
         <dependency>
