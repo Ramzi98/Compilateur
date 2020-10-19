@@ -37,7 +37,6 @@
 	    <module>mini-jaja-node-structure</module>
 	    <module>mini-jaja-parser</module>
 	    <module>mini-jaja-ast-to-yaml</module>
-        <module>graphic-interface</module>
     </modules>
 
     <distributionManagement>
@@ -108,13 +107,11 @@
                 <artifactId>mini-jaja-node-structure</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
             <dependency>
                 <groupId>edu.ubfc.st.vm.project.grp7</groupId>
                 <artifactId>mini-jaja-parser</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
             <dependency>
                 <groupId>edu.ubfc.st.vm.project.grp7</groupId>
                 <artifactId>mini-jaja-ast-to-yaml</artifactId>
@@ -136,38 +133,11 @@
             <!-- End JajaCode -->
 
             <!-- End BOM -->
-            <dependency>
-                <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-                <artifactId>graphic-inteface</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-                <artifactId>gui</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx</artifactId>
-                <version>11.0.1</version>
-            </dependency>
-
-            </dependencies>
+        </dependencies>
     </dependencyManagement>
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -180,13 +150,6 @@
 
         <pluginManagement>
             <plugins>
-
-                <plugin>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-maven-plugin</artifactId>
-                    <version>0.0.5</version>
-                </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
