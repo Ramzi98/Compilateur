@@ -22,7 +22,7 @@ public abstract class JajaCodeASTVisitor implements ASTVisitor {
 
         else {
             throw new IllFormedNodeException(node.line(), node.column(),
-                    node.getClass().getName() + " nodes are not part of a Valid MiniJaja AST"
+                    node.getClass().getName() + " nodes are not part of a Valid JajaCode AST"
             );
         }
     }
