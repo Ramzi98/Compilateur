@@ -37,6 +37,7 @@
 	    <module>mini-jaja-node-structure</module>
 	    <module>mini-jaja-parser</module>
 	    <module>mini-jaja-ast-to-yaml</module>
+        <module>stack</module>
     </modules>
 
     <distributionManagement>
