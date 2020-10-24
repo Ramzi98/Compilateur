@@ -34,11 +34,18 @@ OR       : 'or' ;
 AND      : 'and' ;
 NEG      : 'neg' ;
 CMP      : 'cmp';
+NOT      : 'not';
+
+VAR      : 'var';
+CST      : 'cst';
+METH     : 'meth';
 
 /* ==================== SEPARATORS ==================== */
 
 LPAR   : '(' ;
 RPAR   : ')' ;
+COMMA  : ',' ;
+SEMI   : ';' ;
 
 /* ======================= TYPES ======================= */
 
