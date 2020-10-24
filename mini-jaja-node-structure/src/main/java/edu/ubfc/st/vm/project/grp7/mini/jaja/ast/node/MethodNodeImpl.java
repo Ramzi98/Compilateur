@@ -1,18 +1,20 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class MethodNodeImpl extends ASTNodeWithInfo implements MethodNode {
+public class MethodNodeImpl extends ASTNodeBreakpoint implements MethodNode {
     private final TypeMethNode typeMeth;
     private final IdentNode identifier;
     private final HeadersNode headers;
     private final VarsNode vars;
     private final InstrsNode instrs;
 
-    public MethodNodeImpl(int line, int column, TypeMethNode typeMeth, IdentNode identifier,
+    public MethodNodeImpl(int line, int column, Breakpoint bp, TypeMethNode typeMeth, IdentNode identifier,
                           HeadersNode headers, VarsNode vars, InstrsNode instrs) {
-        super(line, column);
+        super(line, column, bp);
         this.typeMeth = typeMeth;
         this.identifier = identifier;
         this.headers = headers;

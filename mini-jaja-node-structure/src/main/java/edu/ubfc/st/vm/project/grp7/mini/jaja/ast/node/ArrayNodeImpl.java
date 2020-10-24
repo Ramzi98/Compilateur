@@ -1,15 +1,17 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class ArrayNodeImpl extends ASTNodeWithInfo implements ArrayNode {
+public class ArrayNodeImpl extends ASTNodeBreakpoint implements ArrayNode {
     private final TypeMethNode typeMeth;
     private final IdentNode identifier;
     private final ASTNode expression;
 
-    public ArrayNodeImpl(int line, int column, TypeMethNode typeMeth, IdentNode identifier, ASTNode expression) {
-        super(line, column);
+    public ArrayNodeImpl(int line, int column, Breakpoint bp, TypeMethNode typeMeth, IdentNode identifier, ASTNode expression) {
+        super(line, column, bp);
         this.typeMeth = typeMeth;
         this.identifier = identifier;
         this.expression = expression;

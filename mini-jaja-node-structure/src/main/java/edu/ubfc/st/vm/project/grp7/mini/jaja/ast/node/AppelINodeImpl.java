@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class AppelINodeImpl extends ASTNodeWithInfo implements AppelINode {
+public class AppelINodeImpl extends ASTNodeBreakpoint implements AppelINode {
     private final ListExpNode listexp;
     private final IdentNode identifier;
 
-    public AppelINodeImpl(int line, int column, IdentNode identifier, ListExpNode listexp) {
-        super(line, column);
+    public AppelINodeImpl(int line, int column, Breakpoint bp, IdentNode identifier, ListExpNode listexp) {
+        super(line, column, bp);
         this.listexp = listexp;
         this.identifier = identifier;
     }

@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTLeaf;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MinijajaLeaf;
 
-public interface StringNode extends ASTLeaf<String> {
+public interface StringNode extends MinijajaLeaf<String> {
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
         visitor.visit(this);
@@ -13,9 +14,9 @@ public interface StringNode extends ASTLeaf<String> {
         return new Builder();
     }
 
-    public class Builder extends ASTLeaf.LeafBuilder<Builder, String> {
+    public class Builder extends MinijajaLeaf.LeafBuilder<Builder, String> {
         public StringNode build() {
-            return new StringNodeImpl(this.line, this.column, this.value);
+            return new StringNodeImpl(this.line, this.column, this.breakpoint, this.value);
         }
     }
 }

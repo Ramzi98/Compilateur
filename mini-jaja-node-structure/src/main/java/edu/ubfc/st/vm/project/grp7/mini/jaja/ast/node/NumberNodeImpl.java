@@ -1,13 +1,15 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class NumberNodeImpl extends ASTNodeWithInfo implements NumberNode {
+public class NumberNodeImpl extends ASTNodeBreakpoint implements NumberNode {
     private final Double value;
 
-    public NumberNodeImpl(int line, int column, Double value) {
-        super(line, column);
+    public NumberNodeImpl(int line, int column, Breakpoint bp, Double value) {
+        super(line, column, bp);
         this.value = value;
     }
 

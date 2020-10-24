@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class ListExpNodeImpl extends ASTNodeWithInfo implements ListExpNode {
+public class ListExpNodeImpl extends ASTNodeBreakpoint implements ListExpNode {
     private final ASTNode expression;
     private final ListExpNode listexp;
 
-    public ListExpNodeImpl(int line, int column, ASTNode expression, ListExpNode listexp) {
-        super(line, column);
+    public ListExpNodeImpl(int line, int column, Breakpoint bp, ASTNode expression, ListExpNode listexp) {
+        super(line, column, bp);
         this.expression = expression;
         this.listexp = listexp;
     }

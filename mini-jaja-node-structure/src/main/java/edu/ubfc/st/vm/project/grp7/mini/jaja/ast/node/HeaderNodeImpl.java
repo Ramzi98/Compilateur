@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class HeaderNodeImpl extends ASTNodeWithInfo implements HeaderNode {
+public class HeaderNodeImpl extends ASTNodeBreakpoint implements HeaderNode {
     private final TypeNode type;
     private final IdentNode identifier;
 
-    public HeaderNodeImpl(int line, int column, TypeNode type, IdentNode identifier) {
-        super(line, column);
+    public HeaderNodeImpl(int line, int column, Breakpoint bp, TypeNode type, IdentNode identifier) {
+        super(line, column, bp);
         this.type = type;
         this.identifier = identifier;
     }

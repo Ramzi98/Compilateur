@@ -1,13 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class WriteLnNodeImpl extends ASTNodeWithInfo implements WriteLnNode {
+public class WriteLnNodeImpl extends ASTNodeBreakpoint implements WriteLnNode {
     private final ASTNode printable;
 
-    public WriteLnNodeImpl(int line, int column, ASTNode printable) {
-        super(line, column);
+    public WriteLnNodeImpl(int line, int column, Breakpoint bp, ASTNode printable) {
+        super(line, column, bp);
         this.printable = printable;
     }
 

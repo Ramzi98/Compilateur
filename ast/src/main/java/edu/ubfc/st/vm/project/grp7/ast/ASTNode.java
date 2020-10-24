@@ -14,13 +14,13 @@ public interface ASTNode {
 
     public class NodeBuilder {
         protected int line;
-        public NodeBuilder line(int line) {
+        public final NodeBuilder line(int line) {
             this.line = line;
             return this;
         }
 
         protected int column;
-        public NodeBuilder column(int column) {
+        public final NodeBuilder column(int column) {
             this.column = column;
             return this;
         }

@@ -1,15 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class ClasseNodeImpl extends ASTNodeWithInfo implements ClasseNode {
+public class ClasseNodeImpl extends ASTNodeBreakpoint implements ClasseNode {
     private final IdentNode identifier;
     private final DeclsNode decls;
     private final MainNode methmain;
 
-    public ClasseNodeImpl(int line, int column, IdentNode identifier, DeclsNode decls, MainNode methmain) {
-        super(line, column);
+    public ClasseNodeImpl(int line, int column, Breakpoint bp, IdentNode identifier, DeclsNode decls, MainNode methmain) {
+        super(line, column, bp);
         this.identifier = identifier;
         this.decls = decls;
         this.methmain = methmain;
