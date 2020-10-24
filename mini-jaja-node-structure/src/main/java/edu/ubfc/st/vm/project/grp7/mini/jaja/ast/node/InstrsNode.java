@@ -1,11 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface InstrsNode extends MiniJajaNode {
-    ASTNode instruction();
+    MiniJajaNode instruction();
     InstrsNode instrs();
 
     @Override
@@ -18,8 +17,8 @@ public interface InstrsNode extends MiniJajaNode {
     }
 
     class Builder extends MiniJajaNode.NodeBuilder {
-        private ASTNode instruction;
-        public Builder instruction(ASTNode instruction) {
+        private MiniJajaNode instruction;
+        public Builder instruction(MiniJajaNode instruction) {
             this.instruction = instruction;
             return this;
         }

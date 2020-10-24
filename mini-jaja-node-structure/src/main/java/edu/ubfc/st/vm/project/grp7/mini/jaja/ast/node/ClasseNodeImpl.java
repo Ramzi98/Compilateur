@@ -1,8 +1,8 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class ClasseNodeImpl extends ASTNodeBreakpoint implements ClasseNode {
     private final IdentNode identifier;
@@ -33,7 +33,7 @@ public class ClasseNodeImpl extends ASTNodeBreakpoint implements ClasseNode {
 
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.identifier;
             case 1 : return this.decls;

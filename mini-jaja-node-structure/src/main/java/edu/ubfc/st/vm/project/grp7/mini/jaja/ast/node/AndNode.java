@@ -1,13 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 
-public interface AndNode extends MiniJajaNode {
-    ASTNode leftOperand();
-    ASTNode rightOperand();
-
+public interface AndNode extends MiniJajaOperatorNode {
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
         visitor.visit(this);
@@ -17,19 +13,7 @@ public interface AndNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
-        private ASTNode leftOperand;
-        public Builder leftOperand(ASTNode leftOperand) {
-            this.leftOperand = leftOperand;
-            return this;
-        }
-
-        private ASTNode rightOperand;
-        public Builder rightOperand(ASTNode rightOperand) {
-            this.rightOperand = rightOperand;
-            return this;
-        }
-
+    public class Builder extends MiniJajaOperatorNode.NodeBuilder {
         public AndNode build() {
             return new AndNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

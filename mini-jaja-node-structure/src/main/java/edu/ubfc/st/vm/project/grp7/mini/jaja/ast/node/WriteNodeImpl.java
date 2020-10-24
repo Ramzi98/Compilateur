@@ -1,25 +1,24 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class WriteNodeImpl extends ASTNodeBreakpoint implements WriteNode {
-    private final ASTNode printable;
+    private final MiniJajaNode printable;
 
-    public WriteNodeImpl(int line, int column, Breakpoint bp, ASTNode printable) {
+    public WriteNodeImpl(int line, int column, Breakpoint bp, MiniJajaNode printable) {
         super(line, column, bp);
         this.printable = printable;
     }
 
     @Override
-    public ASTNode printable() {
+    public MiniJajaNode printable() {
         return this.printable;
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.printable;
             default: throw new IndexOutOfBoundsException();
