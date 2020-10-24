@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface VarNode extends ASTNode {
+public interface VarNode extends MiniJajaNode {
     TypeMethNode typeMeth();
     IdentNode identifier();
     ASTNode expression();
@@ -17,7 +18,7 @@ public interface VarNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private TypeMethNode typeMeth;
         public Builder typeMeth(TypeMethNode typeMeth) {
             this.typeMeth = typeMeth;
@@ -37,7 +38,7 @@ public interface VarNode extends ASTNode {
         }
 
         public VarNode build() {
-            return new VarNodeImpl(this.line, this.column, this.typeMeth, this.identifier, this.expression);
+            return new VarNodeImpl(this.line, this.column, this.breakpoint, this.typeMeth, this.identifier, this.expression);
         }
     }
 }

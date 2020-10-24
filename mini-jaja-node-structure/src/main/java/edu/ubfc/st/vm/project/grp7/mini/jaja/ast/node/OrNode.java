@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface OrNode extends ASTNode {
+public interface OrNode extends MiniJajaNode {
     ASTNode leftOperand();
     ASTNode rightOperand();
 
@@ -16,7 +17,7 @@ public interface OrNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private ASTNode leftOperand;
         public Builder leftOperand(ASTNode leftOperand) {
             this.leftOperand = leftOperand;
@@ -24,13 +25,13 @@ public interface OrNode extends ASTNode {
         }
 
         private ASTNode rightOperand;
-        Builder rightOperand(ASTNode rightOperand) {
+        public Builder rightOperand(ASTNode rightOperand) {
             this.rightOperand = rightOperand;
             return this;
         }
 
-        OrNode build() {
-            return new OrNodeImpl(this.line, this.column, this.leftOperand, this.rightOperand);
+        public OrNode build() {
+            return new OrNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }
     }
 }

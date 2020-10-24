@@ -1,13 +1,15 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class MinusNodeImpl extends ASTNodeWithInfo implements MinusNode {
+public class MinusNodeImpl extends ASTNodeBreakpoint implements MinusNode {
     private final ASTNode expression;
 
-    public MinusNodeImpl(int line, int column, ASTNode expression) {
-        super(line, column);
+    public MinusNodeImpl(int line, int column, Breakpoint bp, ASTNode expression) {
+        super(line, column, bp);
         this.expression = expression;
     }
 

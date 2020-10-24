@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface VarsNode extends ASTNode {
+public interface VarsNode extends MiniJajaNode {
     VarNode var();
     VarsNode vars();
 
@@ -16,21 +17,21 @@ public interface VarsNode extends ASTNode {
         return new Builder();
     }
 
-    class Builder extends ASTNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder {
         private VarNode var;
-        public Builder instruction(VarNode var) {
+        public Builder var(VarNode var) {
             this.var = var;
             return this;
         }
 
         private VarsNode vars;
-        public Builder instrs(VarsNode vars){
+        public Builder vars(VarsNode vars){
             this.vars = vars;
             return this;
         }
 
         public VarsNode build() {
-            return new VarsNodeImpl(this.line, this.column, this.var, this.vars);
+            return new VarsNodeImpl(this.line, this.column, this.breakpoint, this.var, this.vars);
         }
     }
 

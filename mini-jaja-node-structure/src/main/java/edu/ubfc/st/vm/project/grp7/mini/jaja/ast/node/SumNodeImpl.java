@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class SumNodeImpl extends ASTNodeWithInfo implements SumNode {
+public class SumNodeImpl extends ASTNodeBreakpoint implements SumNode {
     private final ASTNode identifier;
     private final ASTNode expression;
 
-    public SumNodeImpl(int line, int column, ASTNode identifier, ASTNode expression) {
-        super(line, column);
+    public SumNodeImpl(int line, int column, Breakpoint bp, ASTNode identifier, ASTNode expression) {
+        super(line, column, bp);
         this.identifier = identifier;
         this.expression = expression;
     }

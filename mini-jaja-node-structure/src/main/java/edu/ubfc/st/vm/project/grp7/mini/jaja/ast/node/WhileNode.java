@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface WhileNode extends ASTNode {
+public interface WhileNode extends MiniJajaNode {
     ASTNode expression();
     InstrsNode instrs();
 
@@ -16,7 +17,7 @@ public interface WhileNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private ASTNode expression;
         public Builder expression(ASTNode expression) {
             this.expression = expression;
@@ -30,7 +31,7 @@ public interface WhileNode extends ASTNode {
         }
 
         public WhileNode build() {
-            return new WhileNodeImpl(this.line, this.column, this.expression, this.instrs);
+            return new WhileNodeImpl(this.line, this.column, this.breakpoint, this.expression, this.instrs);
         }
     }
 }

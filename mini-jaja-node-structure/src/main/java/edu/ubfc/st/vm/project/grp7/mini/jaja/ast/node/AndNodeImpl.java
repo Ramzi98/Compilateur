@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class AndNodeImpl extends ASTNodeWithInfo implements AndNode {
+public class AndNodeImpl extends ASTNodeBreakpoint implements AndNode {
     private final ASTNode leftOperand;
     private final ASTNode rightOperand;
 
-    public AndNodeImpl(int line, int column, ASTNode leftOperand, ASTNode rightOperand) {
-        super(line, column);
+    public AndNodeImpl(int line, int column, Breakpoint bp, ASTNode leftOperand, ASTNode rightOperand) {
+        super(line, column, bp);
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
     }

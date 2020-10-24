@@ -1,15 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class VarNodeImpl extends ASTNodeWithInfo implements VarNode {
+public class VarNodeImpl extends ASTNodeBreakpoint implements VarNode {
     private final TypeMethNode typeMeth;
     private final IdentNode identifier;
     private final ASTNode expression;
 
-    public VarNodeImpl(int line, int column, TypeMethNode typeMeth, IdentNode identifier, ASTNode expression) {
-        super(line, column);
+    public VarNodeImpl(int line, int column, Breakpoint bp, TypeMethNode typeMeth, IdentNode identifier, ASTNode expression) {
+        super(line, column, bp);
         this.typeMeth = typeMeth;
         this.identifier = identifier;
         this.expression = expression;

@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface WriteLnNode extends ASTNode {
+public interface WriteLnNode extends MiniJajaNode {
     ASTNode printable();
 
     @Override
@@ -15,7 +16,7 @@ public interface WriteLnNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private ASTNode printable;
         public Builder printable(ASTNode printable) {
             this.printable = printable;
@@ -23,7 +24,7 @@ public interface WriteLnNode extends ASTNode {
         }
 
         public WriteLnNode build() {
-            return new WriteLnNodeImpl(this.line, this.column, this.printable);
+            return new WriteLnNodeImpl(this.line, this.column, this.breakpoint, this.printable);
         }
     }
 }

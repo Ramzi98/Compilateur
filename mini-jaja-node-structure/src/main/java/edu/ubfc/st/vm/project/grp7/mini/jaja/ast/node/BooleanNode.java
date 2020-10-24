@@ -1,10 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTLeaf;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MinijajaLeaf;
 
-public interface BooleanNode extends ASTLeaf<Boolean> {
+public interface BooleanNode extends MinijajaLeaf<Boolean> {
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
         visitor.visit(this);
@@ -14,9 +14,9 @@ public interface BooleanNode extends ASTLeaf<Boolean> {
         return new Builder();
     }
 
-    public class Builder extends ASTLeaf.LeafBuilder<Builder, Boolean> {
+    public class Builder extends MinijajaLeaf.LeafBuilder<Builder, Boolean> {
         public BooleanNode build() {
-            return new BooleanNodeImpl(this.line, this.column, this.value);
+            return new BooleanNodeImpl(this.line, this.column, this.breakpoint, this.value);
         }
     }
 }

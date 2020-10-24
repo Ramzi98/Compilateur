@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface IncrementNode extends ASTNode {
+public interface IncrementNode extends MiniJajaNode {
     ASTNode identifier();
 
     @Override
@@ -15,7 +16,7 @@ public interface IncrementNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private ASTNode identifier;
         public Builder identifier(ASTNode identifier) {
             this.identifier = identifier;
@@ -23,7 +24,7 @@ public interface IncrementNode extends ASTNode {
         }
 
         public IncrementNode build() {
-            return new IncrementNodeImpl(this.line, this.column, this.identifier);
+            return new IncrementNodeImpl(this.line, this.column, this.breakpoint, this.identifier);
         }
     }
 }

@@ -2,8 +2,9 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
-public interface CstNode extends ASTNode {
+public interface CstNode extends MiniJajaNode {
     TypeNode type();
     IdentNode identifier();
     ASTNode expression();
@@ -17,7 +18,7 @@ public interface CstNode extends ASTNode {
         return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends MiniJajaNode.NodeBuilder {
         private TypeNode type;
         public Builder type(TypeNode type) {
             this.type = type;
@@ -37,7 +38,7 @@ public interface CstNode extends ASTNode {
         }
 
         public CstNode build() {
-            return new CstNodeImpl(this.line, this.column, this.type, this.identifier, this.expression);
+            return new CstNodeImpl(this.line, this.column, this.breakpoint, this.type, this.identifier, this.expression);
         }
     }
 }

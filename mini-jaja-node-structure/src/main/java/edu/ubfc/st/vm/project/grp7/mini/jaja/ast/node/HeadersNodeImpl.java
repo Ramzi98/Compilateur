@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
-public class HeadersNodeImpl extends ASTNodeWithInfo implements HeadersNode {
+public class HeadersNodeImpl extends ASTNodeBreakpoint implements HeadersNode {
     private final HeaderNode header;
     private final HeadersNode headers;
 
-    public HeadersNodeImpl(int line, int column, HeaderNode header, HeadersNode headers) {
-        super(line, column);
+    public HeadersNodeImpl(int line, int column, Breakpoint bp, HeaderNode header, HeadersNode headers) {
+        super(line, column, bp);
         this.header = header;
         this.headers = headers;
     }
