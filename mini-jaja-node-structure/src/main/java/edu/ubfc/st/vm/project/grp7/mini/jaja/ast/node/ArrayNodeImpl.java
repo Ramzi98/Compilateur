@@ -4,13 +4,14 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class ArrayNodeImpl extends ASTNodeBreakpoint implements ArrayNode {
     private final TypeMethNode typeMeth;
     private final IdentNode identifier;
-    private final ASTNode expression;
+    private final MiniJajaNode expression;
 
-    public ArrayNodeImpl(int line, int column, Breakpoint bp, TypeMethNode typeMeth, IdentNode identifier, ASTNode expression) {
+    public ArrayNodeImpl(int line, int column, Breakpoint bp, TypeMethNode typeMeth, IdentNode identifier, MiniJajaNode expression) {
         super(line, column, bp);
         this.typeMeth = typeMeth;
         this.identifier = identifier;
@@ -28,12 +29,12 @@ public class ArrayNodeImpl extends ASTNodeBreakpoint implements ArrayNode {
     }
 
     @Override
-    public ASTNode expression() {
+    public MiniJajaNode expression() {
         return this.expression;
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.typeMeth;
             case 1 : return this.identifier;

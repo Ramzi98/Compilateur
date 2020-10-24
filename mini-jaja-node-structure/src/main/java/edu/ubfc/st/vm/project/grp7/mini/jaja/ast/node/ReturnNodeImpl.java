@@ -1,25 +1,24 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class ReturnNodeImpl extends ASTNodeBreakpoint implements ReturnNode {
-    private final ASTNode ret;
+    private final MiniJajaNode ret;
 
-    public ReturnNodeImpl(int line, int column, Breakpoint bp, ASTNode ret) {
+    public ReturnNodeImpl(int line, int column, Breakpoint bp, MiniJajaNode ret) {
         super(line, column, bp);
         this.ret = ret;
     }
 
     @Override
-    public ASTNode ret() {
+    public MiniJajaNode ret() {
         return this.ret;
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0: return this.ret;
             default: throw new IndexOutOfBoundsException();

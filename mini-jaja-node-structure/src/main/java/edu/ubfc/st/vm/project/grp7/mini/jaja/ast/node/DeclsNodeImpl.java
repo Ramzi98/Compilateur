@@ -4,19 +4,20 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class DeclsNodeImpl extends ASTNodeBreakpoint implements DeclsNode {
-    private final ASTNode decl;
+    private final MiniJajaNode decl;
     private final DeclsNode decls;
 
-    public DeclsNodeImpl(int line, int column, Breakpoint bp, ASTNode decl, DeclsNode decls) {
+    public DeclsNodeImpl(int line, int column, Breakpoint bp, MiniJajaNode decl, DeclsNode decls) {
         super(line, column, bp);
         this.decl = decl;
         this.decls = decls;
     }
 
     @Override
-    public ASTNode decl() {
+    public MiniJajaNode decl() {
         return this.decl;
     }
 
@@ -26,7 +27,7 @@ public class DeclsNodeImpl extends ASTNodeBreakpoint implements DeclsNode {
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.decl;
             case 1 : return this.decls;

@@ -1,22 +1,21 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class ListExpNodeImpl extends ASTNodeBreakpoint implements ListExpNode {
-    private final ASTNode expression;
+    private final MiniJajaNode expression;
     private final ListExpNode listexp;
 
-    public ListExpNodeImpl(int line, int column, Breakpoint bp, ASTNode expression, ListExpNode listexp) {
+    public ListExpNodeImpl(int line, int column, Breakpoint bp, MiniJajaNode expression, ListExpNode listexp) {
         super(line, column, bp);
         this.expression = expression;
         this.listexp = listexp;
     }
 
     @Override
-    public ASTNode expression() {
+    public MiniJajaNode expression() {
         return this.expression;
     }
 
@@ -26,7 +25,7 @@ public class ListExpNodeImpl extends ASTNodeBreakpoint implements ListExpNode {
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.expression;
             case 1 : return this.listexp;

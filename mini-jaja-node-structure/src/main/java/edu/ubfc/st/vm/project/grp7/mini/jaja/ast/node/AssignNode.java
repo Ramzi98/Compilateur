@@ -1,12 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface AssignNode extends MiniJajaNode {
-    ASTNode identifier();
-    ASTNode expression();
+    MiniJajaNode identifier();
+    MiniJajaNode expression();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
@@ -18,14 +17,14 @@ public interface AssignNode extends MiniJajaNode {
     }
 
     public class Builder extends MiniJajaNode.NodeBuilder {
-        private ASTNode identifier;
-        public Builder identifier(ASTNode identifier) {
+        private MiniJajaNode identifier;
+        public Builder identifier(MiniJajaNode identifier) {
             this.identifier = identifier;
             return this;
         }
 
-        private ASTNode expression;
-        public Builder expression(ASTNode expression) {
+        private MiniJajaNode expression;
+        public Builder expression(MiniJajaNode expression) {
             this.expression = expression;
             return this;
         }

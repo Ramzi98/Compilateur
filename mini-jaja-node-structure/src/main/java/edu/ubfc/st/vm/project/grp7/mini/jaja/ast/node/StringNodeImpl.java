@@ -1,8 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
 public class StringNodeImpl extends ASTNodeBreakpoint implements StringNode {

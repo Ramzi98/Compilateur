@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 

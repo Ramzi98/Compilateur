@@ -1,8 +1,8 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class VarsNodeImpl extends ASTNodeBreakpoint implements VarsNode {
     private final VarNode var;
@@ -25,7 +25,7 @@ public class VarsNodeImpl extends ASTNodeBreakpoint implements VarsNode {
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.var;
             case 1 : return this.vars;

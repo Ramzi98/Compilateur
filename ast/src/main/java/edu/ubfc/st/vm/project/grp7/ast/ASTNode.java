@@ -12,7 +12,7 @@ public interface ASTNode {
         visitor.visit(this);
     }
 
-    public class NodeBuilder {
+    abstract class NodeBuilder {
         protected int line;
         public final NodeBuilder line(int line) {
             this.line = line;

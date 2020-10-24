@@ -1,15 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class ArrayItemNodeImpl extends ASTNodeBreakpoint implements ArrayItemNode {
     private final IdentNode identifier;
-    private final ASTNode expression;
+    private final MiniJajaNode expression;
 
-    public ArrayItemNodeImpl(int line, int column, Breakpoint bp, IdentNode identifier, ASTNode expression) {
+    public ArrayItemNodeImpl(int line, int column, Breakpoint bp, IdentNode identifier, MiniJajaNode expression) {
         super(line, column, bp);
         this.identifier = identifier;
         this.expression = expression;
@@ -21,12 +20,12 @@ public class ArrayItemNodeImpl extends ASTNodeBreakpoint implements ArrayItemNod
     }
 
     @Override
-    public ASTNode expression() {
+    public MiniJajaNode expression() {
         return this.expression;
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : return this.identifier;
             case 1 : return this.expression;

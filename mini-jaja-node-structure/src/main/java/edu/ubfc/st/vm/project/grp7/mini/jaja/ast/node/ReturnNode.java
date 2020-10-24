@@ -1,11 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface ReturnNode extends MiniJajaNode {
-    ASTNode ret();
+    MiniJajaNode ret();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
@@ -17,8 +16,8 @@ public interface ReturnNode extends MiniJajaNode {
     }
 
     public class Builder extends MiniJajaNode.NodeBuilder {
-        private ASTNode ret;
-        public Builder ret(ASTNode ret) {
+        private MiniJajaNode ret;
+        public Builder ret(MiniJajaNode ret) {
             this.ret = ret;
             return this;
         }

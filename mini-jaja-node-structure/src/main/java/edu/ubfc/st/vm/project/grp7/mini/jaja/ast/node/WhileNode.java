@@ -5,7 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface WhileNode extends MiniJajaNode {
-    ASTNode expression();
+    MiniJajaNode expression();
     InstrsNode instrs();
 
     @Override
@@ -18,8 +18,8 @@ public interface WhileNode extends MiniJajaNode {
     }
 
     public class Builder extends MiniJajaNode.NodeBuilder {
-        private ASTNode expression;
-        public Builder expression(ASTNode expression) {
+        private MiniJajaNode expression;
+        public Builder expression(MiniJajaNode expression) {
             this.expression = expression;
             return this;
         }
