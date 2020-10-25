@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 
 public interface MultNode extends MiniJajaOperatorNode {
@@ -14,7 +13,7 @@ public interface MultNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public MultNode build() {
             return new MultNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

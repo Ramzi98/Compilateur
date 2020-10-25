@@ -17,7 +17,7 @@ public interface IfNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private MiniJajaNode expression;
         public Builder expression(MiniJajaNode expression) {
             this.expression = expression;

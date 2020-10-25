@@ -19,7 +19,7 @@ public interface MethodNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private TypeMethNode typeMeth;
         public Builder typeMeth(TypeMethNode typeMeth) {
             this.typeMeth = typeMeth;

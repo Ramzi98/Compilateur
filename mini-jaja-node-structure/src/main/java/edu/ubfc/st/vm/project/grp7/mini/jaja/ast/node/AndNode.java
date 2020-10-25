@@ -13,7 +13,7 @@ public interface AndNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public AndNode build() {
             return new AndNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

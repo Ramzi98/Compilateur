@@ -17,7 +17,7 @@ public interface ClasseNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private IdentNode identifier;
         public Builder identifier(IdentNode id) {
             this.identifier = id;

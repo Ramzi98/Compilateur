@@ -14,7 +14,7 @@ public interface SubNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public SubNode build() {
             return new SubNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

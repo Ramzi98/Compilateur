@@ -14,7 +14,7 @@ public interface DivNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public DivNode build() {
             return new DivNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

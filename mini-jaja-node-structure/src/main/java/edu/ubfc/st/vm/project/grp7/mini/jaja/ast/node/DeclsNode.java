@@ -16,7 +16,7 @@ public interface DeclsNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private MiniJajaNode decl;
         public Builder decl(MiniJajaNode decl) {
             this.decl = decl;

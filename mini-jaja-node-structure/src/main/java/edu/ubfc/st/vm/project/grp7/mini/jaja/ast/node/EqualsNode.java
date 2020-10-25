@@ -13,7 +13,7 @@ public interface EqualsNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public EqualsNode build() {
             return new EqualsNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

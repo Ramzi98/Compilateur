@@ -1,9 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MinijajaLeaf;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaLeaf;
 
-public interface TypeNode extends MinijajaLeaf<TypeNode.Type> {
+public interface TypeNode extends MiniJajaLeaf<TypeNode.Type> {
     static Builder builder () {
         return new Builder();
     }
@@ -13,13 +13,13 @@ public interface TypeNode extends MinijajaLeaf<TypeNode.Type> {
         visitor.visit(this);
     }
 
-    public class Builder extends MinijajaLeaf.LeafBuilder<Builder, Type> {
+    class Builder extends MiniJajaLeaf.LeafBuilder<Builder, Type> {
         public TypeNode build() {
             return new TypeNodeImpl(this.line, this.column, this.breakpoint, this.value);
         }
     }
 
-    public enum Type {
+    enum Type {
         INT, BOOLEAN, VOID
     }
 }

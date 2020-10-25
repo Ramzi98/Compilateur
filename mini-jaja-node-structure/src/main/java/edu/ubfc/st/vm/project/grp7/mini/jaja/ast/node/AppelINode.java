@@ -16,7 +16,7 @@ public interface AppelINode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private IdentNode identifier;
         public Builder identifier(IdentNode identifier) {
             this.identifier = identifier;

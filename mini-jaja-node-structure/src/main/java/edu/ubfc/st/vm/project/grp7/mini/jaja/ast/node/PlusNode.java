@@ -14,7 +14,7 @@ public interface PlusNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public PlusNode build() {
             return new PlusNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

@@ -15,7 +15,7 @@ public interface WriteLnNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private MiniJajaNode printable;
         public Builder printable(MiniJajaNode printable) {
             this.printable = printable;

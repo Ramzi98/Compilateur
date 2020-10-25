@@ -16,7 +16,7 @@ public interface InstrsNode extends MiniJajaNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private MiniJajaNode instruction;
         public Builder instruction(MiniJajaNode instruction) {
             this.instruction = instruction;

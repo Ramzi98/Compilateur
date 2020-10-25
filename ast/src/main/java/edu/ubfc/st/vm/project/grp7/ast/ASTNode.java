@@ -12,17 +12,17 @@ public interface ASTNode {
         visitor.visit(this);
     }
 
-    abstract class NodeBuilder {
+    abstract class NodeBuilder<B extends NodeBuilder> {
         protected int line;
-        public final NodeBuilder line(int line) {
+        public final B line(int line) {
             this.line = line;
-            return this;
+            return (B)this;
         }
 
         protected int column;
-        public final NodeBuilder column(int column) {
+        public final B column(int column) {
             this.column = column;
-            return this;
+            return (B)this;
         }
     }
 }

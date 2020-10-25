@@ -16,7 +16,7 @@ public interface HeaderNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private TypeNode type;
         public Builder type(TypeNode type){
             this.type = type;

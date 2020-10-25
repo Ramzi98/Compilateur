@@ -14,7 +14,7 @@ public interface OrNode extends MiniJajaOperatorNode {
         return new Builder();
     }
 
-    class Builder extends MiniJajaOperatorNode.NodeBuilder {
+    class Builder extends MiniJajaOperatorNode.NodeBuilder<Builder> {
         public OrNode build() {
             return new OrNodeImpl(this.line, this.column, this.breakpoint, this.leftOperand, this.rightOperand);
         }

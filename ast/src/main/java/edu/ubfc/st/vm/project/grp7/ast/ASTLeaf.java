@@ -8,7 +8,7 @@ public interface ASTLeaf<C> extends ASTNode {
         throw new  IndexOutOfBoundsException();
     }
 
-    abstract class LeafBuilder<B, C> extends ASTNode.NodeBuilder {
+    abstract class LeafBuilder<B extends LeafBuilder, C> extends ASTNode.NodeBuilder<B> {
         protected C value;
         public B value(C value) {
             this.value = value;

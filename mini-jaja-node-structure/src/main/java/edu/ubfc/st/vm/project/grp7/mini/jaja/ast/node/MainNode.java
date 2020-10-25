@@ -16,7 +16,7 @@ public interface MainNode extends MiniJajaNode {
         return new Builder();
     }
 
-    public class Builder extends MiniJajaNode.NodeBuilder {
+    class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private VarsNode vars;
         public Builder vars(VarsNode vars) {
             this.vars = vars;
