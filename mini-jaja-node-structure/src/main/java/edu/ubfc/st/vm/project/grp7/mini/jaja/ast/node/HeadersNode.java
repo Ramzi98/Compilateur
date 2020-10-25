@@ -18,13 +18,13 @@ public interface HeadersNode extends MiniJajaNode {
 
     class Builder extends MiniJajaNode.NodeBuilder<Builder> {
         private HeaderNode header;
-        public Builder instruction(HeaderNode header) {
+        public Builder header(HeaderNode header) {
             this.header = header;
             return this;
         }
 
         private HeadersNode headers;
-        public Builder instrs(HeadersNode headers){
+        public Builder headers(HeadersNode headers){
             this.headers = headers;
             return this;
         }
