@@ -8,7 +8,7 @@ public interface JcWritelnNode {
     }
 
     public class Builder extends ASTNode.NodeBuilder {
-        public JcWriteNode build() {
+        public JcWritelnNode build() {
             return new JcWritelnImpl(this.line, this.column);
         }
     }
