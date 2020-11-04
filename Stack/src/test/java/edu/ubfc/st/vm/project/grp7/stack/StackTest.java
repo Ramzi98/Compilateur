@@ -25,7 +25,7 @@ public class StackTest {
 
     @Test
     public void Create_empty_stack() throws Exception {
-        stack.print_stack();
+        System.out.println(stack.toString());
     }
 
     @Test(expected = InvalidQuadrupletException.class)
@@ -43,7 +43,7 @@ public class StackTest {
     public void Push_stack_with_correct_quadruplet() throws Exception {
         stack.push(quadruplet_one);
         stack.push(quadruplet_three);
-        stack.print_stack();
+        System.out.println(stack.toString());
         assertEquals(stack.findQuadrupletInStack(quadruplet_three.getIdent()), quadruplet_three);
     }
 
