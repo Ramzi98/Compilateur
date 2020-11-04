@@ -5,8 +5,11 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 
 public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
 
-    public JcIfImpl(int line, int column) {
+    private int adresse;
+
+    public JcIfImpl(int line, int column,int adresse) {
         super(line, column);
+        this.adresse = adresse;
     }
 
     @Override
