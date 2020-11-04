@@ -13,7 +13,7 @@ public interface JcSupNode extends JajaCodeOperatorNode {
         return new Builder();
     }
 
-    class Builder extends JajaCodeOperatorNode.NodeBuilder<Builder> {
+    class Builder extends JajaCodeOperatorNode.NodeBuilder<JcSupNode.Builder> {
         public JcSupNode build() {
             return new JcSupImpl(this.line, this.column,this.leftOperand, this.rightOperand);
         }
