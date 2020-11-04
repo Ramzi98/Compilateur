@@ -3,7 +3,7 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 
-public interface JcIfNode extends ASTNode {
+public interface JcGotoNode extends ASTNode {
     int adresse();
 
     @Override
@@ -11,8 +11,8 @@ public interface JcIfNode extends ASTNode {
         visitor.visit(this);
     }
 
-    static JcIfNode.Builder builder() {
-        return new JcIfNode.Builder();
+    static JcGotoNode.Builder builder() {
+        return new JcGotoNode.Builder();
     }
 
     public class Builder extends ASTNode.NodeBuilder {
@@ -21,8 +21,8 @@ public interface JcIfNode extends ASTNode {
             this.adresse = adresse;
             return this;
         }
-        public JcIfNode build() {
-            return new JcIfImpl(this.line, this.column, this.adresse);
+        public JcGotoNode build() {
+            return new JcGotoImpl(this.line, this.column, this.adresse);
         }
     }
 }

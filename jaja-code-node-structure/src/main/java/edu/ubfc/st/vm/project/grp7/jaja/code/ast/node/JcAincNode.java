@@ -3,7 +3,7 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 
-public interface JcAincNode extends ASTNode {
+public interface JcAincNode extends ASTNode{
 
     static JcAincNode.Builder builder() {
         return new JcAincNode.Builder();
@@ -15,8 +15,9 @@ public interface JcAincNode extends ASTNode {
     }
 
     public class Builder extends ASTNode.NodeBuilder {
+
         private String identifier;
-        public JcAincNode.Builder identifier(String identifier) {
+        public Builder identifier(String identifier) {
             this.identifier = identifier;
             return this;
         }
