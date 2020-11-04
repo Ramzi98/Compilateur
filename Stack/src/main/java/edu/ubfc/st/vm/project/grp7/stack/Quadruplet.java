@@ -15,32 +15,4 @@ public class Quadruplet {
     public String getIdent() {
         return ident;
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public Sorte getSorte() {
-        return sorte;
-    }
-
-    public double getVal() {
-        return val;
-    }
-
-    public void setIdent(String ident) {
-        this.ident = ident;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setSorte(Sorte sorte) {
-        this.sorte = sorte;
-    }
-
-    public void setVal(double val) {
-        this.val = val;
-    }
 }
