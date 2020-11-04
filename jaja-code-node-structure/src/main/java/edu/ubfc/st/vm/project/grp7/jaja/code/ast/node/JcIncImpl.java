@@ -16,6 +16,7 @@ public class JcIncImpl extends ASTNodeWithInfo implements JcIncNode {
 
         @Override
         public ASTNode children(int n) throws IndexOutOfBoundsException {
+
             throw new IndexOutOfBoundsException();
         }
 }
