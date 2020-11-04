@@ -1,47 +1,58 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 
 public interface JcNewNode extends ASTNode {
+    String identifier();
+    int adr();
+    Type type();
+    Sorte sorte();
 
-    static JcNewNode.Builder builder(){
-        return new JcNewNode.Builder();
-    }
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
         visitor.visit(this);
     }
 
+    static JcNewNode.Builder builder(){ return new JcNewNode.Builder(); }
 
-    public class Builder extends ASTNode.NodeBuilder<Builder> {
+    class Builder extends ASTNode.NodeBuilder<Builder> {
+
         private String identifier;
-        private int type;
-        private int sorte;
-        private int adr;
-        private Breakpoint breakpoint;
-        public Builder identifier(String identifier) {
-            this.identifier = identifier;
+        public Builder identifier(String id) {
+            this.identifier = id;
             return this;
         }
-        public Builder type(int type) {
-            this.type = type;
-            return this;
-        }
-        public Builder sorte(int sorte) {
-            this.sorte = sorte;
-            return this;
-        }
+
+        int adr;
         public Builder adr(int adr) {
             this.adr = adr;
             return this;
         }
 
-        public JcNewNode build(){
-            return new JcNewNode(this.line, this.column, this.breakpoint, this.identifier, this.type, this.sorte,this.adr);
+        Type type;
+        public Builder type(Type type) {
+            this.type = type;
+            return this;
         }
+        Sorte sorte;
+        public Builder sorte(Sorte sorte) {
+            this.sorte = sorte;
+            return this;
+        }
+
+        public JcNewNode build(){
+            return new JcNewImpl(this.line, this.column, this.identifier,this.adr,this.type,this.sorte);
+        }
+
+
+    }
+    public enum Sorte {
+        Cst, Var, Meth;
+    }
+
+    public enum Type {
+        INT, BOOLEAN, VOID
     }
 }

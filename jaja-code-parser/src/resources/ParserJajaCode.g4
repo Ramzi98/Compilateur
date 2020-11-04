@@ -13,7 +13,7 @@ instr : INIT
       | NEW LPAR ident COMMA type COMMA sorte COMMA adr RPAR
       | NEWARRAY LPAR ident COMMA type RPAR
       | INVOKE LPAR ident RPAR
-      |RETURN
+      | RETURN
       | WRITE
       | WRITELN
       | PUSH LPAR valeur RPAR
