@@ -1,9 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.stack;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class StackTest {
     Quadruplet quadruplet_one;
@@ -85,7 +87,8 @@ public class StackTest {
 
         stack.push(quadruplet_one);
         stack.editQuadrupletInStack(quadruplet_one.getIdent(),quadruplet_three);
-        assertEquals(stack.pop(),quadruplet_three);
+        Assert.assertTrue(stack.pop() == quadruplet_three);
+
     }
 
 
