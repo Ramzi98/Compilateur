@@ -3,18 +3,20 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 
-public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
-    private final int adresse;
+public class JcAloadImpl extends ASTNodeWithInfo implements JcAloadNode {
 
-    public JcIfImpl(int line, int column, int adresse) {
+    private final String identifier;
+
+    public JcAloadImpl(int line, int column, String identifier) {
         super(line, column);
-        this.adresse = adresse;
+        this.identifier = identifier;
     }
 
     @Override
-    public int adresse() {
-        return this.adresse;
+    public String identifier() {
+        return this.identifier;
     }
+
 
     @Override
     public ASTNode children(int n) throws IndexOutOfBoundsException {
