@@ -6,7 +6,7 @@ public class StackImpl implements Stack {
     private java.util.Stack<Quadruplet> stack;
 
     public StackImpl(){
-        stack = new java.util.Stack<Quadruplet>();
+        stack = new java.util.Stack<>();
     }
 
     @Override
