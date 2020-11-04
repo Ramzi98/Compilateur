@@ -3,10 +3,15 @@ package edu.ubfc.st.vm.project.grp7.stack;
 import java.util.*;
 
 public class StackImpl implements Stack {
-    private java.util.Stack stack;
+    private java.util.Stack<Quadruplet> stack;
 
     public StackImpl(){
-        stack = new java.util.Stack<>();
+        stack = new java.util.Stack<Quadruplet>();
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(stack.toArray());
     }
 
     public void push(Quadruplet quadruplet) throws InvalidQuadrupletException {
@@ -19,13 +24,13 @@ public class StackImpl implements Stack {
     }
 
     public Quadruplet pop(){
-        return (Quadruplet) stack.pop();
+        return stack.pop();
     }
 
     public void swap() throws StackException {
         if(stack.size() > 1) {
-            Quadruplet quadruplet1 = (Quadruplet) stack.pop();
-            Quadruplet quadruplet2 = (Quadruplet) stack.pop();
+            Quadruplet quadruplet1 = stack.pop();
+            Quadruplet quadruplet2 = stack.pop();
 
             stack.push(quadruplet1);
             stack.push(quadruplet2);
@@ -37,9 +42,9 @@ public class StackImpl implements Stack {
 
     public Quadruplet findQuadrupletInStack(String ident)  {
 
-        for( Object stackQuad : stack) {
-            if(((Quadruplet) stackQuad).getIdent() == ident){
-                return (Quadruplet) stackQuad;
+        for( Quadruplet stackQuad : stack) {
+            if(stackQuad.getIdent() == ident){
+                return stackQuad;
             }
         }
         return null;
@@ -48,7 +53,7 @@ public class StackImpl implements Stack {
     public int findQuadrupletIndexInStack(String ident)  {
 
         for( int i =0;i<stack.size();i++ ){
-            if(((Quadruplet) stack.get(i)).getIdent() == ident){
+            if(stack.get(i).getIdent() == ident){
                 return i;
             }
         }
@@ -65,7 +70,5 @@ public class StackImpl implements Stack {
         }
     }
 
-    public void print_stack() {
-        System.out.println(Arrays.toString(stack.toArray()));
-    }
+
 }
