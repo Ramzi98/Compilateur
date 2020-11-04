@@ -45,13 +45,20 @@ public class StackImpl implements Stack {
         return null;
     }
 
+    public int findQuadrupletIndexInStack(String ident)  {
+
+        for( int i =0;i<stack.size();i++ ){
+            if(((Quadruplet) stack.get(i)).getIdent() == ident){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void editQuadrupletInStack(String ident, Quadruplet quadruplet) throws StackException {
-        Quadruplet quadrupletAChanger = findQuadrupletInStack(ident);
-        if(quadrupletAChanger != null) {
-            stack.findQuadrupletInStack(ident).setIdent(quadrupletAChanger.getIdent());
-            quadruplet.setVal(quadrupletAChanger.getVal());
-            quadruplet.setSorte(quadrupletAChanger.getSorte());
-            quadruplet.setType(quadrupletAChanger.getType());
+        int quadrupletAChanger = findQuadrupletIndexInStack(ident);
+        if(quadrupletAChanger != -1) {
+            stack.set(quadrupletAChanger,quadruplet);
         }
         else {
             throw new StackException(stack,"The quadruplet couldn't be found in the stack");
