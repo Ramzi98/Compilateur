@@ -2,7 +2,7 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 
-public interface JcWritelnNode {
+public interface JcWritelnNode extends ASTNode {
     static JcWritelnNode.Builder builder() {
         return new JcWritelnNode.Builder();
     }
