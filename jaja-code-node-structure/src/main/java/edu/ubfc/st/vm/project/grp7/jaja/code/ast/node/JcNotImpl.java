@@ -5,10 +5,11 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcNotImpl extends ASTNodeWithInfo implements JcNotNode {
     private final JajaCodeNode expression;
-
-    public JcNotImpl(int line, int column, JajaCodeNode expression) {
+    private final JajaCodeNode next;
+    public JcNotImpl(int line, int column, JajaCodeNode expression,JajaCodeNode next) {
         super(line, column);
         this.expression = expression;
+        this.next = next;
     }
 
     @Override
@@ -19,8 +20,8 @@ public class JcNotImpl extends ASTNodeWithInfo implements JcNotNode {
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
-            case 0 : return this.expression;
-            default: throw new IndexOutOfBoundsException();
+            case 0 : {return this.next; }
+            default: {throw new IndexOutOfBoundsException();}
         }
     }
 }

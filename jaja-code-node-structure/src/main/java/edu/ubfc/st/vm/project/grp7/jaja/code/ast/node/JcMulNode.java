@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperatorNode;
 
 public interface JcMulNode extends JajaCodeOperatorNode {
@@ -9,13 +10,18 @@ public interface JcMulNode extends JajaCodeOperatorNode {
         visitor.visit(this);
     }
 
-    static JcSupNode.Builder builder() {
-        return new JcSupNode.Builder();
+    static JcMulNode.Builder builder() {
+        return new JcMulNode.Builder();
     }
 
     class Builder extends JajaCodeOperatorNode.NodeBuilder<JcMulNode.Builder> {
+        JajaCodeNode next;
+        public JcMulNode.Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
         public JcMulNode build() {
-            return new JcMulImpl(this.line, this.column,this.leftOperand, this.rightOperand);
+            return new JcMulImpl(this.line, this.column,this.leftOperand, this.rightOperand,this.next);
         }
     }
 }

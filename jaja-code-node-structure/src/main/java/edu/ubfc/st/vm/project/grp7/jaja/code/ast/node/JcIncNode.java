@@ -3,6 +3,7 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcIncNode extends ASTNode{
 
@@ -22,8 +23,13 @@ public interface JcIncNode extends ASTNode{
             this.identifier = identifier;
             return this;
         }
+        JajaCodeNode next;
+        public JcIncNode.Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
         public JcIncNode build() {
-            return new JcIncImpl(this.line, this.column,this.identifier);
+            return new JcIncImpl(this.line, this.column,this.identifier,this.next);
         }
     }
 }

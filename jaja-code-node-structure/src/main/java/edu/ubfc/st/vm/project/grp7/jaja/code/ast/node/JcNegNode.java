@@ -11,8 +11,8 @@ public interface JcNegNode extends JajaCodeNode {
         visitor.visit(this);
     }
 
-    static Builder builder() {
-        return new Builder();
+    static JcNegNode.Builder builder() {
+        return new JcNegNode.Builder();
     }
 
     class Builder extends JajaCodeNode.NodeBuilder<Builder> {
@@ -21,9 +21,14 @@ public interface JcNegNode extends JajaCodeNode {
             this.expression = expression;
             return this;
         }
+       private JajaCodeNode next;
+        public Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
 
         public JcNegNode build() {
-            return new JcNegImpl(this.line, this.column,this.expression);
+            return new JcNegImpl(this.line, this.column,this.expression,this.next);
         }
     }
 }
