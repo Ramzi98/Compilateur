@@ -52,7 +52,7 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
-            case 0 : {return this.next; }
+            case 0 : {return this.next;}
             default: {throw new IndexOutOfBoundsException();}
         }
     }
