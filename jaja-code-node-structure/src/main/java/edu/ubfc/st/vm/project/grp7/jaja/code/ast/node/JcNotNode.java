@@ -22,8 +22,14 @@ public interface JcNotNode extends JajaCodeNode {
             return this;
         }
 
+        private JajaCodeNode next;
+        public JcNotNode.Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
+
         public JcNotNode build() {
-            return new JcNotImpl(this.line, this.column,this.expression);
+            return new JcNotImpl(this.line, this.column,this.expression,this.next);
         }
     }
 }
