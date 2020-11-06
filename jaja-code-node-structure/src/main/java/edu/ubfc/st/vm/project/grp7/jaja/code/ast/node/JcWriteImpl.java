@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcWriteImpl extends ASTNodeWithInfo implements JcWriteNode {
     private final JajaCodeNode next;
 
-    public JcWriteImpl(int line, int column,JajaCodeNode next) {
+    public JcWriteImpl(int line, int column, JajaCodeNode next) {
             super(line, column);
             this.next = next;
         }
