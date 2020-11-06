@@ -2,12 +2,14 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcNewNode extends ASTNode {
     String identifier();
     int adr();
     Type type();
     Sorte sorte();
+    JajaCodeNode next();
 
 
     @Override
@@ -42,8 +44,14 @@ public interface JcNewNode extends ASTNode {
             return this;
         }
 
+        JajaCodeNode next;
+        public Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
+
         public JcNewNode build(){
-            return new JcNewImpl(this.line, this.column, this.identifier,this.adr,this.type,this.sorte);
+            return new JcNewImpl(this.line, this.column, this.identifier,this.adr,this.type,this.sorte,this.next);
         }
 
 

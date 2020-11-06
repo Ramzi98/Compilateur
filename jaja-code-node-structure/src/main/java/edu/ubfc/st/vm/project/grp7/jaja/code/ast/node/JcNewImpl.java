@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
 
@@ -12,13 +13,15 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
     private final int adr;
     private final Type type;
     private final Sorte sorte;
+    private final JajaCodeNode next;
 
-    public JcNewImpl(int line, int column, String identifier,int adr,Type type,Sorte sorte) {
+    public JcNewImpl(int line, int column, String identifier, int adr, Type type, Sorte sorte, JajaCodeNode next) {
         super(line, column);
         this.identifier = identifier;
         this.adr = adr;
         this.type = type;
         this.sorte = sorte;
+        this.next = next;
     }
 
     @Override
@@ -42,7 +45,15 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
-        throw new IndexOutOfBoundsException();
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
+    public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
+        switch (n) {
+            case 0 : {return this.next; }
+            default: {throw new IndexOutOfBoundsException();}
+        }
     }
 }
