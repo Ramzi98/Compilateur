@@ -2,9 +2,11 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcPushNode extends ASTNode {
     Valeur valeur();
+    JajaCodeNode next();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
@@ -21,8 +23,14 @@ public interface JcPushNode extends ASTNode {
             return this;
         }
 
+        JajaCodeNode next;
+        public JcPushNode.Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
+
         public JcPushNode build(){
-            return new JcPushImpl(this.line, this.column,this.valeur);
+            return new JcPushImpl(this.line, this.column,this.valeur,this.next);
         }
 
     }

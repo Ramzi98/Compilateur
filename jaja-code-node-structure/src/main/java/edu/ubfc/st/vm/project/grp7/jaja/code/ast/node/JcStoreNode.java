@@ -2,9 +2,11 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcStoreNode extends ASTNode {
     String identifier();
+    JajaCodeNode next();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
@@ -21,8 +23,14 @@ public interface JcStoreNode extends ASTNode {
             return this;
         }
 
+        JajaCodeNode next;
+        public JcStoreNode.Builder next(JajaCodeNode next) {
+            this.next = next;
+            return this;
+        }
+
         public JcStoreNode build(){
-            return new JcStoreImpl(this.line, this.column, this.identifier);
+            return new JcStoreImpl(this.line, this.column, this.identifier, this.next);
         }
 
     }
