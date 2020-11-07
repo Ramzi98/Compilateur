@@ -1,16 +1,15 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcInitNode extends ASTNode {
+public interface JcInitNode extends JajaCodeNode {
     JajaCodeNode next();
 
-    static Builder builder() {
-        return new Builder();
-    }
+    static JcInitNode.Builder builder(){ return new JcInitNode.Builder(); }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    class Builder extends JajaCodeNode.NodeBuilder<JcInitNode.Builder>  {
         JajaCodeNode next;
         public JcInitNode.Builder next(JajaCodeNode next) {
             this.next = next;
@@ -18,7 +17,7 @@ public interface JcInitNode extends ASTNode {
         }
 
         public JcInitNode build() {
-            return new JcInitImpl(this.line, this.column,this.next);
+            return new JcInitImpl(this.line, this.column, this.next);
         }
     }
 }
