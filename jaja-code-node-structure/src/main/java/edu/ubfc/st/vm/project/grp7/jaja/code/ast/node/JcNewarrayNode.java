@@ -4,7 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcNewarrayNode extends ASTNode {
+public interface JcNewarrayNode extends JajaCodeNode {
     String identifier();
     Type type();
     JajaCodeNode next();
@@ -16,7 +16,7 @@ public interface JcNewarrayNode extends ASTNode {
 
     static JcNewarrayNode.Builder builder(){ return new JcNewarrayNode.Builder(); }
 
-    class Builder extends ASTNode.NodeBuilder<JcNewarrayNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcNewarrayNode.Builder> {
 
         private String identifier;
         public JcNewarrayNode.Builder identifier(String id) {
@@ -42,7 +42,7 @@ public interface JcNewarrayNode extends ASTNode {
 
     }
 
-    public enum Type {
+    enum Type {
         INT, BOOLEAN, VOID
     }
 }

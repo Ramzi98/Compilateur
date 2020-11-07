@@ -7,42 +7,41 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class JcInitNodeTest {
+public class JcPopNodeTest {
     @Before
     public void setup() {
-        jcInitNode = JcInitNode.builder()
+        jcPopNode = JcPopNode.builder()
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
                 .build();
     }
 
-    private JcInitNode jcInitNode;
-    private JcReturnNode jajaCodeNode;
+    private JcPopNode jcPopNode;
+    private JcGotoNode jajaCodeNode;
 
     @Test
-    public void check__JcInitNode__Line() {
-        assertThat(jcInitNode.line(), is(30));
+    public void check__JcPopNode__Line() {
+        assertThat(jcPopNode.line(), is(30));
     }
 
     @Test
-    public void check__JcInitNode__Column() {
-        assertThat(jcInitNode.column(), is(15));
+    public void check__JcPopNode__Column() {
+        assertThat(jcPopNode.column(), is(15));
     }
 
     @Test
-    public void check__JcInitNode__next() {
-        assertThat(jcInitNode.next(), is(jajaCodeNode));
+    public void check__JcPopNode__next() {
+        assertThat(jcPopNode.next(), is(jajaCodeNode));
     }
 
     @Test
-    public void check__JcInitNode__ChildrenMethod__FirstChild() {
-        assertThat(jcInitNode.children(0) , is(jajaCodeNode));
+    public void check__JcPopNode__ChildrenMethod__FirstChild() {
+        assertThat(jcPopNode.children(0) , is(jajaCodeNode));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void check__AndNode__ChildrenMethod__OtherChild() {
-        jcInitNode.children(2);
+        jcPopNode.children(2);
     }
-
 }

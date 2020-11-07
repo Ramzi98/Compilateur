@@ -3,14 +3,14 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcPopNode extends ASTNode {
+public interface JcPopNode extends JajaCodeNode {
     JajaCodeNode next();
 
-    static JcPopNode.Builder builder() {
-        return new JcPopNode.Builder();
+    static Builder builder() {
+        return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    class Builder extends JajaCodeNode.NodeBuilder<JcPopNode.Builder> {
 
         JajaCodeNode next;
         public JcPopNode.Builder next(JajaCodeNode next) {

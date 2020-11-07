@@ -4,7 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcGotoNode extends ASTNode {
+public interface JcGotoNode extends JajaCodeNode {
     int adresse();
     JajaCodeNode next();
 
@@ -13,14 +13,14 @@ public interface JcGotoNode extends ASTNode {
         visitor.visit(this);
     }
 
-    static JcGotoNode.Builder builder() {
-        return new JcGotoNode.Builder();
+    static Builder builder() {
+        return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    class Builder extends JajaCodeNode.NodeBuilder<JcGotoNode.Builder> {
 
         private int adresse;
-        public Builder identifier(int adresse) {
+        public Builder adresse(int adresse) {
             this.adresse = adresse;
             return this;
         }
