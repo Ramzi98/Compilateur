@@ -18,7 +18,7 @@ public class JcSwapNodeTest {
     }
 
     private JcSwapNode jcSwapNode;
-    private JajaCodeNode jajaCodeNode;
+    private JcIfNode jajaCodeNode;
 
 
     @Test

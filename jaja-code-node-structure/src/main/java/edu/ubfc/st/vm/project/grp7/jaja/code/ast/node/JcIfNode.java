@@ -4,11 +4,13 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcIfNode extends ASTNode{
+public interface JcIfNode extends JajaCodeNode {
 
     JajaCodeNode next();
-    static JcIfNode.Builder builder() {
-        return new JcIfNode.Builder();
+    int adresse();
+
+    static Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -17,7 +19,7 @@ public interface JcIfNode extends ASTNode{
     }
 
 
-    public class Builder extends ASTNode.NodeBuilder {
+    class Builder extends JajaCodeNode.NodeBuilder<JcIfNode.Builder> {
         private int adresse;
         public JcIfNode.Builder adresse(int adresse) {
             this.adresse = adresse;

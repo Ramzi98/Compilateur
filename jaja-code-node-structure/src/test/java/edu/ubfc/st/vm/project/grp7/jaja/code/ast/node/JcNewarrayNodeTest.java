@@ -21,7 +21,7 @@ public class JcNewarrayNodeTest {
     }
 
     private JcNewarrayNode jcNewarrayNode;
-    private JajaCodeNode jajaCodeNode;
+    private JcGotoNode jajaCodeNode;
 
 
     @Test

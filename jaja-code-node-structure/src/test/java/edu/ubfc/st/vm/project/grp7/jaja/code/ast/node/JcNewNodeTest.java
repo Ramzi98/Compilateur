@@ -23,7 +23,7 @@ public class JcNewNodeTest {
     }
 
     private JcNewNode jcNewNode;
-    private JajaCodeNode jajaCodeNode;
+    private JcGotoNode jajaCodeNode;
 
 
     @Test

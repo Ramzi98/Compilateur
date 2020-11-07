@@ -4,7 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcPushNode extends ASTNode {
+public interface JcPushNode extends JajaCodeNode {
     Valeur valeur();
     JajaCodeNode next();
 
@@ -13,9 +13,9 @@ public interface JcPushNode extends ASTNode {
         visitor.visit(this);
     }
 
-    static JcPushNode.Builder builder(){ return new JcPushNode.Builder(); }
+    static Builder builder(){ return new Builder(); }
 
-    class Builder extends ASTNode.NodeBuilder<JcPushNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcPushNode.Builder> {
 
         private Valeur valeur;
         public Builder valeur(Valeur valeur) {
@@ -36,7 +36,7 @@ public interface JcPushNode extends ASTNode {
     }
 
     enum Valeur{
-        INT, BOOLEAN,STRING;
+        INT, BOOLEAN,STRING
     }
 
 
