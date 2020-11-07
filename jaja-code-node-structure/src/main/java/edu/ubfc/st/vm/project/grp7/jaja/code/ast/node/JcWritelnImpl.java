@@ -7,7 +7,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcWritelnImpl extends ASTNodeWithInfo implements JcWritelnNode {
     private final JajaCodeNode next;
 
-    public JcWritelnImpl(int line, int column, JajaCodeNode next) {
+
+    public JcWritelnImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
         this.next = next;
     }
@@ -16,6 +17,7 @@ public class JcWritelnImpl extends ASTNodeWithInfo implements JcWritelnNode {
     public JajaCodeNode next() {
         return this.next;
     }
+
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

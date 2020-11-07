@@ -8,6 +8,7 @@ public interface JcIfNode extends ASTNode{
     int adresse();
     JajaCodeNode next();
 
+    JajaCodeNode next();
     static JcIfNode.Builder builder() {
         return new JcIfNode.Builder();
     }

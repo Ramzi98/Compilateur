@@ -18,6 +18,11 @@ public class JcIncImpl extends ASTNodeWithInfo implements JcIncNode {
             this.next = next;
         }
 
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

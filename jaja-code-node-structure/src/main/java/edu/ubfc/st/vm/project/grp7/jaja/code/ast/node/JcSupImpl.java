@@ -12,6 +12,10 @@ public class JcSupImpl extends JajaCodeOperator implements JcSupNode {
         this.next = next;
     }
 
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

@@ -12,6 +12,11 @@ public class JcSubImpl extends JajaCodeOperator implements JcSubNode {
     }
 
     @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : {return this.next; }

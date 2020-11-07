@@ -11,7 +11,10 @@ public class JcOrImpl  extends JajaCodeOperator implements JcOrNode {
         this.next = next;
     }
 
-
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
