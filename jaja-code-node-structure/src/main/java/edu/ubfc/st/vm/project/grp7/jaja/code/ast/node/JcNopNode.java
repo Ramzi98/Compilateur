@@ -7,6 +7,8 @@ public interface JcNopNode extends JajaCodeNode{
 
     JajaCodeNode next();
 
+    JajaCodeNode next();
+
     static JcNopNode.Builder builder() {
         return new JcNopNode.Builder();
     }

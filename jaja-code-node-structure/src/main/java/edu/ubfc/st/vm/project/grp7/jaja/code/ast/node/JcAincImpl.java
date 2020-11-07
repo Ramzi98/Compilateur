@@ -13,6 +13,10 @@ public class JcAincImpl extends ASTNodeWithInfo implements JcAincNode {
         this.identifier = identifier;
         this.next = next;
     }
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
     @Override
     public String identifier() {
