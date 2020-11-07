@@ -3,7 +3,7 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcNopNode extends ASTNode{
+public interface JcNopNode extends JajaCodeNode{
 
     JajaCodeNode next();
 
@@ -11,7 +11,7 @@ public interface JcNopNode extends ASTNode{
         return new JcNopNode.Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    public class Builder extends JajaCodeNode.NodeBuilder<JcNopNode.Builder> {
 
         private JajaCodeNode next;
         public JcNopNode.Builder next(JajaCodeNode next) {

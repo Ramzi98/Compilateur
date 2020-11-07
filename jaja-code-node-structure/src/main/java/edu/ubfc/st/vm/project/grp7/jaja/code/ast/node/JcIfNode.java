@@ -4,13 +4,13 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcIfNode extends JajaCodeNode {
+public interface JcIfNode extends JajaCodeNode{
 
     JajaCodeNode next();
-    int adresse();
+    int adr();
 
-    static Builder builder() {
-        return new Builder();
+    static JcIfNode.Builder builder() {
+        return new JcIfNode.Builder();
     }
 
     @Override
@@ -19,10 +19,10 @@ public interface JcIfNode extends JajaCodeNode {
     }
 
 
-    class Builder extends JajaCodeNode.NodeBuilder<JcIfNode.Builder> {
-        private int adresse;
-        public JcIfNode.Builder adresse(int adresse) {
-            this.adresse = adresse;
+    public class Builder extends JajaCodeNode.NodeBuilder<JcIfNode.Builder> {
+        private int adr;
+        public JcIfNode.Builder adr(int adr) {
+            this.adr = adr;
             return this;
         }
         JajaCodeNode next;
@@ -31,7 +31,7 @@ public interface JcIfNode extends JajaCodeNode {
             return this;
         }
         public JcIfNode build() {
-            return new JcIfImpl(this.line, this.column,this.adresse,this.next);
+            return new JcIfImpl(this.line, this.column,this.adr,this.next);
         }
     }
 }

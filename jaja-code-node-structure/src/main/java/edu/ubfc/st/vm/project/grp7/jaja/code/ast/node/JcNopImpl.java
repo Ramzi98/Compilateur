@@ -17,7 +17,6 @@ public class JcNopImpl extends ASTNodeWithInfo implements JcNopNode {
         return this.next;
     }
 
-
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
