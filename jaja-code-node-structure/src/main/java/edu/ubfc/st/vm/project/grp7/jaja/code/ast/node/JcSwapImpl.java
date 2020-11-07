@@ -17,7 +17,7 @@ public class JcSwapImpl extends ASTNodeWithInfo implements JcSwapNode {
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
+    public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : {return this.next; }
             default: {throw new IndexOutOfBoundsException();}
