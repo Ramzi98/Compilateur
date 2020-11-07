@@ -10,15 +10,15 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
 
     private final String identifier;
-    private final int adr;
+    private final int adresse;
     private final Type type;
     private final Sorte sorte;
     private final JajaCodeNode next;
 
-    public JcNewImpl(int line, int column, String identifier, int adr, Type type, Sorte sorte, JajaCodeNode next) {
+    public JcNewImpl(int line, int column, String identifier, int adresse, Type type, Sorte sorte, JajaCodeNode next) {
         super(line, column);
         this.identifier = identifier;
-        this.adr = adr;
+        this.adresse = adresse;
         this.type = type;
         this.sorte = sorte;
         this.next = next;
@@ -30,8 +30,8 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
     }
 
     @Override
-    public int adr() {
-        return this.adr;
+    public int adresse() {
+        return this.adresse;
     }
 
     @Override

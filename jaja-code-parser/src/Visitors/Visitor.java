@@ -1,6 +1,10 @@
 // Generated from ParserJajaCode.g4 by ANTLR 4.7.2
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewarrayNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcPushNode;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode.Type;
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -27,19 +31,19 @@ public interface Visitor<JajaCodeNode> extends ParseTreeVisitor<JajaCodeNode> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    JajaCodeNode visitIdent(ParserJajaCode.IdentContext ctx);
+    String visitIdent(ParserJajaCode.IdentContext ctx);
     /**
      * Visit a parse tree produced by {@link ParserJajaCode#valeur}.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    JajaCodeNode visitValeur(ParserJajaCode.ValeurContext ctx);
+    JcPushNode.Valeur visitValeur(ParserJajaCode.ValeurContext ctx);
     /**
      * Visit a parse tree produced by {@link ParserJajaCode#adresse}.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    JajaCodeNode visitAdresse(ParserJajaCode.AdresseContext ctx);
+    int visitAdresse(ParserJajaCode.AdresseContext ctx);
     /**
      * Visit a parse tree produced by {@link ParserJajaCode#oper}.
      * @param ctx the parse tree
@@ -63,17 +67,12 @@ public interface Visitor<JajaCodeNode> extends ParseTreeVisitor<JajaCodeNode> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    JajaCodeNode visitType(ParserJajaCode.TypeContext ctx);
+    Type visitType(ParserJajaCode.TypeContext ctx);
     /**
      * Visit a parse tree produced by {@link ParserJajaCode#sorte}.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    JajaCodeNode visitSorte(ParserJajaCode.SorteContext ctx);
-    /**
-     * Visit a parse tree produced by {@link ParserJajaCode#adr}.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    JajaCodeNode visitAdr(ParserJajaCode.AdrContext ctx);
+    JcNewNode.Sorte visitSorte(ParserJajaCode.SorteContext ctx);
+
 }

@@ -6,7 +6,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcNewNode extends JajaCodeNode {
     String identifier();
-    int adr();
+    int adresse();
     Type type();
     Sorte sorte();
     JajaCodeNode next();
@@ -27,9 +27,9 @@ public interface JcNewNode extends JajaCodeNode {
             return this;
         }
 
-        int adr;
-        public Builder adr(int adr) {
-            this.adr = adr;
+        int adresse;
+        public Builder adresse(int adresse) {
+            this.adresse = adresse;
             return this;
         }
 
@@ -51,7 +51,7 @@ public interface JcNewNode extends JajaCodeNode {
         }
 
         public JcNewNode build(){
-            return new JcNewImpl(this.line, this.column, this.identifier,this.adr,this.type,this.sorte,this.next);
+            return new JcNewImpl(this.line, this.column, this.identifier,this.adresse,this.type,this.sorte,this.next);
         }
 
 

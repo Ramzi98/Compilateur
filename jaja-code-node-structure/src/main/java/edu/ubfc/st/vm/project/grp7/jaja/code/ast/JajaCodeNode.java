@@ -15,5 +15,17 @@ public interface JajaCodeNode extends ASTNode {
             this.breakpoint = bp;
             return (B)this;
         }
+
+        protected Type type = Type.INT;
+        public final B type(Type type){
+            this.type = type;
+            return (B)this;
+        }
+    }
+
+    public enum Type {
+        INT, BOOLEAN, VOID
     }
 }
+
+
