@@ -8,18 +8,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class JcIfNodeTest {
+
     @Before
     public void setup() {
         jcIfNode = JcIfNode.builder()
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
-                .adresse(100)
+                .adr(5)
                 .build();
     }
 
     private JcIfNode jcIfNode;
-    private JcPopNode jajaCodeNode;
+    private JajaCodeNode jajaCodeNode;
 
     @Test
     public void check__JcIfNode__Line() {
@@ -32,13 +33,12 @@ public class JcIfNodeTest {
     }
 
     @Test
-    public void check__JcIfNode__next() {
-        assertThat(jcIfNode.next(), is(jajaCodeNode));
+    public void check__JcIfNode__Adresse() { assertThat(jcIfNode.adr(), is(5));
     }
 
     @Test
-    public void check__JcIfNode__adresse() {
-        assertThat(jcIfNode.adresse(), is(100));
+    public void check__JJcIfNode__next() {
+        assertThat(jcIfNode.next(), is(jajaCodeNode));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class JcIfNodeTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void check__AndNode__ChildrenMethod__OtherChild() {
+    public void check__JcIfNode__ChildrenMethod__OtherChild() {
         jcIfNode.children(2);
     }
 }
