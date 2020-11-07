@@ -11,6 +11,10 @@ public class JcAndImpl extends JajaCodeOperator implements JcAndNode {
         super(line, column,leftOperand, rightOperand);
         this.next = next;
     }
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
 
     @Override

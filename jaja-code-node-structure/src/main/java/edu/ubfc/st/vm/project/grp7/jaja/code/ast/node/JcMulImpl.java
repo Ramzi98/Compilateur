@@ -11,6 +11,10 @@ public class JcMulImpl extends JajaCodeOperator implements JcMulNode {
         this.next = next;
     }
 
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
 
     @Override

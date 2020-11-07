@@ -16,9 +16,15 @@ public class JcNegImpl extends ASTNodeWithInfo implements JcNegNode {
     }
 
     @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
     public JajaCodeNode expression() {
         return this.expression;
     }
+
 
 
     @Override

@@ -11,7 +11,10 @@ public class JcCmpImpl extends JajaCodeOperator implements JcCmpNode {
         this.next = next;
     }
 
-
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

@@ -13,6 +13,11 @@ public class JcNotImpl extends ASTNodeWithInfo implements JcNotNode {
     }
 
     @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
     public JajaCodeNode expression() {
         return this.expression;
     }

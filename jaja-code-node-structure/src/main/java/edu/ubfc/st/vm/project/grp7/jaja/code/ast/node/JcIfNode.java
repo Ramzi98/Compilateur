@@ -6,6 +6,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcIfNode extends ASTNode{
 
+    JajaCodeNode next();
     static JcIfNode.Builder builder() {
         return new JcIfNode.Builder();
     }

@@ -12,6 +12,10 @@ public class JcNopImpl extends ASTNodeWithInfo implements JcNopNode {
         this.next = next;
     }
 
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
 
     @Override

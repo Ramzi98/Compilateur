@@ -12,6 +12,10 @@ public class JcWriteImpl extends ASTNodeWithInfo implements JcWriteNode {
             this.next = next;
         }
 
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

@@ -5,6 +5,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcWriteNode extends ASTNode{
 
+    JajaCodeNode next();
+
     static JcWriteNode.Builder builder() {
         return new JcWriteNode.Builder();
     }
