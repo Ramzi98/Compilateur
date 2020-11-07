@@ -6,12 +6,10 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcNegImpl extends ASTNodeWithInfo implements JcNegNode {
-    private final JajaCodeNode expression;
     private final JajaCodeNode next;
 
-    public JcNegImpl(int line, int column, JajaCodeNode expression,JajaCodeNode next) {
+    public JcNegImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
-        this.expression = expression;
         this.next = next;
     }
 
@@ -20,10 +18,7 @@ public class JcNegImpl extends ASTNodeWithInfo implements JcNegNode {
         return this.next;
     }
 
-    @Override
-    public JajaCodeNode expression() {
-        return this.expression;
-    }
+
 
 
 

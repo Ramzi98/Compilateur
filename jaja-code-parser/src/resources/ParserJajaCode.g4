@@ -1,3 +1,4 @@
+
 parser grammar ParserJajaCode;
 
 options {

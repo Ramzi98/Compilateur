@@ -1,10 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperatorNode;
 
-public interface JcOrNode extends JajaCodeOperatorNode {
+public interface JcOrNode extends ASTNode {
     JajaCodeNode next();
 
     @Override
@@ -16,7 +17,7 @@ public interface JcOrNode extends JajaCodeOperatorNode {
         return new JcOrNode.Builder();
     }
 
-    class Builder extends JajaCodeOperatorNode.NodeBuilder<JcOrNode.Builder> {
+    class Builder extends ASTNode.NodeBuilder<JcOrNode.Builder> {
 
         private JajaCodeNode next;
         public JcOrNode.Builder next(JajaCodeNode next) {
@@ -24,7 +25,7 @@ public interface JcOrNode extends JajaCodeOperatorNode {
             return this;
         }
         public JcOrNode build() {
-            return new JcOrImpl(this.line, this.column,this.leftOperand, this.rightOperand, this.next);
+            return new JcOrImpl(this.line, this.column, this.next);
         }
     }
 }

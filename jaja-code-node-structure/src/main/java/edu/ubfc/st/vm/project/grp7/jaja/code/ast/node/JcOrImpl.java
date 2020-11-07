@@ -1,13 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
-public class JcOrImpl  extends JajaCodeOperator implements JcOrNode {
+public class JcOrImpl  extends ASTNodeWithInfo implements JcOrNode {
     private final JajaCodeNode next;
 
-    public JcOrImpl(int line, int column, JajaCodeNode leftOperand, JajaCodeNode rightOperand,JajaCodeNode next) {
-        super(line, column,leftOperand, rightOperand);
+    public JcOrImpl(int line, int column,JajaCodeNode next) {
+        super(line, column);
         this.next = next;
     }
 

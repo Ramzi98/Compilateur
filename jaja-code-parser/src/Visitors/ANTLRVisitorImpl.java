@@ -67,11 +67,11 @@ public class ANTLRVisitorImpl<JajaCodeNode> extends AbstractParseTreeVisitor<Jaj
     @Override public JajaCodeNode visitOper1(ParserJajaCode.Oper1Context ctx) {
         JajaCodeNode n = null;
         if(ctx.children.get(0).getText() == "NEG"){
-            n = (JajaCodeNode) new JcNegNode.Builder().build().next();
+            n = (JajaCodeNode) new JcNegNode.Builder().build();
         }else{
             if(ctx.children.get(0).getText() == "NOT") {
 
-                n = (JajaCodeNode) new JcNotNode.Builder().build().next();
+                n = (JajaCodeNode) new JcNotNode.Builder().build();
             }
         }
 

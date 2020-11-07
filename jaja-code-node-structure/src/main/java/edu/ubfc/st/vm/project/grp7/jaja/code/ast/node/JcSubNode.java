@@ -1,10 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperatorNode;
 
-public interface JcSubNode extends JajaCodeOperatorNode {
+public interface JcSubNode extends ASTNode {
 
     JajaCodeNode next();
 
@@ -18,7 +19,7 @@ public interface JcSubNode extends JajaCodeOperatorNode {
         return new JcSubNode.Builder();
     }
 
-    class Builder extends JajaCodeOperatorNode.NodeBuilder<JcSubNode.Builder> {
+    class Builder extends ASTNode.NodeBuilder<JcSubNode.Builder> {
 
         private JajaCodeNode next;
         public JcSubNode.Builder next(JajaCodeNode next) {
@@ -26,7 +27,7 @@ public interface JcSubNode extends JajaCodeOperatorNode {
             return this;
         }
         public JcSubNode build() {
-            return new JcSubImpl(this.line, this.column,this.leftOperand, this.rightOperand,this.next);
+            return new JcSubImpl(this.line, this.column,this.next);
         }
     }
 }
