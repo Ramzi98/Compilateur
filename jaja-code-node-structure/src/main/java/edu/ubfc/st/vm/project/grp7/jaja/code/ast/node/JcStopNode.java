@@ -1,14 +1,15 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcStopNode extends ASTNode{
+public interface JcStopNode extends JajaCodeNode {
 
-    static JcStopNode.Builder builder() {
-        return new JcStopNode.Builder();
+    static Builder builder() {
+        return new Builder();
     }
 
-    public class Builder extends ASTNode.NodeBuilder {
+    class Builder extends JajaCodeNode.NodeBuilder<JcStopNode.Builder> {
         public JcStopNode build() {
             return new JcStopImpl(this.line, this.column);
         }
