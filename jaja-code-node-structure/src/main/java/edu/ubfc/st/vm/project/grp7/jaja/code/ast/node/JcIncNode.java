@@ -5,7 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public interface JcIncNode extends JajaCodeNode{
+public interface JcIncNode extends JajaCodeNode {
 
     String identifier();
     JajaCodeNode next();
@@ -19,7 +19,7 @@ public interface JcIncNode extends JajaCodeNode{
         visitor.visit(this);
     }
 
-    public class Builder extends JajaCodeNode.NodeBuilder<JcIncNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcIncNode.Builder> {
 
         private String identifier;
         public Builder identifier(String identifier) {

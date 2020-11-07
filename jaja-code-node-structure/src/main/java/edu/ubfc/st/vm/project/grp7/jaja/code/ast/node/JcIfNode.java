@@ -21,12 +21,12 @@ public interface JcIfNode extends JajaCodeNode {
 
     class Builder extends JajaCodeNode.NodeBuilder<JcIfNode.Builder> {
         private int adresse;
-        public JcIfNode.Builder adresse(int adresse) {
+        public Builder adresse(int adresse) {
             this.adresse = adresse;
             return this;
         }
         JajaCodeNode next;
-        public JcIfNode.Builder next(JajaCodeNode next) {
+        public Builder next(JajaCodeNode next) {
             this.next = next;
             return this;
         }
