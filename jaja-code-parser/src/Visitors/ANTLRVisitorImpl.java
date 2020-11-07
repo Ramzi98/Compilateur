@@ -1,8 +1,6 @@
 // Generated from ParserJajaCode.g4 by ANTLR 4.7.2
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNegNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.*;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNopImpl;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNotNode;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -66,7 +64,7 @@ public class ANTLRVisitorImpl<JajaCodeNode> extends AbstractParseTreeVisitor<Jaj
      */
     @Override public JajaCodeNode visitOper1(ParserJajaCode.Oper1Context ctx) {
         JajaCodeNode n = null;
-        if(ctx.children.get(0).getText() == "NEG"){
+        if(ctx.children.get(0).getText().equals("NEG")){
             n = (JajaCodeNode) new JcNegNode.Builder().build();
         }else{
             if(ctx.children.get(0).getText() == "NOT") {
@@ -83,7 +81,43 @@ public class ANTLRVisitorImpl<JajaCodeNode> extends AbstractParseTreeVisitor<Jaj
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public JajaCodeNode visitOper2(ParserJajaCode.Oper2Context ctx) { return visitChildren(ctx); }
+    @Override public JajaCodeNode visitOper2(ParserJajaCode.Oper2Context ctx) {
+        JajaCodeNode n = null;
+        if(ctx.children.get(0).getText().equals("ADD")){
+            return (JajaCodeNode) new JcAddNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "SUB") {
+
+            return (JajaCodeNode) new JcSubNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "MUL") {
+
+            return (JajaCodeNode) new JcMulNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "DIV") {
+
+           return (JajaCodeNode) new JcDivNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "CMP") {
+
+            return (JajaCodeNode) new JcCmpNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "SUP") {
+
+            return (JajaCodeNode) new JcSupNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "OR") {
+
+            return (JajaCodeNode) new JcOrNode.Builder().build();
+        }
+        if(ctx.children.get(0).getText() == "AND") {
+
+            return (JajaCodeNode) new JcAndNode.Builder().build();
+        }
+
+
+        return n;
+    }
     /**
      * {@inheritDoc}
      *

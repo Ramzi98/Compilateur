@@ -6,15 +6,21 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
 
-    private int adresse;
+    private int adr;
     private final JajaCodeNode next;
 
 
-    public JcIfImpl(int line, int column,int adresse,JajaCodeNode next) {
+    public JcIfImpl(int line, int column,int adr,JajaCodeNode next) {
         super(line, column);
-        this.adresse = adresse;
+        this.adr = adr;
         this.next = next;
     }
+
+    @Override
+    public int adr() {
+        return this.adr;
+    }
+
     @Override
     public JajaCodeNode next() {
         return this.next;

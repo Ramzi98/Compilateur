@@ -6,13 +6,19 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcAincImpl extends ASTNodeWithInfo implements JcAincNode {
 
-    private String identifier;
-    private JajaCodeNode next;
+    private final String identifier;
+    private final JajaCodeNode next;
     public JcAincImpl(int line, int column,String identifier,JajaCodeNode next) {
         super(line, column);
         this.identifier = identifier;
         this.next = next;
     }
+
+    @Override
+    public String identifier() {
+        return this.identifier;
+    }
+
     @Override
     public JajaCodeNode next() {
         return this.next;

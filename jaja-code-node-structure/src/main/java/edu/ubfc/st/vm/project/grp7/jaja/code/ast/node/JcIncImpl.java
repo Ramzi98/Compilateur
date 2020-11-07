@@ -8,7 +8,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcIncImpl extends ASTNodeWithInfo implements JcIncNode {
 
-    String identifier;
+    private final String identifier;
     private final JajaCodeNode next;
 
 
@@ -17,6 +17,11 @@ public class JcIncImpl extends ASTNodeWithInfo implements JcIncNode {
             this.identifier = identifier;
             this.next = next;
         }
+
+    @Override
+    public String identifier() {
+        return this.identifier;
+    }
 
     @Override
     public JajaCodeNode next() {
