@@ -1,10 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperatorNode;
 
-public interface JcCmpNode extends JajaCodeOperatorNode {
+public interface JcCmpNode extends ASTNode {
 
     JajaCodeNode next();
     @Override
@@ -24,7 +25,7 @@ public interface JcCmpNode extends JajaCodeOperatorNode {
             return this;
         }
         public JcCmpNode build() {
-            return new JcCmpImpl(this.line, this.column,this.leftOperand, this.rightOperand, this.next);
+            return new JcCmpImpl(this.line, this.column,this.next);
         }
     }
 }

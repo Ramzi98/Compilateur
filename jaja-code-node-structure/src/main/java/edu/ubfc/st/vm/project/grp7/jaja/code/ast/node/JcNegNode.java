@@ -4,7 +4,6 @@ import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcNegNode extends JajaCodeNode {
-    JajaCodeNode expression();
     JajaCodeNode next();
 
     @Override
@@ -17,11 +16,6 @@ public interface JcNegNode extends JajaCodeNode {
     }
 
     class Builder extends JajaCodeNode.NodeBuilder<Builder> {
-        private JajaCodeNode expression;
-        public Builder expression(JajaCodeNode expression) {
-            this.expression = expression;
-            return this;
-        }
        private JajaCodeNode next;
         public Builder next(JajaCodeNode next) {
             this.next = next;
@@ -29,7 +23,7 @@ public interface JcNegNode extends JajaCodeNode {
         }
 
         public JcNegNode build() {
-            return new JcNegImpl(this.line, this.column,this.expression,this.next);
+            return new JcNegImpl(this.line, this.column,this.next);
         }
     }
 }
