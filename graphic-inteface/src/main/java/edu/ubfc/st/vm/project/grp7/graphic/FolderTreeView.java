@@ -1,3 +1,4 @@
+package edu.ubfc.st.vm.project.grp7.graphic;
 import java.io.File;
 
 import javafx.collections.FXCollections;
