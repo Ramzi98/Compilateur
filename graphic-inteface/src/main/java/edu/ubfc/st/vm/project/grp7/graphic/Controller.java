@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.graphic;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class Controller implements Initializable {
 
@@ -98,7 +101,7 @@ public class Controller implements Initializable {
         File dir= folderChooser.showDialog(new Stage());
         if (dir != null)
         {
-            FolderTreeView treeView = new FolderTreeView(dir);
+            edu.ubfc.st.vm.project.grp7.graphic.FolderTreeView treeView = new edu.ubfc.st.vm.project.grp7.graphic.FolderTreeView(dir);
             TreeItem<File> root =  treeView.tree;
             folderTreeView.setRoot(root);
         }
