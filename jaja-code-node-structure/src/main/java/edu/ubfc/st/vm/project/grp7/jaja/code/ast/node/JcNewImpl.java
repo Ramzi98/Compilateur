@@ -22,6 +22,7 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
         this.type = type;
         this.sorte = sorte;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

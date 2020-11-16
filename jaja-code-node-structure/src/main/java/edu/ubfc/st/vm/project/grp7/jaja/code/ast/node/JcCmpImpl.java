@@ -4,12 +4,15 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
+import static edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode.jajacodelist;
+
 public class JcCmpImpl extends ASTNodeWithInfo implements JcCmpNode {
     private final JajaCodeNode next;
 
     public JcCmpImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

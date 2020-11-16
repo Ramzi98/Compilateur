@@ -15,6 +15,7 @@ public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
         super(line, column);
         this.adresse = adresse;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

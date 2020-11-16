@@ -12,6 +12,7 @@ public class JcAincImpl extends ASTNodeWithInfo implements JcAincNode {
         super(line, column);
         this.identifier = identifier;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override
