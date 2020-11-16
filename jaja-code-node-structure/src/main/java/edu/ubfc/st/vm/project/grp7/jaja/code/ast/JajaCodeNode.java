@@ -3,7 +3,11 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
+import java.util.ArrayList;
+
 public interface JajaCodeNode extends ASTNode {
+
+   public static ArrayList<JajaCodeNode> jajacodelist = new ArrayList<>();
 
     @Override
     JajaCodeNode children(int n) throws IndexOutOfBoundsException;

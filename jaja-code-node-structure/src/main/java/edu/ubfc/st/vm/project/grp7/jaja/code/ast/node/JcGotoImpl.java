@@ -12,6 +12,7 @@ public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
         super(line, column);
         this.adresse = adresse;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

@@ -15,6 +15,7 @@ public class JcNewarrayImpl extends ASTNodeWithInfo implements JcNewarrayNode {
         this.identifier = identifier;
         this.type = type;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

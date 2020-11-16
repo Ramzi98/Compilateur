@@ -13,6 +13,7 @@ public class JcInvokeImpl extends ASTNodeWithInfo implements JcInvokeNode {
         super(line, column);
         this.identifier = identifier;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

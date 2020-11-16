@@ -13,6 +13,7 @@ public class JcPushImpl extends ASTNodeWithInfo implements JcPushNode {
         super(line, column);
         this.valeur = valeur;
         this.next = next;
+        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override
