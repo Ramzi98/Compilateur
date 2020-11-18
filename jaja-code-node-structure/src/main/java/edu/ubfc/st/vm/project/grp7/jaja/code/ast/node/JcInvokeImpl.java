@@ -8,7 +8,7 @@ public class JcInvokeImpl extends ASTNodeWithInfo implements JcInvokeNode {
 
     private final String identifier;
     private final JajaCodeNode next;
-    private JajaCodeNode invokenode = null;
+    private JajaCodeNode invokenodejump = null;
 
     public JcInvokeImpl(int line, int column, String identifier, JajaCodeNode next) {
         super(line, column);
@@ -27,8 +27,13 @@ public class JcInvokeImpl extends ASTNodeWithInfo implements JcInvokeNode {
     }
 
     @Override
-    public void SetInvokeNode(JajaCodeNode node) {
-        this.invokenode = node;
+    public void setInvokeNodeJump(JajaCodeNode node) {
+        this.invokenodejump = node;
+    }
+
+    @Override
+    public JajaCodeNode getInvokeNodeJump() {
+        return invokenodejump;
     }
 
     @Override

@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
     private final int adresse;
     private final JajaCodeNode next;
-    private JajaCodeNode gotonode = null;
+    private JajaCodeNode gotonodejump = null;
 
     public JcGotoImpl(int line, int column, int adresse, JajaCodeNode next) {
         super(line, column);
@@ -26,10 +26,14 @@ public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
     }
 
     @Override
-    public void SetGotoNode(JajaCodeNode node) {
-        this.gotonode = node;
+    public void setGotoNodeJump(JajaCodeNode node) {
+        this.gotonodejump = node;
     }
 
+    @Override
+    public JajaCodeNode getGotoNodeJump() {
+        return gotonodejump;
+    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
