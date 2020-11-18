@@ -4,8 +4,6 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
-import static edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode.jajacodelist;
-
 public class JcSubImpl extends ASTNodeWithInfo implements JcSubNode {
     private final JajaCodeNode next;
 

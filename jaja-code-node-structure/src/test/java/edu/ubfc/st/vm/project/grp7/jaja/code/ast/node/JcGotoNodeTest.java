@@ -16,10 +16,13 @@ public class JcGotoNodeTest {
                 .next(jajaCodeNode)
                 .adresse(100)
                 .build();
+
+        jcGotoNode.setGotoNodeJump(jcWriteNode);
     }
 
     private JcGotoNode jcGotoNode;
     private JcPopNode jajaCodeNode;
+    private JcWriteNode jcWriteNode;
 
     @Test
     public void check__JcGotoNode__Line() {
@@ -39,6 +42,11 @@ public class JcGotoNodeTest {
     @Test
     public void check__JcGotoNode__adresse() {
         assertThat(jcGotoNode.adresse(), is(100));
+    }
+
+    @Test
+    public void check__setGotoNodeJump__adresse() {
+        assertThat(jcGotoNode.getGotoNodeJump(),is(jcWriteNode) );
     }
 
     @Test
