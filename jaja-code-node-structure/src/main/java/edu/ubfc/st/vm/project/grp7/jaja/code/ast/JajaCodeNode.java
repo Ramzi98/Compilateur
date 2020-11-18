@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 public interface JajaCodeNode extends ASTNode {
 
-   public static ArrayList<JajaCodeNode> jajacodelist = new ArrayList<>();
-
     @Override
     JajaCodeNode children(int n) throws IndexOutOfBoundsException;
 

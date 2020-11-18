@@ -11,7 +11,6 @@ public class JcInitImpl extends ASTNodeWithInfo implements JcInitNode {
     public JcInitImpl(int line, int column, JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

@@ -10,7 +10,6 @@ public class JcPopImpl extends ASTNodeWithInfo implements JcPopNode {
     public JcPopImpl(int line, int column, JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

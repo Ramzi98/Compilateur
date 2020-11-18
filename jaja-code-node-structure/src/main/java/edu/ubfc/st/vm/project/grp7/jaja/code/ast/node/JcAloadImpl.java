@@ -13,7 +13,6 @@ public class JcAloadImpl extends ASTNodeWithInfo implements JcAloadNode {
         super(line, column);
         this.identifier = identifier;
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

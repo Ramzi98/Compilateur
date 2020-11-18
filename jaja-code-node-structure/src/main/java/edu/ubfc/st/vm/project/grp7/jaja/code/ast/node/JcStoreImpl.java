@@ -13,7 +13,6 @@ public class JcStoreImpl extends ASTNodeWithInfo implements JcStoreNode {
         super(line, column);
         this.identifier = identifier;
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

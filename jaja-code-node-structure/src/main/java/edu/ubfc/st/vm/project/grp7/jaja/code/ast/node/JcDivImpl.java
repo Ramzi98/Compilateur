@@ -12,7 +12,6 @@ public class JcDivImpl extends ASTNodeWithInfo implements JcDivNode {
     public JcDivImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override
