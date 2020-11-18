@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
@@ -30,7 +31,7 @@ public interface JcStoreNode extends JajaCodeNode {
         }
 
         public JcStoreNode build(){
-            return new JcStoreImpl(this.line, this.column, this.identifier, this.next);
+            return new JcStoreImpl(this.line, this.column, this.breakpoint, this.identifier, this.next);
         }
 
     }

@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcNopImpl extends ASTNodeWithInfo implements JcNopNode {
+public class JcNopImpl extends ASTNodeBreakpoint implements JcNopNode {
     private final JajaCodeNode next;
 
-    public JcNopImpl(int line, int column,JajaCodeNode next) {
-        super(line, column);
+    public JcNopImpl(int line, int column, Breakpoint breakpoint, JajaCodeNode next) {
+        super(line, column, breakpoint);
         this.next = next;
     }
 

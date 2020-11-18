@@ -7,8 +7,6 @@ public interface JcNopNode extends JajaCodeNode{
 
     JajaCodeNode next();
 
-    JajaCodeNode next();
-
     static JcNopNode.Builder builder() {
         return new JcNopNode.Builder();
     }
@@ -22,7 +20,7 @@ public interface JcNopNode extends JajaCodeNode{
         }
 
         public JcNopNode build() {
-            return new JcNopImpl(this.line, this.column,this.next);
+            return new JcNopImpl(this.line, this.column, this.breakpoint, this.next);
         }
     }
 }

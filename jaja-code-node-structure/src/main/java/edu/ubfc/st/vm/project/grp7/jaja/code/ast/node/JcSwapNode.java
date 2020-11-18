@@ -18,7 +18,7 @@ public interface JcSwapNode extends JajaCodeNode {
         }
 
         public JcSwapNode build() {
-            return new JcSwapImpl(this.line, this.column,this.next);
+            return new JcSwapImpl(this.line, this.column, this.breakpoint,this.next);
         }
     }
 }
