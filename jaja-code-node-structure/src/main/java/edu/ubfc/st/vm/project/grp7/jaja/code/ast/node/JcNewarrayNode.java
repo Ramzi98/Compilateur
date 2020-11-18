@@ -37,7 +37,7 @@ public interface JcNewarrayNode extends JajaCodeNode {
         }
 
         public JcNewarrayNode build(){
-            return new JcNewarrayImpl(this.line, this.column, this.identifier,this.type,this.next);
+            return new JcNewarrayImpl(this.line, this.column,this.breakpoint, this.identifier,this.type,this.next);
         }
 
     }

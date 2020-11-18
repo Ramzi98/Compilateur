@@ -7,7 +7,6 @@ public interface JcWriteNode extends JajaCodeNode{
 
     JajaCodeNode next();
 
-    JajaCodeNode next();
 
     static JcWriteNode.Builder builder() {
         return new JcWriteNode.Builder();

@@ -1,17 +1,19 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcNewarrayImpl extends ASTNodeWithInfo implements JcNewarrayNode {
+public class JcNewarrayImpl extends ASTNodeBreakpoint implements JcNewarrayNode {
 
     private final String identifier;
     private final Type type;
     private final JajaCodeNode next;
 
-    public JcNewarrayImpl(int line, int column, String identifier,Type type,JajaCodeNode next) {
-        super(line, column);
+    public JcNewarrayImpl(int line, int column, Breakpoint bp,String identifier, Type type, JajaCodeNode next) {
+        super(line, column,bp);
         this.identifier = identifier;
         this.type = type;
         this.next = next;

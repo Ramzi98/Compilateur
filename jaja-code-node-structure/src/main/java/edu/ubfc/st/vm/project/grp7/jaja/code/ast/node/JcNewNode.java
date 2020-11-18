@@ -51,7 +51,7 @@ public interface JcNewNode extends JajaCodeNode {
         }
 
         public JcNewNode build(){
-            return new JcNewImpl(this.line, this.column, this.identifier,this.adresse,this.type,this.sorte,this.next);
+            return new JcNewImpl(this.line, this.column,this.breakpoint, this.identifier,this.adresse,this.type,this.sorte,this.next);
         }
 
 

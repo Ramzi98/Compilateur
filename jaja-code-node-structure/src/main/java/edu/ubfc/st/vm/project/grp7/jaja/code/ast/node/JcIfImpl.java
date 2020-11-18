@@ -1,19 +1,21 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
+public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
 
     private int adresse;
     private final JajaCodeNode next;
     private JajaCodeNode ifnodejump = null;
 
 
-    public JcIfImpl(int line, int column,int adresse,JajaCodeNode next) {
-        super(line, column);
+    public JcIfImpl(int line, int column, Breakpoint bp,int adresse, JajaCodeNode next) {
+        super(line, column,bp);
         this.adresse = adresse;
         this.next = next;
     }
@@ -23,10 +25,6 @@ public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
         return this.next;
     }
 
-    @Override
-    public JajaCodeNode next() {
-        return this.next;
-    }
 
     @Override
     public int adresse() {

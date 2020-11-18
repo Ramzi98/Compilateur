@@ -10,8 +10,6 @@ public interface JcIncNode extends JajaCodeNode {
     String identifier();
     JajaCodeNode next();
 
-    JajaCodeNode next();
-
     static JcIncNode.Builder builder() {
         return new JcIncNode.Builder();
     }
@@ -34,7 +32,7 @@ public interface JcIncNode extends JajaCodeNode {
             return this;
         }
         public JcIncNode build() {
-            return new JcIncImpl(this.line, this.column,this.identifier,this.next);
+            return new JcIncImpl(this.line, this.column,this.breakpoint, this.identifier,this.next);
         }
     }
 }

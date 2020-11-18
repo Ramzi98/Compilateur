@@ -32,7 +32,7 @@ public interface JcInvokeNode extends JajaCodeNode {
         }
 
         public JcInvokeNode build(){
-            return new JcInvokeImpl(this.line, this.column, this.identifier, this.next);
+            return new JcInvokeImpl(this.line, this.column,this.breakpoint, this.identifier, this.next);
         }
 
     }

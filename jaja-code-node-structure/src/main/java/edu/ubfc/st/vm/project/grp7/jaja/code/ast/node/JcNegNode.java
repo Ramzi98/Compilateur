@@ -23,7 +23,7 @@ public interface JcNegNode extends JajaCodeNode {
         }
 
         public JcNegNode build() {
-            return new JcNegImpl(this.line, this.column,this.next);
+            return new JcNegImpl(this.line, this.column,this.breakpoint,this.next);
         }
     }
 }

@@ -34,7 +34,7 @@ public interface JcGotoNode extends JajaCodeNode {
         }
 
         public JcGotoNode build() {
-            return new JcGotoImpl(this.line, this.column, this.adresse, this.next);
+            return new JcGotoImpl(this.line, this.column,this.breakpoint, this.adresse, this.next);
         }
     }
 }

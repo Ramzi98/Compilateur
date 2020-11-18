@@ -33,7 +33,7 @@ public interface JcIfNode extends JajaCodeNode {
             return this;
         }
         public JcIfNode build() {
-            return new JcIfImpl(this.line, this.column,this.adresse,this.next);
+            return new JcIfImpl(this.line, this.column,this.breakpoint, this.adresse,this.next);
         }
     }
 }

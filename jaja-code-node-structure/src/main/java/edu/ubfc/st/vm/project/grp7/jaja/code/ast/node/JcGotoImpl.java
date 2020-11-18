@@ -1,16 +1,18 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
+public class JcGotoImpl extends ASTNodeBreakpoint implements JcGotoNode {
     private final int adresse;
     private final JajaCodeNode next;
     private JajaCodeNode gotonodejump = null;
 
-    public JcGotoImpl(int line, int column, int adresse, JajaCodeNode next) {
-        super(line, column);
+    public JcGotoImpl(int line, int column, Breakpoint bp, int adresse, JajaCodeNode next) {
+        super(line, column,bp);
         this.adresse = adresse;
         this.next = next;
     }
