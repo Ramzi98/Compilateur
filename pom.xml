@@ -28,6 +28,9 @@
         <developer>
             <name>Tchoulak Ramzi</name>
         </developer>
+        <developer>
+            <name>Henni Karam</name>
+        </developer>
     </developers>
 
     <modules>
@@ -37,7 +40,7 @@
 	    <module>mini-jaja-node-structure</module>
 	    <module>mini-jaja-parser</module>
 	    <module>mini-jaja-ast-to-yaml</module>
-        <module>stack</module>
+        <module>Stack</module>
     </modules>
 
     <distributionManagement>
