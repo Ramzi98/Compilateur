@@ -13,7 +13,7 @@ public class JcNewNodeTest {
         jcNewNode = JcNewNode.builder()
                 .line(72)
                 .column(67)
-                .adr(100)
+                .adresse(100)
                 .next(jajaCodeNode)
                 .sorte(JcNewNode.Sorte.Var)
                 .type(JcNewNode.Type.INT)
@@ -38,7 +38,7 @@ public class JcNewNodeTest {
 
     @Test
     public void check__JcNewNode__adr() {
-        assertThat(jcNewNode.adr(), is(100));
+        assertThat(jcNewNode.adresse(), is(100));
     }
 
     @Test

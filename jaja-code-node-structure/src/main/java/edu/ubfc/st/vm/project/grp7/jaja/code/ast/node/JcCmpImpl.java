@@ -4,6 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
+
 public class JcCmpImpl extends ASTNodeWithInfo implements JcCmpNode {
     private final JajaCodeNode next;
 

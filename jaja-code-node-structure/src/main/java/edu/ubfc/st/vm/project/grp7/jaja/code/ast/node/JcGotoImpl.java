@@ -7,6 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
     private final int adresse;
     private final JajaCodeNode next;
+    private JajaCodeNode gotonodejump = null;
 
     public JcGotoImpl(int line, int column, int adresse, JajaCodeNode next) {
         super(line, column);
@@ -22,6 +23,16 @@ public class JcGotoImpl extends ASTNodeWithInfo implements JcGotoNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setGotoNodeJump(JajaCodeNode node) {
+        this.gotonodejump = node;
+    }
+
+    @Override
+    public JajaCodeNode getGotoNodeJump() {
+        return gotonodejump;
     }
 
     @Override
