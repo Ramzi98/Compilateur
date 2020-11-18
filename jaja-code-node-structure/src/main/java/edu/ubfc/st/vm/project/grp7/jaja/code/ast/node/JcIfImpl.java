@@ -24,6 +24,11 @@ public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
     }
 
     @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
     public int adresse() {
         return this.adresse;
     }

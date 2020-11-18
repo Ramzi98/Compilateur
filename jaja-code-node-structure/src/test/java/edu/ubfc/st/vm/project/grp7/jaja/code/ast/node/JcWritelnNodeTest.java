@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class JcWritelnNodeTest {
+
     @Before
     public void setup() {
         jcWritelnNode = JcWritelnNode.builder()
@@ -41,7 +42,7 @@ public class JcWritelnNodeTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void check__AndNode__ChildrenMethod__OtherChild() {
+    public void check__JcWritelnNode__ChildrenMethod__OtherChild() {
         jcWritelnNode.children(2);
     }
 }

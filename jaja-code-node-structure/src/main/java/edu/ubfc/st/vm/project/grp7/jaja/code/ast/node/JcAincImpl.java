@@ -25,6 +25,16 @@ public class JcAincImpl extends ASTNodeWithInfo implements JcAincNode {
     }
 
     @Override
+    public String identifier() {
+        return this.identifier;
+    }
+
+    @Override
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
         public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
             switch (n) {
                 case 0 : {return this.next; }
