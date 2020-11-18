@@ -9,13 +9,13 @@ public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
 
     private int adresse;
     private final JajaCodeNode next;
+    private JajaCodeNode ifnode = null;
 
 
     public JcIfImpl(int line, int column,int adresse,JajaCodeNode next) {
         super(line, column);
         this.adresse = adresse;
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override
@@ -26,6 +26,11 @@ public class JcIfImpl extends ASTNodeWithInfo implements JcIfNode {
     @Override
     public int adresse() {
         return this.adresse;
+    }
+
+    @Override
+    public void SetIfNode(JajaCodeNode node) {
+        this.ifnode = node;
     }
 
     @Override

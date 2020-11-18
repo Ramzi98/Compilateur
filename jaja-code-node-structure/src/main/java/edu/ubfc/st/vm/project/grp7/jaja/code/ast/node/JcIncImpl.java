@@ -16,7 +16,6 @@ public class JcIncImpl extends ASTNodeWithInfo implements JcIncNode {
             super(line, column);
             this.identifier = identifier;
             this.next = next;
-            jajacodelist.add((JajaCodeNode) this);
         }
 
     @Override

@@ -7,7 +7,6 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcStopImpl extends ASTNodeWithInfo implements JcStopNode {
     public JcStopImpl(int line, int column) {
         super(line, column);
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

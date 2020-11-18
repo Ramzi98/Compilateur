@@ -13,7 +13,6 @@ public class JcSupImpl extends ASTNodeWithInfo implements JcSupNode {
     public JcSupImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

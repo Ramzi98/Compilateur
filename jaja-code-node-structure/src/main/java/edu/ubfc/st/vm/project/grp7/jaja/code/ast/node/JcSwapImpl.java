@@ -9,7 +9,6 @@ public class JcSwapImpl extends ASTNodeWithInfo implements JcSwapNode {
     public JcSwapImpl(int line, int column,JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override

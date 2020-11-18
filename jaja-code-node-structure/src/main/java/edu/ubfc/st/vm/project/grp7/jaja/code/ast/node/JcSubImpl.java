@@ -12,7 +12,6 @@ public class JcSubImpl extends ASTNodeWithInfo implements JcSubNode {
     public JcSubImpl(int line, int column, JajaCodeNode next) {
         super(line, column);
         this.next = next;
-        jajacodelist.add((JajaCodeNode) this);
     }
 
     @Override
