@@ -1,16 +1,18 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcAloadImpl extends ASTNodeWithInfo implements JcAloadNode {
+public class JcAloadImpl extends ASTNodeBreakpoint implements JcAloadNode {
 
     private final String identifier;
     private final JajaCodeNode next;
 
-    public JcAloadImpl(int line, int column, String identifier, JajaCodeNode next) {
-        super(line, column);
+    public JcAloadImpl(int line, int column, Breakpoint bp, String identifier, JajaCodeNode next) {
+        super(line, column,bp);
         this.identifier = identifier;
         this.next = next;
     }

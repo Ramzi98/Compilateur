@@ -7,6 +7,7 @@ public interface JcWriteNode extends JajaCodeNode{
 
     JajaCodeNode next();
 
+
     static JcWriteNode.Builder builder() {
         return new JcWriteNode.Builder();
     }
@@ -18,7 +19,7 @@ public interface JcWriteNode extends JajaCodeNode{
             return this;
         }
         public JcWriteNode build() {
-            return new JcWriteImpl(this.line, this.column,this.next);
+            return new JcWriteImpl(this.line, this.column,this.breakpoint,this.next);
         }
     }
 }

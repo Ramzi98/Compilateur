@@ -32,7 +32,7 @@ public interface JcAincNode extends JajaCodeNode {
         }
 
         public JcAincNode build() {
-            return new JcAincImpl(this.line, this.column,this.identifier,this.next);
+            return new JcAincImpl(this.line, this.column,this.breakpoint,this.identifier,this.next);
         }
     }
 }

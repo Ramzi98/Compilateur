@@ -1,16 +1,18 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcPushImpl extends ASTNodeWithInfo implements JcPushNode {
+public class JcPushImpl extends ASTNodeBreakpoint implements JcPushNode {
 
     private final Valeur valeur;
     private final JajaCodeNode next;
 
-    public JcPushImpl(int line, int column, Valeur valeur, JajaCodeNode next) {
-        super(line, column);
+    public JcPushImpl(int line, int column, Breakpoint breakpoint, Valeur valeur, JajaCodeNode next) {
+        super(line, column, breakpoint);
         this.valeur = valeur;
         this.next = next;
     }

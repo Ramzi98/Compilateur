@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
+public class JcNewImpl extends ASTNodeBreakpoint implements JcNewNode {
 
     private final String identifier;
     private final int adresse;
@@ -15,8 +15,8 @@ public class JcNewImpl extends ASTNodeWithInfo implements JcNewNode {
     private final Sorte sorte;
     private final JajaCodeNode next;
 
-    public JcNewImpl(int line, int column, String identifier, int adresse, Type type, Sorte sorte, JajaCodeNode next) {
-        super(line, column);
+    public JcNewImpl(int line, int column,Breakpoint bp, String identifier, int adresse, Type type, Sorte sorte, JajaCodeNode next) {
+        super(line, column,bp);
         this.identifier = identifier;
         this.adresse = adresse;
         this.type = type;

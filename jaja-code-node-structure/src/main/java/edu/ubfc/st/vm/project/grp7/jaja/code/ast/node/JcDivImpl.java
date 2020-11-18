@@ -1,14 +1,16 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
-public class JcDivImpl extends ASTNodeWithInfo implements JcDivNode {
+public class JcDivImpl extends ASTNodeBreakpoint implements JcDivNode {
     private final JajaCodeNode next;
 
-    public JcDivImpl(int line, int column,JajaCodeNode next) {
-        super(line, column);
+    public JcDivImpl(int line, int column, Breakpoint bp,JajaCodeNode next) {
+        super(line, column,bp);
         this.next = next;
     }
 

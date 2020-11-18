@@ -30,7 +30,7 @@ public interface JcLoadNode extends JajaCodeNode {
         }
 
         public JcLoadNode build(){
-            return new JcLoadImpl(this.line, this.column, this.identifier, this.next);
+            return new JcLoadImpl(this.line, this.column,this.breakpoint, this.identifier, this.next);
         }
 
     }

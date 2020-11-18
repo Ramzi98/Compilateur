@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcReturnNode extends JajaCodeNode {
@@ -17,7 +18,7 @@ public interface JcReturnNode extends JajaCodeNode {
             return this;
         }
         public JcReturnNode build() {
-            return new JcReturnImpl(this.line, this.column, this.next);
+            return new JcReturnImpl(this.line, this.column, this.breakpoint, this.next);
         }
     }
 }

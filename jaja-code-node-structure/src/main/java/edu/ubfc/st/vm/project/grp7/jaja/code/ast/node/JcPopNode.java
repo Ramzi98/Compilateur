@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcPopNode extends JajaCodeNode {
@@ -19,7 +20,7 @@ public interface JcPopNode extends JajaCodeNode {
         }
 
         public JcPopNode build() {
-            return new JcPopImpl(this.line, this.column, this.next);
+            return new JcPopImpl(this.line, this.column, this.breakpoint, this.next);
         }
     }
 }

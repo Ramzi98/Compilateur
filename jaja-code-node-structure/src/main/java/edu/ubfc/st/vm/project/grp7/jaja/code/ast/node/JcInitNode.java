@@ -17,7 +17,7 @@ public interface JcInitNode extends JajaCodeNode {
         }
 
         public JcInitNode build() {
-            return new JcInitImpl(this.line, this.column, this.next);
+            return new JcInitImpl(this.line, this.column,this.breakpoint, this.next);
         }
     }
 }

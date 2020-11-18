@@ -26,7 +26,7 @@ public interface JcNotNode extends JajaCodeNode {
         }
 
         public JcNotNode build() {
-            return new JcNotImpl(this.line, this.column,this.next);
+            return new JcNotImpl(this.line, this.column, this.breakpoint, this.next);
         }
     }
 }

@@ -18,7 +18,7 @@ public interface JcWritelnNode extends JajaCodeNode {
         }
 
         public JcWritelnNode build() {
-            return new JcWritelnImpl(this.line, this.column,this.next);
+            return new JcWritelnImpl(this.line, this.column, this.breakpoint,this.next);
         }
     }
 }

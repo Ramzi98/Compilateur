@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
@@ -30,7 +31,7 @@ public interface JcPushNode extends JajaCodeNode {
         }
 
         public JcPushNode build(){
-            return new JcPushImpl(this.line, this.column,this.valeur,this.next);
+            return new JcPushImpl(this.line, this.column, this.breakpoint, this.valeur,this.next);
         }
 
     }

@@ -30,7 +30,7 @@ public interface JcAstoreNode extends JajaCodeNode {
         }
 
         public JcAstoreNode build(){
-            return new JcAstoreImpl(this.line, this.column, this.identifier, this.next);
+            return new JcAstoreImpl(this.line, this.column,this.breakpoint, this.identifier, this.next);
         }
 
     }

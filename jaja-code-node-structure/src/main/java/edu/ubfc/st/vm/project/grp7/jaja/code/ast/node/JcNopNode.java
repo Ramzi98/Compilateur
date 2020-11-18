@@ -20,7 +20,7 @@ public interface JcNopNode extends JajaCodeNode{
         }
 
         public JcNopNode build() {
-            return new JcNopImpl(this.line, this.column,this.next);
+            return new JcNopImpl(this.line, this.column, this.breakpoint, this.next);
         }
     }
 }
