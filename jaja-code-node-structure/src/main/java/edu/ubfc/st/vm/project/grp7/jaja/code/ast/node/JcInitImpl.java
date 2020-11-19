@@ -1,15 +1,30 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
+import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcInitImpl extends ASTNodeWithInfo implements JcInitNode {
-    public JcInitImpl(int line, int column) {
-        super(line, column);
+public class JcInitImpl extends ASTNodeBreakpoint implements JcInitNode {
+
+    private final JajaCodeNode next;
+
+    public JcInitImpl(int line, int column, Breakpoint bp, JajaCodeNode next) {
+        super(line, column,bp);
+        this.next = next;
     }
 
     @Override
-    public ASTNode children(int n) throws IndexOutOfBoundsException {
-        throw new IndexOutOfBoundsException();
+    public JajaCodeNode next() {
+        return this.next;
+    }
+
+    @Override
+    public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
+        switch (n) {
+            case 0 : {return this.next; }
+            default: {throw new IndexOutOfBoundsException();}
+        }
     }
 }
