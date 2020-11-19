@@ -1,11 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.stack.Stack;
+
 public interface MiniJajaInterpreter {
     static Factory getFactory() {
         return Factory.getFactory();
     }
 
-    void interpret();
+    void interpret() throws Exception;
 
     class Factory {
         private static Factory instance;
@@ -18,8 +21,8 @@ public interface MiniJajaInterpreter {
             return instance;
         }
 
-        public MiniJajaInterpreter createFrom() {
-            return new MiniJajaInterpreterImpl();
+        public MiniJajaInterpreter createFrom(Stack stack, ClasseNode ast) {
+            return new MiniJajaInterpreterImpl(stack, ast);
         }
     }
 }
