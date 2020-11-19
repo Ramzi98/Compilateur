@@ -37,9 +37,10 @@
 	    <module>ast</module>
 	    <module>jaja-code-node-structure</module>
 	    <module>jaja-code-parser</module>
+	    <module>mini-jaja-ast-to-yaml</module>
+        <module>mini-jaja-interpreter</module>
 	    <module>mini-jaja-node-structure</module>
 	    <module>mini-jaja-parser</module>
-	    <module>mini-jaja-ast-to-yaml</module>
         <module>graphic-interface</module>
         <module>Stack</module>
     </modules>
