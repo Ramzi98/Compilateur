@@ -100,11 +100,9 @@ public class MiniJajaVisitorOverride  implements MiniJajaVisitor<Void> {
             /*
             Quel type ?
             */
-
             VarNode varNode = (VarNode)stack.peek();
             stack.pop();
             stack.push(varNode);
-
         }
 
         //methode
@@ -450,7 +448,6 @@ public class MiniJajaVisitorOverride  implements MiniJajaVisitor<Void> {
 
         MiniJajaNode miniJajaNode= null;
         int size = ctx.children.size();
-        System.out.println("exp :"+size);
         switch (size){
             case 2:
                 //exp1 e1
@@ -758,7 +755,6 @@ public class MiniJajaVisitorOverride  implements MiniJajaVisitor<Void> {
                         .value(ident.value())
                         .build();
             }else{
-                System.out.println(ident1.getClass());
                 //ident1 -> ident[exp]
                 ArrayItemNode arrayItemNode = (ArrayItemNode) ident1 ;
                 miniJajaNode = ArrayItemNode.builder()
@@ -782,7 +778,6 @@ public class MiniJajaVisitorOverride  implements MiniJajaVisitor<Void> {
         ArrayNode arrayNode=null;
         MiniJajaNode miniJajaNode = null;
         MiniJajaNode exp = null;
-        System.out.println(size);
         switch (size){
             case 1:
                 //ident

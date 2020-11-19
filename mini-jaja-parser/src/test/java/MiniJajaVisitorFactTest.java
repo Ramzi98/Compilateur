@@ -1,4 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+/*import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import junit.framework.TestCase;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -74,22 +74,8 @@ public class MiniJajaVisitorFactTest extends TestCase {
         Assert.assertEquals(identNode.value(),"Hello");
     }
 
-    @Test
-    public void  testFactVisitor6() throws IOException {
-        CharStream codePointCharStream = CharStreams.fromPath(Paths.get(ressourceTest+"factVisitorTest6.txt"));
-        MiniJajaLexer lexer = new MiniJajaLexer(codePointCharStream);
-        MiniJajaParser parser = new MiniJajaParser(new CommonTokenStream(lexer));
-        ParseTree tree = parser.fact();
-
-        myVisitor.visitFact((MiniJajaParser.FactContext)tree);
-        ArrayItemNode arrayItemNode = (ArrayItemNode) myVisitor.stack.peek();
-        Assert.assertEquals(arrayItemNode.identifier(),"tab");
-        IdentNode identNode = (IdentNode)arrayItemNode.expression();
-        //Assert.assertEquals(identNode.value(),"i");
 
 
-    }
 
-
-}
+}*/
 //-671257

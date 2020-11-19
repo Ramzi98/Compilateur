@@ -1,4 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
+/*import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import junit.framework.TestCase;
 import org.antlr.v4.runtime.CharStream;
@@ -18,7 +18,7 @@ public class MiniJajaVisitorDeclsTest extends TestCase {
     private final MiniJajaVisitorOverride myVisitor = new MiniJajaVisitorOverride();
     private final String ressourceTest = "src/ressourcesTest/decls/";
 
-    @Test
+    /*@Test
     public void  testDeclsVisitor() throws IOException {
         CharStream codePointCharStream = CharStreams.fromPath(Paths.get(ressourceTest+"declsVisitorTest1.txt"));
         MiniJajaLexer lexer = new MiniJajaLexer(codePointCharStream);
@@ -49,4 +49,4 @@ public class MiniJajaVisitorDeclsTest extends TestCase {
 
     }
 
-}
+}*/

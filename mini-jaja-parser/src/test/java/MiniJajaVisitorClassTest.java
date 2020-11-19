@@ -1,4 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
+/*import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import junit.framework.TestCase;
 import org.antlr.v4.runtime.CharStream;
@@ -37,7 +37,7 @@ public class MiniJajaVisitorClassTest extends TestCase {
             ClasseNode  classeNode = (ClasseNode)myVisitor.stack.peek();
         }
 
-    @Test
+   /* @Test
     public void  testClassVisitor2() throws IOException {
         CharStream codePointCharStream = CharStreams.fromPath(Paths.get(ressourceTest+"classVisitorTest2.txt"));
         MiniJajaLexer lexer = new MiniJajaLexer(codePointCharStream);
@@ -64,4 +64,4 @@ public class MiniJajaVisitorClassTest extends TestCase {
 
 
 
-}
+}*/

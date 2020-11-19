@@ -1,4 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
+/*import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import junit.framework.TestCase;
 import org.antlr.v4.runtime.CharStream;
@@ -28,3 +28,5 @@ public class MiniJajaIdentifierClassTest extends TestCase {
         Assert.assertEquals(identNode.column(),0);
     }
 }
+
+*/
