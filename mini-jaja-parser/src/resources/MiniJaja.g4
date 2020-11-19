@@ -50,7 +50,7 @@
                      | //eps
                      ;
 
- instr               : ident1 EQUAL exp
+ instr               : ident1 ASSIGN exp
                      | ident1 ADD_ASSIGN exp
                      | ident1 INC exp1
                      | ident '(' listexp ')'

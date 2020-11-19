@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 public class MiniJajaVisitorClassTest extends TestCase {
 
     private final MiniJajaVisitorOverride myVisitor = new MiniJajaVisitorOverride();
+    private final String ressourceTest = "src/ressourcesTest/class/";
 
     MiniJajaNode identNode;
     MiniJajaNode declsNode;
@@ -24,7 +25,6 @@ public class MiniJajaVisitorClassTest extends TestCase {
     MiniJajaNode classNode;
     MiniJajaParser.ClasseContext ctx;
 
-    private final String ressourceTest = "src/ressourcesTest/class/";
 
         @Test
         public void  testClassVisitor() throws IOException {
