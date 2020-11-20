@@ -20,6 +20,14 @@ public interface TypeMethNode extends MiniJajaLeaf<TypeMethNode.TypeMeth> {
     }
 
     enum TypeMeth {
-        INT, BOOLEAN, VOID
+        INT, BOOLEAN, VOID;
+
+        public static TypeMeth from(TypeNode.Type type){
+            if (type == TypeNode.Type.BOOLEAN){
+                return BOOLEAN;
+            }else{
+                return INT;
+            }
+        }
     }
 }
