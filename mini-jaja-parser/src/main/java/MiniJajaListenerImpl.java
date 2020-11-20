@@ -1,16 +1,12 @@
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
+import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
-    Deque<MiniJajaNode> stack = new LinkedList<>();
+    private final Deque<MiniJajaNode> stack = new ArrayDeque<>(7);
 
     @Override
     public void exitClasse(MiniJajaParser.ClasseContext ctx) {
@@ -20,27 +16,29 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitIdent(MiniJajaParser.IdentContext ctx) {
-        IdentNode identNode =IdentNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+        IdentNode identNode = IdentNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(ctx.getText())
                 .build();
+        
         stack.push(identNode);
     }
 
     @Override
     public void exitMultiDecls(MiniJajaParser.MultiDeclsContext ctx) {
         DeclsNode.Builder builder = DeclsNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine());
+                .line(line(ctx))
+                .column(column(ctx));
 
-        if (!stack.isEmpty() && stack.peekLast().getClass() == DeclsNode.class){
+        if (!stack.isEmpty() && stack.peekLast() instanceof DeclsNode){
             builder.decls((DeclsNode)stack.pop());
-        }else{
+        } else {
             builder.decls(null);
         }
+        
         builder.decl(stack.pop());
-        stack.push(builder.build()) ;
+        stack.push(builder.build());
     }
 
 
@@ -317,10 +315,11 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     @Override
     public void exitBoolean(MiniJajaParser.BooleanContext ctx) {
         BooleanNode booleanNode = BooleanNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(Boolean.parseBoolean(ctx.getText()))
                 .build();
+        
         stack.push(booleanNode);
     }
 
@@ -328,10 +327,11 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     @Override
     public void exitNumber(MiniJajaParser.NumberContext ctx) {
         NumberNode numberNode = NumberNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(Double.parseDouble(ctx.getText()))
                 .build();
+        
         stack.push(numberNode);
     }
 
@@ -357,22 +357,25 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     @Override
     public void exitVoid(MiniJajaParser.VoidContext ctx) {
         TypeMethNode typeNode = TypeMethNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(TypeMethNode.TypeMeth.VOID)
                 .build();
+        
         stack.push(typeNode);
     }
 
 
     @Override
     public void exitTypeMethIsType(MiniJajaParser.TypeMethIsTypeContext ctx) {
-        TypeNode typeNode = (TypeNode)stack.pop();
-        TypeMethNode typeMethNode= TypeMethNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+        TypeNode typeNode = (TypeNode) stack.pop();
+        
+        TypeMethNode typeMethNode = TypeMethNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(TypeMethNode.TypeMeth.from(typeNode.value()))
                 .build();
+        
         stack.push(typeMethNode);
     }
 
@@ -380,10 +383,11 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     @Override
     public void exitTypeIsINT(MiniJajaParser.TypeIsINTContext ctx) {
         TypeNode typeNode = TypeNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(TypeNode.Type.INT)
                 .build();
+        
         stack.push(typeNode);
     }
 
@@ -391,51 +395,19 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     @Override
     public void exitTypeIsBoolean(MiniJajaParser.TypeIsBooleanContext ctx) {
         TypeNode typeNode = TypeNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
+                .line(line(ctx))
+                .column(column(ctx))
                 .value(TypeNode.Type.BOOLEAN)
                 .build();
+        
         stack.push(typeNode);
     }
 
-
-    @Override
-    public void exitEveryRule(ParserRuleContext ctx) {
-        super.exitEveryRule(ctx);
+    private int column(ParserRuleContext ctx) {
+        return ctx.start.getLine();
     }
-
-    @Override
-    public void visitTerminal(TerminalNode node) {
-        super.visitTerminal(node);
-    }
-
-    @Override
-    public void visitErrorNode(ErrorNode node) {
-        super.visitErrorNode(node);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
+    
+    private int line(ParserRuleContext ctx) {
+        return ctx.start.getCharPositionInLine();
     }
 }
