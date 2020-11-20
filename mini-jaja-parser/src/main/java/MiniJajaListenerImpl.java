@@ -358,13 +358,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitNot(MiniJajaParser.NotContext ctx) {
-        MiniJajaNode exp = stack.pop();
-        NotNode notNode = NotNode.builder()
-                .line(ctx.start.getLine())
-                .column(ctx.start.getCharPositionInLine())
-                .expression(exp)
-                .build();
-        stack.push(exp);
     }
 
 
