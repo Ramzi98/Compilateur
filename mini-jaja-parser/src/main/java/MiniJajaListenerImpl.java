@@ -14,7 +14,17 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitClasse(MiniJajaParser.ClasseContext ctx) {
-        super.exitClasse(ctx);
+        MainNode mainNode = (MainNode)stack.pop();
+        DeclsNode declsNode = (DeclsNode)stack.pop();
+        IdentNode identNode = (IdentNode)stack.pop();
+        ClasseNode classeNode = ClasseNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .methmain(mainNode)
+                .decls(declsNode)
+                .identifier(identNode)
+                .build();
+        stack.push(classeNode);
     }
 
 
@@ -44,10 +54,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     }
 
 
-    @Override
-    public void exitDecl(MiniJajaParser.DeclContext ctx) {
-        super.exitDecl(ctx);
-    }
 
 
     @Override
@@ -220,19 +226,41 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitNot(MiniJajaParser.NotContext ctx) {
-        super.exitNot(ctx);
+        MiniJajaNode exp = stack.pop();
+        NotNode notNode = NotNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .expression(exp)
+                .build();
+        stack.push(exp);
     }
 
 
     @Override
     public void exitOr(MiniJajaParser.OrContext ctx) {
-        super.exitOr(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        OrNode orNode = OrNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(orNode);
     }
 
 
     @Override
     public void exitAnd(MiniJajaParser.AndContext ctx) {
-        super.exitAnd(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        AndNode andNode = AndNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(andNode);
     }
 
 
@@ -244,7 +272,15 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitEquals(MiniJajaParser.EqualsContext ctx) {
-        super.exitEquals(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        EqualsNode equalsNode = EqualsNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(equalsNode);
     }
 
 
@@ -262,7 +298,15 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitSub(MiniJajaParser.SubContext ctx) {
-        super.exitSub(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        SubNode subNode = SubNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(subNode);
     }
 
 
@@ -286,7 +330,15 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitDiv(MiniJajaParser.DivContext ctx) {
-        super.exitDiv(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        DivNode divNode = DivNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(divNode);
     }
 
 
@@ -298,7 +350,15 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitMul(MiniJajaParser.MulContext ctx) {
-        super.exitMul(ctx);
+        MiniJajaNode rigthOperand = stack.pop();
+        MiniJajaNode leftOperand = stack.pop();
+        MultNode multNode = MultNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .leftOperand(leftOperand)
+                .rightOperand(rigthOperand)
+                .build();
+        stack.push(multNode);
     }
 
 
@@ -350,7 +410,15 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitArrayItem(MiniJajaParser.ArrayItemContext ctx) {
-        super.exitArrayItem(ctx);
+        MiniJajaNode exp = stack.pop();
+        IdentNode identNode = (IdentNode)stack.pop();
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder()
+                .line(ctx.start.getLine())
+                .column(ctx.start.getCharPositionInLine())
+                .expression(exp)
+                .identifier(identNode)
+                .build();
+        stack.push(arrayItemNode);
     }
 
 
