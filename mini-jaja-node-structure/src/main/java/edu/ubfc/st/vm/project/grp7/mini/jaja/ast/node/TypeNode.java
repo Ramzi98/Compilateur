@@ -20,6 +20,6 @@ public interface TypeNode extends MiniJajaLeaf<TypeNode.Type> {
     }
 
     enum Type {
-        INT, BOOLEAN, VOID
+        INT, BOOLEAN
     }
 }
