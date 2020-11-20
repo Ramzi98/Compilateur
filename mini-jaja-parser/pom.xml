@@ -80,7 +80,8 @@
                             <goal>antlr4</goal>
                         </goals>
                         <configuration>
-                            <visitor>true</visitor>
+                            <visitor>false</visitor>
+                            <listener>true</listener>
                             <sourceDirectory>${project.basedir}/src/resources</sourceDirectory>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
                         </configuration>

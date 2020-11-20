@@ -11,25 +11,25 @@
  ident               :Identifier
                      ;
 
- decls               : decl SEMI decls
-                     | //eps
+ decls               : decl SEMI decls      #MultiDecls
+                     |                      #EmptyDecls
                      ;
 
  decl               : var
                      | methode
                      ;
 
- vars                : var SEMI vars
-                     | //eps
+ vars                : var SEMI vars        #MultiVars
+                     |                      #EmptyVars
                      ;
 
- var                 : typemeth ident vexp
-                     | typemeth ident LBRACK exp RBRACK
-                     | FINAL type ident vexp
+ var                 : typemeth ident vexp                  #VarNode
+                     | typemeth ident LBRACK exp RBRACK     #Array
+                     | FINAL type ident vexp                #Cst
                      ;
 
- vexp                : ASSIGN exp
-                     | //eps
+ vexp                : ASSIGN exp           #VexpAssign
+                     |                      #OmegaAssign
                      ;
 
  methode             : typemeth ident LPAR entetes RPAR LBRACE vars instrs RBRACE
@@ -38,89 +38,79 @@
  methmain            : MAIN LBRACE vars instrs RBRACE
                      ;
 
- entetes             : entete COMMA entetes
-                     | entete
-                     | //eps
+ entetes             : entete COMMA entetes     #MultiHeaders
+                     | entete                   #UnitHeader
+                     |                          #EmptyHeader
                      ;
 
  entete              : type ident
                      ;
 
- instrs              : instr SEMI instrs
-                     | //eps
+ instrs              : instr SEMI instrs        #MultiInstrs
+                     |                          #EmptyInstrs
                      ;
 
- instr               : ident1 ASSIGN exp
-                     | ident1 ADD_ASSIGN exp
-                     | ident1 INC exp1
-                     | ident '(' listexp ')'
-                     | RETURN exp
-                     | WRITE '(' ( ident | STRING ) ')'
-                     | WRITELN '(' ( ident | STRING ) ')'
-                     | IF exp LBRACE instrs RBRACE ELSE LBRACE instrs RBRACE
-                     | IF exp LBRACE instrs RBRACE
-                     | WHILE LPAR exp RPAR LBRACE instrs RBRACE
+ instr               : ident1 ASSIGN exp                                        #Assign
+                     | ident1 ADD_ASSIGN exp                                    #Sum
+                     | ident1 INC exp1                                          #Inc
+                     | ident '(' listexp ')'                                    #AppelI
+                     | RETURN exp                                               #Return
+                     | WRITE '(' ( ident | STRING ) ')'                         #Write
+                     | WRITELN '(' ( ident | STRING ) ')'                       #WriteLn
+                     | IF exp LBRACE instrs RBRACE ELSE LBRACE instrs RBRACE    #IfElse
+                     | IF exp LBRACE instrs RBRACE                              #If
+                     | WHILE LPAR exp RPAR LBRACE instrs RBRACE                 #While
                      ;
 
- listexp             : exp COMMA listexp
-                     | exp
-                     | //eps
+ listexp             : exp COMMA listexp    #MultiListexp
+                     | exp                  #UnitListExp
+                     |                      #EmptyListexp
                      ;
 
- exp                 : BANG exp1 e1
-                     | exp1 e1
+ exp                 : BANG exp1            #Not
+                     | exp AND exp1         #And
+                     | exp OR exp1          #Or
+                     | exp1                 #ExpIsExp1
                      ;
 
- e1                  : AND exp1
-                     | OR exp1
-                     | //eps
+ exp1                : exp1 EQUAL exp2      #Equals
+                     | exp1 GT exp2         #GreaterThan
+                     | exp2                 #Exp1IsExp2
                      ;
 
- exp1                : exp2 e2
+ exp2                : exp2 SUB terme        #Minus
+                     | exp2 ADD terme        #Plus
+                     | exp2 SUB terme        #Sub
+                     | terme                 #Exp2IsTerme
                      ;
 
-
- e2                  : EQUAL exp2
-                     | GT exp2
-                     | //eps
+ terme               : terme MUL fact        #Mul
+                     | terme DIV fact        #Div
+                     | fact                  #TermeIsFact
                      ;
 
- exp2                : SUB terme e3
-                     | terme e3
+ fact                : ident1                       #FactIsIdent1
+                     | ident LPAR listexp RPAR      #AppelE
+                     | BoolLitteral                 #Boolean
+                     | NumberLitteral               #Number
+                     | LPAR exp RPAR                #RecExp
                      ;
 
- e3                  : ADD terme
-                     | SUB terme
-                     | //eps
+ ident1              : ident                        #Ident1IsIdent
+                     | ident LBRACK exp RBRACK      #ArrayItem
                      ;
 
- terme               : fact e4
-                     ;
-
- e4                  : MUL fact
-                     | DIV fact
-                     | //eps
-                     ;
-
- fact                : ident1
-                     | ident LPAR listexp RPAR
-                     | BoolLitteral
-                     | NumberLitteral
-                     | LPAR exp RPAR
-                     ;
-
- ident1              : ident
-                     | ident LBRACK exp RBRACK
-                     ;
-
- typemeth            : VOID
-                     | type
+ typemeth            : VOID                         #Void
+                     | type                         #TypeMethIsType
                      ;
 
 
- type                : INT
-                     | BOOLEAN
+ type                : INT                          #TypeIsINT
+                     | BOOLEAN                      #TypeIsBoolean
                      ;
+
+ /* ======================= LEXER ======================= */
+
  /* ====================== KEYWORDS ===================== */
 
  CLASS : 'class' ;
