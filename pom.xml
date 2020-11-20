@@ -12,26 +12,9 @@
     <name>Projet Virtual Machine du groupe 7</name>
     <description>Projet de COMP et de GL visant à développer des outils de compilation (2020)</description>
 
-    <developers>
-        <developer>
-            <name>Bonneau Antoine</name>
-        </developer>
-        <developer>
-            <name>Tourneret Vincent</name>
-        </developer>
-        <developer>
-            <name>Deniset Nicolas</name>
-        </developer>
-        <developer>
-            <name>Mandelli Nathan</name>
-        </developer>
-        <developer>
-            <name>Tchoulak Ramzi</name>
-        </developer>
-        <developer>
-            <name>Henni Karam</name>
-        </developer>
-    </developers>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <modules>
 	    <module>ast</module>
@@ -226,4 +209,27 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
+
+    <developers>
+        <developer>
+            <name>Bonneau Antoine</name>
+        </developer>
+        <developer>
+            <name>Tourneret Vincent</name>
+        </developer>
+        <developer>
+            <name>Deniset Nicolas</name>
+        </developer>
+        <developer>
+            <name>Mandelli Nathan</name>
+        </developer>
+        <developer>
+            <name>Tchoulak Ramzi</name>
+        </developer>
+        <developer>
+            <name>Henni Karam</name>
+        </developer>
+    </developers>
 </project>

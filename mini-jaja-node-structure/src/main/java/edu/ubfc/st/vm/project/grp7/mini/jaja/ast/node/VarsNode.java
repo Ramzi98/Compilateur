@@ -4,7 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface VarsNode extends MiniJajaNode {
-    VarNode var();
+    MiniJajaNode var();
     VarsNode vars();
 
     @Override
@@ -17,8 +17,8 @@ public interface VarsNode extends MiniJajaNode {
     }
 
     class Builder extends MiniJajaNode.NodeBuilder<Builder> {
-        private VarNode var;
-        public Builder var(VarNode var) {
+        private MiniJajaNode var;
+        public Builder var(MiniJajaNode var) {
             this.var = var;
             return this;
         }
