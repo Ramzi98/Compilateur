@@ -10,7 +10,21 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitClasse(MiniJajaParser.ClasseContext ctx) {
-        super.exitClasse(ctx);
+        ClasseNode.Builder builder = ClasseNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .methmain((MainNode) stack.pop());
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof DeclsNode) {
+            builder.decls((DeclsNode) node)
+                   .identifier((IdentNode) stack.pop());
+        } else {
+            builder.decls(null)
+                   .identifier((IdentNode) node);
+        }
+
+        stack.push(builder.build());
     }
 
 
@@ -43,14 +57,21 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
 
     @Override
-    public void exitDecl(MiniJajaParser.DeclContext ctx) {
-        super.exitDecl(ctx);
-    }
-
-
-    @Override
     public void exitMultiVars(MiniJajaParser.MultiVarsContext ctx) {
-        super.exitMultiVars(ctx);
+        VarsNode.Builder builder = VarsNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof VarsNode) {
+            builder.vars((VarsNode) node)
+                   .var(stack.pop());
+        } else {
+            builder.vars(null)
+                   .var(node);
+        }
+
+        stack.push(builder.build());
     }
 
 

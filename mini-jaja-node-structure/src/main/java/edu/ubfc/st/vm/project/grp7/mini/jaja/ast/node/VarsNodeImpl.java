@@ -5,17 +5,17 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class VarsNodeImpl extends ASTNodeBreakpoint implements VarsNode {
-    private final VarNode var;
+    private final MiniJajaNode var;
     private final VarsNode vars;
 
-    public VarsNodeImpl(int line, int column, Breakpoint bp, VarNode var, VarsNode vars) {
+    public VarsNodeImpl(int line, int column, Breakpoint bp, MiniJajaNode var, VarsNode vars) {
         super(line, column, bp);
         this.var = var;
         this.vars = vars;
     }
 
     @Override
-    public VarNode var() {
+    public MiniJajaNode var() {
         return this.var;
     }
 
