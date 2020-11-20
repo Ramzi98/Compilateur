@@ -11,16 +11,16 @@
  ident               :Identifier
                      ;
 
- decls               : decl SEMI decls      #MultiDecls
-                     |                      #EmptyDecls
+ decls               : decl SEMI decls                      #MultiDecls
+                     |                                      #EmptyDecls
                      ;
 
  decl               : var
                      | methode
                      ;
 
- vars                : var SEMI vars        #MultiVars
-                     |                      #EmptyVars
+ vars                : var SEMI vars                        #MultiVars
+                     |                                      #EmptyVars
                      ;
 
  var                 : typemeth ident vexp                  #VarNode
@@ -28,8 +28,8 @@
                      | FINAL type ident vexp                #Cst
                      ;
 
- vexp                : ASSIGN exp           #VexpAssign
-                     |                      #OmegaAssign
+ vexp                : ASSIGN exp                           #VexpAssign
+                     |                                      #OmegaAssign
                      ;
 
  methode             : typemeth ident LPAR entetes RPAR LBRACE vars instrs RBRACE
@@ -38,16 +38,16 @@
  methmain            : MAIN LBRACE vars instrs RBRACE
                      ;
 
- entetes             : entete COMMA entetes     #MultiHeaders
-                     | entete                   #UnitHeader
-                     |                          #EmptyHeader
+ entetes             : entete COMMA entetes                 #MultiHeaders
+                     | entete                               #UnitHeader
+                     |                                      #EmptyHeader
                      ;
 
  entete              : type ident
                      ;
 
- instrs              : instr SEMI instrs        #MultiInstrs
-                     |                          #EmptyInstrs
+ instrs              : instr SEMI instrs                    #MultiInstrs
+                     |                                      #EmptyInstrs
                      ;
 
  instr               : ident1 ASSIGN exp                                        #Assign
@@ -62,51 +62,51 @@
                      | WHILE LPAR exp RPAR LBRACE instrs RBRACE                 #While
                      ;
 
- listexp             : exp COMMA listexp    #MultiListexp
-                     | exp                  #UnitListExp
-                     |                      #EmptyListexp
+ listexp             : exp COMMA listexp                    #MultiListexp
+                     | exp                                  #UnitListExp
+                     |                                      #EmptyListexp
                      ;
 
- exp                 : BANG exp1            #Not
-                     | exp AND exp1         #And
-                     | exp OR exp1          #Or
-                     | exp1                 #ExpIsExp1
+ exp                 : BANG exp1                            #Not
+                     | exp AND exp1                         #And
+                     | exp OR exp1                          #Or
+                     | exp1                                 #ExpIsExp1
                      ;
 
- exp1                : exp1 EQUAL exp2      #Equals
-                     | exp1 GT exp2         #GreaterThan
-                     | exp2                 #Exp1IsExp2
+ exp1                : exp1 EQUAL exp2                      #Equals
+                     | exp1 GT exp2                         #GreaterThan
+                     | exp2                                 #Exp1IsExp2
                      ;
 
- exp2                : exp2 SUB terme        #Minus
-                     | exp2 ADD terme        #Plus
-                     | exp2 SUB terme        #Sub
-                     | terme                 #Exp2IsTerme
+ exp2                : exp2 SUB terme                       #Minus
+                     | exp2 ADD terme                       #Plus
+                     | exp2 SUB terme                       #Sub
+                     | terme                                #Exp2IsTerme
                      ;
 
- terme               : terme MUL fact        #Mul
-                     | terme DIV fact        #Div
-                     | fact                  #TermeIsFact
+ terme               : terme MUL fact                       #Mul
+                     | terme DIV fact                       #Div
+                     | fact                                 #TermeIsFact
                      ;
 
- fact                : ident1                       #FactIsIdent1
-                     | ident LPAR listexp RPAR      #AppelE
-                     | BoolLitteral                 #Boolean
-                     | NumberLitteral               #Number
-                     | LPAR exp RPAR                #RecExp
+ fact                : ident1                               #FactIsIdent1
+                     | ident LPAR listexp RPAR              #AppelE
+                     | BoolLitteral                         #Boolean
+                     | NumberLitteral                       #Number
+                     | LPAR exp RPAR                        #RecExp
                      ;
 
- ident1              : ident                        #Ident1IsIdent
-                     | ident LBRACK exp RBRACK      #ArrayItem
+ ident1              : ident                                #Ident1IsIdent
+                     | ident LBRACK exp RBRACK              #ArrayItem
                      ;
 
- typemeth            : VOID                         #Void
-                     | type                         #TypeMethIsType
+ typemeth            : VOID                                 #Void
+                     | type                                 #TypeMethIsType
                      ;
 
 
- type                : INT                          #TypeIsINT
-                     | BOOLEAN                      #TypeIsBoolean
+ type                : INT                                  #TypeIsINT
+                     | BOOLEAN                              #TypeIsBoolean
                      ;
 
  /* ======================= LEXER ======================= */
@@ -153,7 +153,6 @@
  DIV : '/';
 
  ADD_ASSIGN : '+=';
- SUB_ASSIGN : '-=';
 
  /* ======================= TYPES ======================= */
 
@@ -173,7 +172,7 @@
  StringLitteral : '"' StringCharacter* '"' ;
 
  fragment StringCharacter
-     : ~["\\\r\n]                // all chars except escape sequences
+     : ~["\\\r\n]                       // all chars except escape sequences
     | EscapeSequence
     ;
  fragment EscapeSequence : '\\' [btnfr"'\\] ;
@@ -191,19 +190,19 @@
     |	DigitSequence
     ;
 
- fragment ExponentPart : [eE] SignedInteger ;
- fragment SignedInteger : [+-]? DigitSequence ;
- fragment DigitSequence : '0' | NonZeroDigit Digit* ;
- fragment Digit:	'0' | NonZeroDigit;
- fragment NonZeroDigit : [1-9] ;
+ fragment ExponentPart :    [eE] SignedInteger ;
+ fragment SignedInteger :   [+-]? DigitSequence ;
+ fragment DigitSequence :   '0' | NonZeroDigit Digit* ;
+ fragment Digit:	        '0' | NonZeroDigit;
+ fragment NonZeroDigit :    [1-9] ;
 
  /* ======================= SKIPS ======================= */
 
- WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+ WS : [ \t\r\n]+ -> skip ;              // skip spaces, tabs, newlines
 
  /* ====================== COMMENTS ===================== */
 
- COMMENT : '/*' .*? '*/' -> skip ; // skip multiline comments
+ COMMENT : '/*' .*? '*/' -> skip ;      // skip multiline comments
  LINE_COMMENT : '//' ~[\r\n]* -> skip ; // skip line comments
 
 
