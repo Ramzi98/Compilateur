@@ -13,28 +13,19 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     Deque<MiniJajaNode> stack = new LinkedList<>();
 
     @Override
-    public void enterClasse(MiniJajaParser.ClasseContext ctx) {
-        super.enterClasse(ctx);
-    }
-
-    @Override
     public void exitClasse(MiniJajaParser.ClasseContext ctx) {
         super.exitClasse(ctx);
     }
 
+
     @Override
-    public void enterIdent(MiniJajaParser.IdentContext ctx) {
+    public void exitIdent(MiniJajaParser.IdentContext ctx) {
         IdentNode identNode =IdentNode.builder()
                 .line(ctx.start.getLine())
                 .column(ctx.start.getCharPositionInLine())
                 .value(ctx.getText())
                 .build();
         stack.push(identNode);
-    }
-
-    @Override
-    public void exitIdent(MiniJajaParser.IdentContext ctx) {
-        super.exitIdent(ctx);
     }
 
     @Override
