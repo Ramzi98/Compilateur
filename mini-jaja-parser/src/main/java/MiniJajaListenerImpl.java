@@ -35,7 +35,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .column(column(ctx))
                 .value(ctx.getText())
                 .build();
-        
         stack.push(identNode);
     }
 
@@ -75,130 +74,250 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     }
 
 
-    @Override
-    public void exitEmptyVars(MiniJajaParser.EmptyVarsContext ctx) {
-        super.exitEmptyVars(ctx);
-    }
 
 
     @Override
     public void exitVarNode(MiniJajaParser.VarNodeContext ctx) {
-        super.exitVarNode(ctx);
+        VarNode.Builder builder = VarNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof  IdentNode){
+            builder.expression(null)
+                    .identifier((IdentNode)node)
+                    .typeMeth((TypeMethNode)stack.pop());
+        }else{
+            builder.expression(node)
+                    .identifier((IdentNode)stack.pop())
+                    .typeMeth((TypeMethNode)stack.pop());
+        }
+
+        stack.push(builder.build());
     }
 
 
     @Override
     public void exitArray(MiniJajaParser.ArrayContext ctx) {
-        super.exitArray(ctx);
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .expression(stack.pop())
+                .identifier((IdentNode)stack.pop())
+                .build();
+
+        stack.push(arrayItemNode);
     }
 
 
     @Override
     public void exitCst(MiniJajaParser.CstContext ctx) {
-        super.exitCst(ctx);
+        CstNode.Builder builder = CstNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof  IdentNode){
+            builder.expression(null)
+                    .identifier((IdentNode)node)
+                    .type((TypeNode) stack.pop());
+        }else{
+            builder.expression(node)
+                    .identifier((IdentNode)stack.pop())
+                    .type((TypeNode) stack.pop());
+        }
+
+        stack.push(builder.build());
     }
 
 
     @Override
     public void exitVexpAssign(MiniJajaParser.VexpAssignContext ctx) {
-        super.exitVexpAssign(ctx);
+
     }
 
 
-    @Override
-    public void exitOmegaAssign(MiniJajaParser.OmegaAssignContext ctx) {
-        super.exitOmegaAssign(ctx);
-    }
 
 
     @Override
     public void exitMethode(MiniJajaParser.MethodeContext ctx) {
-        super.exitMethode(ctx);
+        MethodNode.Builder builder = MethodNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (!(node instanceof InstrsNode)){
+            builder.instrs(null);
+        }else{
+            builder.instrs((InstrsNode)node);
+            node = stack.pop();
+        }
+
+        if (!(node instanceof VarsNode)){
+            builder.vars(null);
+        }else{
+            builder.vars((VarsNode)node);
+            node = stack.pop();
+        }
+
+        if (!(node instanceof HeadersNode)){
+            builder.headers(null);
+        }else{
+            builder.headers((HeadersNode)node);
+            node = stack.pop();
+        }
+
+        builder.identifier((IdentNode) node)
+                .typeMeth((TypeMethNode) stack.pop());
+
+        stack.push(builder.build());
     }
 
 
     @Override
     public void exitMethmain(MiniJajaParser.MethmainContext ctx) {
-        super.exitMethmain(ctx);
-    }
+        MainNode.Builder builder = MainNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
 
+        MiniJajaNode node = stack.peek();
+
+        if (!(node instanceof InstrsNode)){
+            builder.instrs(null);
+        }else{
+            builder.instrs((InstrsNode)stack.pop());
+            node = stack.peek();
+        }
+
+        if (!(node instanceof VarsNode)){
+            builder.vars(null);
+        }else{
+            builder.vars((VarsNode)stack.pop());
+        }
+
+        stack.push(builder.build());
+    }
 
     @Override
     public void exitMultiHeaders(MiniJajaParser.MultiHeadersContext ctx) {
-        super.exitMultiHeaders(ctx);
+        HeadersNode.Builder builder = HeadersNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof HeadersNode){
+            builder.headers((HeadersNode) node)
+                    .header((HeaderNode) stack.pop());
+        }else{
+            builder.headers(null)
+                    .header((HeaderNode) node);
+        }
+
+        stack.push(builder.build());
     }
 
-
-    @Override
-    public void exitUnitHeader(MiniJajaParser.UnitHeaderContext ctx) {
-        super.exitUnitHeader(ctx);
-    }
-
-
-    @Override
-    public void exitEmptyHeader(MiniJajaParser.EmptyHeaderContext ctx) {
-        super.exitEmptyHeader(ctx);
-    }
 
 
     @Override
     public void exitEntete(MiniJajaParser.EnteteContext ctx) {
-        super.exitEntete(ctx);
+        HeaderNode headerNode = HeaderNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .identifier((IdentNode) stack.pop())
+                .type((TypeNode) stack.pop())
+                .build();
+
+        stack.push(headerNode);
     }
 
 
     @Override
     public void exitMultiInstrs(MiniJajaParser.MultiInstrsContext ctx) {
-        super.exitMultiInstrs(ctx);
-    }
+        InstrsNode.Builder builder = InstrsNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
 
+        MiniJajaNode node = stack.pop();
+        if (node instanceof InstrsNode){
+            builder.instrs((InstrsNode) node);
+            builder.instruction(stack.pop());
+        }else{
+            builder.instrs(null);
+            builder.instruction(node);
+        }
 
-    @Override
-    public void exitEmptyInstrs(MiniJajaParser.EmptyInstrsContext ctx) {
-        super.exitEmptyInstrs(ctx);
+        stack.push(builder.build());
     }
 
 
     @Override
     public void exitAssign(MiniJajaParser.AssignContext ctx) {
-        super.exitAssign(ctx);
+        AssignNode assignNode = AssignNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .expression(stack.pop())
+                .identifier(stack.pop())
+                .build();
+
+        stack.push(assignNode);
     }
 
 
     @Override
     public void exitSum(MiniJajaParser.SumContext ctx) {
-        super.exitSum(ctx);
+        SumNode sumNode = SumNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .expression(stack.pop())
+                .identifier(stack.pop())
+                .build();
+
+        stack.push(sumNode);
     }
 
 
     @Override
     public void exitInc(MiniJajaParser.IncContext ctx) {
-        super.exitInc(ctx);
+        IncrementNode incrementNode = IncrementNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .identifier(stack.pop())
+                .build();
+
+        stack.push(incrementNode);
     }
 
 
     @Override
     public void exitAppelI(MiniJajaParser.AppelIContext ctx) {
-        super.exitAppelI(ctx);
+        AppelINode.Builder builder = AppelINode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof IdentNode){
+            builder.listexp(null)
+                    .identifier((IdentNode)stack.pop());
+        }else{
+            builder.listexp((ListExpNode) node)
+                    .identifier((IdentNode) stack.pop());
+        }
+
+        stack.push(builder.build());
     }
 
 
     @Override
     public void exitReturn(MiniJajaParser.ReturnContext ctx) {
-        super.exitReturn(ctx);
+        ReturnNode returnNode = ReturnNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .ret(stack.pop())
+                .build();
+
+        stack.push(returnNode);
     }
 
-
-    @Override
-    public void exitWrite(MiniJajaParser.WriteContext ctx) {
-        super.exitWrite(ctx);
-    }
-
-
-    @Override
-    public void exitWriteLn(MiniJajaParser.WriteLnContext ctx) {
-        super.exitWriteLn(ctx);
-    }
 
 
     @Override

@@ -55,8 +55,10 @@
                      | ident1 INC exp1                                          #Inc
                      | ident '(' listexp ')'                                    #AppelI
                      | RETURN exp                                               #Return
-                     | WRITE '(' ( ident | STRING ) ')'                         #Write
-                     | WRITELN '(' ( ident | STRING ) ')'                       #WriteLn
+                     | WRITE '('  ident  ')'                                    #WriteIdent
+                     | WRITE '('  STRING  ')'                                   #WriteString
+                     | WRITELN '(' ident  ')'                                   #WriteLnIdent
+                     | WRITELN '(' STRING  ')'                                  #WriteLnString
                      | IF exp LBRACE instrs RBRACE ELSE LBRACE instrs RBRACE    #IfElse
                      | IF exp LBRACE instrs RBRACE                              #If
                      | WHILE LPAR exp RPAR LBRACE instrs RBRACE                 #While
