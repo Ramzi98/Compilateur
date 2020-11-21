@@ -134,7 +134,7 @@ public class MiniJajaParserFactTest extends MiniJajaParserBaseTest{
         assertThat(numberNode.column(),is(1));
     }
 
-    @Test(expected = java.lang.NumberFormatException.class )
+    @Test(expected = ASTParsingException.class )
     public void check__Fact__Crash() {
         TestConstructor testConstructor = new TestConstructor(",5");
         parser = testConstructor.getParser();
