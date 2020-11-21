@@ -225,7 +225,17 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         stack.push(builder.build());
     }
 
+    @Override
+    public void exitUnitHeader(MiniJajaParser.UnitHeaderContext ctx) {
+        HeadersNode headers = HeadersNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .header((HeaderNode) stack.pop())
+                .headers(null)
+                .build();
 
+        stack.push(headers);
+    }
 
     @Override
     public void exitEntete(MiniJajaParser.EnteteContext ctx) {
