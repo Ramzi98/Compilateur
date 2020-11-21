@@ -43,8 +43,13 @@ public class MiniJajaParserIdent1Test extends MiniJajaParserBaseTest{
         ArrayItemNode arrayItemNode = (ArrayItemNode) listener.getRoot();
 
         assertThat(arrayItemNode.identifier().value(),is("tab"));
+        assertThat(arrayItemNode.line(),is(1));
+        assertThat(arrayItemNode.column(),is(0));
+
         IdentNode identNode = (IdentNode)arrayItemNode.expression();
         assertThat(identNode.value(),is("i"));
+        assertThat(identNode.line(),is(1));
+        assertThat(identNode.column(),is(4));
     }
 
 }
