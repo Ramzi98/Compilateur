@@ -49,7 +49,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .line(line(ctx))
                 .column(column(ctx));
 
-        if (!stack.isEmpty() && stack.peekLast() instanceof DeclsNode){
+        if (stack.peek() instanceof DeclsNode){
             builder.decls((DeclsNode)stack.pop());
         } else {
             builder.decls(null);
@@ -104,11 +104,12 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitArray(MiniJajaParser.ArrayContext ctx) {
-        ArrayItemNode arrayItemNode = ArrayItemNode.builder()
+        ArrayNode arrayItemNode = ArrayNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))
                 .expression(stack.pop())
-                .identifier((IdentNode)stack.pop())
+                .identifier((IdentNode) stack.pop())
+                .typeMeth((TypeMethNode) stack.pop())
                 .build();
 
         stack.push(arrayItemNode);

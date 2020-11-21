@@ -1,0 +1,10 @@
+class Test_01 {
+    int b = 5;
+    boolean tab[10*b];
+
+    main {
+
+    }
+}
+
+sr:lgkbnzsrlkh,rmùlb,qrtop
