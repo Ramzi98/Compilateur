@@ -374,6 +374,21 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitIfElse(MiniJajaParser.IfElseContext ctx) {
+        IfNode.Builder builder = IfNode.builder()
+                .line(line(ctx))
+                .column(column(ctx));
+
+        MiniJajaNode node = stack.pop();
+        if (node instanceof InstrsNode){
+
+
+        }else{
+            builder.falseInstrs(null)
+                    .trueInstrs(null)
+                    .expression(node);
+        }
+
+        stack.push(builder.build());
 
     }
 
@@ -394,7 +409,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                     .falseInstrs(null)
                     .expression(stack.pop());
         }
-
         stack.push(builder.build());
     }
 
@@ -609,7 +623,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         stack.push(numberNode);
     }
 
-    
+
 
     @Override
     public void exitArrayItem(MiniJajaParser.ArrayItemContext ctx) {
