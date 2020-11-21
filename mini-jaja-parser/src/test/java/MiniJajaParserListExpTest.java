@@ -6,13 +6,11 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 public class MiniJajaParserListExpTest extends MiniJajaParserBaseTest {
-
     @Test
-    public void check__ListExp__ListExp() throws IOException {
+    public void check__ListExp__ListExp() {
         TestConstructor testConstructor = new TestConstructor("6, (6)");
         parser = testConstructor.getParser();
 
