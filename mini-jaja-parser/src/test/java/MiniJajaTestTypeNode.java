@@ -11,19 +11,7 @@ import java.lang.reflect.Type;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestTypeNode {
-
-    MiniJajaParser parser;
-
-    private MiniJajaListenerImpl listener;
-    private ParseTreeWalker walker;
-
-
-    @Before
-    public void setup(){
-        walker = new ParseTreeWalker();
-        listener= new MiniJajaListenerImpl();
-    }
+public class MiniJajaTestTypeNode extends MiniJajaParserBaseTest{
 
     @Test
     public void check__Type__Int() throws IOException {

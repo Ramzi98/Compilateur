@@ -1,11 +1,11 @@
-
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import java.io.IOException;
 
 public class MiniJajaTestIdentNode extends MiniJajaParserBaseTest {
     @Test

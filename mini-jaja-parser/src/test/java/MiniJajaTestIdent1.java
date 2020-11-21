@@ -11,18 +11,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestIdent1 {
-    MiniJajaParser parser;
-
-    private MiniJajaListenerImpl listener;
-    private ParseTreeWalker walker;
-
-
-    @Before
-    public void setup(){
-        walker = new ParseTreeWalker();
-        listener= new MiniJajaListenerImpl();
-    }
+public class MiniJajaTestIdent1 extends MiniJajaParserBaseTest{
 
     @Test
     public void check__Ident1__Ident() throws IOException {
@@ -37,6 +26,8 @@ public class MiniJajaTestIdent1 {
         IdentNode identNode = (IdentNode) listener.getRoot();
 
         assertThat(identNode.value(),is("Hello"));
+        assertThat(identNode.line(),is(1));
+        assertThat(identNode.column(),is(0));
 
     }
 
@@ -49,7 +40,6 @@ public class MiniJajaTestIdent1 {
         walker.walk(listener,tree);
 
         parser.addParseListener(listener);
-        //System.out.println(listener.getRoot().getClass());
         ArrayItemNode arrayItemNode = (ArrayItemNode) listener.getRoot();
 
         assertThat(arrayItemNode.identifier().value(),is("tab"));

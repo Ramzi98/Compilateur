@@ -446,6 +446,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     }
 
 
+
     @Override
     public void exitMultiListexp(MiniJajaParser.MultiListexpContext ctx) {
         ListExpNode.Builder builder = ListExpNode.builder()
@@ -596,13 +597,25 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
 
     @Override
+    public void exitUnitListExp(MiniJajaParser.UnitListExpContext ctx) {
+        ListExpNode listExpNode = ListExpNode.builder()
+                .line(line(ctx))
+                .column(column(ctx))
+                .expression(stack.pop())
+                .listexp(null)
+                .build();
+
+        stack.push(listExpNode);
+    }
+
+    @Override
     public void exitAppelE(MiniJajaParser.AppelEContext ctx) {
         AppelENode.Builder builder = AppelENode.builder()
                 .line(line(ctx))
                 .column(column(ctx));
 
         MiniJajaNode node = stack.pop();
-        if (node instanceof ListExpNode){
+        if (node instanceof ListExpNode ){
             builder.listexp((ListExpNode) node)
                     .identifier((IdentNode) stack.pop());
         }else{

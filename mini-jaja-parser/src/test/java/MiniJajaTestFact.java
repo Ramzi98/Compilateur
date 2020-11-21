@@ -1,5 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ArrayItemNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Before;
@@ -24,10 +23,10 @@ public class MiniJajaTestFact {
 
     @Test
     public void check__Fact__Ident1() throws IOException {
-        TestConstructor testConstructor = new TestConstructor("fact", "FactIdent1ArrayItemTest.txt");
+        TestConstructor testConstructor = new TestConstructor("fact", "FactIdent1ArrayItemTest");
         parser = testConstructor.getParser();
 
-        ParseTree tree = parser.ident();
+        ParseTree tree = parser.fact();
         walker.walk(listener, tree);
 
         parser.addParseListener(listener);
@@ -41,6 +40,21 @@ public class MiniJajaTestFact {
 
     @Test
     public void check__Fact__AppelE() throws IOException {
+        TestConstructor testConstructor = new TestConstructor("fact", "FactAppelETest");
+        parser = testConstructor.getParser();
+
+        ParseTree tree = parser.fact();
+        walker.walk(listener, tree);
+
+        parser.addParseListener(listener);
+
+        AppelENode appelENode = (AppelENode) listener.getRoot();
+        System.out.println(appelENode.identifier().value());
+        assertThat(appelENode.identifier().value(),is("ident"));
+
+        
+        //ListExpNode listExpNode = (ListExpNode appe)
+        //PlusNode plusNode = (PlusNode) appelENode.listexp()
 
     }
 }
