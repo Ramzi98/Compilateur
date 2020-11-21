@@ -59,7 +59,8 @@
                      | WRITE '('  StringLitteral  ')'                           #WriteString
                      | WRITELN '(' ident  ')'                                   #WriteLnIdent
                      | WRITELN '(' StringLitteral  ')'                          #WriteLnString
-                     | IF exp LBRACE instrs RBRACE ELSE LBRACE instrs RBRACE    #IfElse
+                     | IF exp LBRACE ifInstrs=instrs
+                       RBRACE ELSE LBRACE elseInstrs=instrs RBRACE              #IfElse
                      | IF exp LBRACE instrs RBRACE                              #If
                      | WHILE LPAR exp RPAR LBRACE instrs RBRACE                 #While
                      ;
