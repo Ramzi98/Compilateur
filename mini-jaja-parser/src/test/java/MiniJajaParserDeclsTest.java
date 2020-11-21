@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MiniJajaParserDeclsTest extends MiniJajaParserBaseTest {
     @Test
-    public void givenOneVar__thenParsing__thenDeclsOK() throws IOException {
+    public void givenOneVar__whenParsing__thenDeclsOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("int b = 6;");
         parser = testConstructor.getParser();
 
@@ -33,7 +33,7 @@ public class MiniJajaParserDeclsTest extends MiniJajaParserBaseTest {
 
 
     @Test
-    public void givenOneMethod__thenParsing__thenDeclsOK() throws IOException {
+    public void givenOneMethod__whenParsing__thenDeclsOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("decls","methodDecls");
         parser = testConstructor.getParser();
 
@@ -56,7 +56,7 @@ public class MiniJajaParserDeclsTest extends MiniJajaParserBaseTest {
 
 
     @Test
-    public void givenOVarAndMethod__thenParsing__thenDeclsOK() throws IOException {
+    public void givenOneVarAndMethod__whenParsing__thenDeclsOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("decls","varAndMethodDecls");
         parser = testConstructor.getParser();
 

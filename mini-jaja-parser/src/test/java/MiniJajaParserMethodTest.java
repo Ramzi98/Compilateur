@@ -54,7 +54,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
 
     @Test
     public void instrsMethodBooleanArgs() {
-        TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){ return 0; }");
+        TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){return 0;}");
         parser = testConstructor.getParser();
 
         ParseTree tree = parser.methode();
@@ -82,7 +82,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
 
     @Test
     public void methodBooleanArgsVarsInstrs() {
-        TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){\nint ret = 5;\nreturn ret; }");
+        TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){\nint ret = 5;\nreturn ret;}");
         parser = testConstructor.getParser();
 
         ParseTree tree = parser.methode();
