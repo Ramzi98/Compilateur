@@ -324,6 +324,8 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitWriteString(MiniJajaParser.WriteStringContext ctx) {
+        int stringLength = ctx.StringLitteral().getText().length();
+
         WriteNode node = WriteNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))
@@ -331,7 +333,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                         StringNode.builder()
                                 .line(ctx.StringLitteral().getSymbol().getLine())
                                 .column(ctx.StringLitteral().getSymbol().getLine())
-                                .value(ctx.StringLitteral().getText())
+                                .value(ctx.StringLitteral().getText().substring(1, stringLength - 1))
                                 .build()
                 ).build();
 
@@ -351,6 +353,8 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitWriteLnString(MiniJajaParser.WriteLnStringContext ctx) {
+        int stringLength = ctx.StringLitteral().getText().length();
+
         WriteLnNode node = WriteLnNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))
@@ -358,7 +362,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                         StringNode.builder()
                                 .line(ctx.StringLitteral().getSymbol().getLine())
                                 .column(ctx.StringLitteral().getSymbol().getLine())
-                                .value(ctx.StringLitteral().getText())
+                                .value(ctx.StringLitteral().getText().substring(1, stringLength - 1))
                                 .build()
                 ).build();
 

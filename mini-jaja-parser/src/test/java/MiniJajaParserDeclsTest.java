@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MiniJajaParserDeclsTest extends MiniJajaParserBaseTest {
     @Test
-    public void givenOneVar__whenParsing__thenDeclsOK() throws IOException {
+    public void givenOneVar__whenParsing__thenDeclsOK() {
         TestConstructor testConstructor = new TestConstructor("int b = 6;");
         parser = testConstructor.getParser();
 
