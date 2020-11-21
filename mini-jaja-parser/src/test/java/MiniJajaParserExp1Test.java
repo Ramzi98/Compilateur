@@ -35,7 +35,7 @@ public class MiniJajaParserExp1Test extends MiniJajaParserBaseTest{
     }
 
     @Test
-    public void check__Exp2__Greater() throws IOException {
+    public void check__Exp1__Greater() throws IOException {
         TestConstructor testConstructor = new TestConstructor("6 > 5");
         parser = testConstructor.getParser();
 
@@ -58,6 +58,24 @@ public class MiniJajaParserExp1Test extends MiniJajaParserBaseTest{
         assertThat(right.value(),is(5.0));
         assertThat(right.line(),is(1));
         assertThat(right.column(),is(4));
+    }
+
+    @Test
+    public void check__Exp1__exp2() throws IOException {
+        TestConstructor testConstructor = new TestConstructor("(6)");
+        parser = testConstructor.getParser();
+
+        ParseTree tree = parser.exp1();
+        walker.walk(listener,tree);
+
+        parser.addParseListener(listener);
+
+        NumberNode numberNode = (NumberNode) listener.getRoot();
+        assertThat(numberNode.line(),is(1));
+        assertThat(numberNode.column(),is(1));
+
+
+        assertThat(numberNode.value(),is(6.0));
     }
 
 }
