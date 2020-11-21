@@ -33,11 +33,7 @@ public class MiniJajaParserInstrsTest extends MiniJajaParserBaseTest {
     public void uniqueInstrsAssign() {
         TestConstructor testConstructor = new TestConstructor("foo[1] = bar ;");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.instrs();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.instrs());
 
         InstrsNode instrsNode = (InstrsNode) listener.getRoot();
 
@@ -48,18 +44,14 @@ public class MiniJajaParserInstrsTest extends MiniJajaParserBaseTest {
 
         AssignNode assign = (AssignNode) instrsNode.instruction();
         assertThat(((ArrayItemNode)assign.identifier()).identifier().value(), is("foo"));
-        assertThat(((NumberNode)((ArrayItemNode)assign.identifier()).expression()).value(), is(1d));
+        assertThat(((NumberNode)((ArrayItemNode)assign.identifier()).expression()).value(), is(1));
     }
 
     @Test
     public void multiInstrs() {
         TestConstructor testConstructor = new TestConstructor("write(\"oui\") ;\nb++ ;");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.instrs();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.instrs());
 
         InstrsNode instrsNode = (InstrsNode) listener.getRoot();
 

@@ -13,53 +13,45 @@ public class MiniJajaParserListExpTest extends MiniJajaParserBaseTest {
     public void check__ListExp__ListExp() {
         TestConstructor testConstructor = new TestConstructor("6, (6)");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.listexp();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.listexp());
 
         ListExpNode listExpNode = (ListExpNode) listener.getRoot();
-        assertThat(listExpNode.line(),is(1));
-        assertThat(listExpNode.column(),is(0));
+        assertThat(listExpNode.line(), is(1));
+        assertThat(listExpNode.column(), is(0));
 
-        NumberNode numberNode = (NumberNode)listExpNode.expression();
-        assertThat(numberNode.line(),is(1));
-        assertThat(numberNode.column(),is(0));
-        assertThat(numberNode.value(),is(6.0));
+        NumberNode numberNode = (NumberNode) listExpNode.expression();
+        assertThat(numberNode.line(), is(1));
+        assertThat(numberNode.column(), is(0));
+        assertThat(numberNode.value(), is(6));
 
         ListExpNode listExpNode1 = listExpNode.listexp();
-        assertThat(listExpNode1.line(),is(1));
-        assertThat(listExpNode1.column(),is(3));
+        assertThat(listExpNode1.line(), is(1));
+        assertThat(listExpNode1.column(), is(3));
 
-        NumberNode numberNode1 = (NumberNode)listExpNode1.expression();
-        assertThat(numberNode1.line(),is(1));
-        assertThat(numberNode1.column(),is(4));
-        assertThat(numberNode1.value(),is(6.0));
-        assertThat(listExpNode1.listexp(),is(nullValue()));
+        NumberNode numberNode1 = (NumberNode) listExpNode1.expression();
+        assertThat(numberNode1.line(), is(1));
+        assertThat(numberNode1.column(), is(4));
+        assertThat(numberNode1.value(), is(6));
+        assertThat(listExpNode1.listexp(), is(nullValue()));
     }
 
     @Test
-    public void check__ListExp__Exp() throws IOException {
+    public void check__ListExp__Exp() {
         TestConstructor testConstructor = new TestConstructor("6");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.listexp();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.listexp());
 
         ListExpNode listExpNode = (ListExpNode) listener.getRoot();
-        assertThat(listExpNode.line(),is(1));
-        assertThat(listExpNode.column(),is(0));
+        assertThat(listExpNode.line(), is(1));
+        assertThat(listExpNode.column(), is(0));
 
-        NumberNode numberNode = (NumberNode)listExpNode.expression();
-        assertThat(numberNode.line(),is(1));
-        assertThat(numberNode.column(),is(0));
-        assertThat(numberNode.value(),is(6.0));
+        NumberNode numberNode = (NumberNode) listExpNode.expression();
+        assertThat(numberNode.line(), is(1));
+        assertThat(numberNode.column(), is(0));
+        assertThat(numberNode.value(), is(6));
 
         ListExpNode listExpNode1 = listExpNode.listexp();
-        assertThat(listExpNode1,is(nullValue()));
+        assertThat(listExpNode1, is(nullValue()));
     }
 
 }

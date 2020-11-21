@@ -13,7 +13,7 @@ public class NumberNodeTest {
         numberNode = NumberNode.builder()
                 .line(8)
                 .column(34)
-                .value(12d)
+                .value(12)
                 .build();
     }
 
@@ -31,7 +31,7 @@ public class NumberNodeTest {
 
     @Test
     public void check__NumberNode__Value() {
-        assertThat(numberNode.value(), is(12d));
+        assertThat(numberNode.value(), is(12));
     }
 
     @Test

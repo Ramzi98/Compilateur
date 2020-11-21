@@ -12,17 +12,11 @@ public class MiniJajaParserIdentNodeTest extends MiniJajaParserBaseTest {
     public void check__Ident__Correct() throws IOException {
         TestConstructor testConstructor = new TestConstructor("identifier","IdentNodeSimple");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.ident();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.ident());
 
         IdentNode identNode = (IdentNode)listener.getRoot();
         assertThat(identNode.value(),is("Hello"));
         assertThat(identNode.line(),is(1));
         assertThat(identNode.column(),is(0));
     }
-
-
 }

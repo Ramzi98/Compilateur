@@ -12,11 +12,7 @@ public class MiniJajaParserClasseTest extends MiniJajaParserBaseTest {
     public void givenEmptyClass__whenParsing__thenClassNodeOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("classe","emptyClass");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.classe();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.classe());
 
         ClasseNode classe = (ClasseNode) listener.getRoot();
         assertThat(classe.line(),is(1));
@@ -34,11 +30,7 @@ public class MiniJajaParserClasseTest extends MiniJajaParserBaseTest {
     public void givenDeclClass__whenParsing__thenClassNodeOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("classe","declsClass");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.classe();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.classe());
 
         ClasseNode classe = (ClasseNode) listener.getRoot();
 
@@ -61,12 +53,6 @@ public class MiniJajaParserClasseTest extends MiniJajaParserBaseTest {
     public void givenTextAfterClass__whenParsing__thenThrowException() throws IOException {
         TestConstructor testConstructor = new TestConstructor("classe","textAfterClass");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.classe();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
-
-        ClasseNode classe = (ClasseNode) listener.getRoot();
+        walker.walk(listener, parser.classe());
     }
 }

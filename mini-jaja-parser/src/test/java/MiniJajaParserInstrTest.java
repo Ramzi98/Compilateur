@@ -1,4 +1,3 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.WhileNode;
@@ -17,11 +16,7 @@ public class MiniJajaParserInstrTest extends MiniJajaParserBaseTest{
     public void check__Instr__WhileEmpty() throws IOException {
         TestConstructor testConstructor = new TestConstructor("instr","InstrWhileEmptyTest");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.instr();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.instr());
 
         WhileNode whileNode = (WhileNode) listener.getRoot();
         assertThat(whileNode.line(),is(1));
@@ -30,7 +25,7 @@ public class MiniJajaParserInstrTest extends MiniJajaParserBaseTest{
         NumberNode numberNode = (NumberNode)whileNode.expression();
         assertThat(numberNode.line(),is(1));
         assertThat(numberNode.column(),is(6));
-        assertThat(numberNode.value(),is(1.0));
+        assertThat(numberNode.value(),is(1));
 
         assertThat(whileNode.instrs(),is(nullValue()));
     }
@@ -39,33 +34,28 @@ public class MiniJajaParserInstrTest extends MiniJajaParserBaseTest{
     public void check__Instr__While() throws IOException {
         TestConstructor testConstructor = new TestConstructor("instr","InstrWhileTest");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.instr();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.instr());
 
         WhileNode whileNode = (WhileNode) listener.getRoot();
-        assertThat(whileNode.line(),is(1));
-        assertThat(whileNode.column(),is(0));
+        assertThat(whileNode.line(), is(1));
+        assertThat(whileNode.column(), is(0));
 
-        NumberNode numberNode = (NumberNode)whileNode.expression();
-        assertThat(numberNode.line(),is(1));
-        assertThat(numberNode.column(),is(6));
-        assertThat(numberNode.value(),is(1.0));
+        NumberNode numberNode = (NumberNode) whileNode.expression();
+        assertThat(numberNode.line(), is(1));
+        assertThat(numberNode.column(), is(6));
+        assertThat(numberNode.value(), is(1));
 
 
-        InstrsNode instrsNode = (InstrsNode) whileNode.instrs();
+        InstrsNode instrsNode = whileNode.instrs();
         WhileNode whileNode1 = (WhileNode)instrsNode.instruction();
-        assertThat(whileNode1.line(),is(2));
-        assertThat(whileNode1.column(),is(4));
+        assertThat(whileNode1.line(), is(2));
+        assertThat(whileNode1.column(), is(4));
 
-        NumberNode numberNode1 = (NumberNode)whileNode1.expression();
-        assertThat(numberNode1.line(),is(2));
-        assertThat(numberNode1.column(),is(10));
-        assertThat(numberNode1.value(),is(1.0));
+        NumberNode numberNode1 = (NumberNode) whileNode1.expression();
+        assertThat(numberNode1.line(), is(2));
+        assertThat(numberNode1.column(), is(10));
+        assertThat(numberNode1.value(), is(1));
 
-
-        assertThat(whileNode1.instrs(),is(nullValue()));
+        assertThat(whileNode1.instrs(), is(nullValue()));
     }
 }

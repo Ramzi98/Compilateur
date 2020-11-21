@@ -12,68 +12,60 @@ public class MiniJajaParserTermeTest extends MiniJajaParserBaseTest{
     public void check__Terme__Mult() throws IOException {
         TestConstructor testConstructor = new TestConstructor("6 * 5");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.terme();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.terme());
 
         MultNode multNode = (MultNode) listener.getRoot();
-        NumberNode left = (NumberNode)multNode.leftOperand();
-        NumberNode right = (NumberNode)multNode.rightOperand();
-        assertThat(multNode.line(),is(1));
-        assertThat(multNode.column(),is(0));
+        NumberNode left = (NumberNode) multNode.leftOperand();
+        NumberNode right = (NumberNode) multNode.rightOperand();
+        assertThat(multNode.line(), is(1));
+        assertThat(multNode.column(), is(0));
 
 
-        assertThat(left.value(),is(6.0));
-        assertThat(left.line(),is(1));
-        assertThat(left.column(),is(0));
+        assertThat(left.value(), is(6));
+        assertThat(left.line(), is(1));
+        assertThat(left.column(), is(0));
 
-        assertThat(right.value(),is(5.0));
-        assertThat(right.line(),is(1));
-        assertThat(right.column(),is(4));
+        assertThat(right.value(), is(5));
+        assertThat(right.line(), is(1));
+        assertThat(right.column(), is(4));
     }
 
     @Test
-    public void check__Terme__Div() throws IOException {
+    public void check__Terme__Div() {
         TestConstructor testConstructor = new TestConstructor("6 / 5");
         parser = testConstructor.getParser();
 
         ParseTree tree = parser.terme();
-        walker.walk(listener,tree);
+        walker.walk(listener, tree);
 
         parser.addParseListener(listener);
 
         DivNode divNode = (DivNode) listener.getRoot();
-        NumberNode left = (NumberNode)divNode.leftOperand();
-        NumberNode right = (NumberNode)divNode.rightOperand();
-        assertThat(divNode.line(),is(1));
-        assertThat(divNode.column(),is(0));
+        NumberNode left = (NumberNode) divNode.leftOperand();
+        NumberNode right = (NumberNode) divNode.rightOperand();
+        assertThat(divNode.line(), is(1));
+        assertThat(divNode.column(), is(0));
 
 
-        assertThat(left.value(),is(6.0));
-        assertThat(left.line(),is(1));
-        assertThat(left.column(),is(0));
+        assertThat(left.value(), is(6));
+        assertThat(left.line(), is(1));
+        assertThat(left.column(), is(0));
 
-        assertThat(right.value(),is(5.0));
-        assertThat(right.line(),is(1));
-        assertThat(right.column(),is(4));
+        assertThat(right.value(), is(5));
+        assertThat(right.line(), is(1));
+        assertThat(right.column(), is(4));
     }
 
     @Test
-    public void check__Terme__Fact() throws IOException {
+    public void check__Terme__Fact() {
         TestConstructor testConstructor = new TestConstructor("fact");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.terme();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.terme());
 
         IdentNode identNode = (IdentNode) listener.getRoot();
-        assertThat(identNode.line(),is(1));
-        assertThat(identNode.column(),is(0));
-        assertThat(identNode.value(),is("fact"));
+        assertThat(identNode.line(), is(1));
+        assertThat(identNode.column(), is(0));
+        assertThat(identNode.value(), is("fact"));
     }
 
 

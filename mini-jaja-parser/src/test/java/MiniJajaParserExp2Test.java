@@ -9,14 +9,10 @@ import static org.hamcrest.Matchers.is;
 
 public class MiniJajaParserExp2Test extends MiniJajaParserBaseTest{
     @Test
-    public void check__Exp2__Div() throws IOException {
+    public void check__Exp2__Div() {
         TestConstructor testConstructor = new TestConstructor("6 + 5");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.exp2();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.exp2());
 
         PlusNode plusNode = (PlusNode) listener.getRoot();
         NumberNode left = (NumberNode)plusNode.leftOperand();
@@ -25,24 +21,20 @@ public class MiniJajaParserExp2Test extends MiniJajaParserBaseTest{
         assertThat(plusNode.column(),is(0));
 
 
-        assertThat(left.value(),is(6.0));
+        assertThat(left.value(),is(6));
         assertThat(left.line(),is(1));
         assertThat(left.column(),is(0));
 
-        assertThat(right.value(),is(5.0));
+        assertThat(right.value(),is(5));
         assertThat(right.line(),is(1));
         assertThat(right.column(),is(4));
     }
 
     @Test
-    public void check__Exp2__Sub() throws IOException {
+    public void check__Exp2__Sub() {
         TestConstructor testConstructor = new TestConstructor("6 - 5");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.exp2();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.exp2());
 
         SubNode subNode = (SubNode) listener.getRoot();
         NumberNode left = (NumberNode)subNode.leftOperand();
@@ -51,47 +43,38 @@ public class MiniJajaParserExp2Test extends MiniJajaParserBaseTest{
         assertThat(subNode.column(),is(0));
 
 
-        assertThat(left.value(),is(6.0));
+        assertThat(left.value(),is(6));
         assertThat(left.line(),is(1));
         assertThat(left.column(),is(0));
 
-        assertThat(right.value(),is(5.0));
+        assertThat(right.value(),is(5));
         assertThat(right.line(),is(1));
         assertThat(right.column(),is(4));
     }
 
     @Test
-    public void check__Exp2__Minus() throws IOException {
+    public void check__Exp2__Minus() {
         TestConstructor testConstructor = new TestConstructor("-6");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.exp2();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.exp2());
 
         MinusNode minusNode = (MinusNode) listener.getRoot();
         NumberNode exp = (NumberNode)minusNode.expression();
 
-
-        assertThat(exp.value(),is(6.0));
+        assertThat(exp.value(),is(6));
         assertThat(exp.line(),is(1));
         assertThat(exp.column(),is(1));
     }
 
     @Test
-    public void check__Exp2__Termes() throws IOException {
+    public void check__Exp2__Termes() {
         TestConstructor testConstructor = new TestConstructor("(6)");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.exp2();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.exp2());
 
         NumberNode numberNode = (NumberNode) listener.getRoot();
 
-        assertThat(numberNode.value(),is(6.0));
+        assertThat(numberNode.value(),is(6));
         assertThat(numberNode.line(),is(1));
         assertThat(numberNode.column(),is(1));
     }

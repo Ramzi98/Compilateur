@@ -12,11 +12,7 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
     public void givenOneVar__thenParsing__thenDeclsOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("int b = 6;");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.vars();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.vars());
 
         VarsNode vars = (VarsNode) listener.getRoot();
 
@@ -28,7 +24,7 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
         VarNode var = (VarNode) vars.var();
         assertThat(var.typeMeth().value(), is(TypeMethNode.TypeMeth.INT));
         assertThat(var.identifier().value(), is("b"));
-        assertThat(((NumberNode)var.expression()).value(), is(6d));
+        assertThat(((NumberNode)var.expression()).value(), is(6));
     }
 
 
@@ -36,11 +32,7 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
     public void givenOneArray__thenParsing__thenDeclsOK() {
         TestConstructor testConstructor = new TestConstructor("int tab[7];");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.vars();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.vars());
 
         VarsNode vars = (VarsNode) listener.getRoot();
 
@@ -52,18 +44,14 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
         ArrayNode array = (ArrayNode) vars.var();
         assertThat(array.typeMeth().value(), is(TypeMethNode.TypeMeth.INT));
         assertThat(array.identifier().value(), is("tab"));
-        assertThat(((NumberNode)array.expression()).value(), is(7d));
+        assertThat(((NumberNode)array.expression()).value(), is(7));
     }
 
     @Test
     public void givenCst__thenParsing__thenDeclsOK() {
         TestConstructor testConstructor = new TestConstructor("final boolean flag = true;");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.vars();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.vars());
 
         VarsNode vars = (VarsNode) listener.getRoot();
 
@@ -75,18 +63,14 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
         CstNode array = (CstNode) vars.var();
         assertThat(array.type().value(), is(TypeNode.Type.BOOLEAN));
         assertThat(array.identifier().value(), is("flag"));
-        assertThat(((BooleanNode)array.expression()).value(), is(true));
+        assertThat(((BooleanNode) array.expression()).value(), is(true));
     }
 
     @Test
     public void givenMultiVars__thenParsing__thenDeclsOK() {
         TestConstructor testConstructor = new TestConstructor("final boolean flag;\nint i = 0;");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.vars();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.vars());
 
         VarsNode vars = (VarsNode) listener.getRoot();
 
@@ -101,7 +85,7 @@ public class MiniJajaParserVarsTest extends MiniJajaParserBaseTest {
         VarNode next = (VarNode) vars.vars().var();
         assertThat(next.typeMeth().value(), is(TypeMethNode.TypeMeth.INT));
         assertThat(next.identifier().value(), is("i"));
-        assertThat(((NumberNode)next.expression()).value(), is(0d));
+        assertThat(((NumberNode) next.expression()).value(), is(0));
         assertThat(vars.vars().vars(), is(nullValue()));
     }
 }

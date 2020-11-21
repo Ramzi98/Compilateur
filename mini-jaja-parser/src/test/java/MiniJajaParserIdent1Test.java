@@ -17,9 +17,7 @@ public class MiniJajaParserIdent1Test extends MiniJajaParserBaseTest{
     public void check__Ident1__Ident() throws IOException {
         TestConstructor testConstructor = new TestConstructor("ident1","Ident1IdentTest");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.ident1();
-        walker.walk(listener,tree);
+        walker.walk(listener, parser.ident1());
 
         parser.addParseListener(listener);
 
@@ -35,21 +33,17 @@ public class MiniJajaParserIdent1Test extends MiniJajaParserBaseTest{
     public void check__Ident1__ArrayItem() throws IOException {
         TestConstructor testConstructor = new TestConstructor("ident1","Ident1ArrayItemTest");
         parser = testConstructor.getParser();
+        walker.walk(listener, parser.ident1());
 
-        ParseTree tree = parser.ident1();
-        walker.walk(listener,tree);
-
-        parser.addParseListener(listener);
         ArrayItemNode arrayItemNode = (ArrayItemNode) listener.getRoot();
 
         assertThat(arrayItemNode.identifier().value(),is("tab"));
         assertThat(arrayItemNode.line(),is(1));
         assertThat(arrayItemNode.column(),is(0));
 
-        IdentNode identNode = (IdentNode)arrayItemNode.expression();
+        IdentNode identNode = (IdentNode) arrayItemNode.expression();
         assertThat(identNode.value(),is("i"));
         assertThat(identNode.line(),is(1));
         assertThat(identNode.column(),is(4));
     }
-
 }

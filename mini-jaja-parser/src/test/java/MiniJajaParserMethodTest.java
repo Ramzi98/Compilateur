@@ -10,11 +10,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
     public void emptyMethodNoArgs() {
         TestConstructor testConstructor = new TestConstructor("void fun(){ }");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methode();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methode());
 
         MethodNode method = (MethodNode) listener.getRoot();
 
@@ -31,11 +27,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
     public void emptyMethodIntArgs() {
         TestConstructor testConstructor = new TestConstructor("int fun(int arg){ }");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methode();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methode());
 
         MethodNode method = (MethodNode) listener.getRoot();
 
@@ -56,11 +48,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
     public void instrsMethodBooleanArgs() {
         TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){return 0;}");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methode();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methode());
 
         MethodNode method = (MethodNode) listener.getRoot();
 
@@ -72,7 +60,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
 
         assertThat(method.instrs().instrs(), is(nullValue()));
         ReturnNode retour = (ReturnNode)method.instrs().instruction();
-        assertThat(((NumberNode)retour.ret()).value(), is(0d));
+        assertThat(((NumberNode)retour.ret()).value(), is(0));
 
         assertThat(method.headers().header().type().value(), is(TypeNode.Type.BOOLEAN));
         assertThat(method.headers().header().identifier().value(), is("flag"));
@@ -84,11 +72,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
     public void methodBooleanArgsVarsInstrs() {
         TestConstructor testConstructor = new TestConstructor("int fun(boolean flag){\nint ret = 5;\nreturn ret;}");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methode();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methode());
 
         MethodNode method = (MethodNode) listener.getRoot();
 
@@ -100,7 +84,7 @@ public class MiniJajaParserMethodTest extends MiniJajaParserBaseTest {
         VarNode var = (VarNode) method.vars().var();
         assertThat(var.typeMeth().value(), is(TypeMethNode.TypeMeth.INT));
         assertThat(var.identifier().value(), is("ret"));
-        assertThat(((NumberNode) var.expression()).value(), is(5d));
+        assertThat(((NumberNode) var.expression()).value(), is(5));
         assertThat(method.vars().vars(), is(nullValue()));
         ReturnNode retour = (ReturnNode) method.instrs().instruction();
         assertThat(((IdentNode) retour.ret()).value(), is("ret"));

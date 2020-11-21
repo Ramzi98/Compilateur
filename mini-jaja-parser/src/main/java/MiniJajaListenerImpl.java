@@ -617,7 +617,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         NumberNode numberNode = NumberNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))
-                .value(Double.parseDouble(ctx.getText()))
+                .value(Integer.parseInt(ctx.getText()))
                 .build();
         
         stack.push(numberNode);

@@ -10,11 +10,7 @@ public class MiniJajaParserMainTest extends MiniJajaParserBaseTest {
     public void emptyMain() {
         TestConstructor testConstructor = new TestConstructor("main { }");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methmain();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methmain());
 
         MainNode main = (MainNode) listener.getRoot();
 
@@ -29,11 +25,7 @@ public class MiniJajaParserMainTest extends MiniJajaParserBaseTest {
     public void instrsMain() {
         TestConstructor testConstructor = new TestConstructor("main {return 0;}");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methmain();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methmain());
 
         MainNode main = (MainNode) listener.getRoot();
 
@@ -43,7 +35,7 @@ public class MiniJajaParserMainTest extends MiniJajaParserBaseTest {
 
         assertThat(main.instrs().instrs(), is(nullValue()));
         ReturnNode retour = (ReturnNode)main.instrs().instruction();
-        assertThat(((NumberNode)retour.ret()).value(), is(0d));
+        assertThat(((NumberNode)retour.ret()).value(), is(0));
     }
 
 
@@ -51,11 +43,7 @@ public class MiniJajaParserMainTest extends MiniJajaParserBaseTest {
     public void methodArgsVarsInstrs() {
         TestConstructor testConstructor = new TestConstructor("main {\nint ret = 5;\nreturn ret;}");
         parser = testConstructor.getParser();
-
-        ParseTree tree = parser.methmain();
-        walker.walk(listener, tree);
-
-        parser.addParseListener(listener);
+        walker.walk(listener, parser.methmain());
 
         MainNode main = (MainNode) listener.getRoot();
 
@@ -65,7 +53,7 @@ public class MiniJajaParserMainTest extends MiniJajaParserBaseTest {
         VarNode var = (VarNode) main.vars().var();
         assertThat(var.typeMeth().value(), is(TypeMethNode.TypeMeth.INT));
         assertThat(var.identifier().value(), is("ret"));
-        assertThat(((NumberNode) var.expression()).value(), is(5d));
+        assertThat(((NumberNode) var.expression()).value(), is(5));
         assertThat(main.vars().vars(), is(nullValue()));
 
         ReturnNode retour = (ReturnNode) main.instrs().instruction();
