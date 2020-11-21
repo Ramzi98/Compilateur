@@ -8,6 +8,11 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     private final Deque<MiniJajaNode> stack = new ArrayDeque<>(7);
 
+
+    public MiniJajaNode getRoot(){
+       return stack.peek();
+    }
+
     @Override
     public void exitClasse(MiniJajaParser.ClasseContext ctx) {
         ClasseNode.Builder builder = ClasseNode.builder()
@@ -379,17 +384,26 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .column(column(ctx));
 
         MiniJajaNode node = stack.pop();
-        if (node instanceof InstrsNode){
 
-
+        //si le contexte elseInstrs n'a pas d'enfant alors il est vide
+        if (ctx.elseInstrs.children.size()==0){
+            builder.falseInstrs(null);
         }else{
-            builder.falseInstrs(null)
-                    .trueInstrs(null)
-                    .expression(node);
+            builder.falseInstrs((InstrsNode) node);
+            node = stack.pop();
         }
 
-        stack.push(builder.build());
+        //si le contexte ifInstrs n'a pas d'enfant alors il est vide
+        if (ctx.ifInstrs.children.size()==0){
+            builder.trueInstrs(null);
+        }else{
+            builder.trueInstrs((InstrsNode) node);
+            node = stack.pop();
+        }
 
+        builder.expression(node);
+
+        stack.push(builder.build());
     }
 
 
@@ -689,11 +703,11 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
 
 
-    private int column(ParserRuleContext ctx) {
+    private int line(ParserRuleContext ctx) {
         return ctx.start.getLine();
     }
     
-    private int line(ParserRuleContext ctx) {
+    private int column(ParserRuleContext ctx) {
         return ctx.start.getCharPositionInLine();
     }
 }
