@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.compiler;
+
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public class CompilerImpl implements Compiler {

@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.compiler;
+
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
@@ -14,9 +16,9 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class CompilerVisitor extends MiniJajaASTVisitor {
-    ArrayList<JajaCodeNode> jajaCodeNodes = new ArrayList<>();
-    HashMap<MiniJajaNode, Integer> minijajaNodes= new HashMap<MiniJajaNode,Integer>();
-    Stack<HashMap<MiniJajaNode, Integer>> stack;
+    private ArrayList<JajaCodeNode> jajaCodeNodes = new ArrayList<>();
+    private ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
+    private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<HashMap<MiniJajaNode, Integer>>();
     int line = 1;
     int column = 0;
     int n = 1;
@@ -29,6 +31,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         h.put(node,0);
+        minijajaNodes.add(h);
+
 
         stack.push(h);
 
@@ -64,6 +68,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         jajaCodeNodes.add(jcStopNode);
 
 
+
+
     }
 
     @Override
@@ -79,6 +85,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         h.put(node,0);
+        minijajaNodes.add(h);
         stack.push(h);
 
         try {
@@ -102,6 +109,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         h.put(node,0);
+        minijajaNodes.add(h);
         stack.push(h);
 
         try {
@@ -110,6 +118,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int topstack = (int) newhashMap.values().toArray()[0];
             h.replace(node,topstack+1);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            //Works
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -268,9 +278,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(NumberNode node) throws IllFormedNodeException, IOException {
-        //Push
+
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
+        //Works
         h.put(node,1);
+        minijajaNodes.add(h);
         stack.push(h);
 
 
