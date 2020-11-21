@@ -11,7 +11,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestIdent1 extends MiniJajaParserBaseTest{
+public class MiniJajaParserIdent1Test extends MiniJajaParserBaseTest{
 
     @Test
     public void check__Ident1__Ident() throws IOException {

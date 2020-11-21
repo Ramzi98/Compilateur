@@ -641,6 +641,10 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitNumber(MiniJajaParser.NumberContext ctx) {
+        System.out.println(ctx.getText());
+
+        System.out.println(ctx.NumberLitteral().toString());
+        System.out.println(ctx.NumberLitteral().getText());
         NumberNode numberNode = NumberNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))

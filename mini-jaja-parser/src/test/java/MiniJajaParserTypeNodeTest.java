@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestTypeNode extends MiniJajaParserBaseTest{
+public class MiniJajaParserTypeNodeTest extends MiniJajaParserBaseTest{
 
     @Test
     public void check__Type__Int() throws IOException {

@@ -7,7 +7,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestIdentNode extends MiniJajaParserBaseTest {
+public class MiniJajaParserIdentNodeTest extends MiniJajaParserBaseTest {
     @Test
     public void check__Ident__Correct() throws IOException {
         TestConstructor testConstructor = new TestConstructor("identifier","IdentNodeSimple");

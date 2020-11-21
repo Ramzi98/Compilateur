@@ -10,7 +10,7 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class MiniJajaTestTypeMethNode extends MiniJajaParserBaseTest{
+public class MiniJajaParserTypeMethNodeTest extends MiniJajaParserBaseTest{
 
     @Test
     public void check__TypeMeth__Int() throws IOException {
