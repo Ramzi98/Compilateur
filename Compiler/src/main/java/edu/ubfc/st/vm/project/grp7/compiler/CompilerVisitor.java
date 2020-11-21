@@ -90,6 +90,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         try {
             nodeDecl.accept(this);
+
+
             nodeDecls.accept(this);
         } catch (Exception e) {
             e.printStackTrace();
