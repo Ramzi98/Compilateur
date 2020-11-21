@@ -12,7 +12,7 @@
     <artifactId>Compiler</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Compiler</name>
+    <name>edu.ubfc.st.vm.project.grp7.compiler.Compiler</name>
 
     <dependencies>
         <dependency>
