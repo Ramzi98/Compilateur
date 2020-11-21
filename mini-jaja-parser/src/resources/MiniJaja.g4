@@ -56,9 +56,9 @@
                      | ident '(' listexp ')'                                    #AppelI
                      | RETURN exp                                               #Return
                      | WRITE '('  ident  ')'                                    #WriteIdent
-                     | WRITE '('  STRING  ')'                                   #WriteString
+                     | WRITE '('  StringLitteral  ')'                           #WriteString
                      | WRITELN '(' ident  ')'                                   #WriteLnIdent
-                     | WRITELN '(' STRING  ')'                                  #WriteLnString
+                     | WRITELN '(' StringLitteral  ')'                          #WriteLnString
                      | IF exp LBRACE instrs RBRACE ELSE LBRACE instrs RBRACE    #IfElse
                      | IF exp LBRACE instrs RBRACE                              #If
                      | WHILE LPAR exp RPAR LBRACE instrs RBRACE                 #While
@@ -80,7 +80,7 @@
                      | exp2                                 #Exp1IsExp2
                      ;
 
- exp2                : exp2 SUB terme                       #Minus
+ exp2                : SUB terme                            #Minus
                      | exp2 ADD terme                       #Plus
                      | exp2 SUB terme                       #Sub
                      | terme                                #Exp2IsTerme
@@ -161,7 +161,6 @@
  VOID : 'void' ;
  INT : 'int' ;
  BOOLEAN : 'boolean';
- STRING : 'string';
 
  /* ===================== LITERRALS ===================== */
 
