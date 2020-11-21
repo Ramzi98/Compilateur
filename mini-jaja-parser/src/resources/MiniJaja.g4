@@ -5,7 +5,7 @@
 /* ====================== PARSER ===================== */
 
 
- classe              : CLASS ident LBRACE decls methmain RBRACE
+ classe              : CLASS ident LBRACE decls methmain RBRACE EOF
                      ;
 
  ident               :Identifier

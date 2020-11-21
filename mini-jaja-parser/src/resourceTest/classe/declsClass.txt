@@ -6,5 +6,3 @@ class Test_01 {
 
     }
 }
-
-sr:lgkbnzsrlkh,rmùlb,qrtop

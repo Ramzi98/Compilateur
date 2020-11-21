@@ -1,6 +1,9 @@
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+
+import java.text.ParseException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -714,7 +717,14 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         stack.push(typeNode);
     }
 
-
+    @Override
+    public void visitErrorNode(ErrorNode node) {
+        throw new ASTParsingException(
+                node.getSymbol().getLine(),
+                node.getSymbol().getCharPositionInLine(),
+                node.getText()
+                );
+    }
 
     private int line(ParserRuleContext ctx) {
         return ctx.start.getLine();
