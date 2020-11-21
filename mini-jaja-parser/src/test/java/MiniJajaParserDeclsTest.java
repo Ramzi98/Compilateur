@@ -54,6 +54,7 @@ public class MiniJajaParserDeclsTest extends MiniJajaParserBaseTest {
         assertThat(method.identifier().value(), is("fun"));
     }
 
+
     @Test
     public void givenOVarAndMethod__thenParsing__thenDeclsOK() throws IOException {
         TestConstructor testConstructor = new TestConstructor("decls","varAndMethodDecls");

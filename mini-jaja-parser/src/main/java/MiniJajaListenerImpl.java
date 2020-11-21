@@ -146,8 +146,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     }
 
 
-
-
     @Override
     public void exitMethode(MiniJajaParser.MethodeContext ctx) {
         MethodNode.Builder builder = MethodNode.builder()
