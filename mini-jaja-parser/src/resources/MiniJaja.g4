@@ -52,7 +52,7 @@
 
  instr               : ident1 ASSIGN exp                                        #Assign
                      | ident1 ADD_ASSIGN exp                                    #Sum
-                     | ident1 ADD ADD exp1                                      #Inc
+                     | ident1 INC                                               #Inc
                      | ident '(' listexp ')'                                    #AppelI
                      | RETURN exp                                               #Return
                      | WRITE '('  ident  ')'                                    #WriteIdent
@@ -149,6 +149,7 @@
  AND : '&&';
  OR : '||';
  ADD : '+';
+ INC : '++';
  SUB : '-';
  MUL : '*';
  DIV : '/';
