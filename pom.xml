@@ -26,6 +26,7 @@
 	    <module>mini-jaja-parser</module>
         <module>graphic-interface</module>
         <module>Stack</module>
+        <module>Compiler</module>
     </modules>
 
     <distributionManagement>
