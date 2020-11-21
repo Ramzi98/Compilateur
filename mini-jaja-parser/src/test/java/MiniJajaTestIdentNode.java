@@ -30,7 +30,7 @@ public class MiniJajaTestIdentNode  {
 
     @Test
     public void check__Ident__Correct() throws IOException {
-        TestConstructor testConstructor = new TestConstructor("identifier","IdentifierVisitorTest1");
+        TestConstructor testConstructor = new TestConstructor("identifier","IdentNodeSimple");
         parser = testConstructor.getParser();
 
         ParseTree tree = parser.ident();
@@ -43,4 +43,6 @@ public class MiniJajaTestIdentNode  {
         assertThat(identNode.line(),is(1));
         assertThat(identNode.column(),is(0));
     }
+
+
 }
