@@ -16,10 +16,14 @@ public class TestConstructor {
     private final String resourceTest = "src/resourceTest/";
 
     public TestConstructor(String folder,String nameFile) throws IOException {
-
         CharStream codePointCharStream = CharStreams.fromPath(Paths.get(resourceTest+folder+"/"+nameFile+".txt"));
         MiniJajaLexer lexer = new MiniJajaLexer(codePointCharStream);
         parser = new MiniJajaParser(new CommonTokenStream(lexer));
+    }
+
+    public TestConstructor(String toParse) {
+        CharStream stream = CharStreams.fromString(toParse);
+        parser = new MiniJajaParser(new CommonTokenStream(new MiniJajaLexer(stream)));
     }
 
     public MiniJajaParser getParser(){
