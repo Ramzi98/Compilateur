@@ -49,7 +49,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .line(line(ctx))
                 .column(column(ctx));
 
-        if (!stack.isEmpty() && stack.peekLast() instanceof DeclsNode){
+        if ( stack.peekLast() instanceof DeclsNode){
             builder.decls((DeclsNode)stack.pop());
         } else {
             builder.decls(null);
@@ -627,6 +627,8 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
     }
 
 
+
+
     @Override
     public void exitBoolean(MiniJajaParser.BooleanContext ctx) {
         BooleanNode booleanNode = BooleanNode.builder()
@@ -641,10 +643,6 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitNumber(MiniJajaParser.NumberContext ctx) {
-        System.out.println(ctx.getText());
-
-        System.out.println(ctx.NumberLitteral().toString());
-        System.out.println(ctx.NumberLitteral().getText());
         NumberNode numberNode = NumberNode.builder()
                 .line(line(ctx))
                 .column(column(ctx))
@@ -653,6 +651,8 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         
         stack.push(numberNode);
     }
+
+
 
 
 
