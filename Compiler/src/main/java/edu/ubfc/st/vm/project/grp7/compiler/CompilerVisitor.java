@@ -75,15 +75,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
                 stack.set(stack.indexOf(h),h);
 
-                /******************** Retrait Decls ***********************/
+                /********************Retrait***********************/
+                compilemode = Mode.RETRAIT;
 
-                visitRetraitDecls((DeclsNode) nodeDecls);
+                nodeDecls.accept(this);
+                //nrdss
                 newhashMap = stack.pop();
                 int nrdss = (int) newhashMap.values().toArray()[0];
                 h.replace(node,ndss+nmma+nrdss+3);
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
                 stack.set(stack.indexOf(h),h);
 
+                compilemode = Mode.NORMALE;
                 /*****************************************************/
 
                 JcPopNode jcPopNode = JcPopNode.builder()
@@ -145,26 +148,49 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         h.put(node,n);
         minijajaNodes.add(h);
         stack.push(h);
-
+        if(compilemode == Mode.NORMALE) {
             try {
                 nodeDecl.accept(this);
                 newhashMap = stack.pop();
                 int nds = (int) newhashMap.values().toArray()[0];
-                h.replace(node,n+nds);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
-                stack.set(stack.indexOf(h),h);
+                h.replace(node, n + nds);
+                minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                stack.set(stack.indexOf(h), h);
 
                 nodeDecls.accept(this);
                 newhashMap = stack.pop();
                 int ndss = (int) newhashMap.values().toArray()[0];
-                h.replace(node,nds+ndss);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
-                stack.set(stack.indexOf(h),h);
+                h.replace(node, nds + ndss);
+                minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                stack.set(stack.indexOf(h), h);
 
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else if(compilemode == Mode.RETRAIT)
+        {
+            try {
+                nodeDecls.accept(this);
+                newhashMap = stack.pop();
+                int nrdss = (int) newhashMap.values().toArray()[0];
+                h.replace(node,n+nrdss);
+                minijajaNodes.set(minijajaNodes.indexOf(h),h);
+                stack.set(stack.indexOf(h),h);
+
+                nodeDecl.accept(this);
+                newhashMap = stack.pop();
+                int nrds = (int) newhashMap.values().toArray()[0];
+                h.replace(node,nrds+nrdss);
+                minijajaNodes.set(minijajaNodes.indexOf(h),h);
+                stack.set(stack.indexOf(h),h);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
 
 
     }
@@ -209,16 +235,17 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     nodeVars.accept(this);
                     newhashMap = stack.pop();
                     int nrdvs = (int) newhashMap.values().toArray()[0];
+                    h.replace(node, n + nrdvs);
+                    minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                    stack.set(stack.indexOf(h), h);
 
                     nodeVar.accept(this);
                     newhashMap = stack.pop();
                     int nrdv = (int) newhashMap.values().toArray()[0];
-
-                    //Sauvegarder n
-                    int nf = nrdvs + nrdv;
-
-                    h.replace(node, nf);
+                    h.replace(node, nrdvs + nrdv);
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                    stack.set(stack.indexOf(h), h);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -282,6 +309,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .column(1)
                     .build();
             jajaCodeNodes.add(jcPopNode);
+
+            int nf = 2;
+
+            h.replace(node,nf);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
         }
 
 
@@ -386,27 +418,23 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             }
         }else if(compilemode == Mode.RETRAIT)
         {
-            try {
-                JcSwapNode jcSwapNode = JcSwapNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-                jajaCodeNodes.add(jcSwapNode);
 
-                JcPopNode jcPopNode = JcPopNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-                jajaCodeNodes.add(jcPopNode);
+            JcSwapNode jcSwapNode = JcSwapNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .build();
+            jajaCodeNodes.add(jcSwapNode);
 
-                int nf = 2;
+            JcPopNode jcPopNode = JcPopNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .build();
+            jajaCodeNodes.add(jcPopNode);
 
-                h.replace(node,nf);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            int nf = 2;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            h.replace(node,nf);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
         }
 
 
@@ -420,6 +448,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodeVars = node.vars();
         MiniJajaNode nodeInstrs = node.instrs();
 
+        int nr =0;
+        int nh = getHeadersNumber(nodeHeaders);
+        boolean Void = false;
+
         HashMap<MiniJajaNode, Integer> newhashMap;
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
@@ -427,6 +459,15 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         h.put(node,n+3);
         minijajaNodes.add(h);
         stack.push(h);
+
+        if(node.typeMeth().equals(TypeMethNode.TypeMeth.VOID))
+        {
+            Void = true;
+        }
+        else
+        {
+            Void = false;
+        }
 
         if(compilemode == Mode.NORMALE) {
             try {
@@ -474,12 +515,31 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
 
-                //Accept Retrait VArs
+                int instrsStartAddress = ndvs;
 
-                int nrdvs = 0;//A refaire
-                h.replace(node, nens+ndvs+niss+nrdvs+5);
-                minijajaNodes.set(minijajaNodes.indexOf(h), h);
-                stack.set(stack.indexOf(h), h);
+                if (Void) {
+                    JcPushNode jcPushNode1 = JcPushNode.builder()
+                            .line(jajaCodeNodes.size() + 1)
+                            .column(1)
+                            .valeur(JcNumberNode.builder().value(0).build())
+                            .build();
+
+                    jajaCodeNodes.add(jcPushNode);
+                }
+
+                //Accept Retrait VArs
+                /********************Retrait***********************/
+                compilemode = Mode.RETRAIT;
+
+                nodeVars.accept(this);
+                newhashMap = stack.pop();
+                int nrdvs = (int) newhashMap.values().toArray()[0];
+                h.replace(node,nens + ndvs + niss + nrdvs + nr );
+                minijajaNodes.set(minijajaNodes.indexOf(h),h);
+                stack.set(stack.indexOf(h),h);
+
+                compilemode = Mode.NORMALE;
+                /*****************************************************/
 
                 JcSwapNode jcSwapNode = JcSwapNode.builder()
                         .line(jajaCodeNodes.size()+1)
@@ -493,9 +553,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .build();
                 jajaCodeNodes.add(jcReturnNode);
 
-
-
-
+                jcGotoNode.setAdresse(n+ nens + ndvs + niss + nrdvs + nr);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -569,20 +627,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .build();
                 jajaCodeNodes.add(jcPushNode);
 
-
-                //Retrait Vars////////////////////
-
+                /********************Retrait***********************/
                 compilemode = Mode.RETRAIT;
+
                 nodeVars.accept(this);
                 newhashMap = stack.pop();
-                int nrdvs = (int) newhashMap.values().toArray()[0];
-                compilemode = Mode.NORMALE;
-
-                int nf = ndvs+niss+nrdvs+1;
-                h.replace(node,nf);
+                int nrds = (int) newhashMap.values().toArray()[0];
+                h.replace(node,ndvs+niss+nrds+1);
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
+                stack.set(stack.indexOf(h),h);
 
-                ////////////////////////
+                compilemode = Mode.NORMALE;
+                /*****************************************************/
 
             }catch (Exception e) {
                 e.printStackTrace();
@@ -945,12 +1001,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int nlexp = (int) newhashMap.values().toArray()[0];
 
-            //A faire retrait
-            int nrlexp = 0;
-            h.replace(node,nlexp + nrlexp + 2);
-            minijajaNodes.set(minijajaNodes.indexOf(h),h);
-            stack.set(stack.indexOf(h),h);
-
 
             JcInvokeNode jcInvokeNode = JcInvokeNode
                     .builder()
@@ -961,7 +1011,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             jajaCodeNodes.add(jcInvokeNode);
 
-            //Retrait
+            /********************Retrait***********************/
+            compilemode = Mode.RETRAIT;
+
+            nodeLexp.accept(this);
+            newhashMap = stack.pop();
+            int nrlexp = (int) newhashMap.values().toArray()[0];
+            h.replace(node,nlexp + nrlexp + 2);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
+            compilemode = Mode.NORMALE;
+            /*****************************************************/
 
             JcPopNode jcPopNode = JcPopNode
                     .builder()
@@ -1202,6 +1263,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
+        HashMap<MiniJajaNode, Integer> newhashMap = new HashMap<MiniJajaNode, Integer>();
         int n = (Integer)stack.peek().values().toArray()[0];
         if(node.expression() != null) {
             MiniJajaNode nodeExp = node.expression();
@@ -1209,20 +1271,49 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             h.put(node, n);
             minijajaNodes.add(h);
             stack.push(h);
-            try {
-                nodeExp.accept(this);
-                HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
-                int nexp = (int) newhashMap.values().toArray()[0];
-                h.replace(node, n+nexp);
-                nodeListExp.accept(this);
-                newhashMap = stack.pop();
-                int nlexp = (int) newhashMap.values().toArray()[0];
-                h.replace(node, nexp + nlexp);
-                minijajaNodes.set(minijajaNodes.indexOf(h), h);
-                stack.set(stack.indexOf(h),h);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (compilemode == Mode.NORMALE) {
+                try {
+                    nodeExp.accept(this);
+                    newhashMap = stack.pop();
+                    int nexp = (int) newhashMap.values().toArray()[0];
+                    h.replace(node, n + nexp);
+                    nodeListExp.accept(this);
+                    newhashMap = stack.pop();
+                    int nlexp = (int) newhashMap.values().toArray()[0];
+                    h.replace(node, nexp + nlexp);
+                    minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                    stack.set(stack.indexOf(h), h);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else if(compilemode == Mode.RETRAIT)
+            {
+                try {
+                    JcSwapNode jcSwapNode = JcSwapNode.builder()
+                            .line(jajaCodeNodes.size()+1)
+                            .column(1)
+                            .build();
+                    jajaCodeNodes.add(jcSwapNode);
+
+                    JcPopNode jcPopNode = JcPopNode.builder()
+                            .line(jajaCodeNodes.size()+1)
+                            .column(1)
+                            .build();
+                    jajaCodeNodes.add(jcPopNode);
+
+                    nodeListExp.accept(this);
+                    int nrlexp = (int) newhashMap.values().toArray()[0];
+                    h.replace(node,nrlexp+2);
+                    minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                    stack.set(stack.indexOf(h), h);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         }else{
 
@@ -1653,12 +1744,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int nlexp = (int) newhashMap.values().toArray()[0];
 
-            //A faire retrait
-            int nrlexp = 0;
-            h.replace(node,nlexp + nrlexp +1);
-            minijajaNodes.set(minijajaNodes.indexOf(h),h);
-            stack.set(stack.indexOf(h),h);
-
 
             JcInvokeNode jcInvokeNode = JcInvokeNode
                     .builder()
@@ -1670,6 +1755,21 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             jajaCodeNodes.add(jcInvokeNode);
 
             //Retrait
+            /********************Retrait***********************/
+            compilemode = Mode.RETRAIT;
+
+            nodeLexp.accept(this);
+            //nrdss
+            newhashMap = stack.pop();
+            int nrlexp = (int) newhashMap.values().toArray()[0];
+            h.replace(node,nlexp + nrlexp +1);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
+            compilemode = Mode.NORMALE;
+            /*****************************************************/
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1871,8 +1971,16 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private static int getHeadersNumber(MiniJajaNode headearsnode) {
+        int value = 0;
 
+        while ( headearsnode.children(0) != null ) {
+            value += 1;
+            headearsnode = ((HeadersNode) headearsnode).headers();
+        }
+        return value;
     }
 
 
