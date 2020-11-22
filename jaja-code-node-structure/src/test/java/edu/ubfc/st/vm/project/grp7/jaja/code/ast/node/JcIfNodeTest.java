@@ -17,12 +17,11 @@ public class JcIfNodeTest {
                 .adresse(100)
                 .build();
 
-        jcIfNode.setIfNodeJump(jcSwapNode);
+        jcIfNode.setAdresse(2);
     }
 
     private JcIfNode jcIfNode;
     private JcPopNode jajaCodeNode;
-    private JcSwapNode jcSwapNode;
 
     @Test
     public void check__JcIfNode__Line() {
@@ -41,12 +40,7 @@ public class JcIfNodeTest {
 
     @Test
     public void check__JcIfNode__adresse() {
-        assertThat(jcIfNode.adresse(), is(100));
-    }
-
-    @Test
-    public void check__setIfNodeJump__adresse() {
-        assertThat(jcIfNode.getIfNodeJump(), is(jcSwapNode));
+        assertThat(jcIfNode.adresse(), is(2));
     }
 
     @Test

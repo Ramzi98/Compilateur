@@ -7,8 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public interface JcGotoNode extends JajaCodeNode {
     int adresse();
     JajaCodeNode next();
-    void setGotoNodeJump(JajaCodeNode node);
-    JajaCodeNode getGotoNodeJump();
+    void setAdresse(int adresse);
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {

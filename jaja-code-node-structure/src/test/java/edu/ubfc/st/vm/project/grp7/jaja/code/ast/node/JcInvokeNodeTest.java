@@ -16,12 +16,10 @@ public class JcInvokeNodeTest {
                 .next(jajaCodeNode)
                 .identifier("max")
                 .build();
-        jcInvokeNode.setInvokeNodeJump(JcaloadNode);
     }
 
     private JcInvokeNode jcInvokeNode;
     private JcReturnNode jajaCodeNode;
-    private JcAloadNode JcaloadNode;
 
 
     @Test
@@ -44,10 +42,6 @@ public class JcInvokeNodeTest {
         assertThat(jcInvokeNode.identifier(), is("max"));
     }
 
-    @Test
-    public void check__setInvokeNodeJump__adresse() {
-        assertThat(jcInvokeNode.getInvokeNodeJump(), is(JcaloadNode));
-    }
 
     @Test
     public void check__JcInvokeNode__ChildrenMethod__FirstChild() {

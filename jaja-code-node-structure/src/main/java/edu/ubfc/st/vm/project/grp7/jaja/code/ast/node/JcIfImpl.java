@@ -11,7 +11,6 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
 
     private int adresse;
     private final JajaCodeNode next;
-    private JajaCodeNode ifnodejump = null;
 
 
     public JcIfImpl(int line, int column, Breakpoint bp,int adresse, JajaCodeNode next) {
@@ -32,14 +31,10 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
     }
 
     @Override
-    public void setIfNodeJump(JajaCodeNode node) {
-        this.ifnodejump = node;
+    public void setAdresse(int adresse) {
+        this.adresse = adresse;
     }
 
-    @Override
-    public JajaCodeNode getIfNodeJump() {
-        return ifnodejump;
-    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

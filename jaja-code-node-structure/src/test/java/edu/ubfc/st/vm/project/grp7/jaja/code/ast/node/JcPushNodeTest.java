@@ -10,17 +10,20 @@ import static org.hamcrest.Matchers.is;
 public class JcPushNodeTest {
     @Before
     public void setup() {
+
         jcPushNode = JcPushNode.builder()
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
-                .valeur(JcNumberNode.builder().value(2.5).build())
+                .valeur(value)
                 .build();
 
     }
 
     private JcPushNode jcPushNode;
     private JcIfNode jajaCodeNode;
+    private JcNumberNode value = JcNumberNode.builder().value(2).build();
+
 
 
     @Test
@@ -41,7 +44,7 @@ public class JcPushNodeTest {
     @Test
     public void check__JcPushNode__valeur() {
 
-       // assertThat(jcPushNode.valeur(), is(JcNumberNode.builder().value(2.5).build()));
+        assertThat(jcPushNode.valeur(), is(value));
     }
 
 

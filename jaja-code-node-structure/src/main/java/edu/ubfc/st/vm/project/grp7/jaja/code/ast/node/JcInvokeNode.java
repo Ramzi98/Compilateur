@@ -7,8 +7,6 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public interface JcInvokeNode extends JajaCodeNode {
     String identifier();
     JajaCodeNode next();
-    void setInvokeNodeJump(JajaCodeNode node);
-    JajaCodeNode getInvokeNodeJump();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {

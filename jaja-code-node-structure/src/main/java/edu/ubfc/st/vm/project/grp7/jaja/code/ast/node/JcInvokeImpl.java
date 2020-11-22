@@ -10,7 +10,6 @@ public class JcInvokeImpl extends ASTNodeBreakpoint implements JcInvokeNode {
 
     private final String identifier;
     private final JajaCodeNode next;
-    private JajaCodeNode invokenodejump = null;
 
     public JcInvokeImpl(int line, int column, Breakpoint bp, String identifier, JajaCodeNode next) {
         super(line, column,bp);
@@ -28,15 +27,6 @@ public class JcInvokeImpl extends ASTNodeBreakpoint implements JcInvokeNode {
         return this.next;
     }
 
-    @Override
-    public void setInvokeNodeJump(JajaCodeNode node) {
-        this.invokenodejump = node;
-    }
-
-    @Override
-    public JajaCodeNode getInvokeNodeJump() {
-        return invokenodejump;
-    }
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
