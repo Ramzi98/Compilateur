@@ -1,0 +1,4 @@
+int x = 92;
+boolean fun(int x) {
+    return x == 2;
+};

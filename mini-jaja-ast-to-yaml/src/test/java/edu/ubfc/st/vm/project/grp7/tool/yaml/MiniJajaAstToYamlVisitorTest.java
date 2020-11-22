@@ -67,12 +67,12 @@ public class MiniJajaAstToYamlVisitorTest {
         stringRelatedVisitor__setUp();
 
         NumberNode number = NumberNode.builder()
-                .value(17.5)
+                .value(17)
                 .build();
 
         number.accept(this.visitor);
 
-        compareOutputWithYamlString("NumberNode:\n  value: 17.5");
+        compareOutputWithYamlString("NumberNode:\n  value: 17");
     }
 
     @Test

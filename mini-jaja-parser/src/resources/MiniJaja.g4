@@ -5,7 +5,7 @@
 /* ====================== PARSER ===================== */
 
 
- classe              : CLASS ident LBRACE decls methmain RBRACE
+ classe              : CLASS ident LBRACE decls methmain RBRACE EOF
                      ;
 
  ident               :Identifier
@@ -52,7 +52,7 @@
 
  instr               : ident1 ASSIGN exp                                        #Assign
                      | ident1 ADD_ASSIGN exp                                    #Sum
-                     | ident1 INC exp1                                          #Inc
+                     | ident1 INC                                               #Inc
                      | ident '(' listexp ')'                                    #AppelI
                      | RETURN exp                                               #Return
                      | WRITE '('  ident  ')'                                    #WriteIdent
@@ -148,9 +148,8 @@
  EQUAL : '==';
  AND : '&&';
  OR : '||';
- INC : '++';
- DEC : '--';
  ADD : '+';
+ INC : '++';
  SUB : '-';
  MUL : '*';
  DIV : '/';
@@ -185,17 +184,8 @@
  fragment NonDigit : [a-zA-Z_] ;
 
  // Number Literals
- NumberLitteral
-    :	DigitSequence '.' Digit* ExponentPart?
-    |	'.' Digit* ExponentPart?
-    |	DigitSequence ExponentPart
-    |	DigitSequence
-    ;
-
- fragment ExponentPart :    [eE] SignedInteger ;
- fragment SignedInteger :   [+-]? DigitSequence ;
- fragment DigitSequence :   '0' | NonZeroDigit Digit* ;
- fragment Digit:	        '0' | NonZeroDigit;
+ NumberLitteral :           '0' | NonZeroDigit Digit* ;
+ fragment Digit :	        '0' | NonZeroDigit;
  fragment NonZeroDigit :    [1-9] ;
 
  /* ======================= SKIPS ======================= */

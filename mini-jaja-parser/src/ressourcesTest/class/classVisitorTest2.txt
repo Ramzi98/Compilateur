@@ -1,6 +1,0 @@
-class test{
-int i = 5;
-main{
-
-}
-}

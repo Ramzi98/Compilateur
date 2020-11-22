@@ -4,15 +4,15 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 
 public class NumberNodeImpl extends ASTNodeBreakpoint implements NumberNode {
-    private final Double value;
+    private final Integer value;
 
-    public NumberNodeImpl(int line, int column, Breakpoint bp, Double value) {
+    public NumberNodeImpl(int line, int column, Breakpoint bp, Integer value) {
         super(line, column, bp);
         this.value = value;
     }
 
     @Override
-    public Double value() {
+    public Integer value() {
         return this.value;
     }
 }
