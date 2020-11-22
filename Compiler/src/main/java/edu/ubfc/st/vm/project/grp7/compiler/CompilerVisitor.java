@@ -305,7 +305,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node))
+                        .type(getType(node.typeMeth().value()))
                         .adresse(0)
                         .build();
 
@@ -424,7 +424,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Cst)
-                        .type(getType(node))
+                        .type(getType(node.type().value()))
                         .adresse(0)
                         .build();
 
@@ -480,10 +480,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         if(node.typeMeth().equals(TypeMethNode.TypeMeth.VOID))
         {
             Void = true;
+            nr = 6;
         }
         else
         {
             Void = false;
+            nr = 5;
         }
 
         if(compilemode == Mode.NORMALE) {
@@ -500,7 +502,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Meth)
-                        .type(getType(node))
+                        .type(getType(node.typeMeth().value()))
                         .adresse(0)
                         .build();
                 jajaCodeNodes.add(jcNewNode);
@@ -531,8 +533,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 h.replace(node, n+nens+ndvs+niss+3);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
-
-                int instrsStartAddress = ndvs;
 
                 if (Void) {
                     JcPushNode jcPushNode1 = JcPushNode.builder()
@@ -733,7 +733,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node))
+                        .type(getType(node.type().value()))
                         .adresse(0)
                         .build();
                 jajaCodeNodes.add(jcNewNode);
@@ -1891,68 +1891,38 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     }
 
-    public JcNewNode.Type getType(CstNode node)
+    public JcNewNode.Type getType(TypeMethNode.TypeMeth type)
     {
-        if(node.type().value() == TypeNode.Type.INT)
+        if(type == TypeMethNode.TypeMeth.INT)
         {
             return JcNewNode.Type.INT;
         }
-        else if (node.type().value() == TypeNode.Type.BOOLEAN)
+        else if (type == TypeMethNode.TypeMeth.BOOLEAN)
         {
             return JcNewNode.Type.BOOLEAN;
         }
-        return null;
-    }
-
-    public JcNewNode.Type getType(MethodNode node)
-    {
-        if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
-        {
-            return JcNewNode.Type.VOID;
-        }
-        return null;
-    }
-    public JcNewNode.Type getType(HeaderNode node)
-    {
-        if(node.type().value() == TypeNode.Type.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.type().value() == TypeNode.Type.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        return null;
-    }
-    public JcNewNode.Type getType(VarNode node)
-    {
-        if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
+        else if (type == TypeMethNode.TypeMeth.VOID)
         {
             return JcNewNode.Type.VOID;
         }
         return null;
     }
 
+    public JcNewNode.Type getType(TypeNode.Type type)
+    {
+        if(type == TypeNode.Type.INT)
+        {
+            return JcNewNode.Type.INT;
+        }
+        else if (type == TypeNode.Type.BOOLEAN)
+        {
+            return JcNewNode.Type.BOOLEAN;
+        }
+        return null;
+    }
 
 
-
-    private static int getHeadersNumber(MiniJajaNode headearsnode) {
+    public int getHeadersNumber(MiniJajaNode headearsnode) {
         int value = 0;
 
         while ( headearsnode.children(0) != null ) {
