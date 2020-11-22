@@ -5,9 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.StringNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,8 +17,7 @@ import java.util.Stack;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-
-public class NodeVarCompileTest {
+public class NodeStringCompileTest {
 
     public CompilerVisitor compiler;
 
@@ -51,29 +48,24 @@ public class NodeVarCompileTest {
             }
         };
 
-        ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
-        HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,1);
+        ArrayList<HashMap<MiniJajaNode, Integer>> miniJajaNodes = new ArrayList<>();
+        HashMap<MiniJajaNode, Integer> startingHash = new HashMap<>();
+        startingHash.put(classe, 1);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
-
     }
 
     @Test
-    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeStringCompileVisitor() throws IOException, IllFormedNodeException {
 
-        TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
-        IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2).build();
-        VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
-        compiler.visit(varNode);
 
-        assertThat(compiler.getJajaCodeNodes().size(), is(2));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
+        StringNode string = StringNode.builder().value("ident").build();
+        compiler.visit(string);
+        assertThat(compiler.getJajaCodeNodes().size(), is(1));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
 
 
     }
-
 }

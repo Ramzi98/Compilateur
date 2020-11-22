@@ -5,9 +5,8 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,8 +18,7 @@ import java.util.Stack;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-
-public class NodeVarCompileTest {
+public class NodeListExpCompileTest {
 
     public CompilerVisitor compiler;
 
@@ -50,10 +48,9 @@ public class NodeVarCompileTest {
                 return 0;
             }
         };
-
-        ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
-        HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,1);
+        ArrayList<HashMap<MiniJajaNode, Integer>> miniJajaNodes = new ArrayList<>();
+        HashMap<MiniJajaNode, Integer> startingHash = new HashMap<>();
+        startingHash.put(classe, 35);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -61,19 +58,45 @@ public class NodeVarCompileTest {
 
     }
 
+
     @Test
-    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeListeExpCompileVisitor() throws IOException, IllFormedNodeException {
 
-        TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
-        IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2).build();
-        VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
-        compiler.visit(varNode);
-
-        assertThat(compiler.getJajaCodeNodes().size(), is(2));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
-
-
+        ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(exnil).build();
+        compiler.visit(lexp);
+        assertThat(compiler.getJajaCodeNodes().size(), is(1));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
     }
 
+    private static final ListExpNode exnil = new ListExpNode() {
+        @Override
+        public MiniJajaNode expression() {
+            return null;
+        }
+
+        @Override
+        public ListExpNode listexp() {
+            return null;
+        }
+
+        @Override
+        public Breakpoint breakpoint() {
+            return null;
+        }
+
+        @Override
+        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
+            return null;
+        }
+
+        @Override
+        public int line() {
+            return 0;
+        }
+
+        @Override
+        public int column() {
+            return 0;
+        }
+    };
 }

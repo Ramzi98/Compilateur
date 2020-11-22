@@ -4,10 +4,10 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.AndNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.EqualsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,8 +19,7 @@ import java.util.Stack;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-
-public class NodeVarCompileTest {
+public class NodeEqualsCompileTest {
 
     public CompilerVisitor compiler;
 
@@ -50,10 +49,9 @@ public class NodeVarCompileTest {
                 return 0;
             }
         };
-
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,1);
+        startingHash.put(classe,35);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -61,19 +59,17 @@ public class NodeVarCompileTest {
 
     }
 
+
     @Test
-    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeEqualsCompileVisitor() throws IOException, IllFormedNodeException {
 
-        TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
-        IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2).build();
-        VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
-        compiler.visit(varNode);
+        NumberNode expNode = NumberNode.builder().value(2).build();
+        BooleanNode expNode2 = BooleanNode.builder().value(false).build();
 
-        assertThat(compiler.getJajaCodeNodes().size(), is(2));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
-
+        EqualsNode equalsNode = EqualsNode.builder().leftOperand(expNode).rightOperand(expNode2).build();
+        compiler.visit(equalsNode);
+        assertThat(compiler.getJajaCodeNodes().size(), is(3));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(3));
 
     }
-
 }
