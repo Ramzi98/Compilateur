@@ -36,6 +36,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         this.stack = stack;
     }
 
+    public void setMinijajaNodes(ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes) {
+        this.minijajaNodes = minijajaNodes;
+    }
+
     @Override
     public void visit(ClasseNode node) {
         MiniJajaNode nodeDecls = node.decls();
@@ -228,7 +232,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         }
         else {
             HashMap<MiniJajaNode, Integer> vnil = new HashMap<MiniJajaNode, Integer>();
-            vnil.put(node, n);
+            vnil.put(node, 0);
             minijajaNodes.add(vnil);
             stack.push(vnil);
         }
@@ -632,10 +636,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         }
         else
         {
-            HashMap<MiniJajaNode, Integer> vnil = new HashMap<MiniJajaNode, Integer>();
-            vnil.put(node, n);
-            minijajaNodes.add(vnil);
-            stack.push(vnil);
+            HashMap<MiniJajaNode, Integer> enil = new HashMap<MiniJajaNode, Integer>();
+            enil.put(node, n);
+            minijajaNodes.add(enil);
+            stack.push(enil);
         }
 
 
@@ -709,7 +713,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         }else{
 
             HashMap<MiniJajaNode, Integer> inil = new HashMap<MiniJajaNode, Integer>();
-            inil.put(node, n);
+            inil.put(node, 0);
             minijajaNodes.add(inil);
             stack.push(inil);
         }
@@ -759,7 +763,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             }else
                 {
                     MiniJajaNode nodeExp = node.expression();
-                    h.put(node,0);
+                    h.put(node,n);
                     minijajaNodes.add(h);
                     stack.push(h);
                     try {
@@ -829,7 +833,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         }else{
 
             MiniJajaNode nodeExp = node.expression();
-            h.put(node,0);
+            h.put(node,n);
             minijajaNodes.add(h);
             stack.push(h);
             try {
@@ -1226,10 +1230,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             }
         }else{
 
-            HashMap<MiniJajaNode, Integer> inil = new HashMap<MiniJajaNode, Integer>();
-            inil.put(node, n);
-            minijajaNodes.add(inil);
-            stack.push(inil);
+            HashMap<MiniJajaNode, Integer> exnil = new HashMap<MiniJajaNode, Integer>();
+            exnil.put(node, 0);
+            minijajaNodes.add(exnil);
+            stack.push(exnil);
         }
 
     }

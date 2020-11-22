@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -44,76 +45,17 @@ public class CompilerVisitorTest {
                  return 0;
              }
          };
-         HashMap<MiniJajaNode,Integer> startingHash = new HashMap<>();
+         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
+        HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
          startingHash.put(classe,1);
          stack.push(startingHash);
+         miniJajaNodes.add(startingHash);
 
          compiler.setStack(stack);
+         compiler.setMinijajaNodes(miniJajaNodes);
     }
 
 
-    @Test
-    public void NodeInstrsCompilerVisitor() throws IOException, IllFormedNodeException {
-
-        IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2).build();
-        AssignNode assignNode = AssignNode.builder().identifier(ident).expression(expression).build();
-
-        InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instrs).build();
 
 
-        compiler.visit(instsrNode);
-
-        for (HashMap<MiniJajaNode, Integer> mjjnodes : compiler.getMinijajaNodes() ){
-
-            System.out.println(mjjnodes.entrySet());
-        }
-
-    }
-
-    private static final InstrsNode instrs = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            throw new IndexOutOfBoundsException();
-        }
-
-        @Override
-        public int line() {
-            return 13;
-        }
-
-        @Override
-        public int column() {
-            return 10;
-        }
-    };
-
-    @Test
-    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException {
-
-        TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
-        IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2).build();
-        VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
-
-        compiler.visit(varNode);
-
-
-
-    }
 }
