@@ -5,14 +5,15 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
 
 public class JcNewarrayImpl extends ASTNodeBreakpoint implements JcNewarrayNode {
 
     private final String identifier;
-    private final Type type;
+    private final TypeMethNode.TypeMeth type;
     private final JajaCodeNode next;
 
-    public JcNewarrayImpl(int line, int column, Breakpoint bp,String identifier, Type type, JajaCodeNode next) {
+    public JcNewarrayImpl(int line, int column, Breakpoint bp, String identifier, TypeMethNode.TypeMeth type, JajaCodeNode next) {
         super(line, column,bp);
         this.identifier = identifier;
         this.type = type;
@@ -25,7 +26,7 @@ public class JcNewarrayImpl extends ASTNodeBreakpoint implements JcNewarrayNode 
     }
 
     @Override
-    public Type type() {
+    public TypeMethNode.TypeMeth type() {
         return this.type;
     }
 

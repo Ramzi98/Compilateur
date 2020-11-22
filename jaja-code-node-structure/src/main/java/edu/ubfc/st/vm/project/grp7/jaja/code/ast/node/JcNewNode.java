@@ -3,6 +3,8 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
 
 public interface JcNewNode extends JajaCodeNode {
     String identifier();
@@ -56,11 +58,15 @@ public interface JcNewNode extends JajaCodeNode {
 
 
     }
+
+
+    enum  Type{
+        INT, BOOLEAN, VOID
+    }
+
     enum Sorte {
         Cst, Var, Meth
     }
 
-    enum Type {
-        INT, BOOLEAN, VOID
-    }
+
 }

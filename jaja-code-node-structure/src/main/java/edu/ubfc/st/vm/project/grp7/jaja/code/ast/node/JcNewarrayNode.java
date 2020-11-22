@@ -3,10 +3,11 @@ package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
 
 public interface JcNewarrayNode extends JajaCodeNode {
     String identifier();
-    Type type();
+    TypeMethNode.TypeMeth type();
     JajaCodeNode next();
 
     @Override
@@ -24,8 +25,8 @@ public interface JcNewarrayNode extends JajaCodeNode {
             return this;
         }
 
-        Type type;
-        public JcNewarrayNode.Builder type(Type type) {
+        TypeMethNode.TypeMeth type;
+        public JcNewarrayNode.Builder type(TypeMethNode.TypeMeth type) {
             this.type = type;
             return this;
         }

@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class JcNewarrayNodeTest {
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
-                .type(JcNewarrayNode.Type.INT)
+                .type(TypeMethNode.TypeMeth.INT)
                 .identifier("max")
                 .build();
 
@@ -41,7 +42,7 @@ public class JcNewarrayNodeTest {
 
     @Test
     public void check__JcNewarrayNode__type() {
-        assertThat(jcNewarrayNode.type(), is(JcNewarrayNode.Type.INT));
+        assertThat(jcNewarrayNode.type(), is(TypeMethNode.TypeMeth.INT));
     }
 
     @Test
