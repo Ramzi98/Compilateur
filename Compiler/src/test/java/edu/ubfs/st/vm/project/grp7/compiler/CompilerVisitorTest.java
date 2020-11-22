@@ -56,7 +56,7 @@ public class CompilerVisitorTest {
     public void NodeInstrsCompilerVisitor() throws IOException, IllFormedNodeException {
 
         IdentNode ident = IdentNode.builder().value("I").build();
-        NumberNode expression = NumberNode.builder().value(2.5).build();
+        NumberNode expression = NumberNode.builder().value(2).build();
         AssignNode assignNode = AssignNode.builder().identifier(ident).expression(expression).build();
 
         InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instrs).build();
