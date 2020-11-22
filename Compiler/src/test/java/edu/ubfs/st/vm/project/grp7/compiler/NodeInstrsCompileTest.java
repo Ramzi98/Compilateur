@@ -66,12 +66,17 @@ public class NodeInstrsCompileTest {
         IdentNode ident = IdentNode.builder().value("I").build();
         NumberNode expression = NumberNode.builder().value(2).build();
         AssignNode assignNode = AssignNode.builder().identifier(ident).expression(expression).build();
-        InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instrs).build();
+
+        IdentNode ident2 = IdentNode.builder().value("J").build();
+        NumberNode expression2 = NumberNode.builder().value(3).build();
+        AssignNode assignNode2 = AssignNode.builder().identifier(ident2).expression(expression2).build();
+        InstrsNode instsrNode2 = InstrsNode.builder().line(1).column(0).instruction(assignNode2).instrs(instrs).build();
+        InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instsrNode2).build();
 
         compiler.visit(instsrNode);
 
-        assertThat(compiler.getJajaCodeNodes().size(), is(2));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
+        assertThat(compiler.getJajaCodeNodes().size(), is(4));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(4));
 
     }
 
