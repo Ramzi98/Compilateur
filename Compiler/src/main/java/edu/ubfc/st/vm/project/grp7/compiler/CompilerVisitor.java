@@ -707,7 +707,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         else
         {
             HashMap<MiniJajaNode, Integer> enil = new HashMap<MiniJajaNode, Integer>();
-            enil.put(node, n);
+            enil.put(node, 0);
             minijajaNodes.add(enil);
             stack.push(enil);
         }
@@ -767,7 +767,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 nodeInstr.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
                 int nis = (int) newhashMap.values().toArray()[0];
-                System.out.println(nis);
                 h.replace(node, nis);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 nodeInstrs.accept(this);
@@ -866,11 +865,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         minijajaNodes.add(h);
         stack.push(h);
 
-        if(nodeIdent instanceof ArrayNode){
+        if(nodeIdent instanceof ArrayItemNode){
 
             try {
 
-                MiniJajaNode nodeExp = ((ArrayNode) nodeIdent).expression();
+                MiniJajaNode nodeExp = ((ArrayItemNode) nodeIdent).expression();
                 nodeExp.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
                 int ne = (int) newhashMap.values().toArray()[0];
@@ -887,7 +886,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .builder()
                         .line(jajaCodeNodes.size() + 1)
                         .column(1)
-                        .identifier(((IdentNode)nodeIdent).value())
+                        .identifier(((ArrayItemNode)nodeIdent).identifier().value())
                         .build();
 
                 jajaCodeNodes.add(jcAincNode);
@@ -895,7 +894,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 e.printStackTrace();
             }
 
-        }else{
+        }else if(nodeIdent instanceof IdentNode){
 
             MiniJajaNode nodeExp = node.expression();
             h.put(node,n);
@@ -936,11 +935,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         minijajaNodes.add(h);
         stack.push(h);
 
-        if(nodeIdent instanceof ArrayNode){
+        if(nodeIdent instanceof ArrayItemNode){
 
             try {
 
-                MiniJajaNode nodeExp = ((ArrayNode) nodeIdent).expression();
+                MiniJajaNode nodeExp = ((ArrayItemNode) nodeIdent).expression();
                 nodeExp.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
                 int ne = (int) newhashMap.values().toArray()[0];
@@ -962,7 +961,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .builder()
                         .line(jajaCodeNodes.size() +1)
                         .column(1)
-                        .identifier(((IdentNode)nodeIdent).value())
+                        .identifier(((ArrayItemNode)nodeIdent).identifier().value())
                         .build();
 
                 jajaCodeNodes.add(jcAincNode);
@@ -971,7 +970,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 e.printStackTrace();
             }
 
-        }else{
+        }else if(nodeIdent instanceof   IdentNode){
             h.put(node,2);
             minijajaNodes.add(h);
 
@@ -985,13 +984,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             jajaCodeNodes.add(jcPushNode);
 
             JcIncNode jcIncNode = JcIncNode
-                        .builder()
-                        .line(jajaCodeNodes.size() + 1)
-                        .column(1)
-                        .identifier(((IdentNode)nodeIdent).value())
-                        .build();
+                    .builder()
+                    .line(jajaCodeNodes.size() + 1)
+                    .column(1)
+                    .identifier(((IdentNode)nodeIdent).value())
+                    .build();
 
-                jajaCodeNodes.add(jcIncNode);
+            jajaCodeNodes.add(jcIncNode);
+
 
         }
     }
