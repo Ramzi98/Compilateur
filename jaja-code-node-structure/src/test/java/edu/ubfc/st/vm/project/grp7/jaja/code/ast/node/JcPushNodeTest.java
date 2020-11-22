@@ -14,7 +14,7 @@ public class JcPushNodeTest {
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
-                .valeur(JcPushNode.Valeur.INT)
+                .valeur(JcNumberNode.builder().value(2.5).build())
                 .build();
 
     }
@@ -40,7 +40,7 @@ public class JcPushNodeTest {
 
     @Test
     public void check__JcPushNode__valeur() {
-        assertThat(jcPushNode.valeur(), is(JcPushNode.Valeur.INT));
+        assertThat(jcPushNode.valeur(), is(JcNumberNode.builder().value(2.5).build()));
     }
 
     @Test
