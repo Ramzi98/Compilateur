@@ -1,19 +1,19 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.stack.Stack;
 
 public class MiniJajaInterpreterImpl implements MiniJajaInterpreter {
-    private final Stack stack;
+    private final Memory memory;
     private final ClasseNode ast;
-    public MiniJajaInterpreterImpl(Stack stack, ClasseNode ast) {
-        this.stack = stack;
+    public MiniJajaInterpreterImpl(Memory memory, ClasseNode ast) {
+        this.memory = memory;
         this.ast = ast;
     }
 
     @Override
     public void interpret() throws Exception {
-        MiniJajaInterpreterVisitor visitor = new MiniJajaInterpreterVisitor(this.stack);
+        MiniJajaInterpreterVisitor visitor = new MiniJajaInterpreterVisitor(this.memory);
         ast.accept(visitor);
     }
 }

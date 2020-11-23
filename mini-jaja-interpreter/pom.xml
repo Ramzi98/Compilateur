@@ -21,13 +21,14 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-        <dependency>
-            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-            <artifactId>Stack</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-node-structure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>memory</artifactId>
         </dependency>
     </dependencies>
 </project>

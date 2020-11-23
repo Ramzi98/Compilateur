@@ -11,7 +11,7 @@ classe : adresse instr SEMI classe
 
 instr : INIT
       | SWAP
-      | NEW LPAR ident COMMA type COMMA sorte COMMA adresse RPAR
+      | NEW LPAR ident COMMA type COMMA nature COMMA adresse RPAR
       | NEWARRAY LPAR ident COMMA type RPAR
       | INVOKE LPAR ident RPAR
       | RETURN
@@ -65,7 +65,7 @@ type : INT
      | VOID
      ;
 
-sorte : CST
+nature : CST
       | VAR
       | METH
       ;
