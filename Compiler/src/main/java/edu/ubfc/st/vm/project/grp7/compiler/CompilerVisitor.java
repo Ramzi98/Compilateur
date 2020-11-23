@@ -20,6 +20,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     private  ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
     private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<HashMap<MiniJajaNode, Integer>>();
     private Mode compilemode = Mode.NORMALE;
+    private int nheader;
 
     int line = 1;
     int column = 0;
@@ -467,6 +468,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         int nr =0;
         int nh = getHeadersNumber(nodeHeaders);
+        nheader = nh;
         boolean Void = false;
 
         HashMap<MiniJajaNode, Integer> newhashMap;
@@ -477,7 +479,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         minijajaNodes.add(h);
         stack.push(h);
 
-        if(node.typeMeth().equals(TypeMethNode.TypeMeth.VOID))
+        if(node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
         {
             Void = true;
             nr = 6;
@@ -541,7 +543,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                             .valeur(JcNumberNode.builder().value(0).build())
                             .build();
 
-                    jajaCodeNodes.add(jcPushNode);
+                    jajaCodeNodes.add(jcPushNode1);
                 }
 
                 //Accept Retrait VArs
@@ -734,13 +736,15 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Var)
                         .type(getType(node.type().value()))
-                        .adresse(0)
+                        .adresse(nheader)
                         .build();
                 jajaCodeNodes.add(jcNewNode);
 
                 int nf = 1;
                 h.replace(node,nf);
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
+
+                nheader--;
 
             } catch (Exception e) {
                 e.printStackTrace();

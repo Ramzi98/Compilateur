@@ -17,7 +17,7 @@ import java.util.Stack;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class NodeMethodeCompileTest {
+public class NodeMethodeRetraitTest {
     public CompilerVisitor compiler;
 
     @Before
@@ -58,17 +58,19 @@ public class NodeMethodeCompileTest {
 
 
     @Test
-    public void NodeMethodeCompileVisitor() throws IOException, IllFormedNodeException {
+    public void NodeMethodeRetraitVisitor() throws IOException, IllFormedNodeException {
 
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)
                 .column(0)
-                .value(TypeMethNode.TypeMeth.INT)
+                .value(TypeMethNode.TypeMeth.VOID)
                 .build();
 
         IdentNode ident = IdentNode.builder().value("I").build();
 
         IdentNode identf = IdentNode.builder().value("f").build();
+
+        IdentNode identclasse = IdentNode.builder().value("C").build();
 
         NumberNode expression = NumberNode.builder().value(2).build();
 
@@ -79,6 +81,15 @@ public class NodeMethodeCompileTest {
                 .identifier(ident)
                 .expression(expression)
                 .build();
+
+        VarsNode varsNode = VarsNode.builder()
+                .line(1)
+                .column(10)
+                .var(varNode)
+                .vars(vnil)
+                .build();
+
+
 
         IdentNode ident2 = IdentNode.builder().value("I").build();
         NumberNode expression2 = NumberNode.builder().value(2).build();
@@ -173,14 +184,38 @@ public class NodeMethodeCompileTest {
                 .vars(varsNode3)
                 .build();
 
+        DeclsNode declsNode = DeclsNode.builder()
+                .line(1)
+                .column(0)
+                .decl(methodNode)
+                .decls(vnil1)
+                .build();
 
-        compiler.visit(methodNode);
+        MainNode mainNode = MainNode.builder()
+                .line(1)
+                .column(0)
+                .vars(varsNode)
+                .instrs(instsrNode)
+                .build();
 
-        assertThat(compiler.getJajaCodeNodes().size(), is(17));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(17));
+        ClasseNode classeNode = ClasseNode.builder()
+                .line(1)
+                .column(0)
+                .identifier(identclasse)
+                .decls(declsNode)
+                .methmain(mainNode)
+                .build();
 
-        JcGotoNode jcGotoNode = (JcGotoNode) compiler.getJajaCodeNodes().get(2);
-        assertThat(jcGotoNode.adresse(), is(18));
+
+
+
+        compiler.visit(classeNode);
+
+        assertThat(compiler.getJajaCodeNodes().size(), is(30));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(30));
+
+        JcGotoNode jcGotoNode = (JcGotoNode) compiler.getJajaCodeNodes().get(3);
+        assertThat(jcGotoNode.adresse(), is(20));
 
     }
 
@@ -311,5 +346,4 @@ public class NodeMethodeCompileTest {
             return 0;
         }
     };
-
 }
