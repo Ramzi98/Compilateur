@@ -33,4 +33,8 @@ public interface Memory {
     Object valT(String id);
     OBJ object(String id);
     SORTE sorte(String id);
+
+    static Memory getInstance() {
+        return new IDEMemory(new IDEStack(), new IDEHeap());
+    }
 }

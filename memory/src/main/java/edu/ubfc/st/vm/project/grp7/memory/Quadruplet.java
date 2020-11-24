@@ -32,4 +32,15 @@ public class Quadruplet {
     public SORTE type() {
         return this.type;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "<%s, %s, %s, %s>",
+                this.id,
+                this.val,
+                this.nature,
+                this.type
+        );
+    }
 }
