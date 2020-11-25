@@ -4,6 +4,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeadersNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarsNode;
+import org.omg.CORBA.OBJ_ADAPTER;
 
 public class IDEMemory implements Memory {
     private final Stack stack;
@@ -17,12 +18,14 @@ public class IDEMemory implements Memory {
 
     @Override
     public Memory pushContext(String context) {
-        return null;
+        stack.pushStack(context);
+        return this;
     }
 
     @Override
     public Memory popContext() {
-        return null;
+        stack.popStack();
+        return this;
     }
 
     @Override
@@ -45,31 +48,46 @@ public class IDEMemory implements Memory {
 
     @Override
     public Memory identVal(String id, SORTE t, int s) {
-        return null;
+        stack.identVal(id,t,s);
+        return this;
     }
 
     @Override
     public Memory declVar(String id, Object val, SORTE type) {
-        return null;
+        stack.empiler(new Quadruplet(id,val,OBJ.VAR,type));
+        return this;
     }
 
     @Override
     public Memory declCst(String id, Object val, SORTE type) {
-        return null;
+        if (val == null){
+            stack.empiler(new Quadruplet(id,val,OBJ.VCST,type));
+        }else{
+            stack.empiler(new Quadruplet(id,val,OBJ.CST,type));
+        }
+        return this;
     }
 
     @Override
     public Memory declTab(String id, Object val, SORTE type) {
-        return null;
+        stack.empiler(new Quadruplet(id,heap.CreerTas(val,type),OBJ.TAB,type));
+        return this;
     }
 
     @Override
     public Memory declMeth(String id, Object val, SORTE type) {
-        return null;
+        stack.empiler(new Quadruplet(id,val,OBJ.METH,type));
+        return this;
     }
 
     @Override
     public Memory retirerDecl(String id) {
+        //RetirerDecl(i, []) = []
+        //I RetirerDecl(i, < i1, v1, o,t > .m) = Si i == i1 alors
+        //(Si o == tab alors RetirerTas(v1,t) endif m) sinon
+        //< i1, v1, o,t > .RetirerDecl(i, m)
+
+        //stack.depiler();
         return null;
     }
 

@@ -5,4 +5,8 @@ public interface Stack {
      void depiler();
      void echanger();
      void ajouterRef(Object ref, SORTE type);
+     void pushStack(String scope);
+     void popStack();
+     void identVal(String id, SORTE t, int s);
+
 }
