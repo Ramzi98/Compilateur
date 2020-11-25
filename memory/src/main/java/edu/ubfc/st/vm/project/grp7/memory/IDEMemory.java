@@ -4,7 +4,6 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeadersNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarsNode;
-import org.omg.CORBA.OBJ_ADAPTER;
 
 public class IDEMemory implements Memory {
     private final Stack stack;
