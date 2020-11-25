@@ -6,6 +6,9 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarsNode;
 
 public interface Memory {
+    Memory pushContext(String context);
+    Memory popContext();
+
     Memory empiler(Quadruplet q);
     Memory depiler();
     Memory echanger();
