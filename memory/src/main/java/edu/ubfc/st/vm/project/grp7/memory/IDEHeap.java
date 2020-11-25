@@ -2,6 +2,11 @@ package edu.ubfc.st.vm.project.grp7.memory;
 
 public class IDEHeap implements Heap {
     @Override
+    public Object ajouterRef(Object ref, SORTE type) {
+        return null;
+    }
+
+    @Override
     public void affecterTas(Object ref, int index, Object val) {
 
     }

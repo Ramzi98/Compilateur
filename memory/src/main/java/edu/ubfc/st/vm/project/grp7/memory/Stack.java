@@ -8,12 +8,8 @@ public interface Stack {
      void pushStack(String scope);
      void popStack();
      Quadruplet removeFirst(String id);
+     Quadruplet peekFirst(String id);
+     
      void identVal(String id, SORTE t, int s);
      boolean isEmpty();
-
-     Object val(String id);
-     Object valT(String id);
-     OBJ object(String id);
-     SORTE sorte(String id);
-
 }

@@ -2,22 +2,7 @@ package edu.ubfc.st.vm.project.grp7.memory;
 
 public class IDEStack implements Stack {
     @Override
-    public Object val(String id) {
-        return null;
-    }
-
-    @Override
-    public Object valT(String id) {
-        return null;
-    }
-
-    @Override
-    public OBJ object(String id) {
-        return null;
-    }
-
-    @Override
-    public SORTE sorte(String id) {
+    public Quadruplet peekFirst(String id) {
         return null;
     }
 
