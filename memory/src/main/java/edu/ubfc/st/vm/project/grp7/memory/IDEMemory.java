@@ -47,22 +47,22 @@ public class IDEMemory implements Memory {
 
     @Override
     public Memory identVal(String id, SORTE t, int s) {
-        stack.identVal(id,t,s);
+        stack.identVal(id, t, s);
         return this;
     }
 
     @Override
     public Memory declVar(String id, Object val, SORTE type) {
-        stack.empiler(new Quadruplet(id,val,OBJ.VAR,type));
+        stack.empiler(new Quadruplet(id, val, OBJ.VAR, type));
         return this;
     }
 
     @Override
     public Memory declCst(String id, Object val, SORTE type) {
         if (val == null){
-            stack.empiler(new Quadruplet(id,val,OBJ.VCST,type));
+            stack.empiler(new Quadruplet(id, val, OBJ.VCST ,type));
         }else{
-            stack.empiler(new Quadruplet(id,val,OBJ.CST,type));
+            stack.empiler(new Quadruplet(id, val, OBJ.CST, type));
         }
         return this;
     }
@@ -81,13 +81,16 @@ public class IDEMemory implements Memory {
 
     @Override
     public Memory retirerDecl(String id) {
-        //RetirerDecl(i, []) = []
-        //I RetirerDecl(i, < i1, v1, o,t > .m) = Si i == i1 alors
-        //(Si o == tab alors RetirerTas(v1,t) endif m) sinon
-        //< i1, v1, o,t > .RetirerDecl(i, m)
+        if(stack.isEmpty()) {
+            return this;
+        }
 
-        //stack.depiler();
-        return null;
+        Quadruplet quad = stack.removeFirst(id);
+        if (quad != null && quad.nature() == OBJ.TAB) {
+            heap.retirerTas(quad.val(), quad.type());
+        }
+
+        return retirerDecl(id);
     }
 
     @Override

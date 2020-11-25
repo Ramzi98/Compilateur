@@ -2,8 +2,8 @@ package edu.ubfc.st.vm.project.grp7.memory;
 
 public class Quadruplet {
     private final String id;
-    private final SORTE type;
-    private final OBJ nature;
+    private SORTE type;
+    private OBJ nature;
     private Object val;
 
     public Quadruplet(String id, Object val, OBJ nature, SORTE type) {
@@ -29,8 +29,16 @@ public class Quadruplet {
         return this.nature;
     }
 
+    public void nature(OBJ nature) {
+        this.nature = nature;
+    }
+
     public SORTE type() {
         return this.type;
+    }
+
+    public void type(SORTE type) {
+        this.type = type;
     }
 
     @Override

@@ -1,7 +1,25 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
 public class IDEStack implements Stack {
+    @Override
+    public Object val(String id) {
+        return null;
+    }
 
+    @Override
+    public Object valT(String id) {
+        return null;
+    }
+
+    @Override
+    public OBJ object(String id) {
+        return null;
+    }
+
+    @Override
+    public SORTE sorte(String id) {
+        return null;
+    }
 
     @Override
     public void empiler(Quadruplet q) {
@@ -38,5 +56,13 @@ public class IDEStack implements Stack {
 
     }
 
+    @Override
+    public Quadruplet removeFirst(String id) {
+        return null;
+    }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }
