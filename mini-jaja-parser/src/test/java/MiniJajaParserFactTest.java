@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 public class MiniJajaParserFactTest extends MiniJajaParserBaseTest{
 
@@ -27,13 +28,28 @@ public class MiniJajaParserFactTest extends MiniJajaParserBaseTest{
     }
 
     @Test
+    public void check__Fact__AppelEEmpty() throws IOException {
+        TestConstructor testConstructor = new TestConstructor("i()");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.fact());
+
+        AppelENode appelENode = (AppelENode) listener.getRoot();
+
+        assertThat(appelENode.identifier().value(),is("i"));
+        assertThat(appelENode.identifier().line(),is(1));
+        assertThat(appelENode.identifier().column(),is(0));
+
+        assertThat(appelENode.listexp(),is(nullValue()));
+
+    }
+
+    @Test
     public void check__Fact__AppelE() throws IOException {
         TestConstructor testConstructor = new TestConstructor("fact", "FactAppelETest");
         parser = testConstructor.getParser();
         walker.walk(listener, parser.fact());
 
         AppelENode appelENode = (AppelENode) listener.getRoot();
-        System.out.println(appelENode.identifier().value());
         assertThat(appelENode.identifier().value(),is("ident"));
         assertThat(appelENode.identifier().line(),is(1));
         assertThat(appelENode.identifier().column(),is(0));

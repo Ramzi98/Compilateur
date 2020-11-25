@@ -17,7 +17,6 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ClasseNode node) throws IllFormedNodeException, IOException {
-
     }
 
     @Override

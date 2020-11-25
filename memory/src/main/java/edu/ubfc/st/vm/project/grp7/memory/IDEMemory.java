@@ -9,9 +9,20 @@ public class IDEMemory implements Memory {
     private final Stack stack;
     private final Heap heap;
 
+
     public IDEMemory(Stack stack, Heap heap) {
         this.stack = stack;
         this.heap = heap;
+    }
+
+    @Override
+    public Memory pushContext(String context) {
+        return null;
+    }
+
+    @Override
+    public Memory popContext() {
+        return null;
     }
 
     @Override
