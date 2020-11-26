@@ -32,6 +32,11 @@ public class JcGotoImpl extends ASTNodeBreakpoint implements JcGotoNode {
     }
 
     @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
+    }
+
+    @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : {return this.next;}

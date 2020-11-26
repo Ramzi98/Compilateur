@@ -21,6 +21,11 @@ public class JcCmpImpl extends ASTNodeBreakpoint implements JcCmpNode {
     }
 
     @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
+    }
+
+    @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         switch (n) {
             case 0 : {return this.next; }
