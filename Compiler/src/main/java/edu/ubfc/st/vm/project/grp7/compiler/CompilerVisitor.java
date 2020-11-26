@@ -17,9 +17,10 @@ import java.util.Stack;
 
 public class CompilerVisitor extends MiniJajaASTVisitor {
     private ArrayList<JajaCodeNode> jajaCodeNodes = new ArrayList<>();
-    private  ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
+    private ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
     private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<HashMap<MiniJajaNode, Integer>>();
     private Mode compilemode = Mode.NORMALE;
+    HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
 
     int line = 1;
     int column = 0;
@@ -123,11 +124,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
 
-        HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
-        int n = (Integer)stack.peek().values().toArray()[0];
-        h.put(node,1);
-        minijajaNodes.add(h);
-        stack.push(h);
+        int n = nodeInit(node,h);
 
         JcLoadNode jcLoadNode = JcLoadNode
                 .builder()
@@ -147,14 +144,9 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> newhashMap;
 
-        HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
-
         if(nodeDecl != null)
         {
-            int n = (Integer)stack.peek().values().toArray()[0];
-            h.put(node,n);
-            minijajaNodes.add(h);
-            stack.push(h);
+            int n = nodeInit(node,h);
 
             if(compilemode == Mode.NORMALE) {
                 try {
@@ -1960,6 +1952,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             headearsnode = ((HeadersNode) headearsnode).headers();
         }
         return value;
+    }
+
+
+    private int nodeInit(MiniJajaNode node ,HashMap<MiniJajaNode, Integer> h){
+
+        h.clear();
+        int n = (Integer)stack.peek().values().toArray()[0];
+        h.put(node,1);
+        minijajaNodes.add(h);
+        stack.push(h);
+
+        return n;
     }
 
 
