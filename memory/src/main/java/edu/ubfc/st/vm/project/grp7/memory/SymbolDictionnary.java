@@ -10,10 +10,18 @@ public class SymbolDictionnary {
     private final ArrayList<String> scopes;
     private final HashMap<String, HashMap<String,Integer>> symbols;
 
+
+    public SymbolDictionnary() {
+        scopes = new ArrayList<>();
+        symbols = new HashMap<>();
+        symbols.put(NAME_GLOBAL_SCOPE,new HashMap<>());
+        scopes.add(NAME_GLOBAL_SCOPE);
+    }
+
     public void pushScope(String scope) {
         String scopeIdent = scope+ "-" + ++top;
-        symbols.put(scopeIdent, new HashMap<>());
         scopes.add(scopeIdent);
+        symbols.put(scopeIdent, new HashMap<>());
     }
 
     public void popScope() {
@@ -22,14 +30,11 @@ public class SymbolDictionnary {
         }
     }
 
-    public SymbolDictionnary() {
-         scopes = new ArrayList<>();
-         symbols = new HashMap<>();
-         symbols.put(NAME_GLOBAL_SCOPE,new HashMap<>());
-    }
+
 
     public void register(String ident,int indice) throws IllegalArgumentException {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
+
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
             throw new IllegalArgumentException("The value is already in the list.");
         }else{
@@ -55,6 +60,7 @@ public class SymbolDictionnary {
         if (top == GLOBAL_SCOPE) {
             return  -1;
         }
+
         HashMap<String, Integer> globalScope = symbols.get(NAME_GLOBAL_SCOPE);
         if (globalScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
             return globalScope.get(ident);
@@ -62,4 +68,6 @@ public class SymbolDictionnary {
 
         return -1;
     }
+
+
 }
