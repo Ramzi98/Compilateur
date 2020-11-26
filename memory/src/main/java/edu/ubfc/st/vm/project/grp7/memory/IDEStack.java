@@ -12,6 +12,11 @@ public class IDEStack implements Stack {
         quads = new ArrayList<>();
         top = -1;
     }
+    public IDEStack(SymbolDictionnary symbolDictionnary){
+        this.symbolDictionnary = symbolDictionnary;
+        quads = new ArrayList<>();
+        top = -1;
+    }
 
     @Override
     public Quadruplet peekFirst(String id) {
@@ -27,7 +32,7 @@ public class IDEStack implements Stack {
     public void empiler(Quadruplet q) {
         quads.add(q);
         if (! q.id().isEmpty()) {
-            symbolDictionnary.register(q.id(), top++);
+            symbolDictionnary.register(q.id(), ++top);
         }
     }
 
@@ -69,10 +74,6 @@ public class IDEStack implements Stack {
         symbolDictionnary.popScope();
     }
 
-    /**
-     *   IdentVal(i,t, < i1, v1, o1,t1 > .m, s) = Si s == 0 alors < i, v1, var,t > .m
-     *   sinon < i1, v1, o1,t1 >.IdentVal(i,t, m, s  1)
-     */
     @Override
     public void identVal(String id, SORTE t, int s) throws IllegalArgumentException, IllegalStateException {
         if (s < 0) {
