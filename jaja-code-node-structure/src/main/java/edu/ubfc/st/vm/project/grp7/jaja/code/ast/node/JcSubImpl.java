@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
 public class JcSubImpl extends ASTNodeBreakpoint implements JcSubNode {
-    private final JajaCodeNode next;
+    private  JajaCodeNode next;
 
     public JcSubImpl(int line, int column, Breakpoint breakpoint, JajaCodeNode next) {
         super(line, column, breakpoint);
@@ -17,6 +17,11 @@ public class JcSubImpl extends ASTNodeBreakpoint implements JcSubNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
     @Override

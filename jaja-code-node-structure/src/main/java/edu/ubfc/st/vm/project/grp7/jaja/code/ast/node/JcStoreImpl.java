@@ -9,7 +9,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcStoreImpl extends ASTNodeBreakpoint implements JcStoreNode {
 
     private final String identifier;
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
 
     public JcStoreImpl(int line, int column, Breakpoint breakpoint, String identifier, JajaCodeNode next) {
         super(line, column, breakpoint);
@@ -25,6 +25,11 @@ public class JcStoreImpl extends ASTNodeBreakpoint implements JcStoreNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
     @Override

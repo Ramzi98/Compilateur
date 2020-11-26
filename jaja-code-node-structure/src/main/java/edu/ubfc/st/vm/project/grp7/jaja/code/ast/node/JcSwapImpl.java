@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public class JcSwapImpl extends ASTNodeBreakpoint implements JcSwapNode {
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
     public JcSwapImpl(int line, int column, Breakpoint breakpoint, JajaCodeNode next) {
         super(line, column,breakpoint);
         this.next = next;
@@ -16,6 +16,11 @@ public class JcSwapImpl extends ASTNodeBreakpoint implements JcSwapNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
     @Override

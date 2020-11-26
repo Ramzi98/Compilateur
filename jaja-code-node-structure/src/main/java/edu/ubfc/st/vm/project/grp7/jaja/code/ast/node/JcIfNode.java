@@ -7,6 +7,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public interface JcIfNode extends JajaCodeNode {
 
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
     int adresse();
     void setAdresse(int adresse);
 

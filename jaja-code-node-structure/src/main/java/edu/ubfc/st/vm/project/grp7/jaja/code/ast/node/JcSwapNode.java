@@ -5,6 +5,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcSwapNode extends JajaCodeNode {
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
 
     static JcSwapNode.Builder builder() {
         return new JcSwapNode.Builder();

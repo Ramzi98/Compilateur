@@ -8,7 +8,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
 
 public class JcCmpImpl extends ASTNodeBreakpoint implements JcCmpNode {
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
 
     public JcCmpImpl(int line, int column, Breakpoint bp,JajaCodeNode next) {
         super(line, column,bp);

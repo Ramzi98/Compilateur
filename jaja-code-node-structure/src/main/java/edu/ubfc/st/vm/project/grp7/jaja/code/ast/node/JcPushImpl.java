@@ -9,7 +9,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcPushImpl extends ASTNodeBreakpoint implements JcPushNode {
 
     private final JajaCodeNode valeur;
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
 
     public JcPushImpl(int line, int column, Breakpoint breakpoint, JajaCodeNode valeur, JajaCodeNode next) {
         super(line, column, breakpoint);
@@ -26,6 +26,11 @@ public class JcPushImpl extends ASTNodeBreakpoint implements JcPushNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
     @Override

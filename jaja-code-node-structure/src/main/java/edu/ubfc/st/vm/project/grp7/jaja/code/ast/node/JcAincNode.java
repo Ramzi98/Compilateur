@@ -8,6 +8,8 @@ public interface JcAincNode extends JajaCodeNode {
 
     String identifier();
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
     static JcAincNode.Builder builder() {
         return new JcAincNode.Builder();
     }

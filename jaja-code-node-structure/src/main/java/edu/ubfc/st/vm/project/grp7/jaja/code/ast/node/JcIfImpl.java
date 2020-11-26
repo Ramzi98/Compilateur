@@ -10,7 +10,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
 
     private int adresse;
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
+
 
 
     public JcIfImpl(int line, int column, Breakpoint bp,int adresse, JajaCodeNode next) {
@@ -22,6 +23,11 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
 

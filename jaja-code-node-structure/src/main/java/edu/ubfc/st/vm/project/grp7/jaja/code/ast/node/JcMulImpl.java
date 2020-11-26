@@ -7,7 +7,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperator;
 
 public class JcMulImpl extends ASTNodeBreakpoint implements JcMulNode {
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
 
     public JcMulImpl(int line, int column, Breakpoint bp,JajaCodeNode next) {
         super(line,column,bp);
@@ -17,6 +17,11 @@ public class JcMulImpl extends ASTNodeBreakpoint implements JcMulNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
 
