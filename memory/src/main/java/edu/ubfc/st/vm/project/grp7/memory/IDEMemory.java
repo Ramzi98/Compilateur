@@ -45,7 +45,7 @@ public class IDEMemory implements Memory {
     }
 
     @Override
-    public Memory identVal(String id, SORTE t, int s) {
+    public Memory identVal(String id, SORTE t, int s) throws IllegalStateException, IllegalArgumentException {
         stack.identVal(id, t, s);
         return this;
     }

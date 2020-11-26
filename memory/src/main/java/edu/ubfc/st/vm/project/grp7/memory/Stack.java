@@ -4,7 +4,6 @@ public interface Stack {
      void empiler(Quadruplet q);
      Quadruplet depiler();
      void echanger();
-     //void ajouterRef(Object ref, SORTE type);
      void pushScope(String scope);
      void popScope();
      Quadruplet removeFirst(String id);
