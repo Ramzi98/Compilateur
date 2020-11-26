@@ -1,8 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // TODO: 26/11/2020 Implémentation réelle du temps prenant en compte le cours : blocs en puissances de 2, Garbage collector, ...
 public class IDEHeap implements Heap {
@@ -65,18 +68,28 @@ public class IDEHeap implements Heap {
     public Object valeurTas(Object ref, int index) throws IllegalArgumentException, IndexOutOfBoundsException {
         if(ref instanceof UUID) {
             if (objects.containsKey(ref)) {
-                return objects.get(index)[index];
+                return objects.get(ref)[index];
+            } else {
+                throw new IllegalArgumentException("Unknown ref");
             }
         } else {
             throw new IllegalArgumentException("Incorrect ref type");
         }
-        return null;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("{\n");
-        objects.forEach((k, v) -> builder.append(k.toString()).append(" : ").append(v).append("\n"));
-        return builder.append("}\n").toString();
+        StringBuilder builder = new StringBuilder("{\n\t");
+        objects.forEach((k, v) -> {
+            builder.append(k.toString()).append(" : [");
+            StringBuilder insideBuilder = new StringBuilder();
+            for (Object e : v) {
+                insideBuilder.append(e).append(", ");
+            }
+            int length = insideBuilder.length();
+            builder.append(insideBuilder.delete(length - 2, length)).append("]\n\t");
+        });
+        int length = builder.length();
+        return builder.delete(length-1, length).append("}\n").toString();
     }
 }
