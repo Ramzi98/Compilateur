@@ -54,4 +54,6 @@ public class MiniJajaParserListExpTest extends MiniJajaParserBaseTest {
         assertThat(listExpNode1, is(nullValue()));
     }
 
+
+
 }

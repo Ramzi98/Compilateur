@@ -25,7 +25,7 @@
 	    <module>mini-jaja-node-structure</module>
 	    <module>mini-jaja-parser</module>
         <module>graphic-interface</module>
-        <module>Stack</module>
+        <module>memory</module>
         <module>Compiler</module>
     </modules>
 
@@ -106,10 +106,9 @@
 
             <dependency>
                 <groupId>edu.ubfc.st.vm.project.grp7</groupId>
-                <artifactId>Stack</artifactId>
+                <artifactId>memory</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
 
             <dependency>
                 <groupId>edu.ubfc.st.vm.project.grp7</groupId>
@@ -209,27 +208,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-
-
-    <developers>
-        <developer>
-            <name>Bonneau Antoine</name>
-        </developer>
-        <developer>
-            <name>Tourneret Vincent</name>
-        </developer>
-        <developer>
-            <name>Deniset Nicolas</name>
-        </developer>
-        <developer>
-            <name>Mandelli Nathan</name>
-        </developer>
-        <developer>
-            <name>Tchoulak Ramzi</name>
-        </developer>
-        <developer>
-            <name>Henni Karam</name>
-        </developer>
-    </developers>
 </project>

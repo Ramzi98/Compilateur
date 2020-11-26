@@ -17,10 +17,10 @@ import java.util.Stack;
 
 public class CompilerVisitor extends MiniJajaASTVisitor {
     private ArrayList<JajaCodeNode> jajaCodeNodes = new ArrayList<>();
-    private ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
+    private  ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
     private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<HashMap<MiniJajaNode, Integer>>();
     private Mode compilemode = Mode.NORMALE;
-    HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
+    private int nheader;
 
     int line = 1;
     int column = 0;
@@ -124,7 +124,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
 
-        int n = nodeInit(node,h);
+        HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
+        int n = (Integer)stack.peek().values().toArray()[0];
+        h.put(node,1);
+        minijajaNodes.add(h);
+        stack.push(h);
 
         JcLoadNode jcLoadNode = JcLoadNode
                 .builder()
@@ -144,9 +148,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> newhashMap;
 
+        HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
+
         if(nodeDecl != null)
         {
-            int n = nodeInit(node,h);
+            int n = (Integer)stack.peek().values().toArray()[0];
+            h.put(node,n);
+            minijajaNodes.add(h);
+            stack.push(h);
 
             if(compilemode == Mode.NORMALE) {
                 try {
@@ -297,7 +306,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node))
+                        .type(getType(node.typeMeth().value()))
                         .adresse(0)
                         .build();
 
@@ -416,7 +425,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Cst)
-                        .type(getType(node))
+                        .type(getType(node.type().value()))
                         .adresse(0)
                         .build();
 
@@ -459,6 +468,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         int nr =0;
         int nh = getHeadersNumber(nodeHeaders);
+        nheader = nh;
         boolean Void = false;
 
         HashMap<MiniJajaNode, Integer> newhashMap;
@@ -469,13 +479,15 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         minijajaNodes.add(h);
         stack.push(h);
 
-        if(node.typeMeth().equals(TypeMethNode.TypeMeth.VOID))
+        if(node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
         {
             Void = true;
+            nr = 6;
         }
         else
         {
             Void = false;
+            nr = 5;
         }
 
         if(compilemode == Mode.NORMALE) {
@@ -492,7 +504,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Meth)
-                        .type(getType(node))
+                        .type(getType(node.typeMeth().value()))
                         .adresse(0)
                         .build();
                 jajaCodeNodes.add(jcNewNode);
@@ -524,8 +536,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
 
-                int instrsStartAddress = ndvs;
-
                 if (Void) {
                     JcPushNode jcPushNode1 = JcPushNode.builder()
                             .line(jajaCodeNodes.size() + 1)
@@ -533,7 +543,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                             .valeur(JcNumberNode.builder().value(0).build())
                             .build();
 
-                    jajaCodeNodes.add(jcPushNode);
+                    jajaCodeNodes.add(jcPushNode1);
                 }
 
                 //Accept Retrait VArs
@@ -725,14 +735,16 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node))
-                        .adresse(0)
+                        .type(getType(node.type().value()))
+                        .adresse(nheader)
                         .build();
                 jajaCodeNodes.add(jcNewNode);
 
                 int nf = 1;
                 h.replace(node,nf);
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
+
+                nheader--;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1883,68 +1895,38 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     }
 
-    public JcNewNode.Type getType(CstNode node)
+    public JcNewNode.Type getType(TypeMethNode.TypeMeth type)
     {
-        if(node.type().value() == TypeNode.Type.INT)
+        if(type == TypeMethNode.TypeMeth.INT)
         {
             return JcNewNode.Type.INT;
         }
-        else if (node.type().value() == TypeNode.Type.BOOLEAN)
+        else if (type == TypeMethNode.TypeMeth.BOOLEAN)
         {
             return JcNewNode.Type.BOOLEAN;
         }
-        return null;
-    }
-
-    public JcNewNode.Type getType(MethodNode node)
-    {
-        if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
-        {
-            return JcNewNode.Type.VOID;
-        }
-        return null;
-    }
-    public JcNewNode.Type getType(HeaderNode node)
-    {
-        if(node.type().value() == TypeNode.Type.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.type().value() == TypeNode.Type.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        return null;
-    }
-    public JcNewNode.Type getType(VarNode node)
-    {
-        if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
-        {
-            return JcNewNode.Type.INT;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
-        {
-            return JcNewNode.Type.BOOLEAN;
-        }
-        else if (node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
+        else if (type == TypeMethNode.TypeMeth.VOID)
         {
             return JcNewNode.Type.VOID;
         }
         return null;
     }
 
+    public JcNewNode.Type getType(TypeNode.Type type)
+    {
+        if(type == TypeNode.Type.INT)
+        {
+            return JcNewNode.Type.INT;
+        }
+        else if (type == TypeNode.Type.BOOLEAN)
+        {
+            return JcNewNode.Type.BOOLEAN;
+        }
+        return null;
+    }
 
 
-
-    private static int getHeadersNumber(MiniJajaNode headearsnode) {
+    public int getHeadersNumber(MiniJajaNode headearsnode) {
         int value = 0;
 
         while ( headearsnode.children(0) != null ) {
@@ -1952,18 +1934,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             headearsnode = ((HeadersNode) headearsnode).headers();
         }
         return value;
-    }
-
-
-    private int nodeInit(MiniJajaNode node ,HashMap<MiniJajaNode, Integer> h){
-
-        h.clear();
-        int n = (Integer)stack.peek().values().toArray()[0];
-        h.put(node,1);
-        minijajaNodes.add(h);
-        stack.push(h);
-
-        return n;
     }
 
 

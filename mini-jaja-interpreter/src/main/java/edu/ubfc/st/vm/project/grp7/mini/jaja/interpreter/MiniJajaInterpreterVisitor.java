@@ -1,22 +1,22 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
-import edu.ubfc.st.vm.project.grp7.stack.Stack;
+import edu.ubfc.st.vm.project.grp7.memory.Stack;
 
 import java.io.IOException;
 
 public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
-    private final Stack stack;
+    private final Memory memory;
 
-    public MiniJajaInterpreterVisitor(Stack stack) {
-        this.stack = stack;
+    public MiniJajaInterpreterVisitor(Memory memory) {
+        this.memory = memory;
     }
 
     @Override
     public void visit(ClasseNode node) throws IllFormedNodeException, IOException {
-
     }
 
     @Override

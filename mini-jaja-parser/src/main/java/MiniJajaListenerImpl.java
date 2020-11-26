@@ -332,7 +332,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .printable(
                         StringNode.builder()
                                 .line(ctx.StringLitteral().getSymbol().getLine())
-                                .column(ctx.StringLitteral().getSymbol().getLine())
+                                .column(ctx.StringLitteral().getSymbol().getCharPositionInLine())
                                 .value(ctx.StringLitteral().getText().substring(1, stringLength - 1))
                                 .build()
                 ).build();
@@ -361,7 +361,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
                 .printable(
                         StringNode.builder()
                                 .line(ctx.StringLitteral().getSymbol().getLine())
-                                .column(ctx.StringLitteral().getSymbol().getLine())
+                                .column(ctx.StringLitteral().getSymbol().getCharPositionInLine())
                                 .value(ctx.StringLitteral().getText().substring(1, stringLength - 1))
                                 .build()
                 ).build();
@@ -378,7 +378,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         MiniJajaNode node = stack.pop();
 
         //si le contexte elseInstrs n'a pas d'enfant alors il est vide
-        if (ctx.elseInstrs.children.size()==0){
+        if (ctx.elseInstrs.children == null ){
             builder.falseInstrs(null);
         }else{
             builder.falseInstrs((InstrsNode) node);
@@ -386,7 +386,7 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         }
 
         //si le contexte ifInstrs n'a pas d'enfant alors il est vide
-        if (ctx.ifInstrs.children.size()==0){
+        if (ctx.ifInstrs.children == null ){
             builder.trueInstrs(null);
         }else{
             builder.trueInstrs((InstrsNode) node);
