@@ -3,6 +3,9 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcLoadNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
@@ -15,6 +18,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 public class NodeIdentCompileTest {
@@ -55,6 +59,11 @@ public class NodeIdentCompileTest {
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
+        ArrayList<JajaCodeNode> jjnodes = new ArrayList<>();
+        JcInitNode init = JcInitNode.builder().build();
+        jjnodes.add(init);
+        compiler.setJajaCodeNodes(jjnodes);
+
     }
 
     @Test
@@ -63,8 +72,9 @@ public class NodeIdentCompileTest {
 
         IdentNode ident = IdentNode.builder().value("ident").build();
         compiler.visit(ident);
-        assertThat(compiler.getJajaCodeNodes().size(), is(1));
+        assertThat(compiler.getJajaCodeNodes().size(), is(2));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
+        System.out.println(compiler.getJajaCodeNodes().get(compiler.getJajaCodeNodes().size() - 2).children(0));
 
 
     }

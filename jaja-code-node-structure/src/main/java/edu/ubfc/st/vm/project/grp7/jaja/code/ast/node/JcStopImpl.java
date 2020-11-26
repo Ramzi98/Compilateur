@@ -15,4 +15,9 @@ public class JcStopImpl extends ASTNodeBreakpoint implements JcStopNode {
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         throw new IndexOutOfBoundsException();
     }
+
+    @Override
+    public void setNext(JajaCodeNode next) throws IndexOutOfBoundsException {
+        return;
+    }
 }

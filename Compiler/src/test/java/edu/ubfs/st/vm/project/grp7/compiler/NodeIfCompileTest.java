@@ -3,6 +3,8 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -53,6 +55,10 @@ public class NodeIfCompileTest {
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
+        ArrayList<JajaCodeNode> jjnodes = new ArrayList<>();
+        JcInitNode init = JcInitNode.builder().build();
+        jjnodes.add(init);
+        compiler.setJajaCodeNodes(jjnodes);
 
     }
 
@@ -73,7 +79,7 @@ public class NodeIfCompileTest {
 
         IfNode ifNode = IfNode.builder().expression(expNode).trueInstrs(instsrNode).falseInstrs(instsrNode2).build();
         compiler.visit(ifNode);
-         assertThat(compiler.getJajaCodeNodes().size(), is(9));
+         assertThat(compiler.getJajaCodeNodes().size(), is(10));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(9));
         System.out.println(compiler.getJajaCodeNodes().toString());
 
