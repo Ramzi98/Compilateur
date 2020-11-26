@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
@@ -68,7 +69,7 @@ public class NodeVarCompileTest {
     }
 
     @Test
-    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeVarCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
         IdentNode ident = IdentNode.builder().value("I").build();

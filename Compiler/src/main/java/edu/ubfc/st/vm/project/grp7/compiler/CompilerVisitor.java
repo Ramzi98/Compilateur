@@ -1,11 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.compiler;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.*;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcPopNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -44,7 +43,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(ClasseNode node) {
+    public void visit(ClasseNode node) throws CompilerException {
         MiniJajaNode nodeDecls = node.decls();
         MiniJajaNode nodeMain = node.methmain();
         HashMap<MiniJajaNode, Integer> newhashMap;
@@ -52,18 +51,17 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
-
         JcInitNode jcInitNode = JcInitNode.builder()
                 .line(jajaCodeNodes.size()+1)
                 .column(1)
-                    .build();
-            jajaCodeNodes.add(jcInitNode);
+                .build();
+        jajaCodeNodes.add(jcInitNode);
+        h.replace(node,n+1);
+        minijajaNodes.set(minijajaNodes.indexOf(h),h);
+        stack.set(stack.indexOf(h),h);
 
             try {
-                h.replace(node,n+1);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
-                stack.set(stack.indexOf(h),h);
+
                 nodeDecls.accept(this);
                 //ndss
                 newhashMap = stack.pop();
@@ -111,7 +109,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Classe");
             }
 
 
@@ -122,7 +120,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
-
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n = (Integer)stack.peek().values().toArray()[0];
@@ -142,7 +139,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(DeclsNode node){
+    public void visit(DeclsNode node) throws CompilerException {
 
         MiniJajaNode nodeDecl = node.decl();
         MiniJajaNode nodeDecls = node.decls();
@@ -174,7 +171,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Node Decls");
                 }
             }
             else if(compilemode == Mode.RETRAIT)
@@ -194,7 +191,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h),h);
                     stack.set(stack.indexOf(h),h);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Retrait Node Decls");
                 }
 
 
@@ -212,20 +209,16 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(VarsNode node) throws IllFormedNodeException, IOException {
+    public void visit(VarsNode node) throws IllFormedNodeException, IOException, CompilerException {
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
 
         if(node.var() != null) {
             MiniJajaNode nodeVar = node.var();
             MiniJajaNode nodeVars = node.vars();
             int n =  node_init(node,h);
-
-
             if (compilemode == Mode.NORMALE) {
                 try {
-
                     nodeVar.accept(this);
                     newhashMap = stack.pop();
                     int ndv = (int) newhashMap.values().toArray()[0];
@@ -241,7 +234,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Node Vars");
                 }
 
 
@@ -262,10 +255,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Retrait Node Vars");
                 }
-
-
             }
         }
         else {
@@ -278,37 +269,37 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(VarNode node) throws IllFormedNodeException, IOException {
+    public void visit(VarNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeExp = node.expression();
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         if(compilemode == Mode.NORMALE) {
             try {
                 nodeExp.accept(this);
-                newhashMap = stack.pop();
-                int ne = (int) newhashMap.values().toArray()[0];
-                h.replace(node, ne+1);
-                minijajaNodes.set(minijajaNodes.indexOf(h), h);
-                stack.set(stack.indexOf(h), h);
-
-
-                JcNewNode jcNewNode = JcNewNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .identifier(node.identifier().value())
-                        .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node.typeMeth().value()))
-                        .adresse(0)
-                        .build();
-
-                setNextNode(jcNewNode);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Var");
             }
+
+            newhashMap = stack.pop();
+            int ne = (int) newhashMap.values().toArray()[0];
+            h.replace(node, ne+1);
+            minijajaNodes.set(minijajaNodes.indexOf(h), h);
+            stack.set(stack.indexOf(h), h);
+
+
+            JcNewNode jcNewNode = JcNewNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .identifier(node.identifier().value())
+                    .sorte(JcNewNode.Sorte.Var)
+                    .type(getType(node.typeMeth().value()))
+                    .adresse(0)
+                    .build();
+
+            setNextNode(jcNewNode);
+
         }else if(compilemode == Mode.RETRAIT)
         {
             JcSwapNode jcSwapNode = JcSwapNode.builder()
@@ -333,10 +324,9 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(ArrayNode node) throws IllFormedNodeException, IOException {
+    public void visit(ArrayNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeExp = node.expression();
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
@@ -345,24 +335,25 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         {
             try {
                 nodeExp.accept(this);
-                newhashMap = stack.pop();
-                int ne = (int) newhashMap.values().toArray()[0];
-                h.replace(node, ne+1);
-                minijajaNodes.set(minijajaNodes.indexOf(h), h);
-                stack.set(stack.indexOf(h), h);
-
-                JcNewarrayNode jcNewarrayNode = JcNewarrayNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .identifier(node.identifier().value())
-                        .type(node.typeMeth().value())
-                        .build();
-                setNextNode(jcNewarrayNode);
-
             }
             catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Array");
             }
+
+            newhashMap = stack.pop();
+            int ne = (int) newhashMap.values().toArray()[0];
+            h.replace(node, ne+1);
+            minijajaNodes.set(minijajaNodes.indexOf(h), h);
+            stack.set(stack.indexOf(h), h);
+
+            JcNewarrayNode jcNewarrayNode = JcNewarrayNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .identifier(node.identifier().value())
+                    .type(node.typeMeth().value())
+                    .build();
+            setNextNode(jcNewarrayNode);
+
         }else if(compilemode == Mode.RETRAIT)
         {
             JcSwapNode jcSwapNode = JcSwapNode.builder()
@@ -382,49 +373,38 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
         }
-
-        try {
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
-    public void visit(CstNode node) throws IllFormedNodeException, IOException {
-
+    public void visit(CstNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeExp = node.expression();
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         if(compilemode == Mode.NORMALE) {
             try {
                 nodeExp.accept(this);
-                newhashMap = stack.pop();
-                int ne = (int) newhashMap.values().toArray()[0];
-                h.replace(node, ne+1);
-                minijajaNodes.set(minijajaNodes.indexOf(h), h);
-                stack.set(stack.indexOf(h), h);
-
-                JcNewNode jcNewNode = JcNewNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .identifier(node.identifier().value())
-                        .sorte(JcNewNode.Sorte.Cst)
-                        .type(getType(node.type().value()))
-                        .adresse(0)
-                        .build();
-
-                setNextNode(jcNewNode);
-
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Cst");
             }
+            newhashMap = stack.pop();
+            int ne = (int) newhashMap.values().toArray()[0];
+            h.replace(node, ne+1);
+            minijajaNodes.set(minijajaNodes.indexOf(h), h);
+            stack.set(stack.indexOf(h), h);
+
+            JcNewNode jcNewNode = JcNewNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .identifier(node.identifier().value())
+                    .sorte(JcNewNode.Sorte.Cst)
+                    .type(getType(node.type().value()))
+                    .adresse(0)
+                    .build();
+
+            setNextNode(jcNewNode);
+
         }else if(compilemode == Mode.RETRAIT)
         {
 
@@ -450,7 +430,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(MethodNode node) throws IllFormedNodeException, IOException {
+    public void visit(MethodNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeTypeMeth = node.typeMeth();
         MiniJajaNode nodeHeaders = node.headers();
@@ -461,12 +441,9 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         int nh = getHeadersNumber(nodeHeaders);
         nheader = nh;
         boolean Void = false;
-
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         if(node.typeMeth().value() == TypeMethNode.TypeMeth.VOID)
         {
@@ -564,42 +541,31 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 jcGotoNode.setAdresse(n+ nens + ndvs + niss + nrdvs + nr);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Methode");
             }
         }else if(compilemode == Mode.RETRAIT)
         {
 
-            try {
-                JcSwapNode jcSwapNode = JcSwapNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-                setNextNode(jcSwapNode);
+            JcSwapNode jcSwapNode = JcSwapNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .build();
+            setNextNode(jcSwapNode);
 
-                JcPopNode jcPopNode = JcPopNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-                setNextNode(jcPopNode);
+            JcPopNode jcPopNode = JcPopNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .build();
+            setNextNode(jcPopNode);
 
-
-                h.replace(node,2);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            h.replace(node,2);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
 
         }
-
-
-
-
     }
 
     @Override
-    public void visit(MainNode node) throws IllFormedNodeException, IOException {
+    public void visit(MainNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeVars = node.vars();
         MiniJajaNode nodeInstrs = node.instrs();
@@ -647,27 +613,21 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 /*****************************************************/
 
             }catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Main");
             }
         }
-
-
     }
 
     @Override
-    public void visit(HeadersNode node) throws IllFormedNodeException, IOException {
-
+    public void visit(HeadersNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeHeader = node.header();
         MiniJajaNode nodeHeaders = node.headers();
 
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
 
         if(node.header() != null) {
             int n =  node_init(node,h);
-
-
             if (compilemode == Mode.NORMALE) {
                 try {
 
@@ -684,10 +644,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     h.replace(node, nen + nens);
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
                     stack.set(stack.indexOf(h), h);
-
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Node Headers");
                 }
             }
         }
@@ -705,49 +663,35 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(HeaderNode node) throws IllFormedNodeException, IOException {
         HashMap<MiniJajaNode, Integer> newhashMap;
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
         if(compilemode == Mode.NORMALE) {
-            try {
+            JcNewNode jcNewNode =  JcNewNode.builder()
+                    .line(jajaCodeNodes.size()+1)
+                    .column(1)
+                    .identifier(node.identifier().value())
+                    .sorte(JcNewNode.Sorte.Var)
+                    .type(getType(node.type().value()))
+                    .adresse(nheader)
+                    .build();
+            setNextNode(jcNewNode);
 
-                JcNewNode jcNewNode =  JcNewNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .identifier(node.identifier().value())
-                        .sorte(JcNewNode.Sorte.Var)
-                        .type(getType(node.type().value()))
-                        .adresse(nheader)
-                        .build();
-                setNextNode(jcNewNode);
-
-                int nf = 1;
-                h.replace(node,nf);
-                minijajaNodes.set(minijajaNodes.indexOf(h),h);
-
-                nheader--;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            int nf = 1;
+            h.replace(node,nf);
+            minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            nheader--;
         }
 
     }
 
     @Override
-    public void visit(InstrsNode node) throws IllFormedNodeException, IOException {
-
-
+    public void visit(InstrsNode node) throws IllFormedNodeException, IOException, CompilerException {
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         if(node.instruction() != null) {
             MiniJajaNode nodeInstr = node.instruction();
             MiniJajaNode nodeInstrs = node.instrs();
             int n =  node_init(node,h);
-
-
-
             try {
                 nodeInstr.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
@@ -761,7 +705,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Instrs");
             }
         }else{
 
@@ -774,16 +718,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
         @Override
-    public void visit(AssignNode node) throws IllFormedNodeException, IOException {
-
-
+    public void visit(AssignNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeIdent = node.identifier();
         MiniJajaNode nodeExp1 = node.expression();
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
-
 
             if(nodeIdent instanceof ArrayItemNode) {
                 try {
@@ -799,20 +739,20 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
                     stack.set(stack.indexOf(h),h);
 
-                    JcAstoreNode jcAstoreNode = JcAstoreNode
-                            .builder()
-                            .line(jajaCodeNodes.size() + 1)
-                            .column(1)
-                            .identifier(((ArrayItemNode)nodeIdent).identifier().value())
-                            .build();
-
-                    setNextNode(jcAstoreNode);
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Node Assign");
                 }
-            }else
-                {
+                JcAstoreNode jcAstoreNode = JcAstoreNode
+                        .builder()
+                        .line(jajaCodeNodes.size() + 1)
+                        .column(1)
+                        .identifier(((ArrayItemNode)nodeIdent).identifier().value())
+                        .build();
+
+                setNextNode(jcAstoreNode);
+
+
+            }else {
                     MiniJajaNode nodeExp = node.expression();
                     try {
 
@@ -832,24 +772,22 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
                         setNextNode(jcStoreNode);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        throw new CompilerException("Compiler Exception in Node Assign");
                     }
                 }
     }
 
     @Override
-    public void visit(SumNode node) throws IllFormedNodeException, IOException {
+    public void visit(SumNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeIdent = node.identifier();
         MiniJajaNode nodeExp1 = node.expression();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
         if(nodeIdent instanceof ArrayItemNode){
 
             try {
-
                 MiniJajaNode nodeExp = ((ArrayItemNode) nodeIdent).expression();
                 nodeExp.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
@@ -861,19 +799,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 h.replace(node, ne + ne1 + 1);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h),h);
-
-
-                JcAincNode jcAincNode = JcAincNode
-                        .builder()
-                        .line(jajaCodeNodes.size() + 1)
-                        .column(1)
-                        .identifier(((ArrayItemNode)nodeIdent).identifier().value())
-                        .build();
-
-                setNextNode(jcAincNode);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Sum");
             }
+
+            JcAincNode jcAincNode = JcAincNode
+                    .builder()
+                    .line(jajaCodeNodes.size() + 1)
+                    .column(1)
+                    .identifier(((ArrayItemNode)nodeIdent).identifier().value())
+                    .build();
+
+            setNextNode(jcAincNode);
 
         }else if(nodeIdent instanceof IdentNode){
 
@@ -889,30 +826,27 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 h.replace(node,ne + 1);
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
                 stack.set(stack.indexOf(h),h);
-
-
-                JcIncNode jcIncNode = JcIncNode
-                                    .builder()
-                                    .line(jajaCodeNodes.size() + 1)
-                                    .column(1)
-                                    .identifier(((IdentNode)nodeIdent).value())
-                                    .build();
-
-                setNextNode(jcIncNode);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Sum");
             }
+            JcIncNode jcIncNode = JcIncNode
+                    .builder()
+                    .line(jajaCodeNodes.size() + 1)
+                    .column(1)
+                    .identifier(((IdentNode)nodeIdent).value())
+                    .build();
+
+            setNextNode(jcIncNode);
 
         }
     }
 
     @Override
-    public void visit(IncrementNode node) throws IllFormedNodeException, IOException {
+    public void visit(IncrementNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeIdent = node.identifier();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         if(nodeIdent instanceof ArrayItemNode){
 
@@ -925,7 +859,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 h.replace(node, ne + 2);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h),h);
-
 
                 JcPushNode jcPushNode= JcPushNode
                         .builder()
@@ -942,11 +875,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .column(1)
                         .identifier(((ArrayItemNode)nodeIdent).identifier().value())
                         .build();
-
                 setNextNode(jcAincNode);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CompilerException("Compiler Exception in Node Increment");
             }
 
         }else if(nodeIdent instanceof   IdentNode){
@@ -970,23 +902,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .build();
 
             setNextNode(jcIncNode);
-
-
         }
     }
 
     @Override
-    public void visit(AppelINode node) throws IllFormedNodeException, IOException {
-
+    public void visit(AppelINode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeLexp = node.listexp();
         MiniJajaNode nodeIdent = node.identifier();
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
         try {
-
             nodeLexp.accept(this);
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int nlexp = (int) newhashMap.values().toArray()[0];
@@ -1000,7 +927,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .build();
 
             setNextNode(jcInvokeNode);
-
             /********************Retrait***********************/
             compilemode = Mode.RETRAIT;
 
@@ -1023,70 +949,60 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcPopNode);
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }    }
+            throw new CompilerException("Compiler Exception in Node AppelI");
+        }
+    }
 
     @Override
-    public void visit(ReturnNode node) throws IllFormedNodeException, IOException {
+    public void visit(ReturnNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeExpReturn = node.ret();
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
         try {
-
             nodeExpReturn.accept(this);
-            HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
-            int ne = (int) newhashMap.values().toArray()[0];
-            h.replace(node,ne);
-            minijajaNodes.set(minijajaNodes.indexOf(h),h);
-            stack.set(stack.indexOf(h),h);
-            //Works
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Return");
         }
+        HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
+        int ne = (int) newhashMap.values().toArray()[0];
+        h.replace(node,ne);
+        minijajaNodes.set(minijajaNodes.indexOf(h),h);
+        stack.set(stack.indexOf(h),h);
     }
 
 
     @Override
-    public void visit(WriteNode node) throws IllFormedNodeException, IOException {
+    public void visit(WriteNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodePrintable = node.printable();
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
-
         try {
-
             nodePrintable.accept(this);
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int ne = (int) newhashMap.values().toArray()[0];
             h.replace(node,ne+1);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
-
-            JcWriteNode jcWriteNode = JcWriteNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcWriteNode);
-
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Write");
         }
+        JcWriteNode jcWriteNode = JcWriteNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcWriteNode);
 
     }
 
     @Override
     public void visit(WriteLnNode node) throws IllFormedNodeException, IOException {
-
 
     }
 
@@ -1103,24 +1019,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 .line(jajaCodeNodes.size()+1)
                 .column(1)
                 .valeur(JcStringNode.builder().value(node.value()).build()).build();
-
-
         setNextNode(jcPushNode);
-
-
     }
 
     @Override
-    public void visit(IfNode node) throws IllFormedNodeException, IOException {
+    public void visit(IfNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeExp = node.expression();
         MiniJajaNode nodeis1 = node.trueInstrs();
         MiniJajaNode nodeis2 = node.falseInstrs();
 
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1163,28 +1073,19 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
            jcGotoNode.setAdresse(n+ne+ns1+ns+2);
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcGotoNode),jcGotoNode);
 
-
-
-
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node If");
         }
-
 
     }
 
     @Override
-    public void visit(WhileNode node) throws IllFormedNodeException, IOException {
-
-
+    public void visit(WhileNode node) throws IllFormedNodeException, IOException, CompilerException {
         MiniJajaNode nodeExp = node.expression();
         MiniJajaNode nodeinstrs = node.instrs();
 
-
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1228,20 +1129,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             jcIfNode.setAdresse(n+ne+niss+3);
             jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
 
-
-
-
-
-
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node While");
         }
 
     }
 
     @Override
-    public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
+    public void visit(ListExpNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         HashMap<MiniJajaNode, Integer> newhashMap = new HashMap<MiniJajaNode, Integer>();
@@ -1266,7 +1161,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Node ListExp");
                 }
             }
             else if(compilemode == Mode.RETRAIT)
@@ -1290,12 +1185,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new CompilerException("Compiler Exception in Retrait Node ListExp");
                 }
 
             }
         }else{
-
             HashMap<MiniJajaNode, Integer> exnil = new HashMap<MiniJajaNode, Integer>();
             exnil.put(node, 0);
             minijajaNodes.add(exnil);
@@ -1305,7 +1199,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(NotNode node) throws IllFormedNodeException, IOException {
+    public void visit(NotNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeExp = node.expression();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
@@ -1319,7 +1213,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
             JcNotNode jcNotNode = JcNotNode
                     .builder()
                     .line(jajaCodeNodes.size()+1)
@@ -1329,19 +1222,18 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcNotNode);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Not");
         }
 
     }
 
     @Override
-    public void visit(AndNode node) throws IllFormedNodeException, IOException {
+    public void visit(AndNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1357,28 +1249,26 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcAndNode jcAndNode = JcAndNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcAndNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node And");
         }
+
+        JcAndNode jcAndNode = JcAndNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcAndNode);
     }
 
     @Override
-    public void visit(OrNode node) throws IllFormedNodeException, IOException {
+    public void visit(OrNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1406,12 +1296,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcOrNode);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Or");
         }
     }
 
     @Override
-    public void visit(EqualsNode node) throws IllFormedNodeException, IOException {
+    public void visit(EqualsNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
@@ -1446,7 +1336,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcCmpNode);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Equals");
         }
 
 
@@ -1454,13 +1344,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     }
 
     @Override
-    public void visit(GreaterNode node) throws IllFormedNodeException, IOException {
+    public void visit(GreaterNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1479,29 +1368,27 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcSupNode jcSupNode = JcSupNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcSupNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Greater");
         }
+
+        JcSupNode jcSupNode = JcSupNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcSupNode);
 
     }
 
     @Override
-    public void visit(PlusNode node) throws IllFormedNodeException, IOException {
+    public void visit(PlusNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1520,28 +1407,26 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcAddNode jcAddNode = JcAddNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcAddNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Plus");
         }
+
+        JcAddNode jcAddNode = JcAddNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcAddNode);
     }
 
     @Override
-    public void visit(SubNode node) throws IllFormedNodeException, IOException {
+    public void visit(SubNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1560,22 +1445,21 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcSubNode jcSubNode = JcSubNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcSubNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Sub");
         }
+        JcSubNode jcSubNode = JcSubNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcSubNode);
+
     }
 
     @Override
-    public void visit(MinusNode node) throws IllFormedNodeException, IOException {
+    public void visit(MinusNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeExp = node.expression();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
@@ -1600,18 +1484,17 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcNegNode);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Minus");
         }
     }
 
     @Override
-    public void visit(MultNode node) throws IllFormedNodeException, IOException {
+    public void visit(MultNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1630,28 +1513,26 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcMulNode jcMulNode = JcMulNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcMulNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Mult");
         }
+        JcMulNode jcMulNode = JcMulNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcMulNode);
+
     }
 
     @Override
-    public void visit(DivNode node) throws IllFormedNodeException, IOException {
+    public void visit(DivNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode leftOperande = node.leftOperand();
         MiniJajaNode rightOperande = node.rightOperand();
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
 
         try {
 
@@ -1670,22 +1551,21 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-
-            JcDivNode jcDivNode = JcDivNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .build();
-
-            setNextNode(jcDivNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node Div");
         }
+
+        JcDivNode jcDivNode = JcDivNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcDivNode);
     }
 
     @Override
-    public void visit(AppelENode node) throws IllFormedNodeException, IOException {
+    public void visit(AppelENode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeLexp = node.listexp();
         MiniJajaNode nodeIdent = node.identifier();
@@ -1724,9 +1604,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             /*****************************************************/
 
 
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node AppelE");
         }
     }
 
@@ -1785,11 +1664,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         setNextNode(jcPushNode);
 
-
     }
 
     @Override
-    public void visit(ArrayItemNode node) throws IllFormedNodeException, IOException {
+    public void visit(ArrayItemNode node) throws IllFormedNodeException, IOException, CompilerException {
 
         MiniJajaNode nodeExp = node.expression();
         MiniJajaNode nodeIdent = node.identifier();
@@ -1805,20 +1683,20 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-            JcAloadNode jcAloadNode = JcAloadNode
-                    .builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
-                    .identifier(((IdentNode)nodeIdent).value())
-                    .build();
-
-            setNextNode(jcAloadNode);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CompilerException("Compiler Exception in Node ArrayItem");
         }
 
-        }
+        JcAloadNode jcAloadNode = JcAloadNode
+                .builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .identifier(((IdentNode)nodeIdent).value())
+                .build();
+
+        setNextNode(jcAloadNode);
+
+    }
 
     @Override
     public void visit(TypeMethNode node) throws IllFormedNodeException, IOException {

@@ -6,6 +6,7 @@ import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class NodeMethodeCompileTest {
 
 
     @Test
-    public void NodeMethodeCompileVisitor() throws IOException, IllFormedNodeException {
+    public void NodeMethodeCompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)

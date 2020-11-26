@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.AndNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
@@ -67,7 +68,7 @@ public class NodeDivCompileTest {
 
 
     @Test
-    public void NodeDivCompileVisitor() throws IOException, IllFormedNodeException {
+    public void NodeDivCompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         NumberNode expNode = NumberNode.builder().value(2).build();
         BooleanNode expNode2 = BooleanNode.builder().value(false).build();

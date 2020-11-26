@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -63,7 +64,7 @@ public class NodeArrayCompileTest {
     }
 
     @Test
-    public void NodeArrayCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeArrayCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)

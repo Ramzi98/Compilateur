@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeaderNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
@@ -66,7 +67,7 @@ public class NodeIncrementCompileTest {
     }
 
     @Test
-    public void NodeIncrementCompilerVisitor() throws IOException, IllFormedNodeException {
+    public void NodeIncrementCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         IdentNode ident = IdentNode.builder()
                 .value("B")

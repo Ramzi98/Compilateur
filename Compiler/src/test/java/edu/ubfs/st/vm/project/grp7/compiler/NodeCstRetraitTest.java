@@ -3,6 +3,7 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -57,7 +58,7 @@ public class NodeCstRetraitTest{
 
 
         @Test
-        public void CstRetraitCompilerVisitor() throws IOException, IllFormedNodeException {
+        public void CstRetraitCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
             TypeNode typeNode = TypeNode.builder()
                     .line(1)
