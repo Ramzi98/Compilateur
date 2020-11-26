@@ -13,14 +13,6 @@ public class IDEStack implements Stack {
         top = -1;
     }
 
-    /**
-     * while (quad == null && top > 0){
-     *             quad = quads.get(top);
-     *             top--;
-     *         }
-     */
-
-
     @Override
     public Quadruplet peekFirst(String id) {
         int index = symbolDictionnary.find(id);
@@ -77,24 +69,34 @@ public class IDEStack implements Stack {
         symbolDictionnary.popScope();
     }
 
-    /*
-    IdentVal(i,t, < i1, v1, o1,t1 > .m, s) = Si s == 0 alors < i, v1, var,t > .m
-    sinon < i1, v1, o1,t1 >.IdentVal(i,t, m, s  1)
+    /**
+     *   IdentVal(i,t, < i1, v1, o1,t1 > .m, s) = Si s == 0 alors < i, v1, var,t > .m
+     *   sinon < i1, v1, o1,t1 >.IdentVal(i,t, m, s  1)
      */
     @Override
-    public void identVal(String id, SORTE t, int s) {
-        removeNulls();
-        int index = symbolDictionnary.find(id);
-        if (index == top) {
-
-        } else {
-
+    public void identVal(String id, SORTE t, int s) throws IllegalArgumentException, IllegalStateException {
+        if (s < 0) {
+           throw new IllegalArgumentException("identVal doesn't treat negative depths");
         }
+        int depth = s;
+        removeNulls();
+        int index = top;
+        while(depth > 0) {
+            if(index == -1) {
+                throw new IllegalArgumentException("identVal depth greater than stack size");
+            }
+            if (quads.get(index) != null) {
+                depth--;
+            }
+            index--;
+        }
+        Quadruplet quad = quads.get(index);
+        quad.id(id);
+        quad.type(t);
     }
 
-
     @Override
-    public Quadruplet removeFirst(String id) throws IllegalArgumentException{
+    public Quadruplet removeFirst(String id) throws IllegalArgumentException {
         removeNulls();
         int index = symbolDictionnary.find(id);
         Quadruplet quadruplet = quads.get(index);
@@ -105,6 +107,25 @@ public class IDEStack implements Stack {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        removeNulls();
+        if (top == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        removeNulls();
+        Quadruplet quad;
+        for (int i = top; i >= 0 ; i--) {
+            quad = quads.get(i);
+            if (quad != null) {
+                builder.append(quad.toString()+"\n");
+            }
+        }
+        return builder.toString();
     }
 }

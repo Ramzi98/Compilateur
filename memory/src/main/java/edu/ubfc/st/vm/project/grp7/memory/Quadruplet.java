@@ -17,8 +17,15 @@ public class Quadruplet {
         return this.id;
     }
 
-    public void id(String id) {
-        this.id = id == null ? null : id.trim();
+    public void id(String id) throws IllegalStateException, IllegalArgumentException {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("null or empty name for an identVal");
+        }
+        if (this.id == null) {
+            this.id.trim();
+        } else {
+            throw new IllegalStateException("Error modifying a named var");
+        }
     }
 
     public Object val() {
