@@ -3,6 +3,8 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeaderNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeadersNode;
@@ -56,6 +58,10 @@ public class GetHeadersNumberMethodTest {
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
+        ArrayList<JajaCodeNode> jjnodes = new ArrayList<>();
+        JcInitNode init = JcInitNode.builder().build();
+        jjnodes.add(init);
+        compiler.setJajaCodeNodes(jjnodes);
 
     }
 

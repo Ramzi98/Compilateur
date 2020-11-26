@@ -3,6 +3,8 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
@@ -55,7 +57,10 @@ public class NodeListExpCompileTest {
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
-
+        ArrayList<JajaCodeNode> jjnodes = new ArrayList<>();
+        JcInitNode init = JcInitNode.builder().build();
+        jjnodes.add(init);
+        compiler.setJajaCodeNodes(jjnodes);
     }
 
 
@@ -64,7 +69,7 @@ public class NodeListExpCompileTest {
 
         ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(exnil).build();
         compiler.visit(lexp);
-        assertThat(compiler.getJajaCodeNodes().size(), is(1));
+        assertThat(compiler.getJajaCodeNodes().size(), is(2));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
     }
 

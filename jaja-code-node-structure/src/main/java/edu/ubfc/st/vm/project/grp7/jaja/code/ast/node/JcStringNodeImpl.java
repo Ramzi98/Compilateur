@@ -21,4 +21,9 @@ public class JcStringNodeImpl extends ASTNodeBreakpoint implements JcStringNode{
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {
         return null;
     }
+
+    @Override
+    public void setNext(JajaCodeNode next) throws IndexOutOfBoundsException {
+        return;
+    }
 }

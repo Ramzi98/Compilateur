@@ -122,6 +122,7 @@ public class NodeClasseCompileTest {
         compiler.visit(classeNode);
 
         assertThat(compiler.getJajaCodeNodes().size(), is(14));
+        assertThat(compiler.getJajaCodeNodes().get(6),is(compiler.getJajaCodeNodes().get(5).children(0)));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(14));
 
     }

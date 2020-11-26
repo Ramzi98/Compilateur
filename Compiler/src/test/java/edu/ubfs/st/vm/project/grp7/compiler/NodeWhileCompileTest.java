@@ -3,8 +3,10 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcIfNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -55,6 +57,10 @@ public class NodeWhileCompileTest {
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
+        ArrayList<JajaCodeNode> jjnodes = new ArrayList<>();
+        JcInitNode init = JcInitNode.builder().build();
+        jjnodes.add(init);
+        compiler.setJajaCodeNodes(jjnodes);
 
     }
 
@@ -70,14 +76,12 @@ public class NodeWhileCompileTest {
 
         WhileNode whileNode = WhileNode.builder().expression(expNode).instrs(instrsNode).build();
         compiler.visit(whileNode);
-        assertThat(compiler.getJajaCodeNodes().size(), is(6));
+        assertThat(compiler.getJajaCodeNodes().size(), is(7));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(6));
 
-        JcIfNode jcIfNode = (JcIfNode) (compiler.getJajaCodeNodes().get(2));
-        assertThat(jcIfNode.adresse(),is(41));
-        JcGotoNode jcGotoNode = (JcGotoNode) (compiler.getJajaCodeNodes().get(5));
+        JcIfNode jcIfNode = (JcIfNode) (compiler.getJajaCodeNodes().get(3));
+        JcGotoNode jcGotoNode = (JcGotoNode) (compiler.getJajaCodeNodes().get(6));
         assertThat(jcGotoNode.adresse(),is(35));
-        System.out.println(compiler.getJajaCodeNodes().toString());
     }
     private static final InstrsNode inil = new InstrsNode() {
 

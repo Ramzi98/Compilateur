@@ -10,6 +10,8 @@ public interface JajaCodeNode extends ASTNode {
     @Override
     JajaCodeNode children(int n) throws IndexOutOfBoundsException;
 
+    void setNext(JajaCodeNode next) throws IndexOutOfBoundsException;
+
     abstract class NodeBuilder<B extends NodeBuilder> extends ASTNode.NodeBuilder<B> {
         // No breakpoint as default behaviour
         protected Breakpoint breakpoint = Breakpoint.NONE;
