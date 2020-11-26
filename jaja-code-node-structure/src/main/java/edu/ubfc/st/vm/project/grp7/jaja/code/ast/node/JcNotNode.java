@@ -5,6 +5,8 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcNotNode extends JajaCodeNode {
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
 
 
     @Override

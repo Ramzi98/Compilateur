@@ -8,6 +8,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeOperatorNode;
 public interface JcAddNode extends JajaCodeNode {
 
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {

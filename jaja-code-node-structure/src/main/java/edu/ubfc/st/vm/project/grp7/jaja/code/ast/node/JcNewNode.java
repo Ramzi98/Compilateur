@@ -12,6 +12,8 @@ public interface JcNewNode extends JajaCodeNode {
     Type type();
     Sorte sorte();
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
 
 
     @Override

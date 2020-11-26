@@ -8,6 +8,8 @@ public interface JcGotoNode extends JajaCodeNode {
     int adresse();
     JajaCodeNode next();
     void setAdresse(int adresse);
+    void setNext(JajaCodeNode next);
+
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {

@@ -9,6 +9,8 @@ public interface JcNewarrayNode extends JajaCodeNode {
     String identifier();
     TypeMethNode.TypeMeth type();
     JajaCodeNode next();
+    void setNext(JajaCodeNode next);
+
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {

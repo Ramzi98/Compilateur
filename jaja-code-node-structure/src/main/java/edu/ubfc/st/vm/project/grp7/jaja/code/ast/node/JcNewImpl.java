@@ -16,7 +16,7 @@ public class JcNewImpl extends ASTNodeBreakpoint implements JcNewNode {
     private final int adresse;
     private final Type type;
     private final Sorte sorte;
-    private final JajaCodeNode next;
+    private JajaCodeNode next;
 
     public JcNewImpl(int line, int column, Breakpoint bp, String identifier, int adresse, Type type, Sorte sorte, JajaCodeNode next) {
         super(line, column,bp);
@@ -50,6 +50,11 @@ public class JcNewImpl extends ASTNodeBreakpoint implements JcNewNode {
     @Override
     public JajaCodeNode next() {
         return this.next;
+    }
+
+    @Override
+    public void setNext(JajaCodeNode next) {
+        this.next = next;
     }
 
     @Override

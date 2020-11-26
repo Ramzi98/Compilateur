@@ -22,8 +22,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     private Mode compilemode = Mode.NORMALE;
     private int nheader;
 
-    int line = 1;
-    int column = 0;
     int n = 1;
 
     public  ArrayList<HashMap<MiniJajaNode, Integer>> getMinijajaNodes() {
@@ -53,9 +51,9 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         stack.push(h);
 
 
-            JcInitNode jcInitNode = JcInitNode.builder()
-                    .line(jajaCodeNodes.size()+1)
-                    .column(1)
+        JcInitNode jcInitNode = JcInitNode.builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
                     .build();
 
             jajaCodeNodes.add(jcInitNode);

@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcBooleanNode extends JajaCodeNode{
     Boolean value();
+
     static JcBooleanNode.Builder builder () {
         return new JcBooleanNode.Builder();
     }
