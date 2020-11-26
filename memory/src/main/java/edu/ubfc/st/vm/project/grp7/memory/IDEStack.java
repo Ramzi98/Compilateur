@@ -13,13 +13,6 @@ public class IDEStack implements Stack {
         top = -1;
     }
 
-    /**
-     * while (quad == null && top > 0){
-     *             quad = quads.get(top);
-     *             top--;
-     *         }
-     */
-
 
     @Override
     public Quadruplet peekFirst(String id) {
@@ -105,6 +98,10 @@ public class IDEStack implements Stack {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        if(top == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
