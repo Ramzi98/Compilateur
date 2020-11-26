@@ -11,6 +11,7 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
 
     private int adresse;
     private JajaCodeNode next;
+    private JajaCodeNode Ifnode;
 
 
 
@@ -28,6 +29,16 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
     @Override
     public void setNext(JajaCodeNode next) {
         this.next = next;
+    }
+
+    @Override
+    public void setIfNode(JajaCodeNode Ifnode) {
+        this.Ifnode = Ifnode;
+    }
+
+    @Override
+    public JajaCodeNode getIfNode() {
+        return Ifnode;
     }
 
 

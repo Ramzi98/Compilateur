@@ -51,7 +51,7 @@ public class NodeIfCompileTest {
         };
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,35);
+        startingHash.put(classe,0);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -80,7 +80,7 @@ public class NodeIfCompileTest {
 
         IfNode ifNode = IfNode.builder().expression(expNode).trueInstrs(instsrNode).falseInstrs(instsrNode2).build();
         compiler.visit(ifNode);
-         assertThat(compiler.getJajaCodeNodes().size(), is(10));
+        assertThat(compiler.getJajaCodeNodes().size(), is(10));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(9));
         System.out.println(compiler.getJajaCodeNodes().toString());
 

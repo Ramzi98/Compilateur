@@ -9,6 +9,7 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 public class JcGotoImpl extends ASTNodeBreakpoint implements JcGotoNode {
     private int adresse;
     private JajaCodeNode next;
+    private JajaCodeNode Gotonode;
 
     public JcGotoImpl(int line, int column, Breakpoint bp, int adresse, JajaCodeNode next) {
         super(line, column,bp);
@@ -34,6 +35,16 @@ public class JcGotoImpl extends ASTNodeBreakpoint implements JcGotoNode {
     @Override
     public void setNext(JajaCodeNode next) {
         this.next = next;
+    }
+
+    @Override
+    public void setGotonode(JajaCodeNode Gotonode) {
+        this.Gotonode = Gotonode;
+    }
+
+    @Override
+    public JajaCodeNode getGotonode() {
+        return Gotonode;
     }
 
     @Override

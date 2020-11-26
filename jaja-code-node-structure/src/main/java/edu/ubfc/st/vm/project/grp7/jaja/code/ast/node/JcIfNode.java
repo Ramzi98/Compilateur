@@ -8,6 +8,8 @@ public interface JcIfNode extends JajaCodeNode {
 
     JajaCodeNode next();
     void setNext(JajaCodeNode next);
+    void setIfNode(JajaCodeNode Ifnode);
+    JajaCodeNode getIfNode();
 
     int adresse();
     void setAdresse(int adresse);

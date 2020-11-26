@@ -109,7 +109,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Classe");
+                throw new CompilerException(e);
             }
 
 
@@ -171,7 +171,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Node Decls");
+                    throw new CompilerException(e);
                 }
             }
             else if(compilemode == Mode.RETRAIT)
@@ -191,7 +191,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h),h);
                     stack.set(stack.indexOf(h),h);
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Retrait Node Decls");
+                    throw new CompilerException(e);
                 }
 
 
@@ -234,7 +234,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Node Vars");
+                    throw new CompilerException(e);
                 }
 
 
@@ -255,7 +255,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Retrait Node Vars");
+                    throw new CompilerException(e);
                 }
             }
         }
@@ -279,7 +279,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             try {
                 nodeExp.accept(this);
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Var");
+                throw new CompilerException(e);
             }
 
             newhashMap = stack.pop();
@@ -337,7 +337,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 nodeExp.accept(this);
             }
             catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Array");
+                throw new CompilerException(e);
             }
 
             newhashMap = stack.pop();
@@ -386,7 +386,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             try {
                 nodeExp.accept(this);
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Cst");
+                throw new CompilerException(e);
             }
             newhashMap = stack.pop();
             int ne = (int) newhashMap.values().toArray()[0];
@@ -539,9 +539,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 setNextNode(jcReturnNode);
 
                 jcGotoNode.setAdresse(n+ nens + ndvs + niss + nrdvs + nr);
+                jcGotoNode.setGotonode(jajaCodeNodes.get(n+ nens + ndvs + niss + nrdvs + nr));
 
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Methode");
+                throw new CompilerException(e);
             }
         }else if(compilemode == Mode.RETRAIT)
         {
@@ -613,7 +614,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 /*****************************************************/
 
             }catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Main");
+                throw new CompilerException(e);
             }
         }
     }
@@ -645,7 +646,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
                     stack.set(stack.indexOf(h), h);
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Node Headers");
+                    throw new CompilerException(e);
                 }
             }
         }
@@ -705,7 +706,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
 
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Instrs");
+                throw new CompilerException(e);
             }
         }else{
 
@@ -740,7 +741,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h),h);
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Node Assign");
+                    throw new CompilerException(e);
                 }
                 JcAstoreNode jcAstoreNode = JcAstoreNode
                         .builder()
@@ -772,7 +773,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
                         setNextNode(jcStoreNode);
                     } catch (Exception e) {
-                        throw new CompilerException("Compiler Exception in Node Assign");
+                        throw new CompilerException(e);
                     }
                 }
     }
@@ -800,7 +801,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h),h);
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Sum");
+                throw new CompilerException(e);
             }
 
             JcAincNode jcAincNode = JcAincNode
@@ -827,7 +828,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h),h);
                 stack.set(stack.indexOf(h),h);
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Sum");
+                throw new CompilerException(e);
             }
             JcIncNode jcIncNode = JcIncNode
                     .builder()
@@ -878,7 +879,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 setNextNode(jcAincNode);
 
             } catch (Exception e) {
-                throw new CompilerException("Compiler Exception in Node Increment");
+                throw new CompilerException(e);
             }
 
         }else if(nodeIdent instanceof   IdentNode){
@@ -949,7 +950,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcPopNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node AppelI");
+            throw new CompilerException(e);
         }
     }
 
@@ -964,7 +965,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         try {
             nodeExpReturn.accept(this);
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Return");
+            throw new CompilerException(e);
         }
         HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
         int ne = (int) newhashMap.values().toArray()[0];
@@ -989,7 +990,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Write");
+            throw new CompilerException(e);
         }
         JcWriteNode jcWriteNode = JcWriteNode
                 .builder()
@@ -1069,12 +1070,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
            jcIfNode.setAdresse(n+ne+ns1+2);
+           jcIfNode.setIfNode(jajaCodeNodes.get(n+ne+ns1+2));
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
            jcGotoNode.setAdresse(n+ne+ns1+ns+2);
+           jcGotoNode.setGotonode(jajaCodeNodes.get(n+ne+ns1+ns+2));
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcGotoNode),jcGotoNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node If");
+            throw new CompilerException(e);
         }
 
     }
@@ -1127,10 +1130,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             setNextNode(jcGotoNode);
             jcIfNode.setAdresse(n+ne+niss+3);
+            jcIfNode.setIfNode(jajaCodeNodes.get(n+ne+niss+3));
             jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
+            jcGotoNode.setAdresse(n);
+            jcGotoNode.setGotonode(jajaCodeNodes.get(n));
+            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcGotoNode),jcGotoNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node While");
+            throw new CompilerException(e);
         }
 
     }
@@ -1146,7 +1153,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             MiniJajaNode nodeListExp = node.listexp();
             int n =  node_init(node,h);
 
-
             if (compilemode == Mode.NORMALE) {
                 try {
                     nodeExp.accept(this);
@@ -1161,7 +1167,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     stack.set(stack.indexOf(h), h);
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Node ListExp");
+                    throw new CompilerException(e);
                 }
             }
             else if(compilemode == Mode.RETRAIT)
@@ -1185,7 +1191,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
 
                 } catch (Exception e) {
-                    throw new CompilerException("Compiler Exception in Retrait Node ListExp");
+                    throw new CompilerException(e);
                 }
 
             }
@@ -1222,7 +1228,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcNotNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Not");
+            throw new CompilerException(e);
         }
 
     }
@@ -1250,7 +1256,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node And");
+            throw new CompilerException(e);
         }
 
         JcAndNode jcAndNode = JcAndNode
@@ -1296,7 +1302,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcOrNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Or");
+            throw new CompilerException(e);
         }
     }
 
@@ -1336,7 +1342,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcCmpNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Equals");
+            throw new CompilerException(e);
         }
 
 
@@ -1369,7 +1375,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Greater");
+            throw new CompilerException(e);
         }
 
         JcSupNode jcSupNode = JcSupNode
@@ -1408,7 +1414,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Plus");
+            throw new CompilerException(e);
         }
 
         JcAddNode jcAddNode = JcAddNode
@@ -1446,7 +1452,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Sub");
+            throw new CompilerException(e);
         }
         JcSubNode jcSubNode = JcSubNode
                 .builder()
@@ -1484,7 +1490,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             setNextNode(jcNegNode);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Minus");
+            throw new CompilerException(e);
         }
     }
 
@@ -1514,7 +1520,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Mult");
+            throw new CompilerException(e);
         }
         JcMulNode jcMulNode = JcMulNode
                 .builder()
@@ -1552,7 +1558,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node Div");
+            throw new CompilerException(e);
         }
 
         JcDivNode jcDivNode = JcDivNode
@@ -1605,7 +1611,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node AppelE");
+            throw new CompilerException(e);
         }
     }
 
@@ -1684,7 +1690,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
-            throw new CompilerException("Compiler Exception in Node ArrayItem");
+            throw new CompilerException(e);
         }
 
         JcAloadNode jcAloadNode = JcAloadNode

@@ -9,7 +9,8 @@ public interface JcGotoNode extends JajaCodeNode {
     JajaCodeNode next();
     void setAdresse(int adresse);
     void setNext(JajaCodeNode next);
-
+    void setGotonode(JajaCodeNode Gotonode);
+    JajaCodeNode getGotonode();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
