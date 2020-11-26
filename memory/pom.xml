@@ -25,6 +25,12 @@
             <artifactId>hamcrest</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <!-- TODO: Remove dependecy implementing in interpretors -->
+        <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-node-structure</artifactId>
         </dependency>
