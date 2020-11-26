@@ -22,7 +22,7 @@ public class Quadruplet {
             throw new IllegalArgumentException("null or empty name for an identVal");
         }
         if (this.id == null) {
-            this.id.trim();
+            this.id = id.trim();
         } else {
             throw new IllegalStateException("Error modifying a named var");
         }
@@ -57,9 +57,9 @@ public class Quadruplet {
         return String.format(
                 "<%s, %s, %s, %s>",
                 this.id == null ? "w" : this.id,
-                this.val == null ? "w" : this.toString(),
-                this.nature == null ? "w" : this.toString(),
-                this.type == null ? "w" : this.toString()
+                this.val == null ? "w" : this.val.toString(),
+                this.nature == null ? "w" : this.nature.toString(),
+                this.type == null ? "w" : this.type.toString()
         );
     }
 }
