@@ -1,13 +1,13 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
 public class Quadruplet {
-    private final String id;
+    private String id;
     private SORTE type;
     private OBJ nature;
     private Object val;
 
     public Quadruplet(String id, Object val, OBJ nature, SORTE type) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
         this.val = val;
         this.nature = nature;
         this.type = type;
@@ -15,6 +15,10 @@ public class Quadruplet {
 
     public String id() {
         return this.id;
+    }
+
+    public void id(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public Object val() {
@@ -45,10 +49,10 @@ public class Quadruplet {
     public String toString() {
         return String.format(
                 "<%s, %s, %s, %s>",
-                this.id,
-                this.val,
-                this.nature,
-                this.type
+                this.id == null ? "w" : this.id,
+                this.val == null ? "w" : this.toString(),
+                this.nature == null ? "w" : this.toString(),
+                this.type == null ? "w" : this.toString()
         );
     }
 }

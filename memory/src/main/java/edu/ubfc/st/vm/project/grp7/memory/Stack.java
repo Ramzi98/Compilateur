@@ -2,11 +2,11 @@ package edu.ubfc.st.vm.project.grp7.memory;
 
 public interface Stack {
      void empiler(Quadruplet q);
-     void depiler();
+     Quadruplet depiler();
      void echanger();
-     void ajouterRef(Object ref, SORTE type);
-     void pushStack(String scope);
-     void popStack();
+     //void ajouterRef(Object ref, SORTE type);
+     void pushScope(String scope);
+     void popScope();
      Quadruplet removeFirst(String id);
      Quadruplet peekFirst(String id);
      

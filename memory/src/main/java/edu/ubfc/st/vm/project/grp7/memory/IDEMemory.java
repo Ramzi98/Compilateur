@@ -16,13 +16,13 @@ public class IDEMemory implements Memory {
 
     @Override
     public Memory pushContext(String context) {
-        stack.pushStack(context);
+        stack.pushScope(context);
         return this;
     }
 
     @Override
     public Memory popContext() {
-        stack.popStack();
+        stack.popScope();
         return this;
     }
 
