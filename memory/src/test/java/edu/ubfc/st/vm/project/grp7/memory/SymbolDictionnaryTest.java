@@ -66,6 +66,16 @@ public class SymbolDictionnaryTest  {
     }
 
     @Test(expected = IllegalArgumentException.class )
+    public void registerWithNullId(){
+        symbolDictionnary.register(null,1);
+    }
+
+    @Test(expected = IllegalArgumentException.class )
+    public void registerWithEmptyId(){
+        symbolDictionnary.register("",1);
+    }
+
+    @Test(expected = IllegalArgumentException.class )
     public void noRegistered(){
         symbolDictionnary.unregister("i");
     }
