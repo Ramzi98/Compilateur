@@ -336,6 +336,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
         }
 
 
@@ -390,6 +392,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
         }
     }
 
@@ -442,6 +446,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
         }
 
 
@@ -577,6 +583,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             h.replace(node,2);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
 
         }
     }
@@ -697,6 +705,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             int nf = 1;
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
             nheader--;
         }
 
@@ -713,13 +723,17 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 nodeInstr.accept(this);
                 HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
                 int nis = (int) newhashMap.values().toArray()[0];
-                h.replace(node, nis);
+                h.replace(node, n + nis);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                stack.set(stack.indexOf(h),h);
+
                 nodeInstrs.accept(this);
                 newhashMap = stack.pop();
                 int niss = (int) newhashMap.values().toArray()[0];
                 h.replace(node, nis + niss);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                stack.set(stack.indexOf(h),h);
+
 
             } catch (Exception e) {
                 throw new CompilerException(e);
@@ -778,6 +792,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         int ne = (int) newhashMap.values().toArray()[0];
                         h.replace(node,ne + 1);
                         minijajaNodes.set(minijajaNodes.indexOf(h),h);
+                        stack.set(stack.indexOf(h),h);
+
 
 
                         JcStoreNode jcStoreNode = JcStoreNode
@@ -1049,6 +1065,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
 
+
         try {
 
             nodeExp.accept(this);
@@ -1085,6 +1102,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
+            System.out.println(ns);
            jcIfNode.setAdresse(n+ne+ns1+2);
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
            jcGotoNode.setAdresse(n+ne+ns1+ns+2);
@@ -1199,6 +1217,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     int nrlexp = (int) newhashMap.values().toArray()[0];
                     h.replace(node,nrlexp+2);
                     minijajaNodes.set(minijajaNodes.indexOf(h), h);
+                    stack.set(stack.indexOf(h),h);
+
 
                 } catch (Exception e) {
                     throw new CompilerException(e);
@@ -1258,11 +1278,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             int ne1 = (int) newhashMap.values().toArray()[0];
             h.replace(node,n+ne1);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+            stack.set(stack.indexOf(h),h);
+
             rightOperande.accept(this);
             newhashMap = stack.pop();
             int ne2 = (int) newhashMap.values().toArray()[0];
             h.replace(node,ne1+ne2+1);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
+
             stack.set(stack.indexOf(h),h);
 
         } catch (Exception e) {
