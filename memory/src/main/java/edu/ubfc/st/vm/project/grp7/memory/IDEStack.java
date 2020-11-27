@@ -54,10 +54,12 @@ public class IDEStack implements Stack {
 
     private void removeNulls(){
         Quadruplet quad = null;
-        System.out.println(top);
         while (quad == null && top >= 0){
             quad = quads.get(top);
-            //top--;
+            if (quad == null) {
+                quads.remove(top);
+                top--;
+            }
         }
     }
 
@@ -80,18 +82,21 @@ public class IDEStack implements Stack {
     }
 
     @Override
-    public void identVal(String id, SORTE t, int s) throws IllegalArgumentException, IllegalStateException {
+    public void identVal(String id, SORTE t, int s) throws IllegalArgumentException {
         if (s < 0) {
            throw new IllegalArgumentException("identVal doesn't treat negative depths");
         }
         int depth = s;
         removeNulls();
         int index = top;
-        while(depth > 0) {
+        while(depth >= 0) {
             if(index == -1) {
                 throw new IllegalArgumentException("identVal depth greater than stack size");
             }
             if (quads.get(index) != null) {
+                if(depth == 0) {
+                    index++;
+                }
                 depth--;
             }
             index--;
@@ -99,6 +104,7 @@ public class IDEStack implements Stack {
         Quadruplet quad = quads.get(index);
         quad.id(id);
         quad.type(t);
+        symbolDictionnary.register(id, index);
     }
 
     @Override
@@ -107,18 +113,15 @@ public class IDEStack implements Stack {
         int index = symbolDictionnary.find(id);
         Quadruplet quadruplet = quads.get(index);
         symbolDictionnary.unregister(quadruplet.id());
-        quads.remove(index);
+        quads.set(index, null);
+        removeNulls();
         return quadruplet;
     }
 
     @Override
     public boolean isEmpty() {
         removeNulls();
-        if (top == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return top == -1;
     }
 
     @Override

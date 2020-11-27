@@ -1,15 +1,12 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class IDEStackTest {
     IDEStack ideStack;
@@ -85,140 +82,150 @@ public class IDEStackTest {
 
     @Test
     public void peekFirstNull() {
-        //pas dans le dictionnaire de symbole
+        // i absent du dictionnaire de symbole
         when(symbolDictionnary.find("i")).thenReturn(-1);
         assertThat(ideStack.peekFirst("i"), is(nullValue()));
     }
 
-
     @Test
     public void removeFirstTest(){
-       /* ideStack.empiler(new Quadruplet("i", 5, OBJ.VAR, SORTE.INT));
-        ideStack.empiler(new Quadruplet("j", 6, OBJ.VAR, SORTE.INT));
-        ideStack.empiler(new Quadruplet("k", 7, OBJ.VAR, SORTE.INT));
-        ideStack.empiler(new Quadruplet("l", 8, OBJ.CST, SORTE.INT));
+        ideStack.empiler(new Quadruplet("i", 5, OBJ.VAR, SORTE.INT));
+        when(symbolDictionnary.find("i")).thenReturn(0);
+
+        ideStack.empiler(new Quadruplet("j", null, OBJ.VCST, SORTE.INT));
+        when(symbolDictionnary.find("j")).thenReturn(1);
+
+        ideStack.empiler(new Quadruplet("k", true, OBJ.VAR, SORTE.BOOLEAN));
+        when(symbolDictionnary.find("k")).thenReturn(2);
+
+        ideStack.empiler(new Quadruplet("l", false, OBJ.CST, SORTE.BOOLEAN));
+        when(symbolDictionnary.find("l")).thenReturn(3);
 
         ideStack.removeFirst("k");
         ideStack.removeFirst("j");
 
         Quadruplet q = ideStack.depiler();
         assertThat(q.id(), is("l"));
-        assertThat(q.val(), is(8));
-        assertThat(q.type(), is(SORTE.INT));
+        assertThat(q.val(), is(false));
+        assertThat(q.type(), is(SORTE.BOOLEAN));
         assertThat(q.nature(), is(OBJ.CST));
 
         Quadruplet q2 = ideStack.depiler();
-        assertThat(q.id(), is("i"));
-        assertThat(q.val(), is(5));
-        assertThat(q.type(), is(SORTE.INT));
-        assertThat(q.nature(), is(OBJ.VAR));*/
-
+        assertThat(q2.id(), is("i"));
+        assertThat(q2.val(), is(5));
+        assertThat(q2.type(), is(SORTE.INT));
+        assertThat(q2.nature(), is(OBJ.VAR));
     }
-/**
- * private final SymbolDictionnary symbolDictionnary;
- *     private final ArrayList<Quadruplet> quads ;
- *     private int top;
- *
- *     public IDEStack(){
- *         symbolDictionnary = new SymbolDictionnary();
- *         quads = new ArrayList<>();
- *         top = -1;
- *     }
- *
- *
- *     @Override
- *     public Quadruplet depiler() {
- *         removeNulls();
- *         if (top >= 0) {
- *             Quadruplet quad = quads.get(top);
- *             symbolDictionnary.unregister(quad.id());
- *             quads.remove(top--);
- *             removeNulls();
- *             return quad;
- *         }
- *         return null;
- *     }
- *
- *     private void removeNulls(){
- *         Quadruplet quad = null;
- *         while (quad == null && top >= 0){
- *             quad = quads.get(top--);
- *         }
- *     }
- *
- *     @Override
- *     public void echanger() {
- *         Quadruplet q1 = depiler();
- *         Quadruplet q2 = depiler();
- *         empiler(q1);
- *         empiler(q2);
- *     }
- *
- *     @Override
- *     public void pushScope(String scope) {
- *         symbolDictionnary.pushScope(scope);
- *     }
- *
- *     @Override
- *     public void popScope() {
- *         symbolDictionnary.popScope();
- *     }
- *
- *     @Override
- *     public void identVal(String id, SORTE t, int s) throws IllegalArgumentException, IllegalStateException {
- *         if (s < 0) {
- *            throw new IllegalArgumentException("identVal doesn't treat negative depths");
- *         }
- *         int depth = s;
- *         removeNulls();
- *         int index = top;
- *         while(depth > 0) {
- *             if(index == -1) {
- *                 throw new IllegalArgumentException("identVal depth greater than stack size");
- *             }
- *             if (quads.get(index) != null) {
- *                 depth--;
- *             }
- *             index--;
- *         }
- *         Quadruplet quad = quads.get(index);
- *         quad.id(id);
- *         quad.type(t);
- *     }
- *
- *     @Override
- *     public Quadruplet removeFirst(String id) throws IllegalArgumentException {
- *         removeNulls();
- *         int index = symbolDictionnary.find(id);
- *         Quadruplet quadruplet = quads.get(index);
- *         symbolDictionnary.unregister(quadruplet.id());
- *         quads.remove(index);
- *         return quadruplet;
- *     }
- *
- *     @Override
- *     public boolean isEmpty() {
- *         removeNulls();
- *         if (top == 0) {
- *             return true;
- *         } else {
- *             return false;
- *         }
- *     }
- *
- *     @Override
- *     public String toString() {
- *         StringBuilder builder = new StringBuilder();
- *         removeNulls();
- *         Quadruplet quad;
- *         for (int i = top; i >= 0 ; i--) {
- *             quad = quads.get(i);
- *             if (quad != null) {
- *                 builder.append(quad.toString()+"\n");
- *             }
- *         }
- *         return builder.toString();
- *     }
- */
 
+    @Test
+    public void pushScope__symbolDictionnaryIsRequired() {
+        ideStack.pushScope("meth");
+        verify(symbolDictionnary).pushScope("meth");
+    }
+
+    @Test
+    public void popScope__symbolDictionnaryIsRequired() {
+        ideStack.popScope();
+        verify(symbolDictionnary).popScope();
+    }
+
+    @Test
+    public void emptySack__IsEmpty__ReturnTrue() {
+        assertThat(ideStack.isEmpty(), is(true));
+    }
+
+    @Test
+    public void onElemInStack__isEmpty__ReturnFalse() {
+        ideStack.empiler(new Quadruplet("oui", "zbeb", OBJ.TAB, SORTE.OMEGA));
+        assertThat(ideStack.isEmpty(), is(false));
+    }
+
+    @Test
+    public void fulledAndEmptied__isEmpty__ReturnFalse() {
+        ideStack.empiler(new Quadruplet("oui", "zbeb", OBJ.TAB, SORTE.OMEGA));
+        when(symbolDictionnary.find("oui")).thenReturn(0);
+        ideStack.empiler(new Quadruplet("pop", false, OBJ.CST, SORTE.BOOLEAN));
+        when(symbolDictionnary.find("pop")).thenReturn(1);
+        ideStack.removeFirst("oui");
+        ideStack.depiler();
+
+        assertThat(ideStack.isEmpty(), is(true));
+    }
+
+    @Test
+    public void unnamed__identVal__renamed() {
+        ideStack.empiler(new Quadruplet(null, 1, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet(null, 2, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet(null, 3, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet(null, 4, OBJ.VAR, null));
+
+        ideStack.identVal("i", SORTE.INT, 2);
+        verify(symbolDictionnary).register("i", 1);
+        when(symbolDictionnary.find("i")).thenReturn(1);
+
+        Quadruplet quad = ideStack.removeFirst("i");
+        assertThat(quad.id(), is("i"));
+        assertThat(quad.nature(), is(OBJ.VAR));
+        assertThat(quad.type(), is(SORTE.INT));
+        assertThat(quad.val(), is(2));
+    }
+
+    @Test
+    public void unnamed__HoledStructure__identVal__renamed() {
+        ideStack.empiler(new Quadruplet(null, 1, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet(null, 2, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet("j", 3, OBJ.VAR, null));
+        when(symbolDictionnary.find("j")).thenReturn(2);
+        ideStack.empiler(new Quadruplet(null, 4, OBJ.VAR, null));
+        ideStack.removeFirst("j");
+        when(symbolDictionnary.find("j")).thenReturn(-1);
+
+        ideStack.identVal("i", SORTE.INT, 1);
+        verify(symbolDictionnary).register("i", 1);
+        when(symbolDictionnary.find("i")).thenReturn(1);
+
+        Quadruplet quad = ideStack.removeFirst("i");
+        assertThat(quad.id(), is("i"));
+        assertThat(quad.nature(), is(OBJ.VAR));
+        assertThat(quad.type(), is(SORTE.INT));
+        assertThat(quad.val(), is(2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void depthGTStackSize__identVal__throwException() {
+        ideStack.empiler(new Quadruplet(null, 1, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet(null, 2, OBJ.VAR, null));
+        ideStack.empiler(new Quadruplet("j", 3, OBJ.VAR, null));
+        when(symbolDictionnary.find("j")).thenReturn(2);
+        ideStack.empiler(new Quadruplet(null, 4, OBJ.VAR, null));
+        ideStack.removeFirst("j");
+        when(symbolDictionnary.find("j")).thenReturn(-1);
+
+        ideStack.identVal("i", SORTE.INT, 3);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void nullId__identVal__throwException() {
+        ideStack.empiler(new Quadruplet(null, 1, OBJ.VAR, null));
+
+        ideStack.identVal(null, SORTE.INT, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyId__identVal__throwException() {
+        ideStack.empiler(new Quadruplet(null, 1, OBJ.VAR, null));
+
+        ideStack.identVal(" ", SORTE.INT, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void depth__neg__exception() {
+        ideStack.identVal("i", SORTE.INT, -1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void already__exist__exception() {
+        ideStack.empiler(new Quadruplet("j", 1, OBJ.VAR, null));
+        ideStack.identVal("i", SORTE.INT, 0);
+    }
 }
