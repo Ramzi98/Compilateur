@@ -12,6 +12,7 @@ public class IDEStack implements Stack {
         quads = new ArrayList<>();
         top = -1;
     }
+
     public IDEStack(SymbolDictionnary symbolDictionnary){
         this.symbolDictionnary = symbolDictionnary;
         quads = new ArrayList<>();
