@@ -104,14 +104,21 @@ public class IDEMemory implements Memory {
         if(quad == null){
             throw new IllegalAccessException(id + " has not been declared");
         }
-        if (quad.nature() == OBJ.VCST) {
-            quad.val(val);
-            quad.nature(OBJ.CST);
-        } else if (quad.nature() == OBJ.CST) {
-            throw new IllegalAccessException(id + " is a cst");
-        } else if(quad.nature() == OBJ.TAB) {
-            heap.retirerTas(quad.val(), quad.type());
-            quad.val(heap.ajouterRef(val, quad.type()));
+        switch (quad.nature()) {
+            case VCST:
+                quad.val(val);
+                quad.nature(OBJ.CST);
+                break;
+            case CST :
+                throw new IllegalAccessException(id + " is a cst");
+            case TAB :
+                Object previousRef = quad.val();
+                quad.val(heap.ajouterRef(val, quad.type()));
+                heap.retirerTas(previousRef, quad.type());
+                break;
+            default  : // VAR
+                quad.val(val);
+                break;
         }
         return this;
     }

@@ -1,5 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
+import java.util.Objects;
+
 public class Quadruplet {
     private String id;
     private SORTE type;
@@ -61,5 +63,21 @@ public class Quadruplet {
                 this.nature == null ? "w" : this.nature.toString(),
                 this.type == null ? "w" : this.type.toString()
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Quadruplet that = (Quadruplet) o;
+        return Objects.equals(id, that.id) &&
+                type == that.type &&
+                nature == that.nature &&
+                Objects.equals(val, that.val);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, nature, val);
     }
 }
