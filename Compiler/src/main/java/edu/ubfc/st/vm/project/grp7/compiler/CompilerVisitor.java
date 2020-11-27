@@ -92,42 +92,40 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 compilemode = Mode.NORMALE;
                 /*****************************************************/
 
-                JcPopNode jcPopNode = JcPopNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-
-                setNextNode(jcPopNode);
-
-                JcStopNode jcStopNode = JcStopNode.builder()
-                        .line(jajaCodeNodes.size()+1)
-                        .column(1)
-                        .build();
-
-                setNextNode(jcStopNode);
-
-                for (int i = 0; i<jajaCodeNodes.size();i++)
-                {
-
-                    if(jajaCodeNodes.get(i) instanceof JcIfNode)
-                    {
-                        JcIfNode jcIfNode = (JcIfNode) ((JcIfNode) jajaCodeNodes.get(i));
-                        jcIfNode.setIfNode(jajaCodeNodes.get(jcIfNode.adresse()-1));
-                    }
-                    else if(jajaCodeNodes.get(i) instanceof JcGotoNode)
-                    {
-                        JcGotoNode jcGotoNode = (JcGotoNode) ((JcGotoNode) jajaCodeNodes.get(i));
-                        jcGotoNode.setGotonode(jajaCodeNodes.get(jcGotoNode.adresse()-1));
-                    }
-
-                }
-
-
 
             } catch (Exception e) {
                 throw new CompilerException(e);
             }
 
+        JcPopNode jcPopNode = JcPopNode.builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcPopNode);
+
+        JcStopNode jcStopNode = JcStopNode.builder()
+                .line(jajaCodeNodes.size()+1)
+                .column(1)
+                .build();
+
+        setNextNode(jcStopNode);
+
+        for (JajaCodeNode jcnode : jajaCodeNodes)
+        {
+
+            if(jcnode instanceof JcIfNode)
+            {
+                JajaCodeNode jcIfNode = jajaCodeNodes.get(((JcIfNode) jcnode).adresse() - 1);
+                ((JcIfNode) jcnode).setIfNode(jcIfNode);
+            }
+            else if(jcnode instanceof JcGotoNode)
+            {
+                JajaCodeNode jcGotoNode = jajaCodeNodes.get(((JcGotoNode) jcnode).adresse() - 1);
+                ((JcGotoNode) jcnode).setGotonode(jcGotoNode);
+            }
+
+        }
 
 
 
@@ -1101,9 +1099,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         HashMap<MiniJajaNode, Integer> h = new HashMap<MiniJajaNode, Integer>();
         int n =  node_init(node,h);
-
-        try {
-
+            try{
             nodeExp.accept(this);
             HashMap<MiniJajaNode, Integer> newhashMap = stack.pop();
             int ne = (int) newhashMap.values().toArray()[0];

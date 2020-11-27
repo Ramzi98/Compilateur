@@ -43,7 +43,7 @@ public class JcGotoImpl extends ASTNodeBreakpoint implements JcGotoNode {
     }
 
     @Override
-    public JajaCodeNode getGotonode() {
+    public JajaCodeNode gotoNode() {
         return Gotonode;
     }
 

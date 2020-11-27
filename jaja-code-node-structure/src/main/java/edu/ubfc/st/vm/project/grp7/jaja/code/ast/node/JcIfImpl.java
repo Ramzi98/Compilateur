@@ -37,7 +37,7 @@ public class JcIfImpl extends ASTNodeBreakpoint implements JcIfNode {
     }
 
     @Override
-    public JajaCodeNode getIfNode() {
+    public JajaCodeNode ifNode() {
         return Ifnode;
     }
 
