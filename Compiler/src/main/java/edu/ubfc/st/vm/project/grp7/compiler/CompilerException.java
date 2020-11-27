@@ -1,4 +1,4 @@
-package edu.ubfc.st.vm.project.grp7.mini.jaja.ast;
+package edu.ubfc.st.vm.project.grp7.compiler;
 
 public class CompilerException extends Exception {
     public CompilerException(Exception e){

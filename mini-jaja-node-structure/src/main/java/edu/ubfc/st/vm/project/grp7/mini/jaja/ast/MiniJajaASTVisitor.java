@@ -142,4 +142,5 @@ public abstract class MiniJajaASTVisitor implements ASTVisitor {
     public abstract void visit(ArrayItemNode node) throws Exception;
     public abstract void visit(TypeMethNode node) throws Exception;
     public abstract void visit(TypeNode node) throws Exception;
+
 }
