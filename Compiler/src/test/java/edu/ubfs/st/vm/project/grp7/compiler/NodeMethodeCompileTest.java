@@ -51,7 +51,7 @@ public class NodeMethodeCompileTest {
         };
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,0);
+        startingHash.put(classe,1);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -187,7 +187,7 @@ public class NodeMethodeCompileTest {
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(17));
 
         JcGotoNode jcGotoNode = (JcGotoNode) compiler.getJajaCodeNodes().get(3);
-        assertThat(jcGotoNode.adresse(), is(17));
+        assertThat(jcGotoNode.adresse(), is(18));
 
     }
 

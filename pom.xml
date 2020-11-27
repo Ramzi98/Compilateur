@@ -27,6 +27,7 @@
         <module>graphic-interface</module>
         <module>memory</module>
         <module>Compiler</module>
+        <module>type-checker</module>
     </modules>
 
     <distributionManagement>

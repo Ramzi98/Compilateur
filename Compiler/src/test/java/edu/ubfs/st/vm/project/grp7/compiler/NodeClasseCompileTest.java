@@ -4,6 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -125,7 +126,6 @@ public class NodeClasseCompileTest {
         assertThat(compiler.getJajaCodeNodes().size(), is(14));
         assertThat(compiler.getJajaCodeNodes().get(6),is(compiler.getJajaCodeNodes().get(5).children(0)));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(14));
-
     }
 
     private static final VarsNode vnil = new VarsNode() {

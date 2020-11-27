@@ -106,6 +106,22 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
                 setNextNode(jcStopNode);
 
+                for (int i = 0; i<jajaCodeNodes.size();i++)
+                {
+
+                    if(jajaCodeNodes.get(i) instanceof JcIfNode)
+                    {
+                        JcIfNode jcIfNode = (JcIfNode) ((JcIfNode) jajaCodeNodes.get(i));
+                        jcIfNode.setIfNode(jajaCodeNodes.get(jcIfNode.adresse()-1));
+                    }
+                    else if(jajaCodeNodes.get(i) instanceof JcGotoNode)
+                    {
+                        JcGotoNode jcGotoNode = (JcGotoNode) ((JcGotoNode) jajaCodeNodes.get(i));
+                        jcGotoNode.setGotonode(jajaCodeNodes.get(jcGotoNode.adresse()-1));
+                    }
+
+                }
+
 
 
             } catch (Exception e) {
@@ -539,8 +555,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 setNextNode(jcReturnNode);
 
                 jcGotoNode.setAdresse(n+ nens + ndvs + niss + nrdvs + nr);
-                jcGotoNode.setGotonode(jajaCodeNodes.get(n+ nens + ndvs + niss + nrdvs + nr));
-
             } catch (Exception e) {
                 throw new CompilerException(e);
             }
@@ -1070,10 +1084,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             stack.set(stack.indexOf(h),h);
 
            jcIfNode.setAdresse(n+ne+ns1+2);
-           jcIfNode.setIfNode(jajaCodeNodes.get(n+ne+ns1+2));
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
            jcGotoNode.setAdresse(n+ne+ns1+ns+2);
-           jcGotoNode.setGotonode(jajaCodeNodes.get(n+ne+ns1+ns+2));
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcGotoNode),jcGotoNode);
 
         } catch (Exception e) {
@@ -1130,10 +1142,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             setNextNode(jcGotoNode);
             jcIfNode.setAdresse(n+ne+niss+3);
-            jcIfNode.setIfNode(jajaCodeNodes.get(n+ne+niss+3));
             jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
             jcGotoNode.setAdresse(n);
-            jcGotoNode.setGotonode(jajaCodeNodes.get(n));
             jajaCodeNodes.set(jajaCodeNodes.indexOf(jcGotoNode),jcGotoNode);
 
         } catch (Exception e) {

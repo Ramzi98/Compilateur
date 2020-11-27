@@ -103,7 +103,7 @@ public abstract class MiniJajaASTVisitor implements ASTVisitor {
         }
     }
 
-    public abstract void visit(ClasseNode node) throws IllFormedNodeException, IOException, CompilerException;
+    public abstract void visit(ClasseNode node) throws IllFormedNodeException, IOException, CompilerException, TypeChekerException;
     public abstract void visit(IdentNode node) throws IllFormedNodeException, IOException;
     public abstract void visit(DeclsNode node) throws IllFormedNodeException, IOException, CompilerException;
     public abstract void visit(VarsNode node) throws IllFormedNodeException, IOException, CompilerException;

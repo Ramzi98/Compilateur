@@ -51,7 +51,7 @@ public class NodeIfCompileTest {
         };
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,0);
+        startingHash.put(classe,35);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);

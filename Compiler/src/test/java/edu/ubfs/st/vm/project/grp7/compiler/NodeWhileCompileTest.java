@@ -53,7 +53,7 @@ public class NodeWhileCompileTest {
         };
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,0);
+        startingHash.put(classe,35);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -82,9 +82,8 @@ public class NodeWhileCompileTest {
 
         JcIfNode jcIfNode = (JcIfNode) (compiler.getJajaCodeNodes().get(3));
         JcGotoNode jcGotoNode = (JcGotoNode) (compiler.getJajaCodeNodes().get(6));
-        assertThat(jcGotoNode.adresse(),is(0));
-        System.out.println(compiler.getJajaCodeNodes().get(6).toString());
-        //assertThat(jcGotoNode.getGotonode(),is());
+        assertThat(jcGotoNode.adresse(),is(35));
+
     }
     private static final InstrsNode inil = new InstrsNode() {
 

@@ -49,7 +49,7 @@ public class NodeMethodeRetraitTest {
         };
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
-        startingHash.put(classe,-1);
+        startingHash.put(classe,1);
         stack.push(startingHash);
         miniJajaNodes.add(startingHash);
         compiler.setStack(stack);
@@ -216,7 +216,7 @@ public class NodeMethodeRetraitTest {
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(30));
 
         JcGotoNode jcGotoNode = (JcGotoNode) compiler.getJajaCodeNodes().get(3);
-        assertThat(jcGotoNode.adresse(), is(18));
+        assertThat(jcGotoNode.adresse(), is(20));
 
     }
 
