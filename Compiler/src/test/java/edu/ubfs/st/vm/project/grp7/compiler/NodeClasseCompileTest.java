@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcIfNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -99,12 +100,27 @@ public class NodeClasseCompileTest {
         IdentNode ident2 = IdentNode.builder().value("I").build();
         NumberNode expression2 = NumberNode.builder().value(2).build();
         AssignNode assignNode = AssignNode.builder().identifier(ident2).expression(expression2).build();
+        IdentNode identIf = IdentNode.builder().value("I").build();
+        NumberNode expNodeIf = NumberNode.builder().value(2).build();
+        NumberNode expressionIf = NumberNode.builder().value(2).build();
+        AssignNode assignNodeIf = AssignNode.builder().identifier(identIf).expression(expressionIf).build();
+
+        IdentNode ident2If = IdentNode.builder().value("J").build();
+        NumberNode expression2If = NumberNode.builder().value(3).build();
+        AssignNode assignNode2If = AssignNode.builder().identifier(ident2If).expression(expression2If).build();
+        InstrsNode instsrNode2If = InstrsNode.builder().line(1).column(0).instruction(assignNode2If).instrs(instrs).build();
+        InstrsNode instsrNodeIf = InstrsNode.builder().line(1).column(0).instruction(assignNodeIf).instrs(instsrNode2If).build();
+
+        IfNode ifNode = IfNode.builder().expression(expNodeIf).trueInstrs(instsrNodeIf).falseInstrs(instsrNode2If).build();
+
+        InstrsNode InstrNodeIfGlobal = InstrsNode.builder().instruction(ifNode).instrs(instrs).build();
         InstrsNode instsrNode = InstrsNode.builder()
                 .line(1)
                 .column(0)
                 .instruction(assignNode)
-                .instrs(instrs)
+                .instrs(InstrNodeIfGlobal)
                 .build();
+
 
         MainNode mainNode = MainNode.builder()
                 .line(1)
@@ -123,9 +139,14 @@ public class NodeClasseCompileTest {
 
         compiler.visit(classeNode);
 
-        assertThat(compiler.getJajaCodeNodes().size(), is(14));
+        assertThat(compiler.getJajaCodeNodes().size(), is(23));
         assertThat(compiler.getJajaCodeNodes().get(6),is(compiler.getJajaCodeNodes().get(5).children(0)));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(14));
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(23));
+        JcIfNode ifnode = (JcIfNode) compiler.getJajaCodeNodes().get(8);
+        JcGotoNode gotonode = (JcGotoNode) compiler.getJajaCodeNodes().get(11);
+        assertThat(ifnode.adresse(),is(13));
+        assertThat(gotonode.adresse(),is(17));
+
     }
 
     private static final VarsNode vnil = new VarsNode() {

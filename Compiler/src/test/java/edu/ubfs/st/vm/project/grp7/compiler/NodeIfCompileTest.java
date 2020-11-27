@@ -4,6 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcIfNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
@@ -82,7 +83,8 @@ public class NodeIfCompileTest {
         compiler.visit(ifNode);
         assertThat(compiler.getJajaCodeNodes().size(), is(10));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(9));
-        System.out.println(compiler.getJajaCodeNodes().toString());
+        JcIfNode jcif = (JcIfNode) compiler.getJajaCodeNodes().get(2);
+        System.out.println(jcif.adresse());
 
     }
     private static final InstrsNode inil = new InstrsNode() {
