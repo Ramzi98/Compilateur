@@ -5,11 +5,10 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NotNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.WriteNode;
 import org.junit.Before;
 import org.junit.Test;
 

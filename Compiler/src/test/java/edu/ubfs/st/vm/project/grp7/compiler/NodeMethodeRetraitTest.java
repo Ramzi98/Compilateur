@@ -4,7 +4,7 @@ import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.CompilerException;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
