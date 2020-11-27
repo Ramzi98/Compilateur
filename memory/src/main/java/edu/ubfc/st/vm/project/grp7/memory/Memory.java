@@ -22,7 +22,7 @@ public interface Memory {
 
     Memory retirerDecl(String id);
     Memory affecterVal(String id, Object val) throws IllegalAccessException;
-    Memory affecterValT(String id, Object val, int index) throws IllegalAccessException;
+    Memory affecterValT(String id, int index, Object val) throws IllegalAccessException;
     Memory affecterType(String id, SORTE type) throws IllegalAccessException;
 
     //TODO: déplacer dans l'interpréteur pour enlever la dépendance de module
@@ -40,4 +40,6 @@ public interface Memory {
     static Memory getInstance() {
         return new IDEMemory(new IDEStack(), new IDEHeap());
     }
+
+    Object classVar(Object val);
 }

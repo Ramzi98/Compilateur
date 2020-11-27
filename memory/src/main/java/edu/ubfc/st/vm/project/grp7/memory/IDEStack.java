@@ -20,6 +20,16 @@ public class IDEStack implements Stack {
     }
 
     @Override
+    public Object classVar(Object val) {
+        if (! quads.isEmpty()) {
+            Object ret = quads.get(0).val();
+            quads.get(0).val(val);
+            return ret;
+        }
+        return null;
+    }
+
+    @Override
     public Quadruplet peekFirst(String id) {
         int index = symbolDictionnary.find(id);
         if (index == -1){

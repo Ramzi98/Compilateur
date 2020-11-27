@@ -128,7 +128,7 @@ public class IDEMemory implements Memory {
      *  < i1, v1, o,t > .AffecterValT(i, v, ind, m) sinon AffecterTas(v1, ind, v, m)
      */
     @Override
-    public Memory affecterValT(String id, Object val, int index) throws IllegalAccessException {
+    public Memory affecterValT(String id, int index, Object val) throws IllegalAccessException {
         Quadruplet quad = stack.peekFirst(id);
         if(quad == null){
             throw new IllegalAccessException(id + " has not been declared");
@@ -229,6 +229,11 @@ public class IDEMemory implements Memory {
             throw new IllegalAccessException(id + " has not been declared");
         }
         return quad.type();
+    }
+
+    @Override
+    public Object classVar(Object val) {
+        return stack.classVar(val);
     }
 
     @Override

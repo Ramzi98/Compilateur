@@ -176,7 +176,7 @@ public class IDEMemoryTest {
     @Test(expected = IllegalAccessException.class )
     public void affecterValTNullQuadTest() throws IllegalAccessException {
         when(ideStack.peekFirst("i")).thenReturn(null);
-        ideMemory.affecterValT("i", 5, 0);
+        ideMemory.affecterValT("i", 0, 5);
 
     }
 
@@ -190,7 +190,7 @@ public class IDEMemoryTest {
         when(mockedQuad.type()).thenReturn(SORTE.BOOLEAN);
         when(mockedQuad.val()).thenReturn(refFrom);
         when(ideStack.peekFirst("i")).thenReturn(mockedQuad);
-        ideMemory.affecterValT("i", 5, 0);
+        ideMemory.affecterValT("i", 0, 5);
     }
 
     @Test
@@ -202,7 +202,7 @@ public class IDEMemoryTest {
         when(mockedQuad.type()).thenReturn(SORTE.BOOLEAN);
         when(mockedQuad.val()).thenReturn(refFrom);
         when(ideStack.peekFirst("i")).thenReturn(mockedQuad);
-        ideMemory.affecterValT("i", 5, 0);
+        ideMemory.affecterValT("i", 0, 5);
 
         verify(ideHeap).affecterTas(refFrom,0,5);
     }

@@ -11,4 +11,6 @@ public interface Stack {
      
      void identVal(String id, SORTE t, int s);
      boolean isEmpty();
+
+     Object classVar(Object val);
 }

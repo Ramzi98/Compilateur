@@ -2,7 +2,6 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.memory.Stack;
 
 public interface MiniJajaInterpreter {
     static Factory getFactory() {
