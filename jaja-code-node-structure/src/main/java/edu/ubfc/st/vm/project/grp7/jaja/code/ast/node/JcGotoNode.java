@@ -10,7 +10,7 @@ public interface JcGotoNode extends JajaCodeNode {
     void setAdresse(int adresse);
     void setNext(JajaCodeNode next);
     void setGotonode(JajaCodeNode Gotonode);
-    JajaCodeNode getGotonode();
+    JajaCodeNode gotoNode();
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
