@@ -31,8 +31,9 @@ public class IDEStack implements Stack {
     @Override
     public void empiler(Quadruplet q) {
         quads.add(q);
-        if (! q.id().isEmpty()) {
-            symbolDictionnary.register(q.id(), ++top);
+        top++;
+        if (q.id() != null && ! q.id().isEmpty()) {
+            symbolDictionnary.register(q.id(), top);
         }
     }
 
@@ -41,7 +42,9 @@ public class IDEStack implements Stack {
         removeNulls();
         if (top >= 0) {
             Quadruplet quad = quads.get(top);
-            symbolDictionnary.unregister(quad.id());
+            if (quad.id()!= null){
+                symbolDictionnary.unregister(quad.id());
+            }
             quads.remove(top--);
             removeNulls();
             return quad;
@@ -51,8 +54,10 @@ public class IDEStack implements Stack {
 
     private void removeNulls(){
         Quadruplet quad = null;
+        System.out.println(top);
         while (quad == null && top >= 0){
-            quad = quads.get(top--);
+            quad = quads.get(top);
+            //top--;
         }
     }
 

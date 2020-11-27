@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class CompilerVisitor extends MiniJajaASTVisitor {
+   
     private ArrayList<JajaCodeNode> jajaCodeNodes = new ArrayList<>();
     private  ArrayList<HashMap<MiniJajaNode, Integer>> minijajaNodes= new ArrayList<HashMap<MiniJajaNode, Integer>>();
     private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<HashMap<MiniJajaNode, Integer>>();
