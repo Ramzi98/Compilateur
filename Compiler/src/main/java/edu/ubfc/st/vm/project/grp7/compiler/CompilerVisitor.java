@@ -118,11 +118,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             {
                 JajaCodeNode jcIfNode = jajaCodeNodes.get(((JcIfNode) jcnode).adresse() - 1);
                 ((JcIfNode) jcnode).setIfNode(jcIfNode);
+                jajaCodeNodes.set(jajaCodeNodes.indexOf(jcnode),jcnode);
             }
             else if(jcnode instanceof JcGotoNode)
             {
                 JajaCodeNode jcGotoNode = jajaCodeNodes.get(((JcGotoNode) jcnode).adresse() - 1);
                 ((JcGotoNode) jcnode).setGotonode(jcGotoNode);
+                jajaCodeNodes.set(jajaCodeNodes.indexOf(jcnode),jcnode);
+
             }
 
         }
