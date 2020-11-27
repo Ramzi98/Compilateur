@@ -189,18 +189,19 @@ public class IDEMemoryTest {
         when(mockedQuad.nature()).thenReturn(OBJ.VAR);
         when(mockedQuad.type()).thenReturn(SORTE.BOOLEAN);
         when(mockedQuad.val()).thenReturn(refFrom);
+        when(ideStack.peekFirst("i")).thenReturn(mockedQuad);
         ideMemory.affecterValT("i", 5, 0);
     }
 
-    @Test(expected = IllegalAccessException.class )
+    @Test
     public void affecterValTTest() throws IllegalAccessException {
         Quadruplet mockedQuad = mock(Quadruplet.class);
-
         Object refFrom = "refFrom", refTo = "refTo";
         when(mockedQuad.id()).thenReturn("i");
         when(mockedQuad.nature()).thenReturn(OBJ.TAB);
         when(mockedQuad.type()).thenReturn(SORTE.BOOLEAN);
         when(mockedQuad.val()).thenReturn(refFrom);
+        when(ideStack.peekFirst("i")).thenReturn(mockedQuad);
         ideMemory.affecterValT("i", 5, 0);
 
         verify(ideHeap).affecterTas(refFrom,0,5);

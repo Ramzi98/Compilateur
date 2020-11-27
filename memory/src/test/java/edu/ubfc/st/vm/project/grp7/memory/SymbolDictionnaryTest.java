@@ -7,7 +7,8 @@ import org.junit.Test;
 
 public class SymbolDictionnaryTest  {
 
-     private SymbolDictionnary symbolDictionnary;
+    private SymbolDictionnary symbolDictionnary;
+    
     @Before
     public void init(){
         symbolDictionnary = new SymbolDictionnary();
