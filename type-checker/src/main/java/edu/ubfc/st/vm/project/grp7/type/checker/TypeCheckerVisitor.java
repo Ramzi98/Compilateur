@@ -44,13 +44,16 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
 
-        Scope scope = Scope.GLOBAL;
+        scope = Scope.GLOBAL;
+        pass = Pass.FIRST_PASS;
+
 
 
 
         if (pass == Pass.FIRST_PASS)
         {
-
+            SymbolDictionnary symbolDictionnary = new SymbolDictionnary();
+            symbolDictionnary.register(ident.value(),0);
         }
 
         stack.push(scope);
@@ -61,11 +64,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             stack.push(scope);
             main.accept(this);
         } catch (Exception e) {
-            try {
-                throw new TypeChekerException(e);
-            } catch (TypeChekerException typeChekerException) {
-                typeChekerException.printStackTrace();
-            }
+            throw new IllFormedNodeException(e.toString());
         }
 
     }
@@ -184,6 +183,20 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(NotNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode expression = node.expression();
+        try {
+            expression.accept(this);
+
+            if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
+
+                throw new IllFormedNodeException("The type of "+ expression +"Is not compatible with the NOT operator");
+
+            }
+            miniJajaNodeType.put(node,SORTE.BOOLEAN);
+
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
 
     }
 
@@ -213,7 +226,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllFormedNodeException(e.toString());
         }
 
     }
@@ -230,19 +243,19 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
             if (miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN) {
 
-                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the AND operator");
+                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the OR operator");
 
             }
 
             if (miniJajaNodeType.get(rightOperand) != SORTE.BOOLEAN) {
 
-                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the AND operator");
+                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the OR operator");
 
             }
 
             miniJajaNodeType.put(node, SORTE.BOOLEAN);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllFormedNodeException(e.toString());
         }
     }
 
@@ -256,30 +269,138 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(GreaterNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode leftOperandGreater = node.leftOperand();
+        MiniJajaNode rightOperandGreater = node.rightOperand();
+        try {
+            leftOperandGreater.accept(this);
+            rightOperandGreater.accept(this);
+
+            if (miniJajaNodeType.get(leftOperandGreater) != SORTE.INT) {
+                throw new IllFormedNodeException("The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
+            }
+
+            if (miniJajaNodeType.get(rightOperandGreater) != SORTE.INT) {
+                throw new IllFormedNodeException("The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
+            }
+            miniJajaNodeType.put(node, SORTE.BOOLEAN);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
     }
 
     @Override
     public void visit(PlusNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode leftOperandAdd = node.leftOperand();
+        MiniJajaNode rightOperandAdd = node.rightOperand();
+        try {
+            leftOperandAdd.accept(this);
+            rightOperandAdd.accept(this);
 
+            if (miniJajaNodeType.get(leftOperandAdd) != SORTE.INT) {
+                throw new IllFormedNodeException("The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
+            }
+
+            if (miniJajaNodeType.get(rightOperandAdd) != SORTE.INT) {
+                throw new IllFormedNodeException("The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
+            }
+            miniJajaNodeType.put(node, SORTE.INT);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
     }
 
     @Override
     public void visit(SubNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode leftOperandSub = node.leftOperand();
+        MiniJajaNode rightOperandSub = node.rightOperand();
+        try {
+            leftOperandSub.accept(this);
+            rightOperandSub.accept(this);
 
+            if (miniJajaNodeType.get(leftOperandSub) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandSub + "Is not compatible with the SUB operator");
+
+            }
+
+            if (miniJajaNodeType.get(rightOperandSub) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandSub + "Is not compatible with the SYB operator");
+            }
+            miniJajaNodeType.put(node, SORTE.INT);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
     }
 
     @Override
     public void visit(MinusNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode expression = node.expression();
+        try {
+            expression.accept(this);
 
+            if (miniJajaNodeType.get(expression) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + expression + "Is not compatible with the Minus operator");
+
+            }
+
+            miniJajaNodeType.put(node, SORTE.INT);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
     }
 
     @Override
     public void visit(MultNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode leftOperandMult = node.leftOperand();
+        MiniJajaNode rightOperandMult = node.rightOperand();
+        try {
+            leftOperandMult.accept(this);
+            rightOperandMult.accept(this);
 
+            if (miniJajaNodeType.get(leftOperandMult) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandMult + "Is not compatible with the MULT operator");
+
+            }
+
+            if (miniJajaNodeType.get(rightOperandMult) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandMult + "Is not compatible with the MULT operator");
+
+            }
+
+            miniJajaNodeType.put(node, SORTE.INT);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
     }
 
     @Override
     public void visit(DivNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode leftOperandDiv = node.leftOperand();
+        MiniJajaNode rightOperandDiv = node.rightOperand();
+        try {
+            leftOperandDiv.accept(this);
+            rightOperandDiv.accept(this);
+
+            if (miniJajaNodeType.get(leftOperandDiv) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandDiv + "Is not compatible with the Div operator");
+
+            }
+
+            if (miniJajaNodeType.get(rightOperandDiv) != SORTE.INT) {
+
+                throw new IllFormedNodeException("The type of " + rightOperandDiv + "Is not compatible with the Div operator");
+
+            }
+
+            miniJajaNodeType.put(node, SORTE.INT);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
 
     }
 
