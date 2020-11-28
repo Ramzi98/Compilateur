@@ -481,9 +481,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(BooleanNode node) throws IllFormedNodeException, IOException {
 
-        SORTE type = SORTE.of(TypeNode.Type.BOOLEAN);
-        miniJajaNodeType.put(node,type);
-
+        if(node.value() != null)
+        {
+            SORTE type = SORTE.of(TypeNode.Type.BOOLEAN);
+            miniJajaNodeType.put(node, type);
+        }
+        else {
+            throw new IllFormedNodeException("Node has no value specified");
+        }
     }
 
     @Override
