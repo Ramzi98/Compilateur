@@ -17,15 +17,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     Stack<Scope> stack = new Stack<>();
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     private Pass pass;
-    private Scope scope;
+    int indice;
 
     public void setPass(Pass pass) {
         this.pass = pass;
     }
 
-    public void setScope(Scope scope) {
-        this.scope = scope;
-    }
 
     private SymbolDictionnary symbolDictionnary;
 
@@ -44,22 +41,28 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
 
+
+        Scope s = stack.push(Scope.GLOBAL);
+
         if (pass == Pass.FIRST_PASS)
         {
-            SymbolDictionnary symbolDictionnary = new SymbolDictionnary();
-            symbolDictionnary.register(ident.value(),0);
+            try{
+                symbolDictionnary.register(ident.value(),indice++);
+                symbolDictionnary.pushScope(SCOPE_GLOBAL);
+            }catch (Exception e){
+                throw new IllFormedNodeException(node.line(), node.column(),"The symbol \"" + ident.value() + "\" has already been declared.");
+            }
+
         }
 
-        stack.push(scope);
         try {
             ident.accept(this);
-            stack.push(scope);
             decls.accept(this);
-            stack.push(scope);
             main.accept(this);
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
+        symbolDictionnary.popScope();
 
     }
 
@@ -71,15 +74,63 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode nodeDecl = node.decl();
+        MiniJajaNode nodeDecls = node.decls();
+        if(node.decl() != null) {
+            try {
+                nodeDecl.accept(this);
+                nodeDecls.accept(this);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(e.toString());
+            }
+        }
+
     }
 
     @Override
     public void visit(VarsNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode nodeVar = node.var();
+        MiniJajaNode nodeVars = node.vars();
+        if(node.var() != null) {
+            try {
+                nodeVar.accept(this);
+                nodeVars.accept(this);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(e.toString());
+            }
+        }
     }
 
     @Override
     public void visit(VarNode node) throws IllFormedNodeException, IOException {
+
+        MiniJajaNode nodeType = node.typeMeth();
+        MiniJajaNode nodeExpression = node.expression();
+        MiniJajaNode identfier = node.identifier();
+
+        if(pass == Pass.FIRST_PASS) {
+            try {
+                nodeType.accept(this);
+                nodeExpression.accept(this);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(e.toString());
+            }
+
+            if (miniJajaNodeType.get(nodeType) == SORTE.OMEGA) {
+                throw new IllFormedNodeException(node.line(), node.column(), "Can not declare a variable of type " + miniJajaNodeType.get(nodeType));
+            }
+
+            if (miniJajaNodeType.get(nodeExpression) != null && miniJajaNodeType.get(nodeExpression) != miniJajaNodeType.get(nodeType)) {
+                throw new IllFormedNodeException(node.line(), node.column(), "The type " + miniJajaNodeType.get(nodeExpression) + " is not compatible with the ident \"" + node.identifier().value() + "\" of type " + miniJajaNodeType.get(nodeType) + ".");
+            }
+
+            try {
+                symbolDictionnary.register(node.identifier().value(), indice++);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.");
+            }
+        }
 
     }
 
@@ -100,6 +151,19 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(MainNode node) throws IllFormedNodeException, IOException {
+        MiniJajaNode nodeVars = node.vars();
+        MiniJajaNode nodeInstrs = node.instrs();
+
+        symbolDictionnary.pushScope(SCOPE_MAIN);
+
+        try {
+            nodeVars.accept(this);
+            nodeInstrs.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
+
+        symbolDictionnary.popScope();
 
     }
 
@@ -522,11 +586,27 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(TypeMethNode node) throws IllFormedNodeException, IOException {
-
+        if(node.value() != null)
+        {
+            SORTE type = SORTE.of(node.value());
+            miniJajaNodeType.put(node,type);
+        }
+        else
+        {
+            throw new IllFormedNodeException(node.line(), node.column(), "Node TypeNode has no value specified");
+        }
     }
 
     @Override
     public void visit(TypeNode node) throws IllFormedNodeException, IOException {
-
+        if(node.value() != null)
+        {
+            SORTE type = SORTE.of(node.value());
+            miniJajaNodeType.put(node,type);
+        }
+        else
+        {
+            throw new IllFormedNodeException(node.line(), node.column(), "Node TypeNode has no value specified");
+        }
     }
 }
