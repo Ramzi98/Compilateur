@@ -19,6 +19,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     Stack<Scope> stack = new Stack<>();
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
+
+    public HashMap<MiniJajaNode, SORTE> getMiniJajaNodeType() {
+        return miniJajaNodeType;
+    }
+
     private Pass pass;
     private Scope scope;
 
@@ -241,6 +246,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
 
             miniJajaNodeType.put(node, SORTE.BOOLEAN);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -299,8 +305,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(NumberNode node) throws IllFormedNodeException, IOException {
 
-       SORTE type = SORTE.of(TypeNode.Type.INT);
-       miniJajaNodeType.put(node,type);
+
+        if(node.value() != null) {
+            SORTE type = SORTE.of(TypeNode.Type.INT);
+            miniJajaNodeType.put(node, type);
+        }
+        else{
+            throw new IllFormedNodeException("The number node has no value specified");
+        }
 
 
     }
