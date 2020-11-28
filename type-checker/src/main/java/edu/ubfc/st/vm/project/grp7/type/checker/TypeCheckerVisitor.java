@@ -41,9 +41,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
 
-
-        Scope s = stack.push(Scope.GLOBAL);
-
         if (pass == Pass.FIRST_PASS)
         {
             try{
@@ -128,6 +125,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 symbolDictionnary.register(node.identifier().value(), indice++);
             } catch (Exception e) {
+                System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
                 throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.");
             }
         }
@@ -346,7 +344,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN){
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+rightOperand +"Is not compatible with the AND operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+leftOperand +"Is not compatible with the AND operator");
 
         }
 
@@ -375,7 +373,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperand + "Is not compatible with the OR operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperand + "Is not compatible with the OR operator");
 
         }
 
@@ -400,7 +398,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(e.toString());
         }
 
-        if (miniJajaNodeType.get(leftOperandEquals) != miniJajaNodeType.get(leftOperandEquals)) {
+        if (miniJajaNodeType.get(leftOperandEquals) != miniJajaNodeType.get(rightOperandEquals)) {
             throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandEquals + "can not be compared with the type of "+ leftOperandEquals);
         }
         miniJajaNodeType.put(node, SORTE.BOOLEAN);
@@ -419,7 +417,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if (miniJajaNodeType.get(leftOperandGreater) != SORTE.INT) {
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandGreater + "Is not compatible with the GREATER (>) operator");
         }
 
         if (miniJajaNodeType.get(rightOperandGreater) != SORTE.INT) {
@@ -440,7 +438,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if (miniJajaNodeType.get(leftOperandAdd) != SORTE.INT) {
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandAdd + "Is not compatible with the ADD operator");
         }
 
         if (miniJajaNodeType.get(rightOperandAdd) != SORTE.INT) {
@@ -462,7 +460,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandSub) != SORTE.INT) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandSub + "Is not compatible with the SUB operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandSub + "Is not compatible with the SUB operator");
 
         }
 
@@ -504,7 +502,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandMult) != SORTE.INT) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandMult + "Is not compatible with the MULT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandMult + "Is not compatible with the MULT operator");
 
         }
 
@@ -530,7 +528,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandDiv) != SORTE.INT) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandDiv + "Is not compatible with the Div operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandDiv + "Is not compatible with the Div operator");
 
         }
 
