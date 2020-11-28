@@ -7,6 +7,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
@@ -17,7 +18,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_MAIN = "main";
 
     Stack<Scope> stack = new Stack<>();
-
+    HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     private Pass pass;
     private Scope scope;
 
@@ -162,6 +163,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(StringNode node) throws IllFormedNodeException, IOException {
 
+        // SORTE type = SORTE.of(TypeNode.Type.BOOLEAN);
+        // miniJajaNodeType.put(node,type);
     }
 
     @Override
@@ -187,15 +190,66 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(AndNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode leftOperand = node.leftOperand();
+        MiniJajaNode rightOperand = node.rightOperand();
+
+        try {
+            leftOperand.accept(this);
+            rightOperand.accept(this);
+
+            if(miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN){
+
+                throw new IllFormedNodeException("The type of "+rightOperand +"Is not compatible with the AND operator");
+
+            }
+
+            if(miniJajaNodeType.get(rightOperand) != SORTE.BOOLEAN){
+
+                throw new IllFormedNodeException("The type of "+rightOperand +"Is not compatible with the AND operator");
+
+            }
+
+            miniJajaNodeType.put(node,SORTE.BOOLEAN);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void visit(OrNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode leftOperand = node.leftOperand();
+        MiniJajaNode rightOperand = node.rightOperand();
+
+        try {
+            leftOperand.accept(this);
+            rightOperand.accept(this);
+
+            if (miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN) {
+
+                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the AND operator");
+
+            }
+
+            if (miniJajaNodeType.get(rightOperand) != SORTE.BOOLEAN) {
+
+                throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the AND operator");
+
+            }
+
+            miniJajaNodeType.put(node, SORTE.BOOLEAN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
+        @Override
     public void visit(EqualsNode node) throws IllFormedNodeException, IOException {
+
+
 
     }
 
@@ -237,10 +291,17 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(BooleanNode node) throws IllFormedNodeException, IOException {
 
+        SORTE type = SORTE.of(TypeNode.Type.BOOLEAN);
+        miniJajaNodeType.put(node,type);
+
     }
 
     @Override
     public void visit(NumberNode node) throws IllFormedNodeException, IOException {
+
+       SORTE type = SORTE.of(TypeNode.Type.INT);
+       miniJajaNodeType.put(node,type);
+
 
     }
 
