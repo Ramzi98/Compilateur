@@ -14,7 +14,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_GLOBAL = "global";
     public static final String SCOPE_MAIN = "main";
 
-    Stack<Scope> stack = new Stack<>();
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     private Pass pass;
     int indice;
@@ -49,7 +48,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }catch (Exception e){
                 throw new IllFormedNodeException(node.line(), node.column(),"The symbol \"" + ident.value() + "\" has already been declared.");
             }
-
         }
 
         try {
@@ -65,7 +63,17 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
-
+        int ind = symbolDictionnary.find(node.value());
+        if(ind == -1)
+        {
+            SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
+            symbolDictionnary1.popScope();
+            int ind2 = symbolDictionnary1.find(node.value());
+            if(ind2 == -1)
+            {
+                throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
+            }
+        }
     }
 
     @Override
@@ -104,7 +112,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode nodeType = node.typeMeth();
         MiniJajaNode nodeExpression = node.expression();
-        MiniJajaNode identfier = node.identifier();
+        IdentNode identifier = node.identifier();
 
         if(pass == Pass.FIRST_PASS) {
             try {
@@ -119,14 +127,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
 
             if (miniJajaNodeType.get(nodeExpression) != null && miniJajaNodeType.get(nodeExpression) != miniJajaNodeType.get(nodeType)) {
-                throw new IllFormedNodeException(node.line(), node.column(), "The type " + miniJajaNodeType.get(nodeExpression) + " is not compatible with the ident \"" + node.identifier().value() + "\" of type " + miniJajaNodeType.get(nodeType) + ".");
+                throw new IllFormedNodeException(node.line(), node.column(), "The type " + miniJajaNodeType.get(nodeExpression) + " is not compatible with the ident \"" + identifier.value() + "\" of type " + miniJajaNodeType.get(nodeType) + ".");
             }
 
             try {
-                symbolDictionnary.register(node.identifier().value(), indice++);
+                symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
-                System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
-                throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.");
+                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
+                throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
 
