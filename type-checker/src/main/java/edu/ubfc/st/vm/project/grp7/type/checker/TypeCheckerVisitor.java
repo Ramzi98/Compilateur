@@ -1,12 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import com.sun.org.apache.xerces.internal.impl.XML11NSDocumentScannerImpl;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.*;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
-import jdk.internal.vm.compiler.collections.EconomicMap;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,6 +32,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public void setDataDictionnary(SymbolDictionnary symbolDictionnary)
     {
         this.symbolDictionnary = symbolDictionnary;
+    }
+
+    public SymbolDictionnary getSymbolDictionnary() {
+        return symbolDictionnary;
     }
 
     public HashMap<MiniJajaNode, SORTE> getMiniJajaNodeType() {
@@ -80,6 +82,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
             }
         }
+
+        //TODO: Continue work on this part
         //Quadruplet q = stack.peekFirst(node.value());
         //miniJajaNodeType.put(node,q.type());
     }
@@ -137,7 +141,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
 
             if (miniJajaNodeType.get(nodeExpression) != null && miniJajaNodeType.get(nodeExpression) != miniJajaNodeType.get(nodeType)) {
-                throw new IllFormedNodeException(node.line(), node.column(), "The type " + miniJajaNodeType.get(nodeExpression) + " is not compatible with the ident \"" + identifier.value() + "\" of type " + miniJajaNodeType.get(nodeType) + ".");
+                throw new IllFormedNodeException(node.line(), node.column(), "The type " + miniJajaNodeType.get(nodeExpression) + " is not compatible with the variable \"" + identifier.value() + "\" of type " + miniJajaNodeType.get(nodeType) + ".");
             }
 
             try {
@@ -201,10 +205,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 expression.accept(this);
             }catch(Exception e){
                 throw new IllFormedNodeException(e.toString());
-            }
-
-            if (miniJajaNodeType.get(typeNode) == SORTE.OMEGA) {
-                throw new IllFormedNodeException(node.line(),node.column(),"Impossible to declare a constant of type void");
             }
 
             if (miniJajaNodeType.get(expression) == null || miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
@@ -650,7 +650,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if (miniJajaNodeType.get(leftOperandEquals) != miniJajaNodeType.get(rightOperandEquals)) {
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandEquals + "can not be compared with the type of "+ leftOperandEquals);
+            throw new IllFormedNodeException(node.line(), node.column(), " The type of " + rightOperandEquals + " can not be compared with the type of "+ leftOperandEquals);
         }
         miniJajaNodeType.put(node, SORTE.BOOLEAN);
     }

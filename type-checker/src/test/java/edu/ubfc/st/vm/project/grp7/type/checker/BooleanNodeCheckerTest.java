@@ -19,6 +19,8 @@ public class BooleanNodeCheckerTest {
     public void start(){
 
         typeChecker = new TypeCheckerVisitor();
+        typeChecker.setPass(Pass.FIRST_PASS);
+
 
     }
 
