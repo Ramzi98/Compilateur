@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
+import edu.ubfc.st.vm.project.grp7.memory.IDEStack;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
@@ -17,12 +18,15 @@ import static org.hamcrest.Matchers.is;
 public class ClasseNodeCheckerTest {
     TypeCheckerVisitor typeChecker;
     SymbolDictionnary symbolDictionnary;
+    IDEStack stack;
     @Before
     public void start(){
 
         typeChecker = new TypeCheckerVisitor();
         typeChecker.setPass(Pass.FIRST_PASS);
         symbolDictionnary = new SymbolDictionnary();
+        stack = new IDEStack(symbolDictionnary);
+        typeChecker.setStack(stack);
         typeChecker.setDataDictionnary(symbolDictionnary);
 
     }

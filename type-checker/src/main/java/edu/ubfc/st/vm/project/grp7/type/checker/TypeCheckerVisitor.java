@@ -22,8 +22,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         this.pass = pass;
     }
 
-
     private SymbolDictionnary symbolDictionnary;
+    IDEStack stack ;
+
+    public void setStack(IDEStack stack) {
+        this.stack = stack;
+    }
 
     public void setDataDictionnary(SymbolDictionnary symbolDictionnary)
     {
@@ -74,6 +78,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
             }
         }
+        //Quadruplet q = stack.peekFirst(node.value());
+        //miniJajaNodeType.put(node,q.type());
     }
 
     @Override
@@ -238,10 +244,57 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(AppelINode node) throws IllFormedNodeException, IOException {
 
+        IdentNode identifier = node.identifier();
+        MiniJajaNode nodelistexp = node.listexp();
+
+        try {
+            nodelistexp.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(node.line(), node.column(), e.toString());
+        }
+        int ind = symbolDictionnary.find(identifier.value());
+        if(ind == -1)
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+        }
+        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
+        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
+
     }
 
     @Override
     public void visit(ReturnNode node) throws IllFormedNodeException, IOException {
+
+        MiniJajaNode expression = node.ret();
+        // TODO : récupérer Scope courante et vérifier que on est pas dans Main ni classe
+        //  and recuper the type of the method from sumbolDictionnary to compare with expression type
+
+        try {
+            expression.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(node.line() ,node.column() , e.toString());
+        }
+        //TODO : This verification
+        /*
+        int ind = symbolDictionnary.find(scope);
+        if(ind == -1)
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+        }
+
+
+        if(miniJajaNodeType.get(expression) == SORTE.OMEGA){
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of method is\""+ miniJajaNodeType.get(expression) +"\" that can not return something");
+        }
+
+        if(miniJajaNodeType.get(expression) == miniJajaNodeType.get(expression)){
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of method is\""+ miniJajaNodeType.get(expression) +"\" that can not return something");
+        }
+
+
+         */
+
+
 
     }
 
@@ -329,11 +382,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+ expression +"Is not compatible with the NOT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+ miniJajaNodeType.get(expression) +"Is not compatible with the NOT operator");
 
         }
         miniJajaNodeType.put(node,SORTE.BOOLEAN);
-
 
     }
 
@@ -553,6 +605,24 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(AppelENode node) throws IllFormedNodeException, IOException {
 
+        IdentNode identifier = node.identifier();
+        MiniJajaNode nodelistexp = node.listexp();
+
+        try {
+            nodelistexp.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(node.line(), node.column(), e.toString());
+        }
+        int ind = symbolDictionnary.find(identifier.value());
+        if(ind == -1)
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+        }
+
+        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
+        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
+        //  et ajouter Type of the methode in the minijajaType ArrayList
+
     }
 
     @Override
@@ -581,12 +651,48 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(node.line(), node.column(), "Node has no value specified");
         }
 
-
-
     }
 
     @Override
     public void visit(ArrayItemNode node) throws IllFormedNodeException, IOException {
+        IdentNode identifier = node.identifier();
+        MiniJajaNode nodeExp = node.expression();
+
+        try {
+            nodeExp.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(node.line(), node.column(), e.toString());
+        }
+
+        if (miniJajaNodeType.get(nodeExp) != SORTE.INT) {
+
+            throw new IllFormedNodeException(node.line(), node.column(), "The parameter that you are trying to enter as the array's index should be an integer ");
+
+        }
+
+        int ind1 = symbolDictionnary.find(identifier.value());
+        if(ind1 == -1)
+        {
+            SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
+            symbolDictionnary1.popScope();
+            int ind2 = symbolDictionnary1.find(identifier.value());
+            if(ind2 == -1)
+            {
+                throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            }
+        }
+
+        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
+        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
+        /*
+        Quadruplet q = stack.peekFirst(identifier.value());
+
+        if(q.nature() != OBJ.TAB )
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an Array.");
+        }
+
+         */
 
     }
 
