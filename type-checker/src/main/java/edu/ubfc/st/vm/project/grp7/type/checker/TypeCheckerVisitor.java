@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
-    public static final int FIRST_PASS = 0;
-    public static final int SECOND_PASS = 1;
-
     public static final String SCOPE_GLOBAL = "global";
     public static final String SCOPE_MAIN = "main";
 
@@ -26,8 +23,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         this.pass = pass;
     }
 
-    public void setScope(Scope scope)
-    {
+    public void setScope(Scope scope) {
         this.scope = scope;
     }
 
@@ -154,14 +150,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if (identifier instanceof ArrayItemNode)
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
-                throw new IllFormedNodeException("Can't increment element of Array with Type "+ miniJajaNodeType.get(identifier));
+                throw new IllFormedNodeException(node.line(), node.column(), "Can't increment element of Array with Type "+ miniJajaNodeType.get(identifier));
             }
 
         }
         else
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
-                throw new IllFormedNodeException("Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
+                throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
 
@@ -210,7 +206,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
-            throw new IllFormedNodeException("Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +"as a conditional expression.");
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +"as a conditional expression.");
         }
 
         try {
@@ -237,7 +233,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expressionWhile) != SORTE.BOOLEAN){
-            throw new IllFormedNodeException("Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + "as a conditional expression.");
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + "as a conditional expression.");
         }
 
         try {
@@ -263,7 +259,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
 
-            throw new IllFormedNodeException("The type of "+ expression +"Is not compatible with the NOT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+ expression +"Is not compatible with the NOT operator");
 
         }
         miniJajaNodeType.put(node,SORTE.BOOLEAN);
@@ -286,13 +282,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN){
 
-            throw new IllFormedNodeException("The type of "+rightOperand +"Is not compatible with the AND operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+rightOperand +"Is not compatible with the AND operator");
 
         }
 
         if(miniJajaNodeType.get(rightOperand) != SORTE.BOOLEAN){
 
-            throw new IllFormedNodeException("The type of "+rightOperand +"Is not compatible with the AND operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of "+rightOperand +"Is not compatible with the AND operator");
 
         }
 
@@ -315,13 +311,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperand) != SORTE.BOOLEAN) {
 
-            throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the OR operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperand + "Is not compatible with the OR operator");
 
         }
 
         if (miniJajaNodeType.get(rightOperand) != SORTE.BOOLEAN) {
 
-            throw new IllFormedNodeException("The type of " + rightOperand + "Is not compatible with the OR operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperand + "Is not compatible with the OR operator");
 
         }
 
@@ -331,8 +327,19 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(EqualsNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode leftOperandEquals = node.leftOperand();
+        MiniJajaNode rightOperandEquals = node.rightOperand();
+        try {
+            leftOperandEquals.accept(this);
+            rightOperandEquals.accept(this);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
 
-
+        if (miniJajaNodeType.get(leftOperandEquals) != miniJajaNodeType.get(leftOperandEquals)) {
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandEquals + "can not be compared with the type of "+ leftOperandEquals);
+        }
+        miniJajaNodeType.put(node, SORTE.BOOLEAN);
     }
 
     @Override
@@ -348,11 +355,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if (miniJajaNodeType.get(leftOperandGreater) != SORTE.INT) {
-            throw new IllFormedNodeException("The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
         }
 
         if (miniJajaNodeType.get(rightOperandGreater) != SORTE.INT) {
-            throw new IllFormedNodeException("The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandGreater + "Is not compatible with the GREATER (>) operator");
         }
         miniJajaNodeType.put(node, SORTE.BOOLEAN);
     }
@@ -369,11 +376,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if (miniJajaNodeType.get(leftOperandAdd) != SORTE.INT) {
-            throw new IllFormedNodeException("The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
         }
 
         if (miniJajaNodeType.get(rightOperandAdd) != SORTE.INT) {
-            throw new IllFormedNodeException("The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandAdd + "Is not compatible with the ADD operator");
         }
         miniJajaNodeType.put(node, SORTE.INT);
     }
@@ -391,13 +398,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandSub) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandSub + "Is not compatible with the SUB operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandSub + "Is not compatible with the SUB operator");
 
         }
 
         if (miniJajaNodeType.get(rightOperandSub) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandSub + "Is not compatible with the SYB operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandSub + "Is not compatible with the SYB operator");
         }
         miniJajaNodeType.put(node, SORTE.INT);
     }
@@ -413,7 +420,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(expression) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + expression + "Is not compatible with the Minus operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + expression + "Is not compatible with the Minus operator");
 
         }
 
@@ -433,13 +440,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandMult) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandMult + "Is not compatible with the MULT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandMult + "Is not compatible with the MULT operator");
 
         }
 
         if (miniJajaNodeType.get(rightOperandMult) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandMult + "Is not compatible with the MULT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandMult + "Is not compatible with the MULT operator");
 
         }
 
@@ -459,13 +466,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandDiv) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandDiv + "Is not compatible with the Div operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandDiv + "Is not compatible with the Div operator");
 
         }
 
         if (miniJajaNodeType.get(rightOperandDiv) != SORTE.INT) {
 
-            throw new IllFormedNodeException("The type of " + rightOperandDiv + "Is not compatible with the Div operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + rightOperandDiv + "Is not compatible with the Div operator");
 
         }
 
@@ -501,7 +508,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
         else
         {
-            throw new IllFormedNodeException("Node has no value specified");
+            throw new IllFormedNodeException(node.line(), node.column(), "Node has no value specified");
         }
 
 
