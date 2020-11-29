@@ -73,16 +73,16 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
+        System.out.println(node.value());
+        if (node.value() != null) {
             int ind = symbolDictionnary.find(node.value());
-            if(ind == -1)
-            {
+            if (ind == -1) {
                 SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
                 symbolDictionnary1.popScope();
                 int ind2 = symbolDictionnary1.find(node.value());
 
-                if(ind2 == -1)
-                {
-                    throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
+                if (ind2 == -1) {
+                    throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + node.value() + "\" has not been declared.");
                 }
             }
 
@@ -95,11 +95,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
              */
 
 
-        //TODO: Continue work on this part
-        //Quadruplet q = stack.peekFirst(node.value());
-        //miniJajaNodeType.put(node,q.type());
+            //TODO: Continue work on this part
+            //Quadruplet q = stack.peekFirst(node.value());
+            //miniJajaNodeType.put(node,q.type());
+        }else{
+            throw new IllFormedNodeException(node.line(),node.column(),"The Identifier does not have a value");
+        }
     }
-
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException, IOException {
 

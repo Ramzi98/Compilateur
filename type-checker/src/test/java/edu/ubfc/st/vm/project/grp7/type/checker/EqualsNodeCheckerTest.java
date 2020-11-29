@@ -2,10 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.AndNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.EqualsNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +39,16 @@ public class EqualsNodeCheckerTest {
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
         NumberNode rightOperand = NumberNode.builder().value(5).build();
         AndNode node = AndNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void EqualsNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode leftOperand = BooleanNode.builder().value(true).build();
+        NumberNode rightOperand = NumberNode.builder().value(6).build();
+        EqualsNode node = EqualsNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
         typeChecker.visit(node);
 
     }

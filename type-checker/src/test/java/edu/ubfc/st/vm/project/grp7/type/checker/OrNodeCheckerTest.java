@@ -2,9 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.AndNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.OrNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +38,25 @@ public class OrNodeCheckerTest {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
         BooleanNode rightOperand = BooleanNode.builder().build();
+        OrNode node = OrNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void OrNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode rightOperand = BooleanNode.builder().value(true).build();
+        NumberNode leftOperand = NumberNode.builder().value(6).build();
+        OrNode node = OrNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+    @Test(expected = IllFormedNodeException.class)
+    public void OrNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode leftOperand = BooleanNode.builder().value(true).build();
+        NumberNode rightOperand = NumberNode.builder().value(6).build();
         OrNode node = OrNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
         typeChecker.visit(node);
 

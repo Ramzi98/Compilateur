@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MinusNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.SubNode;
@@ -34,11 +35,19 @@ public class MinusNodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void SubNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    public void MinusNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
 
-        NumberNode leftOperand = NumberNode.builder().build();
-        NumberNode rightOperand = NumberNode.builder().value(6).build();
-        SubNode node = SubNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        NumberNode number = NumberNode.builder().build();
+        MinusNode node = MinusNode.builder().expression(number).build();
+        typeChecker.visit(node);
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void MinusNodeTypeCheck__WrongType__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode number = BooleanNode.builder().value(true).build();
+        MinusNode node = MinusNode.builder().expression(number).build();
         typeChecker.visit(node);
 
     }

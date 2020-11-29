@@ -2,9 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MultNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.SubNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +37,25 @@ public class SubNodeCheckerTest {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
+        SubNode node = SubNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void SubNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode leftOperand = BooleanNode.builder().value(true).build();
+        NumberNode rightOperand = NumberNode.builder().value(6).build();
+        SubNode node = SubNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+    @Test(expected = IllFormedNodeException.class)
+    public void SubNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        NumberNode leftOperand = NumberNode.builder().value(6).build();
+        BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         SubNode node = SubNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
         typeChecker.visit(node);
 
