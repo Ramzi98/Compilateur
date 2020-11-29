@@ -122,12 +122,8 @@ public class MiniJajaInterpreterVisitorTest {
         IdentNode identNode = mock(IdentNode.class);
         when(identNode.value()).thenReturn("i");
 
-        NumberNode numberNode = NumberNode.builder()
-                .value(5)
-                .column(3)
-                .line(1)
-                .build();
-
+        NumberNode numberNode = mock(NumberNode.class);
+        when(numberNode.value()).thenReturn(5);
 
         ArrayItemNode arrayItemNode =ArrayItemNode.builder()
                 .line(1)
@@ -140,14 +136,6 @@ public class MiniJajaInterpreterVisitorTest {
         mjjVisitor.visit(arrayItemNode);
 
         verify(memory).valT("i",5);
-        /**
-         * @Override
-         *      *     public void visit(ArrayItemNode node) throws Exception {
-         *      *         node.expression().accept(this);
-         *      *         Object e = memory.valT(node.identifier().value(), (int) evals.pop());
-         *      *         evals.push(e);
-         *      *     }
-         */
 
     }
 
