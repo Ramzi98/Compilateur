@@ -48,29 +48,28 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
 
+
         if (pass == Pass.FIRST_PASS)
         {
             try{
                 symbolDictionnary.register(ident.value(),indice++);
-                symbolDictionnary.pushScope(SCOPE_GLOBAL);
             }catch (Exception e){
                 throw new IllFormedNodeException(node.line(), node.column(),"The symbol \"" + ident.value() + "\" has already been declared.");
             }
         }
 
         try {
-            ident.accept(this);
             decls.accept(this);
             main.accept(this);
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
-        symbolDictionnary.popScope();
 
     }
 
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
+
         int ind = symbolDictionnary.find(node.value());
         if(ind == -1)
         {
@@ -82,6 +81,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
             }
         }
+
+        //miniJajaNodeType.put(node,node.)
 
         //TODO: Continue work on this part
         //Quadruplet q = stack.peekFirst(node.value());
@@ -413,6 +414,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
+        System.out.println(miniJajaNodeType.get(identifier));
 
         if (identifier instanceof ArrayItemNode)
         {
@@ -428,7 +430,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
         }
 
-        miniJajaNodeType.put(node,SORTE.BOOLEAN);
 
     }
 
