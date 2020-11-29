@@ -139,7 +139,7 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test
+    @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__WithTabException() throws IOException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
@@ -165,7 +165,7 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test
+    @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__WithTabIncompatibleTypeException() throws IOException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
