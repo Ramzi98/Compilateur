@@ -15,7 +15,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     private final Deque<Object> evals;
 
     public MiniJajaInterpreterVisitor(Memory memory) {
-        this.memory = memory;
+        this.memory = memory;   
         this.modeRetrait = false;
         this.evals = new ArrayDeque<>();
     }
