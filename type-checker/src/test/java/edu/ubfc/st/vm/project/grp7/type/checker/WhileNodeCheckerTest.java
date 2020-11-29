@@ -58,7 +58,7 @@ public class WhileNodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void WhileNodeTypeCheker__Exception() throws IllFormedNodeException {
+    public void WhileNodeTypeCheker__Exception__In__Condition() throws IllFormedNodeException {
 
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();

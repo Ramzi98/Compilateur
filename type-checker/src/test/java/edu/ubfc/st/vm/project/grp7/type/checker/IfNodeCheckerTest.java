@@ -59,6 +59,35 @@ public class IfNodeCheckerTest {
 
     }
 
+    @Test(expected = IllFormedNodeException.class)
+    public void IfNodeTypeCheker__Exception__In__Condition() throws IllFormedNodeException {
+
+        IdentNode identvar1 = IdentNode.builder().value("i").build();
+
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        NumberNode numberNode = NumberNode.builder().value(2).build();
+
+        VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+
+        IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+
+        IfNode ifNode = IfNode.builder().expression(incrementNode).trueInstrs(instrsNode).falseInstrs(instrsNode).build();
+
+        InstrsNode instrsNode2 = InstrsNode.builder().instruction(ifNode).instrs(instrsnil).build();
+
+        MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode2).build();
+
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
+        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
+
+    }
+
 
     InstrsNode instrsnil = new InstrsNode() {
         @Override
