@@ -219,10 +219,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
 
-            if (miniJajaNodeType.get(expression) == SORTE.OMEGA) {
-                throw new IllFormedNodeException(node.line(),node.column(),"Can not declare a variable of type "+miniJajaNodeType.get(expression));
-            }
-
             if (miniJajaNodeType.get(expression) != null && miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
                 throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
             }
@@ -230,21 +226,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
-                if(miniJajaNodeType.get(expression) == null)
-                {
-                    identNature.put(identifier,OBJ.VCST);
-                }
-                else
-                {
-                    identNature.put(identifier,OBJ.CST);
-                }
-
+                identNature.put(identifier,OBJ.CST);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
 
                 throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
+
 
     }
 
@@ -396,7 +385,104 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode identifier = node.identifier();
         MiniJajaNode expression = node.expression();
 
-        //To be continued
+        if(identifier instanceof ArrayItemNode){
+
+            try {
+                identifier.accept(this);
+                expression.accept(this);
+                
+
+            }catch(Exception e){
+                throw new IllFormedNodeException(e.toString());
+            }
+
+            if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+            }
+
+        }else{
+
+            try {
+                identifier.accept(this);
+            }catch(Exception e){
+                throw new IllFormedNodeException(e.toString());
+
+            }
+            int ind = symbolDictionnary.find(((IdentNode)identifier).value());
+            if(ind == -1)
+            {
+                throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+((IdentNode)identifier).value()+"\" has not been declared.");
+            }
+
+            if(identNature.get(identifier) == OBJ.METH){
+
+                throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a method ");
+
+            }
+            if(identNature.get(identifier) == OBJ.TAB){
+
+                try {
+                    expression.accept(this);
+                }catch(Exception e){
+                    throw new IllFormedNodeException(e.toString());
+
+                }
+
+                if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+                }
+
+                if (!(expression instanceof IdentNode) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"An array can only be assigned to an array not an expression");
+                }
+
+            }else{
+
+                try {
+                    expression.accept(this);
+                }catch(Exception e){
+                    throw new IllFormedNodeException(e.toString());
+
+                }
+
+                if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+                }
+
+                if(identNature.get(identifier) == OBJ.CST){
+
+                    throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+
+                }
+
+                if(identNature.get(identifier) == OBJ.VCST){
+
+                    //TODO : Check if scope is not in main
+                   // throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+
+                    try {
+                        symbolDictionnary.unregister(((IdentNode) identifier).value());
+                    }catch(Exception e){
+
+                        throw new IllFormedNodeException(node.line() ,node.column() , "The constant "+ ((IdentNode) identifier).value() +" has not been declared");
+
+                    }
+
+                    try {
+                        identNature.put(identifier, OBJ.CST);
+                        symbolDictionnary.register(((IdentNode) identifier).value(), indice++);
+                    } catch (Exception e) {
+                    throw new IllFormedNodeException(e.toString());
+                }
+
+
+                }
+
+
+            }
+
+
+        }
 
     }
 
@@ -604,6 +690,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
+
+
 
     }
 
