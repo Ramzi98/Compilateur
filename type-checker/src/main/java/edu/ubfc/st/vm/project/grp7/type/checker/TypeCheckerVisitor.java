@@ -464,6 +464,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         else
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
+                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier)));
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
@@ -487,8 +488,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         {
             throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
         }
-        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
-        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
+
+        if(identNature.get(identifier) != OBJ.METH)
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
+        }
+
+        miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }
 
@@ -849,9 +855,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
         }
 
-        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
-        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
-        //  et ajouter Type of the methode in the minijajaType ArrayList
+        if(identNature.get(identifier) != OBJ.METH)
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
+        }
+
+        miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }
 
@@ -912,17 +921,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
         }
 
-        // TODO : Vérifier Kind (Nature -CST-METH-VAR...)
-        //  Avec un ajoute d'une foction dans SymbolDictionnary pour récupér le Kind avec un ident comme parametere de fonction
-        /*
-        Quadruplet q = stack.peekFirst(identifier.value());
-
-        if(q.nature() != OBJ.TAB )
+        if(identNature.get(identifier) != OBJ.TAB)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an Array.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an array but is"+identNature.get(identifier));
         }
 
-         */
+        miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }
 
