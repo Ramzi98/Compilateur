@@ -12,16 +12,15 @@ import java.io.IOException;
 
 public class ArrayItemNodeCheckerTest {
 
-    TypeCheckerVisitor typeChecker;
+    TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
+    TypeCheckerVisitor typeCheckerVisitor;
 
     @Before
     public void start(){
 
-        typeChecker = new TypeCheckerVisitor();
-        typeChecker.setPass(Pass.FIRST_PASS);
+        typeCheckerVisitor = new TypeCheckerVisitor();
         symbolDictionnary = new SymbolDictionnary();
-        typeChecker.setDataDictionnary(symbolDictionnary);
 
     }
 
@@ -44,7 +43,11 @@ public class ArrayItemNodeCheckerTest {
         DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
         MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker.visit(classeNode1);
+
+        typeChecker = new TypeChecker(classeNode1);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
     }
 
 

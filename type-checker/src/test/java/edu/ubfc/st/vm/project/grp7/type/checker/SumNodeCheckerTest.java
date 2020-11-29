@@ -27,7 +27,7 @@ public class SumNodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Exception1() throws IllFormedNodeException {
+    public void SumNodeTypeCheker__Exception__Type_Identifier_NOT_INT() throws IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -53,7 +53,7 @@ public class SumNodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Exception2() throws IllFormedNodeException {
+    public void SumNodeTypeCheker__Exception__Type_Expression_NOT_INT() throws IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
