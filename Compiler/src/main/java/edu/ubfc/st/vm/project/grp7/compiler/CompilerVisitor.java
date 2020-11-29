@@ -1097,7 +1097,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
 
-            System.out.println(ns);
            jcIfNode.setAdresse(n+ne+ns1+2);
            jajaCodeNodes.set(jajaCodeNodes.indexOf(jcIfNode),jcIfNode);
            jcGotoNode.setAdresse(n+ne+ns1+ns+2);
