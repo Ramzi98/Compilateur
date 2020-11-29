@@ -25,11 +25,16 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ClasseNode node) throws Exception {
         memory.declVar(node.identifier().value(), null, null);
-        node.decls().accept(this);
+        if (node.decls() != null ) {
+            node.decls().accept(this);
+        }
         node.methmain().accept(this);
 
         this.modeRetrait = true;
-        node.decls().accept(this);
+        
+        if (node.decls() != null ) {
+            node.decls().accept(this);
+        }
         memory.retirerDecl(node.identifier().value());
     }
 
