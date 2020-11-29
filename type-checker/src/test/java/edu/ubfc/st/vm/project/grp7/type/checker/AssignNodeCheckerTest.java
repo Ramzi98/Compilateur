@@ -90,11 +90,11 @@ public class AssignNodeCheckerTest {
 
     }
 
+    /*
     @Test
     public void AssignNodeTypeCheck__WithMethodException() throws IOException, IllFormedNodeException {
 
 
-        /* To see Later
         IdentNode identclasse = IdentNode.builder().value("C").build();
 
         TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
@@ -107,7 +107,7 @@ public class AssignNodeCheckerTest {
 
         VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
 
-        IdentNode ident2 = IdentNode.builder().value("I").build();
+        IdentNode ident2 = IdentNode.builder().value("S").build();
         NumberNode expression2 = NumberNode.builder().value(2).build();
 
         TypeNode type = TypeNode.builder().line(1).column(0).value(TypeNode.Type.BOOLEAN).build();
@@ -149,10 +149,11 @@ public class AssignNodeCheckerTest {
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
 
-        */
 
 
     }
+
+     */
 
     @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {

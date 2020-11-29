@@ -313,12 +313,16 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodeHeader = node.header();
         MiniJajaNode nodeHeaders = node.headers();
 
-        try {
-            nodeHeader.accept(this);
-            nodeHeaders.accept(this);
-        } catch (Exception e) {
-            throw new IllFormedNodeException(e.toString());
+        if(nodeHeader != null)
+        {
+            try {
+                nodeHeader.accept(this);
+                nodeHeaders.accept(this);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(e.toString());
+            }
         }
+
 
     }
 
@@ -1044,21 +1048,23 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
     }
 
-    public boolean existReturn(InstrsNode node){
+    public boolean existReturn(MiniJajaNode nodeInstrs){
 
         boolean exist = false;
 
-        while(node instanceof InstrsNode){
+        while(nodeInstrs instanceof InstrsNode){
+            MiniJajaNode nodeInstr = ((InstrsNode)nodeInstrs).instruction();
 
-            if(node instanceof IfNode){
+            if(nodeInstr instanceof IfNode){
 
-                exist =  existReturn(((IfNode) node).falseInstrs()) && existReturn(((IfNode) node).trueInstrs());
+                exist =  existReturn(((IfNode) nodeInstr).falseInstrs()) && existReturn(((IfNode) nodeInstr).trueInstrs());
             }
 
-            if(node instanceof ReturnNode){
+            if(nodeInstr instanceof ReturnNode){
 
                 exist = true;
             }
+            nodeInstrs = ((InstrsNode) nodeInstrs).instrs();
 
         }
 
