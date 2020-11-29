@@ -85,10 +85,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 }
             }
 
+            /*
             if(identNature.get(node) == OBJ.CST)
             {
 
             }
+
+             */
 
 
         //TODO: Continue work on this part
@@ -246,7 +249,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode vars = node.vars();
         IdentNode identifier = node.identifier();
 
-        symbolDictionnary.pushScope(identifier.value());
+        if(pass == Pass.FIRST_PASS)
+        {
+            symbolDictionnary.pushScope(identifier.value());
+        }
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -277,8 +283,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(e.toString());
         }
 
-        symbolDictionnary.popScope();
-
+        if(pass == Pass.SECOND_PASS)
+        {
+            symbolDictionnary.popScope();
+        }
 
     }
 
