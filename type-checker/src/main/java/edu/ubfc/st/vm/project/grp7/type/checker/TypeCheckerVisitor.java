@@ -464,6 +464,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         else
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
+                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier)));
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
