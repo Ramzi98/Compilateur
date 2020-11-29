@@ -8,7 +8,6 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_GLOBAL = "global";
@@ -565,7 +564,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
-            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +"as a conditional expression.");
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +" as a conditional expression.");
         }
 
         try {
@@ -592,6 +591,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expressionWhile) != SORTE.BOOLEAN){
+            System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + " as a conditional expression."));
             throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + "as a conditional expression.");
         }
 
