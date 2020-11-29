@@ -59,9 +59,8 @@ public class ClasseNodeCheckerTest {
         typeChecker.visit(classeNode1);
 
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
-        assertThat(symbolDictionnary.find(identvar3.value()),is(-1));
+        assertThat(symbolDictionnary.find(identvar3.value()),is(1));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
     }
 /*
     @Test
