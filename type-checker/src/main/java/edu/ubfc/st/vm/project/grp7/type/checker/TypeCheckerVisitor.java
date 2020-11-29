@@ -412,11 +412,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
 
             }
-            int ind = symbolDictionnary.find(((IdentNode)identifier).value());
-            if(ind == -1)
-            {
-                throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+((IdentNode)identifier).value()+"\" has not been declared.");
-            }
+                int ind = symbolDictionnary.find(((IdentNode) identifier).value());
+                if (ind == -1) {
+                    throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + ((IdentNode) identifier).value() + "\" has not been declared.");
+                }
+
 
             if(identNature.get(identifier) == OBJ.METH){
 

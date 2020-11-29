@@ -90,7 +90,7 @@ public class AssignNodeCheckerTest {
 
     }
 
-    /*
+/*
     @Test
     public void AssignNodeTypeCheck__WithMethodException() throws IOException, IllFormedNodeException {
 
@@ -100,6 +100,7 @@ public class AssignNodeCheckerTest {
         TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
 
         IdentNode ident = IdentNode.builder().value("I").build();
+        IdentNode identheader = IdentNode.builder().value("J").build();
 
         IdentNode identf = IdentNode.builder().value("f").build();
 
@@ -110,9 +111,20 @@ public class AssignNodeCheckerTest {
         IdentNode ident2 = IdentNode.builder().value("S").build();
         NumberNode expression2 = NumberNode.builder().value(2).build();
 
+
+        VarNode varNode2 = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident2).expression(expression).build();
+        VarsNode varsNode4 = VarsNode.builder()
+                .line(1)
+                .column(10)
+                .var(varNode2)
+                .vars(varnil)
+                .build();
+
+        AssignNode assignNode = AssignNode.builder().identifier(ident2).expression(expression2).build();
+
         TypeNode type = TypeNode.builder().line(1).column(0).value(TypeNode.Type.BOOLEAN).build();
 
-        HeaderNode headerNode = HeaderNode.builder().line(1).column(0).type(type).identifier(ident).build();
+        HeaderNode headerNode = HeaderNode.builder().line(1).column(0).type(type).identifier(identheader).build();
 
         HeadersNode headersNode = HeadersNode.builder().line(1).column(10).header(headerNode).headers(enil).build();
         VarsNode varsNode3 = VarsNode.builder()
@@ -123,7 +135,6 @@ public class AssignNodeCheckerTest {
                 .build();
 
 
-        AssignNode assignNode = AssignNode.builder().identifier(ident2).expression(expression2).build();
 
         InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instrsnil).build();
 
@@ -141,7 +152,7 @@ public class AssignNodeCheckerTest {
 
         AssignNode assignMethod = AssignNode.builder().identifier(identf).expression(expression).build();
         InstrsNode instrsMain = InstrsNode.builder().instruction(assignMethod).instrs(instrsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrsMain).build();
+        MainNode mainNode = MainNode.builder().vars(varsNode4).instrs(instrsMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
 
@@ -153,7 +164,7 @@ public class AssignNodeCheckerTest {
 
     }
 
-     */
+*/
 
     @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
