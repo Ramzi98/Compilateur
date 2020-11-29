@@ -14,41 +14,41 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class InstrsNodeCheckerTest {
-    TypeCheckerVisitor typeChecker;
+    TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
+    TypeCheckerVisitor typeCheckerVisitor;
 
     @Before
     public void start(){
-        typeChecker = new TypeCheckerVisitor();
-        typeChecker.setPass(Pass.SECOND_PASS);
+        typeCheckerVisitor = new TypeCheckerVisitor();
         symbolDictionnary = new SymbolDictionnary();
-        typeChecker.setDataDictionnary(symbolDictionnary);
     }
 
     @Test
     public void InstrsNodeTypeCheker__First__Second__Pass() throws IOException, IllFormedNodeException {
-/*
+
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
+        VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
 
-        VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker.visit(instrsNode);
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
 
 
-        assertThat(symbolDictionnary.find(identvar1.value()),is(0));
+        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
 
-
- */
     }
 
 
