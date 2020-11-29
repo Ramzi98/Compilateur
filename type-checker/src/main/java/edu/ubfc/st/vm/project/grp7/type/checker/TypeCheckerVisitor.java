@@ -113,9 +113,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
         }
-
-
-
     }
 
     @Override
@@ -206,8 +203,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     }
 
 
-
-
     @Override
     public void visit(CstNode node) throws IllFormedNodeException, IOException {
 
@@ -227,7 +222,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
             }
 
-
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.CST);
@@ -237,7 +231,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
-
 
     }
 
@@ -314,7 +307,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             symbolDictionnary.popScope();
         }
 
-
     }
 
     @Override
@@ -333,7 +325,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
         }
 
-
     }
 
     @Override
@@ -341,8 +332,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode typeNode = node.type();
         IdentNode identifier = node.identifier();
-
-
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -364,8 +353,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
-
-
         }
     }
 
@@ -389,9 +376,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
                 }
             }
-
         }
-
     }
 
     @Override
@@ -405,7 +390,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 identifier.accept(this);
                 expression.accept(this);
-                
 
             }catch(Exception e){
                 throw new IllFormedNodeException(e.toString());
@@ -490,15 +474,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                     throw new IllFormedNodeException(e.toString());
                 }
 
-
                 }
-
-
             }
-
-
         }
-
     }
 
     @Override
@@ -541,8 +519,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
         }
 
-
-
     }
 
     @Override
@@ -568,7 +544,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
-
 
     }
 

@@ -80,6 +80,66 @@ public class SumNodeCheckerTest {
     }
 
 
+
+
+
+    @Test(expected = IllFormedNodeException.class)
+    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Identifier_NOT_INT() throws IllFormedNodeException {
+
+        IdentNode identvar1 = IdentNode.builder().value("i").build();
+
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
+        TypeMethNode typeMethNode2 = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
+        NumberNode numberNode = NumberNode.builder().value(6).build();
+        NumberNode numberNode2 = NumberNode.builder().value(2).build();
+
+        ArrayNode arrayNode = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder().identifier(identvar1).expression(numberNode2).build();
+
+        VarsNode varsNode = VarsNode.builder().var(arrayNode).vars(varnil).build();
+
+        SumNode sumNode = SumNode.builder().identifier(arrayItemNode).expression(numberNode).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(sumNode).instrs(instrsnil).build();
+
+        MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
+
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Expression_NOT_INT() throws IllFormedNodeException {
+
+        IdentNode identvar1 = IdentNode.builder().value("i").build();
+
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
+        TypeMethNode typeMethNode2 = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
+        NumberNode numberNode = NumberNode.builder().value(6).build();
+        NumberNode numberNode2 = NumberNode.builder().value(2).build();
+
+        ArrayNode arrayNode = ArrayNode.builder().typeMeth(typeMethNode2).identifier(identvar1).expression(numberNode).build();
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder().identifier(identvar1).expression(numberNode2).build();
+
+        VarsNode varsNode = VarsNode.builder().var(arrayNode).vars(varnil).build();
+
+        SumNode sumNode = SumNode.builder().identifier(arrayItemNode).expression(booleanNode).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(sumNode).instrs(instrsnil).build();
+
+        MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
+
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
+    }
+
+
     InstrsNode instrsnil = new InstrsNode() {
         @Override
         public MiniJajaNode instruction() {

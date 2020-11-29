@@ -51,6 +51,40 @@ public class IncrementNodeCheckerTest {
 
     }
 
+    @Test(expected = IllFormedNodeException.class)
+    public void IncrementNodeTypeCheker__ArrayItem__Exception__Identifier__NOT_INT() throws IOException, IllFormedNodeException {
+
+        IdentNode identvar1 = IdentNode.builder().value("i").build();
+
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
+
+        BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
+
+        NumberNode numberNode = NumberNode.builder().value(6).build();
+        NumberNode numberNode2 = NumberNode.builder().value(2).build();
+
+        ArrayNode arrayNode = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder().identifier(identvar1).expression(numberNode2).build();
+
+        VarsNode varsNode = VarsNode.builder().var(arrayNode).vars(varnil).build();
+
+
+        IncrementNode incrementNode = IncrementNode.builder().identifier(arrayItemNode).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+
+
+        MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
+
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
+
+        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
+
+    }
+
 
     InstrsNode instrsnil = new InstrsNode() {
         @Override
