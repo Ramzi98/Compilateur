@@ -3,11 +3,16 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 import edu.ubfc.st.vm.project.grp7.memory.IDEMemory;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+
+import java.beans.Expression;
+import java.util.Deque;
+
 import static org.mockito.Mockito.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,12 +22,14 @@ public class MiniJajaInterpreterVisitorTest {
     private MiniJajaInterpreterVisitor mjjVisitor ;
     private Memory memory;
     private MJJInterpreterController controller;
+    private Deque<Object> deque;
 
     @Before
     public void init() {
         memory = mock(IDEMemory.class);
         controller = mock(MJJInterpreterController.class);
-        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller);
+        deque = mock(Deque.class);
+        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller,deque);
     }
 
     @Test
@@ -76,12 +83,27 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void arrayItemNodeTest() throws Exception {
-       /* ArrayItemNode arrayItemNode = mock(ArrayItemNode.class);
-        mjjVisitor.visit(arrayItemNode);
-        when(arrayItemNode.identifier().value()).thenReturn("i");
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("i");
 
-        verify(memory).valT("i",1);
-*/
+        NumberNode numberNode = NumberNode.builder()
+                .value(5)
+                .column(3)
+                .line(1)
+                .build();
+
+
+        ArrayItemNode arrayItemNode =ArrayItemNode.builder()
+                .line(1)
+                .column(0)
+                .identifier(identNode)
+                .expression(numberNode)
+                .build();
+
+        when(deque.pop()).thenReturn(5);
+        mjjVisitor.visit(arrayItemNode);
+
+        verify(memory).valT("i",5);
         /**
          * @Override
          *      *     public void visit(ArrayItemNode node) throws Exception {
