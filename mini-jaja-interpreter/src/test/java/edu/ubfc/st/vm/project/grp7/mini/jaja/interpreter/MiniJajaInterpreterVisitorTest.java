@@ -8,6 +8,11 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import static org.mockito.Mockito.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -72,6 +77,39 @@ public class MiniJajaInterpreterVisitorTest {
         inOrder.verify(main).accept(mjjVisitor);
         inOrder.verify(decls).accept(mjjVisitor);
         inOrder.verify(memory).retirerDecl("C");
+    }
+
+    @Test
+    public void identNode__evalExists__visit() throws Exception {
+        Deque<Object> stack = spy(new ArrayDeque<>());
+        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller, stack);
+        when(memory.val("i")).thenReturn(5);
+
+        IdentNode ident = IdentNode.builder()
+                .line(0)
+                .column(0)
+                .value("i")
+                .build();
+
+        ident.accept(mjjVisitor);
+
+        verify(memory).val("i");
+        verify(stack).push(5);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void identNode__evalDoesntExists__visit__ThrowException() throws Exception {
+        Deque<Object> stack = spy(new ArrayDeque<>());
+        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller, stack);
+        when(memory.val("i")).thenThrow(IllegalStateException.class);
+
+        IdentNode ident = IdentNode.builder()
+                .line(0)
+                .column(0)
+                .value("i")
+                .build();
+
+        ident.accept(mjjVisitor);
     }
 
     @Test

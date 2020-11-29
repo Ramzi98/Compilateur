@@ -23,14 +23,14 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         this.evals = new ArrayDeque<>();
         this.controller = controller;
     }
-    public MiniJajaInterpreterVisitor(Memory memory, MJJInterpreterController controller,Deque<Object> deque) {
+
+    // to mock evals for tests purposes
+    public MiniJajaInterpreterVisitor(Memory memory, MJJInterpreterController controller, Deque<Object> deque) {
         this.memory = memory;
         this.modeRetrait = false;
         this.evals = deque;
         this.controller = controller;
     }
-
-
 
     @Override
     public void visit(ClasseNode node) throws Exception {
