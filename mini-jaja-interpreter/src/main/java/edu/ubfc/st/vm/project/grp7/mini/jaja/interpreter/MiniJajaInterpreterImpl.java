@@ -12,8 +12,8 @@ public class MiniJajaInterpreterImpl implements MiniJajaInterpreter {
     }
 
     @Override
-    public void interpret() throws Exception {
-        MiniJajaInterpreterVisitor visitor = new MiniJajaInterpreterVisitor(this.memory);
+    public void interpret(MJJInterpreterController controller) throws Exception {
+        MiniJajaInterpreterVisitor visitor = new MiniJajaInterpreterVisitor(this.memory, controller);
         ast.accept(visitor);
     }
 }

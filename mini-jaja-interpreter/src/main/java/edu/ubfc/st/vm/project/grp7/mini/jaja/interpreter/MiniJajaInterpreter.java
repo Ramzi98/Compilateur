@@ -8,7 +8,7 @@ public interface MiniJajaInterpreter {
         return Factory.getFactory();
     }
 
-    void interpret() throws Exception;
+    void interpret(MJJInterpreterController controller) throws Exception;
 
     class Factory {
         private static Factory instance;
