@@ -79,6 +79,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
                 symbolDictionnary1.popScope();
                 int ind2 = symbolDictionnary1.find(node.value());
+
                 if(ind2 == -1)
                 {
                     throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
@@ -249,10 +250,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode vars = node.vars();
         IdentNode identifier = node.identifier();
 
-        if(pass == Pass.FIRST_PASS)
-        {
-            symbolDictionnary.pushScope(identifier.value());
-        }
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -272,6 +269,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(existReturn(instrs) && miniJajaNodeType.get(typeNode) == SORTE.OMEGA){
 
             throw new IllFormedNodeException(node.line(),node.column(),"A return statement was specified but the method should return void");
+        }
+
+        if(pass == Pass.FIRST_PASS)
+        {
+            symbolDictionnary.pushScope(identifier.value());
         }
 
         try {

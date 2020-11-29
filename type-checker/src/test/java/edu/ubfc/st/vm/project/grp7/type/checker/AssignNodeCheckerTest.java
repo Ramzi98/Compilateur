@@ -90,9 +90,7 @@ public class AssignNodeCheckerTest {
 
     }
 
-
-/*
-    @Test
+    @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__WithMethodException() throws IOException, IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -140,7 +138,7 @@ public class AssignNodeCheckerTest {
         typeChecker.typeCheck();
 
     }
-*/
+
     @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
 
@@ -164,6 +162,7 @@ public class AssignNodeCheckerTest {
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
     }
+
 
     InstrsNode instrsnil = new InstrsNode() {
         @Override
