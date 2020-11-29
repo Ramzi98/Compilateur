@@ -90,82 +90,57 @@ public class AssignNodeCheckerTest {
 
     }
 
+
 /*
     @Test
     public void AssignNodeTypeCheck__WithMethodException() throws IOException, IllFormedNodeException {
 
-
+        IdentNode identvar1 = IdentNode.builder().value("i").build();
+        IdentNode identheader = IdentNode.builder().value("j").build();
+        IdentNode identfonction = IdentNode.builder().value("fonction").build();
         IdentNode identclasse = IdentNode.builder().value("C").build();
 
-        TypeMethNode typeMeth = TypeMethNode.builder().line(1).column(0).value(TypeMethNode.TypeMeth.INT).build();
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        NumberNode numberNode = NumberNode.builder().value(2).build();
 
-        IdentNode ident = IdentNode.builder().value("I").build();
-        IdentNode identheader = IdentNode.builder().value("J").build();
-
-        IdentNode identf = IdentNode.builder().value("f").build();
-
-        NumberNode expression = NumberNode.builder().value(2).build();
-
-        VarNode varNode = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident).expression(expression).build();
-
-        IdentNode ident2 = IdentNode.builder().value("S").build();
-        NumberNode expression2 = NumberNode.builder().value(2).build();
+        TypeNode type = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
 
 
-        VarNode varNode2 = VarNode.builder().line(1).column(0).typeMeth(typeMeth).identifier(ident2).expression(expression).build();
-        VarsNode varsNode4 = VarsNode.builder()
-                .line(1)
-                .column(10)
-                .var(varNode2)
-                .vars(varnil)
+        VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+
+        IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+
+        HeaderNode headerNode = HeaderNode.builder()
+                .type(type)
+                .identifier(identheader)
                 .build();
 
-        AssignNode assignNode = AssignNode.builder().identifier(ident2).expression(expression2).build();
-
-        TypeNode type = TypeNode.builder().line(1).column(0).value(TypeNode.Type.BOOLEAN).build();
-
-        HeaderNode headerNode = HeaderNode.builder().line(1).column(0).type(type).identifier(identheader).build();
-
-        HeadersNode headersNode = HeadersNode.builder().line(1).column(10).header(headerNode).headers(enil).build();
-        VarsNode varsNode3 = VarsNode.builder()
-                .line(1)
-                .column(10)
-                .var(varNode)
-                .vars(varnil)
+        HeadersNode headersNode = HeadersNode.builder()
+                .header(headerNode)
+                .headers(enil)
                 .build();
 
+        AssignNode assignMethod = AssignNode.builder().identifier(identfonction).expression(numberNode).build();
 
 
-        InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(assignMethod).instrs(instrsnil).build();
+        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
 
-
-        MethodNode methodNode = MethodNode.builder()
-                .headers(headersNode)
-                .identifier(identf)
-                .instrs(instsrNode)
-                .typeMeth(typeMeth)
-                .vars(varsNode3)
-                .build();
-
+        MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
 
         DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(declsnil).build();
 
-        AssignNode assignMethod = AssignNode.builder().identifier(identf).expression(expression).build();
-        InstrsNode instrsMain = InstrsNode.builder().instruction(assignMethod).instrs(instrsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varsNode4).instrs(instrsMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-
 
         typeChecker = new TypeChecker(classeNode1);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
 
-
-
     }
-
 */
-
     @Test(expected = IllFormedNodeException.class)
     public void AssignNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
 
