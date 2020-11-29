@@ -564,6 +564,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
+            //System.out.println(new IllFormedNodeException(node.line(), node.column(), "11Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) + " as a conditional expression."));
             throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +" as a conditional expression.");
         }
 
@@ -591,7 +592,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expressionWhile) != SORTE.BOOLEAN){
-            System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + " as a conditional expression."));
             throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expressionWhile) + "as a conditional expression.");
         }
 
