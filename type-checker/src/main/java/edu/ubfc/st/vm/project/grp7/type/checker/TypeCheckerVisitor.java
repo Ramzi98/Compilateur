@@ -343,6 +343,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         IdentNode identifier = node.identifier();
 
 
+
         if (pass == Pass.FIRST_PASS) {
             try {
                 typeNode.accept(this);
@@ -1025,7 +1026,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(identNature.get(identifier) != OBJ.TAB)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an array but is"+identNature.get(identifier));
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an array but it is"+identNature.get(identifier));
         }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
