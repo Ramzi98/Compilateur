@@ -15,6 +15,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_MAIN = "main";
 
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
+    HashMap<MiniJajaNode,OBJ> identNature = new HashMap<>();
+
     private Pass pass;
     int indice;
 
@@ -44,7 +46,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ClasseNode node) throws IllFormedNodeException, IOException {
-        IdentNode ident = node.identifier();
+        IdentNode identifier = node.identifier();
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
 
@@ -52,9 +54,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if (pass == Pass.FIRST_PASS)
         {
             try{
-                symbolDictionnary.register(ident.value(),indice++);
+                miniJajaNodeType.put(identifier,null);
+                identNature.put(identifier,OBJ.VAR);
+                symbolDictionnary.register(identifier.value(),indice++);
             }catch (Exception e){
-                throw new IllFormedNodeException(node.line(), node.column(),"The symbol \"" + ident.value() + "\" has already been declared.");
+                throw new IllFormedNodeException(node.line(), node.column(),"The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
 
@@ -70,19 +74,23 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
-        int ind = symbolDictionnary.find(node.value());
-        if(ind == -1)
-        {
-            SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
-            symbolDictionnary1.popScope();
-            int ind2 = symbolDictionnary1.find(node.value());
-            if(ind2 == -1)
+            int ind = symbolDictionnary.find(node.value());
+            if(ind == -1)
             {
-                throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
+                SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
+                symbolDictionnary1.popScope();
+                int ind2 = symbolDictionnary1.find(node.value());
+                if(ind2 == -1)
+                {
+                    throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
+                }
             }
-        }
 
-        //miniJajaNodeType.put(node,node.)
+            if(identNature.get(node) == OBJ.CST)
+            {
+
+            }
+
 
         //TODO: Continue work on this part
         //Quadruplet q = stack.peekFirst(node.value());
@@ -146,6 +154,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
 
             try {
+                miniJajaNodeType.put(identifier,miniJajaNodeType.get(nodeType));
+                identNature.put(identifier,OBJ.VAR);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
                 //System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
@@ -181,6 +191,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
 
             try {
+                miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
+                identNature.put(identifier,OBJ.TAB);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
 
@@ -208,12 +220,26 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
 
-            if (miniJajaNodeType.get(expression) == null || miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
+            if (miniJajaNodeType.get(expression) == SORTE.OMEGA) {
+                throw new IllFormedNodeException(node.line(),node.column(),"Can not declare a variable of type "+miniJajaNodeType.get(expression));
+            }
+
+            if (miniJajaNodeType.get(expression) != null && miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
                 throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
             }
 
 
             try {
+                miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
+                if(miniJajaNodeType.get(expression) == null)
+                {
+                    identNature.put(identifier,OBJ.VCST);
+                }
+                else
+                {
+                    identNature.put(identifier,OBJ.CST);
+                }
+
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
 
@@ -237,6 +263,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if (pass == Pass.FIRST_PASS) {
             try {
                 typeNode.accept(this);
+                miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
+                identNature.put(identifier,OBJ.METH);
                 symbolDictionnary.register(identifier.value(), indice++);
                 // TODO: See if we can add some information to the symbol as type, or we initialize a stack.
 
@@ -271,7 +299,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodeVars = node.vars();
         MiniJajaNode nodeInstrs = node.instrs();
 
-        symbolDictionnary.pushScope(SCOPE_MAIN);
+        if(pass == Pass.FIRST_PASS)
+        {
+            symbolDictionnary.pushScope(SCOPE_MAIN);
+        }
 
         try {
             nodeVars.accept(this);
@@ -280,7 +311,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(e.toString());
         }
 
-        symbolDictionnary.popScope();
+        if(pass == Pass.SECOND_PASS)
+        {
+            symbolDictionnary.popScope();
+        }
+
 
     }
 
@@ -317,6 +352,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line(), node.column(), "Impossible to declare a parametere of type void");
             }
             try {
+                miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
+                identNature.put(identifier,OBJ.VAR);
                 symbolDictionnary.register(identifier.value(), indice++);
                 // TODO: See if we can add some information to the symbol as type, or we initialize a stack.
 
@@ -332,22 +369,24 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(InstrsNode node) throws IllFormedNodeException, IOException {
 
-
         MiniJajaNode instr = node.instruction();
         MiniJajaNode instrs = node.instrs();
+        if(instr != null)
+        {
+            if(pass == Pass.SECOND_PASS){
 
-        if(pass == Pass.SECOND_PASS){
+                try
+                {
+                    instr.accept(this);
+                    instrs.accept(this);
+                }
+                catch(Exception e){
 
-            try
-            {
-                instr.accept(this);
-                instrs.accept(this);
+                    throw new IllFormedNodeException(e.toString());
+
+                }
             }
-            catch(Exception e){
 
-                throw new IllFormedNodeException(e.toString());
-
-            }
         }
 
     }
@@ -414,7 +453,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
-        System.out.println(miniJajaNodeType.get(identifier));
 
         if (identifier instanceof ArrayItemNode)
         {

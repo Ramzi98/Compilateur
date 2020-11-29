@@ -16,16 +16,15 @@ import static org.hamcrest.Matchers.is;
 
 public class IdentNodeCheckerTest {
 
-    TypeCheckerVisitor typeChecker;
+    TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
+    TypeCheckerVisitor typeCheckerVisitor;
 
     @Before
     public void start(){
 
-        typeChecker = new TypeCheckerVisitor();
-        typeChecker.setPass(Pass.SECOND_PASS);
+        typeCheckerVisitor = new TypeCheckerVisitor();
         symbolDictionnary = new SymbolDictionnary();
-        typeChecker.setDataDictionnary(symbolDictionnary);
 
     }
 
@@ -56,7 +55,10 @@ public class IdentNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker.visit(classeNode1);
+
+        typeChecker = new TypeChecker(classeNode1);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
 
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));

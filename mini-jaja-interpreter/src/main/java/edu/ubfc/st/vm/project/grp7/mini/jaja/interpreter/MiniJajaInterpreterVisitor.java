@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
+import edu.ubfc.st.vm.project.grp7.memory.OBJ;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -8,6 +9,7 @@ import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.NoSuchElementException;
 
 public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     private final Memory memory;
@@ -21,6 +23,14 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         this.evals = new ArrayDeque<>();
         this.controller = controller;
     }
+    public MiniJajaInterpreterVisitor(Memory memory, MJJInterpreterController controller,Deque<Object> deque) {
+        this.memory = memory;
+        this.modeRetrait = false;
+        this.evals = deque;
+        this.controller = controller;
+    }
+
+
 
     @Override
     public void visit(ClasseNode node) throws Exception {

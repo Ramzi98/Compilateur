@@ -16,18 +16,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ClasseNodeCheckerTest {
-    TypeCheckerVisitor typeChecker;
+    TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
-    IDEStack stack;
+    TypeCheckerVisitor typeCheckerVisitor;
+
     @Before
     public void start(){
 
-        typeChecker = new TypeCheckerVisitor();
-        typeChecker.setPass(Pass.FIRST_PASS);
+        typeCheckerVisitor = new TypeCheckerVisitor();
         symbolDictionnary = new SymbolDictionnary();
-        stack = new IDEStack(symbolDictionnary);
-        typeChecker.setStack(stack);
-        typeChecker.setDataDictionnary(symbolDictionnary);
 
     }
 
@@ -56,10 +53,12 @@ public class ClasseNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode2).instrs(instrsnil).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker.visit(classeNode1);
+        typeChecker = new TypeChecker(classeNode1);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+
 
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
-        assertThat(symbolDictionnary.find(identvar3.value()),is(1));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
     }
 /*
@@ -91,7 +90,9 @@ public class ClasseNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(varsNode3).instrs(instrsnil).build();
         ClasseNode classeNode1 = ClasseNode.builder().line(1).column(1).identifier(identclasse).decls(declsnil).methmain(mainNode).build();
 
-        typeChecker.visit(classeNode1);
+        typeChecker = new TypeChecker(classeNode1);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
 
     }
 
@@ -120,7 +121,9 @@ public class ClasseNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode1).instrs(instrsnil).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker.visit(classeNode1);
+        typeChecker = new TypeChecker(classeNode1);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
 
     }
 

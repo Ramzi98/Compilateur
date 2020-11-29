@@ -32,7 +32,6 @@ public class ArrayNodeCheckerTest {
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
         ArrayNode node = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar).expression(numberNode).build();
-        System.out.println(typeChecker.getSymbolDictionnary());
 
         typeChecker.visit(node);
     }
