@@ -373,7 +373,6 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ArrayItemNode node) throws Exception {
         node.expression().accept(this);
-        System.out.println("?"+(int) evals.pop());
         Object e = memory.valT(node.identifier().value(), (int) evals.pop());
         evals.push(e);
     }

@@ -31,7 +31,7 @@ public class MiniJajaInterpreterVisitorTest {
         memory = mock(IDEMemory.class);
         controller = mock(MJJInterpreterController.class);
         deque = spy(new ArrayDeque<>());
-        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller,deque);
+        mjjVisitor = spy(new MiniJajaInterpreterVisitor(memory, controller,deque));
     }
 
     @Test
@@ -197,11 +197,13 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void arrayItemNodeTest() throws Exception {
-       /* IdentNode identNode = mock(IdentNode.class);
+        /*IdentNode identNode = mock(IdentNode.class);
         when(identNode.value()).thenReturn("i");
 
         NumberNode numberNode = mock(NumberNode.class);
         when(numberNode.value()).thenReturn(5);
+
+
 
         ArrayItemNode arrayItemNode =ArrayItemNode.builder()
                 .line(1)
@@ -258,7 +260,7 @@ public class MiniJajaInterpreterVisitorTest {
 
         deque.push(2);
         deque.push(6);
-        
+
         divNode.accept(mjjVisitor);
         InOrder inOrder = inOrder(leftOp, rightOp);
         inOrder.verify(leftOp).accept(mjjVisitor);
@@ -451,9 +453,10 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void MinusNodeTest() throws Exception {
-        /*NumberNode numberNode = mock(NumberNode.class);
+        NumberNode numberNode = mock(NumberNode.class);
         when(numberNode.value()).thenReturn(5);
 
+        deque.push(5);
 
         MinusNode minusNode = MinusNode.builder()
                 .column(0)
@@ -464,7 +467,7 @@ public class MiniJajaInterpreterVisitorTest {
 
         minusNode.accept(mjjVisitor);
 
-        verify(deque).push(5);*/
+        verify(deque).push(-5);
     }
 }
     /**
