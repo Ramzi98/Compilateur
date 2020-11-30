@@ -10,13 +10,12 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
-
+import static org.mockito.Mockito.*;
 import org.mockito.Spy;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static org.hamcrest.Matchers.in;
-import static org.mockito.Mockito.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -430,26 +429,6 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
-    public void arrayItemNodeTest() throws Exception {
-        /*IdentNode identNode = mock(IdentNode.class);
-        when(identNode.value()).thenReturn("i");
-
-        NumberNode numberNode = mock(NumberNode.class);
-        when(numberNode.value()).thenReturn(5);
-
-
-
-        ArrayItemNode arrayItemNode =ArrayItemNode.builder()
-                .line(1)
-                .column(0)
-                .identifier(identNode)
-                .expression(numberNode)
-                .build();
-
-        arrayItemNode.accept(mjjVisitor);*/
-    }
-
-    @Test
     public void NumberNodeTest() throws Exception {
 
         NumberNode numberNode = NumberNode.builder()
@@ -686,9 +665,38 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
+    public void EqualsNodeTest() throws Exception {
+        BooleanNode leftOp = mock(BooleanNode.class);
+        BooleanNode rightOp = mock(BooleanNode.class);
+        when(leftOp.value()).thenReturn(true);
+        when(rightOp.value()).thenReturn(false);
+
+        EqualsNode equalsNode = EqualsNode.builder()
+                .column(0)
+                .line(1)
+                .leftOperand(leftOp)
+                .rightOperand(rightOp)
+                .build();
+
+
+        deque.push(false);
+        deque.push(true);
+
+        equalsNode.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(leftOp, rightOp);
+        inOrder.verify(leftOp).accept(mjjVisitor);
+        inOrder.verify(rightOp).accept(mjjVisitor);
+
+        InOrder inOrder2 = inOrder(deque);
+        inOrder2.verify(deque).push(false);
+        inOrder2.verify(deque).push(true);
+        inOrder2.verify(deque).push(false);
+    }
+
+    @Test
     public void MinusNodeTest() throws Exception {
         NumberNode numberNode = mock(NumberNode.class);
-        when(numberNode.value()).thenReturn(5);
 
         deque.push(5);
 
@@ -703,29 +711,44 @@ public class MiniJajaInterpreterVisitorTest {
 
         verify(deque).push(-5);
     }
+
+    @Test
+    public void NotNodeTest() throws Exception {
+        BooleanNode booleanNode = mock(BooleanNode.class);
+        deque.push(false);
+
+        NotNode notNode = NotNode.builder()
+                .column(0)
+                .line(1)
+                .expression(booleanNode)
+                .build();
+
+
+        notNode.accept(mjjVisitor);
+
+        verify(deque).push(true);
+    }
+
+
+
+    @Test
+    public void arrayItemNodeTest() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("i");
+
+        NumberNode numberNode = mock(NumberNode.class);
+        when(numberNode.value()).thenReturn(5);
+        deque.push(5);
+
+        ArrayItemNode arrayItemNode =ArrayItemNode.builder()
+                .line(1)
+                .column(0)
+                .identifier(identNode)
+                .expression(numberNode)
+                .build();
+
+        when(memory.valT("i",5)).thenReturn(true);
+        arrayItemNode.accept(mjjVisitor);
+        verify(deque).push(true);
+    }
 }
-    /**
-    /**
-     *
-     *     @Override
-     *     public void visit(EqualsNode node) throws Exception {
-     *         evaluateBinOp(node);
-     *         evals.push(evals.pop() == evals.pop()); // maybe .equals() ?
-     *     }
-     *
-     *
-     *
-     *     @Override
-     *     public void visit(MinusNode node) throws Exception {
-     *         node.expression().accept(this);
-     *         evals.push(- (int) evals.pop());
-     *     }
-     *
-     *     @Override
-     *     public void visit(AppelENode node) throws Exception {
-     *         // TODO: 29/11/2020
-     *         throw new RuntimeException("Not implemented yet");
-     *     }
-     *
-     *     @Override
-     */
