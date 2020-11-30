@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.memory.OBJ;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -9,7 +8,6 @@ import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.NoSuchElementException;
 
 public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     private final Memory memory;
@@ -32,6 +30,18 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         this.controller = controller;
     }
 
+    public final boolean modeRetrait() {
+        return this.modeRetrait;
+    }
+
+    public void switchOnRetrait() {
+        this.modeRetrait = true;
+    }
+
+    public void switchOffRetrait() {
+        this.modeRetrait = false;
+    }
+
     @Override
     public void visit(ClasseNode node) throws Exception {
         memory.declVar(node.identifier().value(), null, null);
@@ -40,11 +50,14 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         }
         node.methmain().accept(this);
 
-        this.modeRetrait = true;
+        switchOnRetrait();
         
         if (node.decls() != null ) {
             node.decls().accept(this);
         }
+
+        switchOffRetrait();
+
         memory.retirerDecl(node.identifier().value());
     }
 

@@ -37,7 +37,15 @@ public class NotNodeCheckerTest {
         BooleanNode expression = BooleanNode.builder().build() ;
         NotNode node = NotNode.builder().expression(expression).build();
         typeChecker.visit(node);
-        assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.BOOLEAN));
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void NotNodeTypeCheck__WrongType__withException() throws IOException, IllFormedNodeException {
+
+        NumberNode expression = NumberNode.builder().value(5).build() ;
+        NotNode node = NotNode.builder().expression(expression).build();
+        typeChecker.visit(node);
 
     }
 }

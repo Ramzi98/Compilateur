@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DivNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MultNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
@@ -39,6 +40,25 @@ public class MultNodeCheckerTest {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
+        MultNode node = MultNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+
+    @Test(expected = IllFormedNodeException.class)
+    public void MultNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode leftOperand = BooleanNode.builder().value(true).build();
+        NumberNode rightOperand = NumberNode.builder().value(6).build();
+        MultNode node = MultNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+    @Test(expected = IllFormedNodeException.class)
+    public void MultNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        NumberNode leftOperand = NumberNode.builder().value(6).build();
+        BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         MultNode node = MultNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
         typeChecker.visit(node);
 

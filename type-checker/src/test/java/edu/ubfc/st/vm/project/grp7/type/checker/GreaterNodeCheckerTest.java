@@ -2,9 +2,7 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.GreaterNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MultNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +37,24 @@ public class GreaterNodeCheckerTest {
     public void GreaterNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().build();
+        NumberNode rightOperand = NumberNode.builder().value(6).build();
+        GreaterNode node = GreaterNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+    @Test(expected = IllFormedNodeException.class)
+    public void GreaterNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode rightOperand = BooleanNode.builder().value(true).build();
+        NumberNode leftOperand = NumberNode.builder().value(6).build();
+        GreaterNode node = GreaterNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
+        typeChecker.visit(node);
+
+    }
+    @Test(expected = IllFormedNodeException.class)
+    public void GreaterNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+
+        BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
         GreaterNode node = GreaterNode.builder().leftOperand(leftOperand).rightOperand(rightOperand).build();
         typeChecker.visit(node);

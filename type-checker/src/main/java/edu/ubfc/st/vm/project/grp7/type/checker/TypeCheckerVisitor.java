@@ -8,7 +8,6 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_GLOBAL = "global";
@@ -25,11 +24,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     }
 
     private SymbolDictionnary symbolDictionnary;
-    IDEStack stack ;
-
-    public void setStack(IDEStack stack) {
-        this.stack = stack;
-    }
 
     public void setDataDictionnary(SymbolDictionnary symbolDictionnary)
     {
@@ -74,29 +68,26 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
+        System.out.println(node.value());
+        if (node.value() != null) {
             int ind = symbolDictionnary.find(node.value());
-            if(ind == -1)
-            {
+            if (ind == -1) {
                 SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
                 symbolDictionnary1.popScope();
                 int ind2 = symbolDictionnary1.find(node.value());
-                if(ind2 == -1)
-                {
-                    throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+node.value()+"\" has not been declared.");
+
+                if (ind2 == -1) {
+                    throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + node.value() + "\" has not been declared.");
                 }
             }
 
-            if(identNature.get(node) == OBJ.CST)
-            {
-
-            }
-
-
-        //TODO: Continue work on this part
-        //Quadruplet q = stack.peekFirst(node.value());
-        //miniJajaNodeType.put(node,q.type());
+            //TODO: Continue work on this part
+            //Quadruplet q = stack.peekFirst(node.value());
+            //miniJajaNodeType.put(node,q.type());
+        }else{
+            throw new IllFormedNodeException(node.line(),node.column(),"The Identifier does not have a value");
+        }
     }
-
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException, IOException {
 
@@ -110,9 +101,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
         }
-
-
-
     }
 
     @Override
@@ -203,8 +191,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     }
 
 
-
-
     @Override
     public void visit(CstNode node) throws IllFormedNodeException, IOException {
 
@@ -220,26 +206,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
 
-            if (miniJajaNodeType.get(expression) == SORTE.OMEGA) {
-                throw new IllFormedNodeException(node.line(),node.column(),"Can not declare a variable of type "+miniJajaNodeType.get(expression));
-            }
-
             if (miniJajaNodeType.get(expression) != null && miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
                 throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
             }
 
-
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
-                if(miniJajaNodeType.get(expression) == null)
-                {
-                    identNature.put(identifier,OBJ.VCST);
-                }
-                else
-                {
-                    identNature.put(identifier,OBJ.CST);
-                }
-
+                identNature.put(identifier,OBJ.CST);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
 
@@ -258,7 +231,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode vars = node.vars();
         IdentNode identifier = node.identifier();
 
-        symbolDictionnary.pushScope(identifier.value());
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -280,6 +252,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(node.line(),node.column(),"A return statement was specified but the method should return void");
         }
 
+        if(pass == Pass.FIRST_PASS)
+        {
+            symbolDictionnary.pushScope(identifier.value());
+        }
+
         try {
             headers.accept(this);
             vars.accept(this);
@@ -289,8 +266,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(e.toString());
         }
 
-        symbolDictionnary.popScope();
-
+        if(pass == Pass.SECOND_PASS)
+        {
+            symbolDictionnary.popScope();
+        }
 
     }
 
@@ -316,7 +295,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             symbolDictionnary.popScope();
         }
 
-
     }
 
     @Override
@@ -325,11 +303,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodeHeader = node.header();
         MiniJajaNode nodeHeaders = node.headers();
 
-        try {
-            nodeHeader.accept(this);
-            nodeHeaders.accept(this);
-        } catch (Exception e) {
-            throw new IllFormedNodeException(e.toString());
+        if(nodeHeader != null)
+        {
+            try {
+                nodeHeader.accept(this);
+                nodeHeaders.accept(this);
+            } catch (Exception e) {
+                throw new IllFormedNodeException(e.toString());
+            }
         }
 
     }
@@ -339,7 +320,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode typeNode = node.type();
         IdentNode identifier = node.identifier();
-
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -361,8 +341,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
-
-
         }
     }
 
@@ -386,9 +364,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
                 }
             }
-
         }
-
     }
 
     @Override
@@ -397,8 +373,98 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode identifier = node.identifier();
         MiniJajaNode expression = node.expression();
 
-        //To be continued
+        if(identifier instanceof ArrayItemNode){
 
+            try {
+                identifier.accept(this);
+                expression.accept(this);
+
+            }catch(Exception e){
+                throw new IllFormedNodeException(e.toString());
+            }
+
+            if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+            }
+
+        }else{
+
+            try {
+                identifier.accept(this);
+            }catch(Exception e){
+                throw new IllFormedNodeException(e.toString());
+
+            }
+                int ind = symbolDictionnary.find(((IdentNode) identifier).value());
+                if (ind == -1) {
+                    throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + ((IdentNode) identifier).value() + "\" has not been declared.");
+                }
+
+
+            if(identNature.get(identifier) == OBJ.METH){
+
+                throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a method ");
+
+            }
+            if(identNature.get(identifier) == OBJ.TAB){
+
+                try {
+                    expression.accept(this);
+                }catch(Exception e){
+                    throw new IllFormedNodeException(e.toString());
+
+                }
+
+                if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+                }
+
+                if (!(expression instanceof IdentNode) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"An array can only be assigned to an array not an expression");
+                }
+
+            }else{
+
+                try {
+                    expression.accept(this);
+                }catch(Exception e){
+                    throw new IllFormedNodeException(e.toString());
+
+                }
+
+                if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+                }
+
+                if(identNature.get(identifier) == OBJ.CST){
+
+                    throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+
+                }
+
+                if(identNature.get(identifier) == OBJ.VCST){
+
+                    //TODO : Check if scope is not in main
+                   // throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+
+                    try {
+                        symbolDictionnary.unregister(((IdentNode) identifier).value());
+                    }catch(Exception e){
+
+                        throw new IllFormedNodeException(node.line() ,node.column() , "The constant "+ ((IdentNode) identifier).value() +" has not been declared");
+
+                    }
+
+                    try {
+                        identNature.put(identifier, OBJ.CST);
+                        symbolDictionnary.register(((IdentNode) identifier).value(), indice++);
+                    } catch (Exception e) {
+                    throw new IllFormedNodeException(e.toString());
+                }
+
+                }
+            }
+        }
     }
 
     @Override
@@ -441,8 +507,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
         }
 
-
-
     }
 
     @Override
@@ -468,7 +532,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
-
 
     }
 
@@ -565,7 +628,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
-            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +"as a conditional expression.");
+            //System.out.println(new IllFormedNodeException(node.line(), node.column(), "11Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) + " as a conditional expression."));
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +" as a conditional expression.");
         }
 
         try {
@@ -604,6 +668,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
+
+
 
     }
 
@@ -923,7 +989,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if(identNature.get(identifier) != OBJ.TAB)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an array but is"+identNature.get(identifier));
+            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not an array but it is"+identNature.get(identifier));
         }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
@@ -956,21 +1022,23 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
     }
 
-    public boolean existReturn(InstrsNode node){
+    public boolean existReturn(MiniJajaNode nodeInstrs){
 
         boolean exist = false;
 
-        while(node instanceof InstrsNode){
+        while(nodeInstrs instanceof InstrsNode){
+            MiniJajaNode nodeInstr = ((InstrsNode)nodeInstrs).instruction();
 
-            if(node instanceof IfNode){
+            if(nodeInstr instanceof IfNode){
 
-                exist =  existReturn(((IfNode) node).falseInstrs()) && existReturn(((IfNode) node).trueInstrs());
+                exist =  existReturn(((IfNode) nodeInstr).falseInstrs()) && existReturn(((IfNode) nodeInstr).trueInstrs());
             }
 
-            if(node instanceof ReturnNode){
+            if(nodeInstr instanceof ReturnNode){
 
                 exist = true;
             }
+            nodeInstrs = ((InstrsNode) nodeInstrs).instrs();
 
         }
 

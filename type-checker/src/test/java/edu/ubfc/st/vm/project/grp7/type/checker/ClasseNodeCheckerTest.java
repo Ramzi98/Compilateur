@@ -61,12 +61,7 @@ public class ClasseNodeCheckerTest {
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
     }
-/*
-    @Test
-    public void BClasseNodeTypeCheker__SecondePass() throws IOException, IllFormedNodeException {
 
-    }
-*/
     @Test(expected = IllFormedNodeException.class)
     public void ClasseNodeTypeCheker__FirstPass__withException__InMainScope() throws IOException, IllFormedNodeException {
 

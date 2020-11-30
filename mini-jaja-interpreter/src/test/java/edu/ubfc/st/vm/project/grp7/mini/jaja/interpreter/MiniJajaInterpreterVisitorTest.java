@@ -10,11 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import java.beans.Expression;
-import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.internal.matchers.Or;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -24,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class MiniJajaInterpreterVisitorTest {
-    private MiniJajaInterpreterVisitor mjjVisitor ;
+    private MiniJajaInterpreterVisitor mjjVisitor;
     private Memory memory;
     private MJJInterpreterController controller;
     @Spy
@@ -43,7 +39,6 @@ public class MiniJajaInterpreterVisitorTest {
         IdentNode ident = mock(IdentNode.class);
         when(ident.value()).thenReturn("C");
         MainNode main = mock(MainNode.class);
-
         ClasseNode classe = ClasseNode.builder()
                 .identifier(ident)
                 .decls(null)
@@ -52,11 +47,18 @@ public class MiniJajaInterpreterVisitorTest {
                 .column(0)
                 .build();
 
+        doCallRealMethod().when(mjjVisitor).switchOnRetrait();
+        doCallRealMethod().when(mjjVisitor).switchOffRetrait();
+
         classe.accept(mjjVisitor);
 
-        verify(memory).declVar("C", null, null);
-        verify(main).accept(mjjVisitor);
-        verify(memory).retirerDecl("C");
+        InOrder inOrder = inOrder(memory, mjjVisitor, main);
+
+        inOrder.verify(memory).declVar("C", null, null);
+        inOrder.verify(main).accept(mjjVisitor);
+        inOrder.verify(mjjVisitor).switchOnRetrait();
+        inOrder.verify(mjjVisitor).switchOffRetrait();
+        inOrder.verify(memory).retirerDecl("C");
     }
 
     @Test
@@ -78,19 +80,19 @@ public class MiniJajaInterpreterVisitorTest {
 
         classe.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(memory, decls, main);
+        InOrder inOrder = inOrder(memory, decls, main, mjjVisitor);
 
         inOrder.verify(memory).declVar("C", null, null);
         inOrder.verify(decls).accept(mjjVisitor);
         inOrder.verify(main).accept(mjjVisitor);
+        inOrder.verify(mjjVisitor).switchOnRetrait();
         inOrder.verify(decls).accept(mjjVisitor);
+        inOrder.verify(mjjVisitor).switchOffRetrait();
         inOrder.verify(memory).retirerDecl("C");
     }
 
     @Test
     public void identNode__evalExists__visit() throws Exception {
-        Deque<Object> stack = spy(new ArrayDeque<>());
-        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller, stack);
         when(memory.val("i")).thenReturn(5);
 
         IdentNode ident = IdentNode.builder()
@@ -101,14 +103,14 @@ public class MiniJajaInterpreterVisitorTest {
 
         ident.accept(mjjVisitor);
 
-        verify(memory).val("i");
-        verify(stack).push(5);
+        InOrder inOrder = inOrder(memory, deque);
+
+        inOrder.verify(memory).val("i");
+        inOrder.verify(deque).push(5);
     }
 
     @Test(expected = IllegalStateException.class)
     public void identNode__evalDoesntExists__visit__ThrowException() throws Exception {
-        Deque<Object> stack = spy(new ArrayDeque<>());
-        mjjVisitor = new MiniJajaInterpreterVisitor(memory, controller, stack);
         when(memory.val("i")).thenThrow(IllegalStateException.class);
 
         IdentNode ident = IdentNode.builder()
@@ -121,6 +123,78 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     // TODO: 30/11/2020
+    @Test
+    public void givenRetraitOff__VisitDECL__thenDECLS() throws Exception {
+        DeclsNode childDecls = mock(DeclsNode.class);
+        MiniJajaNode decl = mock(MiniJajaNode.class);
+        DeclsNode decls = DeclsNode.builder()
+                .decls(childDecls)
+                .decl(decl)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        decls.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, decl, childDecls);
+
+        inOrder.verify(decl).accept(mjjVisitor);
+        inOrder.verify(childDecls).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__VisitDECL__thenDECLS() throws Exception {
+        DeclsNode childDecls = mock(DeclsNode.class);
+        MiniJajaNode decl = mock(MiniJajaNode.class);
+        DeclsNode decls = DeclsNode.builder()
+                .decls(childDecls)
+                .decl(decl)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        decls.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, decl, childDecls);
+
+        inOrder.verify(childDecls).accept(mjjVisitor);
+        inOrder.verify(decl).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__nullDecls() throws Exception {
+        MiniJajaNode decl = mock(MiniJajaNode.class);
+        DeclsNode decls = DeclsNode.builder()
+                .decls(null)
+                .decl(decl)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        decls.accept(mjjVisitor);
+
+        verify(decl).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__nullDecls() throws Exception {
+        MiniJajaNode decl = mock(MiniJajaNode.class);
+        DeclsNode decls = DeclsNode.builder()
+                .decls(null)
+                .decl(decl)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        decls.accept(mjjVisitor);
+
+        verify(decl).accept(mjjVisitor);
+    }
+
     @Test
     public void arrayItemNodeTest() throws Exception {
        /* IdentNode identNode = mock(IdentNode.class);
@@ -184,7 +258,7 @@ public class MiniJajaInterpreterVisitorTest {
 
         deque.push(2);
         deque.push(6);
-
+        
         divNode.accept(mjjVisitor);
         InOrder inOrder = inOrder(leftOp, rightOp);
         inOrder.verify(leftOp).accept(mjjVisitor);
