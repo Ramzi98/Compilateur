@@ -809,6 +809,18 @@ public class MiniJajaInterpreterVisitorTest {
         verify(deque).push("coucou");
     }
 
+    @Test
+    public void ifNodeTest(){
+        BooleanNode booleanNode = mock(BooleanNode.class);
+        InstrsNode instrsNode = mock(InstrsNode.class);
+
+        IfNode.Builder builder = IfNode.builder()
+                .line(1)
+                .column(0)
+                .expression(booleanNode);
+
+
+    }
     
 
 
