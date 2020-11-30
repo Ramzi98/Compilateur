@@ -10,9 +10,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 public class IncrementNodeCheckerTest {
     TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
@@ -25,7 +22,7 @@ public class IncrementNodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void IncrementNodeTypeCheker__Exception() throws IOException, IllFormedNodeException {
+    public void IncrementNodeTypeCheker__Exception() throws IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -45,9 +42,6 @@ public class IncrementNodeCheckerTest {
         typeChecker = new TypeChecker(mainNode);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
 
     }
 
@@ -79,9 +73,6 @@ public class IncrementNodeCheckerTest {
         typeChecker = new TypeChecker(mainNode);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
 
     }
 
