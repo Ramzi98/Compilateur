@@ -82,9 +82,6 @@ public class WhileNodeCheckerTest {
         typeChecker = new TypeChecker(mainNode);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
-
     }
 
 
