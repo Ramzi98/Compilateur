@@ -885,45 +885,107 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
-    public void ifNodeTest(){
-        BooleanNode booleanNode = mock(BooleanNode.class);
+    public void ifNodeTest() throws Exception {
+        BooleanNode expression = mock(BooleanNode.class);
+        deque.push(true);
         InstrsNode instrsNode = mock(InstrsNode.class);
 
-        IfNode.Builder builder = IfNode.builder()
+        IfNode ifNode = IfNode.builder()
                 .line(1)
                 .column(0)
-                .expression(booleanNode);
+                .expression(expression)
+                .trueInstrs(instrsNode)
+                .falseInstrs(null)
+                .build();
 
+        ifNode.accept(mjjVisitor);
+        verify(instrsNode).accept(mjjVisitor);
+    }
+
+    @Test
+    public void ifElseNodeTest() throws Exception {
+        BooleanNode expression = mock(BooleanNode.class);
+        deque.push(false);
+        InstrsNode instrsNode = mock(InstrsNode.class);
+
+        IfNode ifNode = IfNode.builder()
+                .line(1)
+                .column(0)
+                .expression(expression)
+                .trueInstrs(null)
+                .falseInstrs(instrsNode)
+                .build();
+
+        ifNode.accept(mjjVisitor);
+        verify(instrsNode).accept(mjjVisitor);
+    }
+
+    @Test
+    public void whileNodeTest() throws Exception {
+        BooleanNode expression = mock(BooleanNode.class);
+        deque.push(false);
+        InstrsNode instrsNode = mock(InstrsNode.class);
+
+        WhileNode whileNode = WhileNode.builder()
+                .line(1)
+                .column(0)
+                .expression(expression)
+                .instrs(instrsNode)
+                .build();
+
+        deque.push(false);
+        deque.push(false);
+        deque.push(false);
+        deque.push(true);
+        whileNode.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(deque);
+        inOrder.verify(deque).push(false);
+        inOrder.verify(deque).push(false);
+        inOrder.verify(deque).push(false);
+        inOrder.verify(deque).push(false);
+        inOrder.verify(deque).push(true);
+    }
+
+    @Test
+    public void incrementNodeTest() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("tab");
+        NumberNode numberNode = mock(NumberNode.class);
+        when(numberNode.value()).thenReturn(5);
+
+        ArrayItemNode arrayItemNode = ArrayItemNode.builder()
+                .expression(numberNode)
+                .identifier(identNode)
+                .build();
+
+        IncrementNode incrementNode = IncrementNode.builder()
+                .line(1)
+                .column(0)
+                .identifier(arrayItemNode)
+                .build();
+
+        incrementNode.accept(mjjVisitor);
+        verify(memory).affecterValT("tab",5,6);
 
     }
-    
-
-
     /**
 
 
-     @Override
-     public void visit(IfNode node) throws Exception {
-     node.expression().accept(this);
-     if ((boolean)evals.pop()) {
-     if(node.trueInstrs() != null) {
-     node.trueInstrs().accept(this);
-     }
-     } else if(node.falseInstrs() != null) {
-     node.falseInstrs().accept(this);
-     }
-     }
 
      @Override
-     public void visit(WhileNode node) throws Exception {
-     node.expression().accept(this);
-     if ((boolean)evals.pop()) {
-     if(node.instrs() != null) {
-     node.instrs().accept(this);
+     public void visit(IncrementNode node) throws Exception {
+         if (node.identifier() instanceof ArrayItemNode) { // incrémentT
+             ArrayItemNode tab = (ArrayItemNode) node.identifier();
+             tab.identifier().accept(this);  // Val(i,m)
+             tab.expression().accept(this);  // process index
+             memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + 1);
+         } else { // incrément
+             IdentNode ident = (IdentNode) node.identifier();
+             ident.accept(this);     // Val(i,m)
+             memory.affecterVal(ident.value(), (int) evals.pop() + 1);
+         }
      }
-     }
-     }
-
      @Override
      public void visit(ListExpNode node) throws Exception {
      // TODO: 29/11/2020

@@ -271,11 +271,17 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(WhileNode node) throws Exception {
+
         node.expression().accept(this);
-        if ((boolean)evals.pop()) {
+        boolean in = (boolean)evals.pop();
+        while (in){
+
             if(node.instrs() != null) {
                 node.instrs().accept(this);
             }
+
+            node.expression().accept(this);
+            in = (boolean)evals.pop();
         }
     }
 
