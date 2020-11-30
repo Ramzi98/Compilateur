@@ -89,8 +89,6 @@ public class SumNodeCheckerTest {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
-        TypeMethNode typeMethNode2 = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
-        BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
         NumberNode numberNode = NumberNode.builder().value(6).build();
         NumberNode numberNode2 = NumberNode.builder().value(2).build();
 

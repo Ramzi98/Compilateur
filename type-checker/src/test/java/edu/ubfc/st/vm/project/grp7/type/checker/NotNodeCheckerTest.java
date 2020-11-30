@@ -37,7 +37,6 @@ public class NotNodeCheckerTest {
         BooleanNode expression = BooleanNode.builder().build() ;
         NotNode node = NotNode.builder().expression(expression).build();
         typeChecker.visit(node);
-        assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.BOOLEAN));
 
     }
 
@@ -47,7 +46,6 @@ public class NotNodeCheckerTest {
         NumberNode expression = NumberNode.builder().value(5).build() ;
         NotNode node = NotNode.builder().expression(expression).build();
         typeChecker.visit(node);
-        assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.BOOLEAN));
 
     }
 }
