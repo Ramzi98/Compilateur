@@ -118,6 +118,11 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
+    public void givenRetraitOff__VisitDECL__thenDECLS() {
+
+    }
+
+    @Test
     public void arrayItemNodeTest() throws Exception {
         IdentNode identNode = mock(IdentNode.class);
         when(identNode.value()).thenReturn("i");
