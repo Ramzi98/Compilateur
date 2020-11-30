@@ -283,6 +283,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             symbolDictionnary.pushScope(SCOPE_MAIN);
         }
 
+
+
         try {
             nodeVars.accept(this);
             nodeInstrs.accept(this);
@@ -293,6 +295,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(pass == Pass.SECOND_PASS)
         {
             symbolDictionnary.popScope();
+            System.out.println(symbolDictionnary.peekScope());
         }
 
     }

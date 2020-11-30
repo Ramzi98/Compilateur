@@ -2,8 +2,6 @@ package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
-import edu.ubfc.st.vm.project.grp7.memory.IDEStack;
-import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -56,7 +54,6 @@ public class ClasseNodeCheckerTest {
         typeChecker = new TypeChecker(classeNode1);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
 
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));

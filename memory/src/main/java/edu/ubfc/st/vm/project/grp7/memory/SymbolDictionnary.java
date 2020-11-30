@@ -30,6 +30,13 @@ public class SymbolDictionnary {
         }
     }
 
+    public String peekScope() {
+        if ( top >= 0 ){
+            return scopes.get(top);
+        }
+        return null;
+    }
+
     public void register(String ident,int indice) throws IllegalArgumentException {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
 
