@@ -11,8 +11,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class IdentNodeCheckerTest {
 
@@ -60,9 +58,6 @@ public class IdentNodeCheckerTest {
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
 
-        assertThat(symbolDictionnary.find(identclasse.value()),is(0));
-        assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
     }
 
 

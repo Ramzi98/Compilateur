@@ -84,8 +84,6 @@ public class IfNodeCheckerTest {
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
 
-        assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
-
     }
 
 
