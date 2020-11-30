@@ -123,7 +123,6 @@ public class MiniJajaInterpreterVisitorTest {
         ident.accept(mjjVisitor);
     }
 
-    // TODO: 30/11/2020
     @Test
     public void givenRetraitOff__VisitVAR__thenVARS() throws Exception {
         VarsNode childVars = mock(VarsNode.class);
@@ -426,6 +425,82 @@ public class MiniJajaInterpreterVisitorTest {
         inOrder.verify(deque).pop();
         inOrder.verify(type).value();
         inOrder.verify(memory).declCst("N", 100, SORTE.INT);
+    }
+
+    @Test
+    public void givenRetraitOn__MainNode__VarsNull() throws Exception {
+        MainNode main = MainNode.builder()
+                .vars(null)
+                .instrs(null)
+                .line(56)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        main.accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__MainNode__NonNullVars() throws Exception {
+        VarsNode vars = mock(VarsNode.class);
+        MainNode main = MainNode.builder()
+                .vars(vars)
+                .instrs(null)
+                .line(56)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        main.accept(mjjVisitor);
+
+        verify(vars).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__MainNode__NullVars__NullInstrs() throws Exception {
+        MainNode main = MainNode.builder()
+                .vars(null)
+                .instrs(null)
+                .line(56)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        main.accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__MainNode__NonNullVars__NullInstrs() throws Exception {
+        VarsNode vars = mock(VarsNode.class);
+        MainNode main = MainNode.builder()
+                .vars(vars)
+                .instrs(null)
+                .line(56)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        main.accept(mjjVisitor);
+
+        verify(vars).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__MainNode__NonNullVars__NonNullInstrs() throws Exception {
+        VarsNode vars = mock(VarsNode.class);
+        InstrsNode instrs = mock(InstrsNode.class);
+        MainNode main = MainNode.builder()
+                .vars(vars)
+                .instrs(instrs)
+                .line(56)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        main.accept(mjjVisitor);
+
+        verify(vars).accept(mjjVisitor);
+        verify(instrs).accept(mjjVisitor);
     }
 
     @Test
