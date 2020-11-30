@@ -1127,47 +1127,109 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
-    public void incrementNodeTest() throws Exception {
-        IdentNode identNode = mock(IdentNode.class);
-        when(identNode.value()).thenReturn("tab");
-        NumberNode numberNode = mock(NumberNode.class);
-        when(numberNode.value()).thenReturn(5);
-
-        ArrayItemNode arrayItemNode = ArrayItemNode.builder()
-                .expression(numberNode)
-                .identifier(identNode)
-                .build();
+    public void incrementArrayItemNodeTest() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("T");
+        
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        ArrayItemNode tab = mock(ArrayItemNode.class);
+        
+        when(tab.identifier()).thenReturn(ident);
+        when(tab.expression()).thenReturn(exp);
 
         IncrementNode incrementNode = IncrementNode.builder()
-                .line(1)
-                .column(0)
-                .identifier(arrayItemNode)
+                .identifier(tab)
+                .line(35)
+                .column(7)
                 .build();
 
+        deque.push(5); // value to assign
+        deque.push(2); // index of the array
         incrementNode.accept(mjjVisitor);
-        verify(memory).affecterValT("tab",5,6);
 
+        verify(memory).affecterValT("T", 2, 6);
     }
-    /**
+
+    @Test
+    public void incrementIdentTest() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("i");
+
+        deque.push(5);
+
+        IncrementNode incrementNode = IncrementNode.builder()
+                .identifier(ident)
+                .line(35)
+                .column(7)
+                .build();
+
+        deque.push(5); // value to assign
+        incrementNode.accept(mjjVisitor);
+
+        verify(memory).affecterVal("i", 6);
+    }
+
+    @Test
+    public void sumNodeIdentTest() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("i");
+
+        NumberNode numberNode = NumberNode.builder()
+                .value(6)
+                .line(1)
+                .column(0)
+                .build();
+
+        deque.push(6);//valeur de numberNode
+        deque.push(5);//valeur de i
 
 
+        SumNode sumNode = SumNode.builder()
+                .identifier(ident)
+                .expression(numberNode)
+                .line(35)
+                .column(7)
+                .build();
 
-     @Override
-     public void visit(IncrementNode node) throws Exception {
-         if (node.identifier() instanceof ArrayItemNode) { // incrémentT
-             ArrayItemNode tab = (ArrayItemNode) node.identifier();
-             tab.identifier().accept(this);  // Val(i,m)
-             tab.expression().accept(this);  // process index
-             memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + 1);
-         } else { // incrément
-             IdentNode ident = (IdentNode) node.identifier();
-             ident.accept(this);     // Val(i,m)
-             memory.affecterVal(ident.value(), (int) evals.pop() + 1);
-         }
-     }
-     @Override
-     public void visit(ListExpNode node) throws Exception {
-     // TODO: 29/11/2020
-     throw new RuntimeException("Not implemented yet");
-     }*/
+
+        sumNode.accept(mjjVisitor);
+
+
+        verify(memory).affecterVal("i", 11);
+    }
+
+    @Test
+    public void sumNodeArrayItemTest() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("T");
+
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        ArrayItemNode tab = mock(ArrayItemNode.class);
+
+        when(tab.identifier()).thenReturn(ident);
+        when(tab.expression()).thenReturn(exp);
+
+        NumberNode numberNode = NumberNode.builder()
+                .value(6)
+                .line(1)
+                .column(0)
+                .build();
+
+        deque.push(6);//indice
+        deque.push(5);//expression
+        deque.push(4);//valeur de i
+
+
+        SumNode sumNode = SumNode.builder()
+                .identifier(tab)
+                .expression(numberNode)
+                .line(35)
+                .column(7)
+                .build();
+
+
+        sumNode.accept(mjjVisitor);
+
+        verify(memory).affecterValT("T", 6,9);
+    }
 }
