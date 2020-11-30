@@ -6,7 +6,7 @@ public interface Compiler {
 
     void compile() throws Exception;
 
-    public static Compiler CompilerBuilder(MiniJajaNode node){
+    static Compiler CompilerBuilder(MiniJajaNode node){
 
                 return new CompilerImpl(node);
 

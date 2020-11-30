@@ -12,7 +12,7 @@ public interface JcWritelnNode extends JajaCodeNode {
         return new JcWritelnNode.Builder();
     }
 
-    public class Builder extends JajaCodeNode.NodeBuilder<JcWritelnNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcWritelnNode.Builder> {
         private JajaCodeNode next;
         public JcWritelnNode.Builder next(JajaCodeNode next) {
             this.next = next;

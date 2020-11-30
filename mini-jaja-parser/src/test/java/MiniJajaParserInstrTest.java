@@ -250,10 +250,10 @@ public class MiniJajaParserInstrTest extends MiniJajaParserBaseTest{
         assertThat(appelINode.line(), is(1));
         assertThat(appelINode.column(), is(0));
 
-        IdentNode identNode = (IdentNode)appelINode.identifier();
+        IdentNode identNode = appelINode.identifier();
         assertThat(identNode.value(),is("i"));
 
-        ListExpNode listExpNode = (ListExpNode)appelINode.listexp();
+        ListExpNode listExpNode = appelINode.listexp();
         IdentNode identNode1 = (IdentNode)listExpNode.expression();
         assertThat(identNode1.value(),is("j"));
 

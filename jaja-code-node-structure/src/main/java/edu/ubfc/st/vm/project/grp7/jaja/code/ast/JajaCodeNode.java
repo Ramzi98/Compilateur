@@ -27,7 +27,7 @@ public interface JajaCodeNode extends ASTNode {
         }
     }
 
-    public enum Type {
+    enum Type {
         INT, BOOLEAN, VOID
     }
 }

@@ -21,7 +21,7 @@ public interface JcAincNode extends JajaCodeNode {
 
 
 
-    public class Builder extends JajaCodeNode.NodeBuilder<JcAincNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcAincNode.Builder> {
         private String identifier;
         public JcAincNode.Builder identifier(String identifier) {
             this.identifier = identifier;
