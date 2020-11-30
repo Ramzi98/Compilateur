@@ -24,11 +24,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     }
 
     private SymbolDictionnary symbolDictionnary;
-    IDEStack stack ;
-
-    public void setStack(IDEStack stack) {
-        this.stack = stack;
-    }
 
     public void setDataDictionnary(SymbolDictionnary symbolDictionnary)
     {
@@ -85,15 +80,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                     throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + node.value() + "\" has not been declared.");
                 }
             }
-
-            /*
-            if(identNature.get(node) == OBJ.CST)
-            {
-
-            }
-
-             */
-
 
             //TODO: Continue work on this part
             //Quadruplet q = stack.peekFirst(node.value());
