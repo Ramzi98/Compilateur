@@ -15,63 +15,63 @@ public abstract class JajaCodeASTVisitor implements ASTVisitor {
             throw new IllFormedNodeException("Null ASTNode cannot be visited !");
         }
         else if (node instanceof JcAddNode) {
-            this.visit((JcAddNode)node);
+            this.visit(node);
         }else if (node instanceof JcAincNode) {
-            this.visit((JcAincNode)node);
+            this.visit(node);
         }else if (node instanceof JcAloadNode) {
-            this.visit((JcAloadNode)node);
+            this.visit(node);
         }else if (node instanceof JcAndNode) {
-            this.visit((JcAndNode)node);
+            this.visit(node);
         }else if (node instanceof JcAstoreNode) {
-            this.visit((JcAstoreNode)node);
+            this.visit(node);
         }else if (node instanceof JcCmpNode) {
-            this.visit((JcCmpNode)node);
+            this.visit(node);
         }else if (node instanceof JcDivNode) {
-            this.visit((JcDivNode)node);
+            this.visit(node);
         }else if (node instanceof JcGotoNode) {
-            this.visit((JcGotoNode)node);
+            this.visit(node);
         }else if (node instanceof JcIfNode) {
-            this.visit((JcIfNode)node);
+            this.visit(node);
         }else if (node instanceof JcIncNode) {
-            this.visit((JcIncNode)node);
+            this.visit(node);
         }else if (node instanceof JcInitNode) {
-            this.visit((JcInitNode)node);
+            this.visit(node);
         }else if (node instanceof JcInvokeNode) {
-            this.visit((JcInvokeNode)node);
+            this.visit(node);
         }else if (node instanceof JcLoadNode) {
-            this.visit((JcLoadNode)node);
+            this.visit(node);
         }else if (node instanceof JcMulNode) {
-            this.visit((JcMulNode)node);
+            this.visit(node);
         }else if (node instanceof JcNegNode) {
-            this.visit((JcNegNode)node);
+            this.visit(node);
         }else if (node instanceof JcNewarrayNode) {
-            this.visit((JcNewarrayNode)node);
+            this.visit(node);
         }else if (node instanceof JcNewNode) {
-            this.visit((JcNewNode)node);
+            this.visit(node);
         }else if (node instanceof JcNopNode) {
-            this.visit((JcNopNode)node);
+            this.visit(node);
         }else if (node instanceof JcNotNode) {
-            this.visit((JcNotNode)node);
+            this.visit(node);
         }else if (node instanceof JcOrNode) {
-            this.visit((JcOrNode)node);
+            this.visit(node);
         }else if (node instanceof JcPopNode) {
-            this.visit((JcPopNode)node);
+            this.visit(node);
         }else if (node instanceof JcPushNode) {
-            this.visit((JcPushNode)node);
+            this.visit(node);
         }else if (node instanceof JcReturnNode) {
-            this.visit((JcReturnNode)node);
+            this.visit(node);
         }else if (node instanceof JcStoreNode) {
-            this.visit((JcStopNode)node);
+            this.visit(node);
         }else if (node instanceof JcSubNode) {
-            this.visit((JcSubNode)node);
+            this.visit(node);
         }else if (node instanceof JcSupNode) {
-            this.visit((JcSupNode)node);
+            this.visit(node);
         }else if (node instanceof JcSwapNode) {
-            this.visit((JcSwapNode)node);
+            this.visit(node);
         }else if (node instanceof JcWriteNode) {
-            this.visit((JcWriteNode)node);
+            this.visit(node);
         }else if (node instanceof JcWritelnNode) {
-            this.visit((JcWritelnNode)node);
+            this.visit(node);
         } else {
             throw new IllFormedNodeException(node.line(), node.column(),
                     node.getClass().getName() + " nodes are not part of a Valid JajaCode AST"

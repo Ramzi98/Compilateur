@@ -13,7 +13,7 @@ public interface JcNopNode extends JajaCodeNode{
         return new JcNopNode.Builder();
     }
 
-    public class Builder extends JajaCodeNode.NodeBuilder<JcNopNode.Builder> {
+    class Builder extends JajaCodeNode.NodeBuilder<JcNopNode.Builder> {
 
         private JajaCodeNode next;
         public JcNopNode.Builder next(JajaCodeNode next) {

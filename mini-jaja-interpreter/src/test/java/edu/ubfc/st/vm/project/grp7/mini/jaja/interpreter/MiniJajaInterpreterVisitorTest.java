@@ -1,24 +1,20 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
-import edu.ubfc.st.vm.project.grp7.memory.IDEMemory;
-import edu.ubfc.st.vm.project.grp7.memory.Memory;
-
-import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.memory.IDEMemory;
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
+import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Spy;
+import org.junit.Before;
 import org.mockito.InOrder;
 import static org.mockito.Mockito.*;
-import org.mockito.Spy;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.ArrayDeque;
 
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class MiniJajaInterpreterVisitorTest {
     private MiniJajaInterpreterVisitor mjjVisitor;
@@ -684,7 +680,6 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void NumberNodeTest() throws Exception {
-
         NumberNode numberNode = NumberNode.builder()
                 .line(1)
                 .column(0)
@@ -698,7 +693,6 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void BooleanNodeTest() throws Exception {
-
         BooleanNode booleanNode = BooleanNode.builder()
                 .line(1)
                 .column(0)
@@ -712,26 +706,25 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void DivNodeTest() throws Exception {
-        NumberNode leftOp = mock(NumberNode.class);
-        NumberNode rightOp = mock(NumberNode.class);
-        when(leftOp.value()).thenReturn(6);
-        when(rightOp.value()).thenReturn(2);
+        NumberNode lhs = mock(NumberNode.class);
+        NumberNode rhs = mock(NumberNode.class);
+        when(lhs.value()).thenReturn(6);
+        when(rhs.value()).thenReturn(2);
 
         DivNode divNode = DivNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
 
         deque.push(2);
         deque.push(6);
 
         divNode.accept(mjjVisitor);
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -741,26 +734,25 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void MultNodeTest() throws Exception {
-        NumberNode leftOp = mock(NumberNode.class);
-        NumberNode rightOp = mock(NumberNode.class);
-        when(leftOp.value()).thenReturn(6);
-        when(rightOp.value()).thenReturn(2);
+        NumberNode lhs = mock(NumberNode.class);
+        NumberNode rhs = mock(NumberNode.class);
+        when(lhs.value()).thenReturn(6);
+        when(rhs.value()).thenReturn(2);
 
         MultNode multNode = MultNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
-
+        
         deque.push(2);
         deque.push(6);
 
         multNode.accept(mjjVisitor);
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -770,26 +762,25 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void PlusNodeTest() throws Exception {
-        NumberNode leftOp = mock(NumberNode.class);
-        NumberNode rightOp = mock(NumberNode.class);
-        when(leftOp.value()).thenReturn(6);
-        when(rightOp.value()).thenReturn(2);
+        NumberNode lhs = mock(NumberNode.class);
+        NumberNode rhs = mock(NumberNode.class);
+        when(lhs.value()).thenReturn(6);
+        when(rhs.value()).thenReturn(2);
 
         PlusNode plusNode = PlusNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
 
         deque.push(2);
         deque.push(6);
 
         plusNode.accept(mjjVisitor);
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -800,27 +791,26 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void MoinsNodeTest() throws Exception {
-        NumberNode leftOp = mock(NumberNode.class);
-        NumberNode rightOp = mock(NumberNode.class);
-        when(leftOp.value()).thenReturn(6);
-        when(rightOp.value()).thenReturn(2);
+        NumberNode lhs = mock(NumberNode.class);
+        NumberNode rhs = mock(NumberNode.class);
+        when(lhs.value()).thenReturn(6);
+        when(rhs.value()).thenReturn(2);
 
         SubNode subNode = SubNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
-
+        
         deque.push(2);
         deque.push(6);
 
         subNode.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -830,27 +820,26 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void GreaterNodeTest() throws Exception {
-        NumberNode leftOp = mock(NumberNode.class);
-        NumberNode rightOp = mock(NumberNode.class);
-        when(leftOp.value()).thenReturn(6);
-        when(rightOp.value()).thenReturn(2);
+        NumberNode lhs = mock(NumberNode.class);
+        NumberNode rhs = mock(NumberNode.class);
+        when(lhs.value()).thenReturn(6);
+        when(rhs.value()).thenReturn(2);
 
         GreaterNode greaterNode = GreaterNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
 
         deque.push(2);
         deque.push(6);
 
         greaterNode.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -860,27 +849,26 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void AndNodeTest() throws Exception {
-        BooleanNode leftOp = mock(BooleanNode.class);
-        BooleanNode rightOp = mock(BooleanNode.class);
-        when(leftOp.value()).thenReturn(true);
-        when(rightOp.value()).thenReturn(false);
+        BooleanNode lhs = mock(BooleanNode.class);
+        BooleanNode rhs = mock(BooleanNode.class);
+        when(lhs.value()).thenReturn(true);
+        when(rhs.value()).thenReturn(false);
 
         AndNode andNode = AndNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
 
         deque.push(false);
         deque.push(true);
 
         andNode.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);
@@ -890,27 +878,26 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void OrNodeTest() throws Exception {
-        BooleanNode leftOp = mock(BooleanNode.class);
-        BooleanNode rightOp = mock(BooleanNode.class);
-        when(leftOp.value()).thenReturn(true);
-        when(rightOp.value()).thenReturn(false);
+        BooleanNode lhs = mock(BooleanNode.class);
+        BooleanNode rhs = mock(BooleanNode.class);
+        when(lhs.value()).thenReturn(true);
+        when(rhs.value()).thenReturn(false);
 
         OrNode orNode = OrNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
-
+        
         deque.push(false);
         deque.push(true);
 
         orNode.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);
@@ -920,27 +907,26 @@ public class MiniJajaInterpreterVisitorTest {
 
     @Test
     public void EqualsNodeTest() throws Exception {
-        BooleanNode leftOp = mock(BooleanNode.class);
-        BooleanNode rightOp = mock(BooleanNode.class);
-        when(leftOp.value()).thenReturn(true);
-        when(rightOp.value()).thenReturn(false);
+        BooleanNode lhs = mock(BooleanNode.class);
+        BooleanNode rhs = mock(BooleanNode.class);
+        when(lhs.value()).thenReturn(true);
+        when(rhs.value()).thenReturn(false);
 
         EqualsNode equalsNode = EqualsNode.builder()
                 .column(0)
                 .line(1)
-                .leftOperand(leftOp)
-                .rightOperand(rightOp)
+                .leftOperand(lhs)
+                .rightOperand(rhs)
                 .build();
-
-
+        
         deque.push(false);
         deque.push(true);
 
         equalsNode.accept(mjjVisitor);
 
-        InOrder inOrder = inOrder(leftOp, rightOp);
-        inOrder.verify(leftOp).accept(mjjVisitor);
-        inOrder.verify(rightOp).accept(mjjVisitor);
+        InOrder inOrder = inOrder(lhs, rhs);
+        inOrder.verify(lhs).accept(mjjVisitor);
+        inOrder.verify(rhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);
@@ -959,8 +945,7 @@ public class MiniJajaInterpreterVisitorTest {
                 .line(1)
                 .expression(numberNode)
                 .build();
-
-
+        
         minusNode.accept(mjjVisitor);
 
         verify(deque).push(-5);
@@ -976,8 +961,7 @@ public class MiniJajaInterpreterVisitorTest {
                 .line(1)
                 .expression(booleanNode)
                 .build();
-
-
+        
         notNode.accept(mjjVisitor);
 
         verify(deque).push(true);
@@ -1218,15 +1202,13 @@ public class MiniJajaInterpreterVisitorTest {
         deque.push(6);//indice
         deque.push(5);//expression
         deque.push(4);//valeur de i
-
-
+        
         SumNode sumNode = SumNode.builder()
                 .identifier(tab)
                 .expression(numberNode)
                 .line(35)
                 .column(7)
                 .build();
-
 
         sumNode.accept(mjjVisitor);
 

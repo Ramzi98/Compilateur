@@ -30,7 +30,7 @@ public class FolderTreeView  {
             @Override public boolean isLeaf() {
                 if (isFirstTimeLeaf) {
                     isFirstTimeLeaf = false;
-                    File f = (File) getValue();
+                    File f = getValue();
                     isLeaf = f.isFile();
                 }
 

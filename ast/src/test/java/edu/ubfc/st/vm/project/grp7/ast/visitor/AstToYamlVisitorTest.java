@@ -65,7 +65,7 @@ public class AstToYamlVisitorTest {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              YAMLGenerator generator = new YAMLFactory()
                      .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
-                     .createGenerator(out);
+                     .createGenerator(out)
         ){
             AstToYamlVisitor visitor = new AstToYamlVisitor(generator);
             visitor.visit(leaf);

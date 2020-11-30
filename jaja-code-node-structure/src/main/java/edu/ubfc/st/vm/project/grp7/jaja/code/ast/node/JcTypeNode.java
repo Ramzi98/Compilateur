@@ -29,5 +29,5 @@ public interface JcTypeNode extends JajaCodeNode {
 }
 
 enum Type{
-    INT,BOOLEAN,VOID;
+    INT,BOOLEAN,VOID
 }
