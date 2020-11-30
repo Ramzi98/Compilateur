@@ -299,13 +299,17 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(AndNode node) throws Exception {
         evaluateBinOp(node);
-        evals.push((boolean)evals.pop() && (boolean)evals.pop());
+        boolean b1 = (boolean)evals.pop();
+        boolean b2 = (boolean)evals.pop();
+        evals.push(b1 && b2);
     }
 
     @Override
     public void visit(OrNode node) throws Exception {
         evaluateBinOp(node);
-        evals.push((boolean)evals.pop() || (boolean)evals.pop());
+        boolean b1 = (boolean)evals.pop();
+        boolean b2 = (boolean)evals.pop();
+        evals.push(b1 || b2);
     }
 
     @Override
@@ -369,6 +373,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ArrayItemNode node) throws Exception {
         node.expression().accept(this);
+        System.out.println("?"+(int) evals.pop());
         Object e = memory.valT(node.identifier().value(), (int) evals.pop());
         evals.push(e);
     }
