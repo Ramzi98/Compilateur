@@ -826,4 +826,95 @@ public class MiniJajaInterpreterVisitorTest {
         arrayItemNode.accept(mjjVisitor);
         verify(deque).push(true);
     }
+
+    @Test
+    public void returnNodeTest() throws Exception {
+        NumberNode numberNode = mock(NumberNode.class);
+        deque.push(5);
+
+        ReturnNode returnNode = ReturnNode.builder()
+                .line(1)
+                .column(0)
+                .ret(numberNode)
+                .build();
+
+        returnNode.accept(mjjVisitor);
+        verify(memory).classVar(5);
+    }
+
+    @Test
+    public void writeNodeTest() throws Exception {
+        StringNode stringNode = mock(StringNode.class);
+        deque.push("coucou");
+
+        WriteNode writeNode = WriteNode.builder()
+                .line(1)
+                .column(0)
+                .printable(stringNode)
+                .build();
+
+        writeNode.accept(mjjVisitor);
+        verify(controller).write("coucou");
+    }
+
+    @Test
+    public void writeLnNodeTest() throws Exception {
+        StringNode stringNode = mock(StringNode.class);
+        deque.push("coucou");
+
+        WriteLnNode writeLnNode = WriteLnNode.builder()
+                .line(1)
+                .column(0)
+                .printable(stringNode)
+                .build();
+
+        writeLnNode.accept(mjjVisitor);
+        verify(controller).writeLn("coucou");
+    }
+
+    @Test
+    public void StringNodeTest() throws Exception {
+        StringNode stringNode = StringNode.builder()
+                .line(1)
+                .column(0)
+                .value("coucou")
+                .build();
+
+        stringNode.accept(mjjVisitor);
+        verify(deque).push("coucou");
+    }
+
+    
+
+
+    /**
+
+
+     @Override
+     public void visit(IfNode node) throws Exception {
+     node.expression().accept(this);
+     if ((boolean)evals.pop()) {
+     if(node.trueInstrs() != null) {
+     node.trueInstrs().accept(this);
+     }
+     } else if(node.falseInstrs() != null) {
+     node.falseInstrs().accept(this);
+     }
+     }
+
+     @Override
+     public void visit(WhileNode node) throws Exception {
+     node.expression().accept(this);
+     if ((boolean)evals.pop()) {
+     if(node.instrs() != null) {
+     node.instrs().accept(this);
+     }
+     }
+     }
+
+     @Override
+     public void visit(ListExpNode node) throws Exception {
+     // TODO: 29/11/2020
+     throw new RuntimeException("Not implemented yet");
+     }*/
 }
