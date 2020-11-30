@@ -504,6 +504,185 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
+    public void givenRetraitOff__VisitHEADER__thenHEADERS() throws Exception {
+        HeadersNode childHeaders = mock(HeadersNode.class);
+        HeaderNode header = mock(HeaderNode.class);
+        HeadersNode headers = HeadersNode.builder()
+                .headers(childHeaders)
+                .header(header)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        headers.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, header, childHeaders);
+
+        inOrder.verify(header).accept(mjjVisitor);
+        inOrder.verify(childHeaders).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__VisitHEADERS__thenHEADER() throws Exception {
+        HeadersNode childHeaders = mock(HeadersNode.class);
+        HeaderNode header = mock(HeaderNode.class);
+        HeadersNode headers = HeadersNode.builder()
+                .headers(childHeaders)
+                .header(header)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        headers.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, header, childHeaders);
+
+        inOrder.verify(childHeaders).accept(mjjVisitor);
+        inOrder.verify(header).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__nullHeaders() throws Exception {
+        HeaderNode header = mock(HeaderNode.class);
+        HeadersNode headers = HeadersNode.builder()
+                .headers(null)
+                .header(header)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        headers.accept(mjjVisitor);
+
+        verify(header).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__nullHeaders() throws Exception {
+        HeaderNode header = mock(HeaderNode.class);
+        HeadersNode headers = HeadersNode.builder()
+                .headers(null)
+                .header(header)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        headers.accept(mjjVisitor);
+
+        verify(header).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__visitHeader() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("p1");
+        TypeNode type = mock(TypeNode.class);
+        when(type.value()).thenReturn(TypeNode.Type.BOOLEAN);
+        HeaderNode header = HeaderNode.builder()
+                .identifier(ident)
+                .line(78)
+                .column(15)
+                .type(type)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        header.accept(mjjVisitor);
+
+        verify(ident).value();
+        verify(memory).retirerDecl("p1");
+    }
+
+    @Test
+    public void givenNullInstrsChild__visitOnlyInstr() throws Exception {
+        MiniJajaNode instr = mock(MiniJajaNode.class);
+        InstrsNode instrs = InstrsNode.builder()
+                .instruction(instr)
+                .instrs(null)
+                .line(14)
+                .column(5)
+                .build();
+
+        instrs.accept(mjjVisitor);
+
+        verify(instr).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenNonNullInstrsChild__visitINSTR__thenINSTRS() throws Exception {
+        InstrsNode childInstrs = mock(InstrsNode.class);
+        MiniJajaNode instr = mock(MiniJajaNode.class);
+        InstrsNode instrs = InstrsNode.builder()
+                .instruction(instr)
+                .instrs(childInstrs)
+                .line(14)
+                .column(5)
+                .build();
+
+        instrs.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(instr, childInstrs);
+
+        inOrder.verify(instr).accept(mjjVisitor);
+        inOrder.verify(childInstrs).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenIdentNodeAsIdentifier__thenVisitAssign() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("j");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        AssignNode assign = AssignNode.builder()
+                .identifier(ident)
+                .expression(exp)
+                .line(35)
+                .column(7)
+                .build();
+
+        deque.push(true);
+        assign.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, deque, ident, exp);
+        inOrder.verify(exp).accept(mjjVisitor);
+        inOrder.verify(ident).value();
+        inOrder.verify(deque).pop();
+        inOrder.verify(memory).affecterVal("j", true);
+    }
+
+    @Test
+    public void givenArrayItemNodeAsIdentifier__thenVisitAssign() throws Exception {
+        IdentNode ident = mock(IdentNode.class);
+        when(ident.value()).thenReturn("T");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        ArrayItemNode tab = mock(ArrayItemNode.class);
+        when(tab.identifier()).thenReturn(ident);
+        when(tab.expression()).thenReturn(exp);
+        MiniJajaNode val = mock(MiniJajaNode.class);
+        AssignNode assign = AssignNode.builder()
+                .identifier(tab)
+                .expression(val)
+                .line(35)
+                .column(7)
+                .build();
+
+        deque.push(666); // value to assign
+        deque.push(2); // index of the array
+        assign.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, deque, tab, exp, ident, val);
+        inOrder.verify(val).accept(mjjVisitor);
+        inOrder.verify(tab).expression();
+        inOrder.verify(exp).accept(mjjVisitor);
+        inOrder.verify(tab).identifier();
+        inOrder.verify(ident).value();
+        inOrder.verify(deque).pop();
+        inOrder.verify(deque).pop();
+        inOrder.verify(memory).affecterValT("T", 2, 666);
+    }
+
+    @Test
     public void NumberNodeTest() throws Exception {
 
         NumberNode numberNode = NumberNode.builder()
