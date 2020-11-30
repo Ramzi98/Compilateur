@@ -27,4 +27,9 @@ public class JcBooleanNodeImpl  extends ASTNodeBreakpoint implements JcBooleanNo
     public void setNext(JajaCodeNode next) throws IndexOutOfBoundsException {
         return;
     }
+
+    @Override
+    public JajaCodeNode next() throws IndexOutOfBoundsException {
+        return null;
+    }
 }

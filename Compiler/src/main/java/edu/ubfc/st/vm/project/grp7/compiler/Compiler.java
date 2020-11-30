@@ -1,5 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.compiler;
 
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
 public interface Compiler {
@@ -11,4 +12,6 @@ public interface Compiler {
                 return new CompilerImpl(node);
 
     }
+
+    public JajaCodeNode getFirstjajaCodeNode();
 }

@@ -20,9 +20,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     private Stack<HashMap<MiniJajaNode, Integer>> stack;
     private Mode compilemode;
     private int nheader;
+    int nClasse;
 
     //Constructor
     public CompilerVisitor(){
+        nClasse = 1;
         jajaCodeNodes = new ArrayList<>();
         minijajaNodes= new ArrayList<>();
         stack = new Stack<>();
@@ -40,7 +42,10 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ClasseNode node) throws IllFormedNodeException{
         HashMap<MiniJajaNode, Integer> h = new HashMap<>();
-        int n = node_init(node,h);
+        int n = nClasse;
+        h.put(node,n);
+        minijajaNodes.add(h);
+        stack.push(h);
 
         JcInitNode jcInitNode = JcInitNode.builder()
                 .line(jajaCodeNodes.size()+1)
