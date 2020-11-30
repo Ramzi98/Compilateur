@@ -294,7 +294,6 @@ public class MiniJajaInterpreterVisitorTest {
         inOrder.verify(memory).retirerDecl("id");
     }
 
-
     @Test
     public void givenRetraitOff__visitVar() throws Exception {
         IdentNode identNode = mock(IdentNode.class);
@@ -310,7 +309,7 @@ public class MiniJajaInterpreterVisitorTest {
                 .column(26)
                 .build();
 
-        when(deque.pop()).thenReturn(5);
+        deque.push(5);
 
         mjjVisitor.switchOffRetrait();
         var.accept(mjjVisitor);
@@ -322,6 +321,112 @@ public class MiniJajaInterpreterVisitorTest {
         inOrder.verify(deque).pop();
         inOrder.verify(typeMeth).value();
         inOrder.verify(memory).declVar("id", 5, SORTE.INT);
+    }
+
+    @Test
+    public void givenRetraitOn__visitArray() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("T");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeMethNode typeMeth = mock(TypeMethNode.class);
+        when(typeMeth.value()).thenReturn(TypeMethNode.TypeMeth.INT);
+        ArrayNode array = ArrayNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .typeMeth(typeMeth)
+                .line(15)
+                .column(26)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        array.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode);
+
+        inOrder.verify(identNode).value();
+        inOrder.verify(memory).retirerDecl("T");
+    }
+
+    @Test
+    public void givenRetraitOff__visitArray() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("T");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeMethNode typeMeth = mock(TypeMethNode.class);
+        when(typeMeth.value()).thenReturn(TypeMethNode.TypeMeth.BOOLEAN);
+        ArrayNode array = ArrayNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .typeMeth(typeMeth)
+                .line(15)
+                .column(26)
+                .build();
+
+        deque.push(10);
+
+        mjjVisitor.switchOffRetrait();
+        array.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode, exp, typeMeth, deque);
+
+        inOrder.verify(exp).accept(mjjVisitor);
+        inOrder.verify(identNode).value();
+        inOrder.verify(deque).pop();
+        inOrder.verify(typeMeth).value();
+        inOrder.verify(memory).declTab("T", 10, SORTE.BOOLEAN);
+    }
+
+    @Test
+    public void givenRetraitOn__visitCst() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("N");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeNode type = mock(TypeNode.class);
+        when(type.value()).thenReturn(TypeNode.Type.BOOLEAN);
+        CstNode cst = CstNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .type(type)
+                .line(15)
+                .column(2)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        cst.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode);
+
+        inOrder.verify(identNode).value();
+        inOrder.verify(memory).retirerDecl("N");
+    }
+
+    @Test
+    public void givenRetraitOff__visitCst() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("N");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeNode type = mock(TypeNode.class);
+        when(type.value()).thenReturn(TypeNode.Type.INT);
+        CstNode cst = CstNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .type(type)
+                .line(15)
+                .column(2)
+                .build();
+
+        deque.push(100);
+
+        mjjVisitor.switchOffRetrait();
+        cst.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode, exp, type, deque);
+
+        inOrder.verify(exp).accept(mjjVisitor);
+        inOrder.verify(identNode).value();
+        inOrder.verify(deque).pop();
+        inOrder.verify(type).value();
+        inOrder.verify(memory).declCst("N", 100, SORTE.INT);
     }
 
     @Test
