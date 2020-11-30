@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.memory.OBJ;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -35,11 +34,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         return this.modeRetrait;
     }
 
-    public final void switchOnRetrait() {
+    public void switchOnRetrait() {
         this.modeRetrait = true;
     }
 
-    public final void switchOffRetrait() {
+    public void switchOffRetrait() {
         this.modeRetrait = false;
     }
 
@@ -56,6 +55,9 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (node.decls() != null ) {
             node.decls().accept(this);
         }
+
+        switchOffRetrait();
+
         memory.retirerDecl(node.identifier().value());
     }
 
