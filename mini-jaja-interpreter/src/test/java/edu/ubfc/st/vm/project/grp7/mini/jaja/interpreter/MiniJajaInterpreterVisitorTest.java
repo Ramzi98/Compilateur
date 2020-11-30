@@ -3,6 +3,7 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 import edu.ubfc.st.vm.project.grp7.memory.IDEMemory;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 
+import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
@@ -13,6 +14,7 @@ import org.mockito.InOrder;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import static org.hamcrest.Matchers.in;
 import static org.mockito.Mockito.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -121,6 +123,79 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
+    public void givenRetraitOff__VisitVAR__thenVARS() throws Exception {
+        VarsNode childVars = mock(VarsNode.class);
+        MiniJajaNode var = mock(MiniJajaNode.class);
+        VarsNode vars = VarsNode.builder()
+                .vars(childVars)
+                .var(var)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        vars.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, var, childVars);
+
+        inOrder.verify(var).accept(mjjVisitor);
+        inOrder.verify(childVars).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__VisitVARS__thenVAR() throws Exception {
+        VarsNode childVars = mock(VarsNode.class);
+        MiniJajaNode var = mock(MiniJajaNode.class);
+        VarsNode vars = VarsNode.builder()
+                .vars(childVars)
+                .var(var)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        vars.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, var, childVars);
+
+        inOrder.verify(childVars).accept(mjjVisitor);
+        inOrder.verify(var).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__nullVars() throws Exception {
+        MiniJajaNode var = mock(MiniJajaNode.class);
+        VarsNode vars = VarsNode.builder()
+                .vars(null)
+                .var(var)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        vars.accept(mjjVisitor);
+
+        verify(var).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOff__nullVars() throws Exception {
+        MiniJajaNode var = mock(MiniJajaNode.class);
+        VarsNode vars = VarsNode.builder()
+                .vars(null)
+                .var(var)
+                .line(2)
+                .column(8)
+                .build();
+
+        mjjVisitor.switchOffRetrait();
+        vars.accept(mjjVisitor);
+
+        verify(var).accept(mjjVisitor);
+    }
+
+
+    @Test
     public void givenRetraitOff__VisitDECL__thenDECLS() throws Exception {
         DeclsNode childDecls = mock(DeclsNode.class);
         MiniJajaNode decl = mock(MiniJajaNode.class);
@@ -141,7 +216,7 @@ public class MiniJajaInterpreterVisitorTest {
     }
 
     @Test
-    public void givenRetraitOn__VisitDECL__thenDECLS() throws Exception {
+    public void givenRetraitOn__VisitDECLS__thenDECL() throws Exception {
         DeclsNode childDecls = mock(DeclsNode.class);
         MiniJajaNode decl = mock(MiniJajaNode.class);
         DeclsNode decls = DeclsNode.builder()
@@ -190,6 +265,60 @@ public class MiniJajaInterpreterVisitorTest {
         decls.accept(mjjVisitor);
 
         verify(decl).accept(mjjVisitor);
+    }
+
+    @Test
+    public void givenRetraitOn__visitVar() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("id");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeMethNode typeMeth = mock(TypeMethNode.class);
+        when(typeMeth.value()).thenReturn(TypeMethNode.TypeMeth.INT);
+        VarNode var = VarNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .typeMeth(typeMeth)
+                .line(15)
+                .column(26)
+                .build();
+
+        mjjVisitor.switchOnRetrait();
+        var.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode);
+
+        inOrder.verify(identNode).value();
+        inOrder.verify(memory).retirerDecl("id");
+    }
+
+
+    @Test
+    public void givenRetraitOff__visitVar() throws Exception {
+        IdentNode identNode = mock(IdentNode.class);
+        when(identNode.value()).thenReturn("id");
+        MiniJajaNode exp = mock(MiniJajaNode.class);
+        TypeMethNode typeMeth = mock(TypeMethNode.class);
+        when(typeMeth.value()).thenReturn(TypeMethNode.TypeMeth.INT);
+        VarNode var = VarNode.builder()
+                .identifier(identNode)
+                .expression(exp)
+                .typeMeth(typeMeth)
+                .line(15)
+                .column(26)
+                .build();
+
+        when(deque.pop()).thenReturn(5);
+
+        mjjVisitor.switchOffRetrait();
+        var.accept(mjjVisitor);
+
+        InOrder inOrder = inOrder(memory, identNode, exp, typeMeth, deque);
+
+        inOrder.verify(exp).accept(mjjVisitor);
+        inOrder.verify(identNode).value();
+        inOrder.verify(deque).pop();
+        inOrder.verify(typeMeth).value();
+        inOrder.verify(memory).declVar("id", 5, SORTE.INT);
     }
 
     @Test
