@@ -3,6 +3,8 @@ package edu.ubfc.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 
+import java.util.ArrayList;
+
 public interface Compiler {
 
     void compile() throws Exception;
@@ -13,5 +15,6 @@ public interface Compiler {
 
     }
 
-    public JajaCodeNode getFirstjajaCodeNode();
+    public JajaCodeNode firstJajaCodeNode();
+    public ArrayList<JajaCodeNode> jajaCodeNodes();
 }

@@ -11,14 +11,13 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 public class TestConstructor {
-
     private  TestConstructor(){}
 
     private  MiniJajaParser parser;
     private final String resourceTest = "src/resourceTest/";
 
-    public TestConstructor(String folder,String nameFile) throws IOException {
-        CharStream codePointCharStream = CharStreams.fromPath(Paths.get(resourceTest+folder+"/"+nameFile+".txt"));
+    public TestConstructor(String folder, String nameFile) throws IOException {
+        CharStream codePointCharStream = CharStreams.fromPath(Paths.get(resourceTest + folder + "/" + nameFile + ".txt"));
         MiniJajaLexer lexer = new MiniJajaLexer(codePointCharStream);
         parser = new MiniJajaParser(new CommonTokenStream(lexer));
     }

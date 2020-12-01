@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 public class NodeClasseCompileTest {
     public CompilerVisitor compiler;
 
+
     @Before
     public void start() {
 
@@ -154,9 +155,13 @@ public class NodeClasseCompileTest {
         Compiler compiler1 = Compiler.CompilerBuilder(classeNode);
 
         compiler1.compile();
-        JajaCodeNode jajaCodeNode = compiler1.getFirstjajaCodeNode();
+        JajaCodeNode jajaCodeNode = compiler1.firstJajaCodeNode();
         System.out.println(jajaCodeNode);
         System.out.println(jajaCodeNode.next());
+
+
+        Compiler com = Compiler.CompilerBuilder(classeNode);
+        com.compile();
 
 
     }

@@ -9,13 +9,12 @@ public class FolderTreeView  {
     public TreeItem<File> tree;
     public FolderTreeView(File f)
     {
-        this.tree  = createNode(f);
+        this.tree = createNode(f);
     }
 
     private TreeItem<File> createNode(final File f) {
         return new TreeItem<File>(f) {
             private boolean isLeaf;
-
             private boolean isFirstTimeChildren = true;
             private boolean isFirstTimeLeaf = true;
 
@@ -52,7 +51,6 @@ public class FolderTreeView  {
                         return children;
                     }
                 }
-
                 return FXCollections.emptyObservableList();
             }
         };
