@@ -76,6 +76,7 @@
                 </executions>
             </plugin>
 
+
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
@@ -89,10 +90,17 @@
                             <listener>true</listener>
                             <sourceDirectory>${project.basedir}/src/resources</sourceDirectory>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                            <arguments>
+                                <argument>-package</argument>
+                                <argument>edu.ubfc.st.vm.project.grp7.mini.jaja.parser</argument>
+                                <argument>-o</argument>
+                                <argument>${project.build.directory}/generated-sources/edu/ubfc/st/vm/project/grp7/mini/jaja/parser</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 </project>

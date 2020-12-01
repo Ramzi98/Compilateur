@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.mini.jaja.parser;
+
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeaderNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeadersNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;

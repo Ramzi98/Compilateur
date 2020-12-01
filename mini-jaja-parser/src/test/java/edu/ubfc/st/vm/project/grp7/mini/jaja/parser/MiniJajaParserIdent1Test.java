@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.mini.jaja.parser;
+
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ArrayItemNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;

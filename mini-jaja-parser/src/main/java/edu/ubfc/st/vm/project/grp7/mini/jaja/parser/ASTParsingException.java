@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.mini.jaja.parser;
+
 public class ASTParsingException extends RuntimeException {
     private final int line;
     private final int column;
