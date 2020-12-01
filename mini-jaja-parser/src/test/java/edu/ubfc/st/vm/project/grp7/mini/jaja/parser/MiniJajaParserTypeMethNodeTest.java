@@ -1,8 +1,6 @@
+package edu.ubfc.st.vm.project.grp7.mini.jaja.parser;
+
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;

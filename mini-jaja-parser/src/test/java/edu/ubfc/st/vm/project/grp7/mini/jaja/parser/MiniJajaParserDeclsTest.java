@@ -1,3 +1,5 @@
+package edu.ubfc.st.vm.project.grp7.mini.jaja.parser;
+
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Test;
 
