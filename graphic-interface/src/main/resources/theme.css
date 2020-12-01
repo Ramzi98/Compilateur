@@ -163,11 +163,16 @@
     -fx-control-inner-background:derive(#1d1d1d,30%);
 }
 
-.paragraph-text{
-     -fx-fill: white;
+.lineno{
+ -fx-background-color: black;
+ -fx-pref-width: 2em;
 }
 
-.text-flow {
+.paragraph-text{
+   -fx-fill: white;
+}
+
+.text-flow {    
   -fx-font-family: Consolas;
   -fx-highlight-fill: #ffffff;
   -fx-highlight-text-fill: white;
