@@ -1,5 +1,13 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,30 +18,45 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-public class Controller implements Initializable {
-
+public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public TreeView folderTreeView;
     @FXML
     public TextArea textAreaCode;
     @FXML
-    public TextFlow areaRun;
+    public TextArea areaRun;
     @FXML
-    public TextFlow areaError;
+    public TextArea areaError;
 
     private String currentFile;
+
+    private CharStream codePointCharStream;
+    private MiniJajaLexer lexer;
+    private MiniJajaParser parser;
+    private ParseTreeWalker walker =new ParseTreeWalker();
+    private MiniJajaListenerImpl listener;
+    private Executor backgroundThread = Executors.newSingleThreadExecutor();
+    private Executor backgroundThread2 = Executors.newSingleThreadExecutor();
+    private Executor backgroundThread3 = Executors.newSingleThreadExecutor();
+    private Memory memory = Memory.getInstance();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        this.currentFile="";
+        this.currentFile = "";
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
                     (v, oldValue, newValue) -> {
                     saveFile(null);
@@ -41,13 +64,12 @@ public class Controller implements Initializable {
                     if (f2 != null) {
                         try{
                             this.currentFile = f2.getAbsolutePath();
-                            InputStream flux=new FileInputStream(f2.getAbsoluteFile());
-                            InputStreamReader lecture=new InputStreamReader(flux);
-                            BufferedReader buff=new BufferedReader(lecture);
+                            InputStream flux = new FileInputStream(f2.getAbsoluteFile());
+                            InputStreamReader lecture = new InputStreamReader(flux);
+                            BufferedReader buff = new BufferedReader(lecture);
                             String ligne;
                             textAreaCode.clear();
-                            while ((ligne=buff.readLine())!=null){
-
+                            while ((ligne = buff.readLine()) != null){
                                 textAreaCode.appendText(ligne);
                                 textAreaCode.appendText( System.getProperty("line.separator"));
                             }
@@ -58,36 +80,33 @@ public class Controller implements Initializable {
                         }
                     }
                 });
-
     }
 
     @FXML
     public void openFile(ActionEvent actionEvent) {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-        currentFile= selectedFile.getAbsolutePath();
+        currentFile = selectedFile.getAbsolutePath();
         if (selectedFile != null) {
-            if (this.currentFile!= selectedFile.getAbsolutePath()){
+            if (this.currentFile != selectedFile.getAbsolutePath() && this.currentFile != "" ) {
                 saveFile(actionEvent);
-                textAreaCode.clear();
-                try{
-                    InputStream flux=new FileInputStream(selectedFile.getAbsoluteFile());
-                    InputStreamReader lecture=new InputStreamReader(flux);
-                    BufferedReader buff=new BufferedReader(lecture);
-                    String ligne;
-                    while ((ligne=buff.readLine())!=null){
-
-                        textAreaCode.appendText(ligne);
-                        textAreaCode.appendText( System.getProperty("line.separator"));
-                    }
-                    buff.close();
+            }
+            textAreaCode.clear();
+            try{
+                InputStream flux = new FileInputStream(selectedFile.getAbsoluteFile());
+                InputStreamReader lecture = new InputStreamReader(flux);
+                BufferedReader buff = new BufferedReader(lecture);
+                String ligne;
+                while ((ligne = buff.readLine()) != null){
+                    textAreaCode.appendText(ligne);
+                    textAreaCode.appendText(System.getProperty("line.separator"));
                 }
-                catch (Exception e){
-                    System.out.println(e.toString());
-                }
+                buff.close();
+            }
+            catch (Exception e) {
+                System.out.println(e.toString());
             }
 
         }
@@ -98,7 +117,7 @@ public class Controller implements Initializable {
     public void openFolder(ActionEvent actionEvent) {
         DirectoryChooser folderChooser = new DirectoryChooser();
         folderChooser.setTitle("choose your directory");
-        File dir= folderChooser.showDialog(new Stage());
+        File dir = folderChooser.showDialog(new Stage());
         if (dir != null)
         {
             edu.ubfc.st.vm.project.grp7.graphic.FolderTreeView treeView = new edu.ubfc.st.vm.project.grp7.graphic.FolderTreeView(dir);
@@ -107,9 +126,6 @@ public class Controller implements Initializable {
         }
 
     }
-
-
-
 
     @FXML
     public void saveFileAs(ActionEvent actionEvent) {
@@ -125,10 +141,9 @@ public class Controller implements Initializable {
 
     @FXML
     public void saveFile(ActionEvent actionEvent) {
-
-        if (textAreaCode.getText().trim() != "" && textAreaCode.getText().length()!=0)
+        if (textAreaCode.getText().trim() != "" && textAreaCode.getText().length() != 0)
         {
-            if (this.currentFile==""){
+            if (this.currentFile == ""){
                 saveFileAs(actionEvent);
             }
             File file = new File(this.currentFile);
@@ -142,8 +157,7 @@ public class Controller implements Initializable {
 
     private void saveTextToFile(String content, File file) {
         try {
-            PrintWriter writer;
-            writer = new PrintWriter(file);
+            PrintWriter writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
         } catch (IOException ex) {
@@ -151,22 +165,53 @@ public class Controller implements Initializable {
         }
     }
 
-
     @FXML
     public void newFile(ActionEvent actionEvent) {
-        if (textAreaCode.getText().trim()==""){
+        if (textAreaCode.getText().trim() == ""){
             saveFile(actionEvent);
         }
         textAreaCode.clear();
     }
 
     @FXML
-    public void compile(ActionEvent actionEvent) {
+    public void compile(ActionEvent actionEvent) throws IOException {
 
     }
 
     @FXML
     public void run(ActionEvent actionEvent) {
+        saveFile(actionEvent);
+            try {
+                codePointCharStream = CharStreams.fromPath(Paths.get(currentFile));
+                lexer = new MiniJajaLexer(codePointCharStream);
+                parser = new MiniJajaParser(new CommonTokenStream(lexer));
+                listener = new MiniJajaListenerImpl();
+                walker.walk(listener, parser.classe());
+                ClasseNode classeNode = (ClasseNode)listener.getRoot();
+                areaRun.appendText("new execution ... \n\n");
+                MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
+                areaRun.appendText("\n\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                areaError.appendText(e.getStackTrace().toString());
+                e.printStackTrace();
+            }
     }
 
+    @Override
+    public void mjjWrite(String str) {
+        this.backgroundThread2.execute(() -> {
+            areaRun.appendText(str);
+        });
+    }
+
+    @Override
+    public void mjjWriteLn(String str) {
+        this.backgroundThread3.execute(() -> {
+
+            areaRun.appendText(str);
+            areaRun.appendText("\n");
+        });
+    }
 }
