@@ -1,5 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
+
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
@@ -20,6 +21,8 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -31,10 +34,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Controller implements Initializable, MJJInterpreterListener {
+
+    @FXML
+    CodeArea codeTextArea;
+
     @FXML
     public TreeView folderTreeView;
-    @FXML
-    public TextArea textAreaCode;
+
     @FXML
     public TextArea areaRun;
     @FXML
@@ -42,6 +48,8 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @FXML
     public Tab areaErrorTab;
+    @FXML
+    public Tab areaRunTab;
 
     private String currentFile;
 
@@ -55,7 +63,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        codeTextArea.setParagraphGraphicFactory(LineNumberFactory.get(codeTextArea));
         this.currentFile = "";
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
                     (v, oldValue, newValue) -> {
@@ -68,10 +76,10 @@ public class Controller implements Initializable, MJJInterpreterListener {
                             InputStreamReader lecture = new InputStreamReader(flux);
                             BufferedReader buff = new BufferedReader(lecture);
                             String ligne;
-                            textAreaCode.clear();
+                            codeTextArea.clear();
                             while ((ligne = buff.readLine()) != null){
-                                textAreaCode.appendText(ligne);
-                                textAreaCode.appendText( System.getProperty("line.separator"));
+                                codeTextArea.appendText(ligne);
+                                codeTextArea.appendText( System.getProperty("line.separator"));
                             }
                             buff.close();
                         }
@@ -93,15 +101,15 @@ public class Controller implements Initializable, MJJInterpreterListener {
             if (this.currentFile != selectedFile.getAbsolutePath() && this.currentFile != "" ) {
                 saveFile(actionEvent);
             }
-            textAreaCode.clear();
+            codeTextArea.clear();
             try{
                 InputStream flux = new FileInputStream(selectedFile.getAbsoluteFile());
                 InputStreamReader lecture = new InputStreamReader(flux);
                 BufferedReader buff = new BufferedReader(lecture);
                 String ligne;
                 while ((ligne = buff.readLine()) != null){
-                    textAreaCode.appendText(ligne);
-                    textAreaCode.appendText(System.getProperty("line.separator"));
+                    codeTextArea.appendText(ligne);
+                    codeTextArea.appendText(System.getProperty("line.separator"));
                 }
                 buff.close();
             }
@@ -135,13 +143,13 @@ public class Controller implements Initializable, MJJInterpreterListener {
         File file = fileChooser.showSaveDialog(new Stage());
         currentFile = file.getAbsolutePath();
         if (file != null) {
-            saveTextToFile(textAreaCode.getText(), file);
+            saveTextToFile(codeTextArea.getText(), file);
         }
     }
 
     @FXML
     public void saveFile(ActionEvent actionEvent) {
-        if (textAreaCode.getText().trim() != "" && textAreaCode.getText().length() != 0)
+        if (codeTextArea.getText().trim() != "" && codeTextArea.getText().length() != 0)
         {
             if (this.currentFile == ""){
                 saveFileAs(actionEvent);
@@ -150,7 +158,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
             file.delete();
             File newFile = new File(this.currentFile);
             if (newFile != null) {
-                saveTextToFile(textAreaCode.getText(), newFile);
+                saveTextToFile(codeTextArea.getText(), newFile);
             }
         }
     }
@@ -167,10 +175,10 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @FXML
     public void newFile(ActionEvent actionEvent) {
-        if (textAreaCode.getText().trim() == ""){
+        if (codeTextArea.getText().trim() == ""){
             saveFile(actionEvent);
         }
-        textAreaCode.clear();
+        codeTextArea.clear();
     }
 
     @FXML
@@ -192,8 +200,10 @@ public class Controller implements Initializable, MJJInterpreterListener {
                     areaRun.appendText("new execution ... \n\n");
                     MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
                     areaRun.appendText("\n\n");
+                    areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
                 }catch (ASTParsingException e){
                     System.out.println(e.getMessage());
+                    areaError.clear();
                     areaError.appendText(e.getMessage());
                     areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
                 }
