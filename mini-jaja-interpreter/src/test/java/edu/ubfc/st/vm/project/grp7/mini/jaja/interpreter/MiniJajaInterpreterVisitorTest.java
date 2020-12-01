@@ -723,8 +723,9 @@ public class MiniJajaInterpreterVisitorTest {
 
         divNode.accept(mjjVisitor);
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
+
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -751,8 +752,8 @@ public class MiniJajaInterpreterVisitorTest {
 
         multNode.accept(mjjVisitor);
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -779,8 +780,8 @@ public class MiniJajaInterpreterVisitorTest {
 
         plusNode.accept(mjjVisitor);
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -809,8 +810,8 @@ public class MiniJajaInterpreterVisitorTest {
         subNode.accept(mjjVisitor);
 
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -838,8 +839,8 @@ public class MiniJajaInterpreterVisitorTest {
         greaterNode.accept(mjjVisitor);
 
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(2);
@@ -867,8 +868,8 @@ public class MiniJajaInterpreterVisitorTest {
         andNode.accept(mjjVisitor);
 
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);
@@ -896,8 +897,8 @@ public class MiniJajaInterpreterVisitorTest {
         orNode.accept(mjjVisitor);
 
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);
@@ -925,8 +926,8 @@ public class MiniJajaInterpreterVisitorTest {
         equalsNode.accept(mjjVisitor);
 
         InOrder inOrder = inOrder(lhs, rhs);
-        inOrder.verify(lhs).accept(mjjVisitor);
         inOrder.verify(rhs).accept(mjjVisitor);
+        inOrder.verify(lhs).accept(mjjVisitor);
 
         InOrder inOrder2 = inOrder(deque);
         inOrder2.verify(deque).push(false);

@@ -53,12 +53,11 @@
                                                         </AnchorPane>
                                                     </content>
                                                 </Tab>
-                                                <Tab text="Error :">
+                                                <Tab fx:id="areaErrorTab" text="Error :">
                                                     <content>
                                                         <AnchorPane id="areaError" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                             <children>
-                                                                <TextArea fx:id="areaError" prefHeight="154.0" prefWidth="453.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                                <TextArea prefHeight="149.33333333333334" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                <TextArea fx:id="areaError" prefHeight="149.33333333333334" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                             </children>
                                                         </AnchorPane>
                                                     </content>

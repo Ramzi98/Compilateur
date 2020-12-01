@@ -5,16 +5,14 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.text.TextFlow;
+import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -42,6 +40,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public TextArea areaError;
 
+    @FXML
+    public Tab areaErrorTab;
+
     private String currentFile;
 
     private CharStream codePointCharStream;
@@ -49,13 +50,12 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private MiniJajaParser parser;
     private ParseTreeWalker walker =new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
-    private Executor backgroundThread = Executors.newSingleThreadExecutor();
-    private Executor backgroundThread2 = Executors.newSingleThreadExecutor();
-    private Executor backgroundThread3 = Executors.newSingleThreadExecutor();
+    private Executor backgroundThread1 = Executors.newSingleThreadExecutor();
     private Memory memory = Memory.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         this.currentFile = "";
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
                     (v, oldValue, newValue) -> {
@@ -186,32 +186,37 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 lexer = new MiniJajaLexer(codePointCharStream);
                 parser = new MiniJajaParser(new CommonTokenStream(lexer));
                 listener = new MiniJajaListenerImpl();
-                walker.walk(listener, parser.classe());
-                ClasseNode classeNode = (ClasseNode)listener.getRoot();
-                areaRun.appendText("new execution ... \n\n");
-                MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-                areaRun.appendText("\n\n");
+                try {
+                    walker.walk(listener, parser.classe());
+                    ClasseNode classeNode = (ClasseNode)listener.getRoot();
+                    areaRun.appendText("new execution ... \n\n");
+                    MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
+                    areaRun.appendText("\n\n");
+                }catch (ASTParsingException e){
+                    System.out.println(e.getMessage());
+                    areaError.appendText(e.getMessage());
+                    areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
-                areaError.appendText(e.getStackTrace().toString());
                 e.printStackTrace();
             }
     }
 
     @Override
     public void mjjWrite(String str) {
-        this.backgroundThread2.execute(() -> {
+        this.backgroundThread1.execute(() -> {
             areaRun.appendText(str);
         });
     }
 
     @Override
     public void mjjWriteLn(String str) {
-        this.backgroundThread3.execute(() -> {
-
+        this.backgroundThread1.execute(() -> {
             areaRun.appendText(str);
             areaRun.appendText("\n");
         });
     }
+
 }

@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
+import org.antlr.v4.runtime.tree.ErrorNode;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -41,6 +42,10 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void switchOffRetrait() {
         this.modeRetrait = false;
     }
+
+
+
+
 
     @Override
     public void visit(ClasseNode node) throws Exception {
@@ -252,6 +257,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         controller.writeLn(evals.pop().toString());
     }
 
+
     @Override
     public void visit(StringNode node) throws Exception {
         evals.push(node.value());
@@ -298,8 +304,8 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     }
 
     private void evaluateBinOp(MiniJajaOperatorNode node) throws Exception {
-        node.leftOperand().accept(this);
         node.rightOperand().accept(this);
+        node.leftOperand().accept(this);
     }
 
     @Override
