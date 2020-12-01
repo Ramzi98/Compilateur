@@ -33,8 +33,13 @@ public class CompilerImpl implements Compiler {
     }
 
     @Override
-    public JajaCodeNode getFirstjajaCodeNode() {
+    public JajaCodeNode firstJajaCodeNode() {
         return visitor.getJajaCodeNodes().get(0);
+    }
+
+    @Override
+    public ArrayList<JajaCodeNode> jajaCodeNodes() {
+        return visitor.getJajaCodeNodes();
     }
 
 
