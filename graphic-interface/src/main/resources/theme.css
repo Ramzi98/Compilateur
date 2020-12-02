@@ -247,3 +247,8 @@
 -fx-background-insets: 0, 1 1 0 1;
 -fx-background-radius: 5 5 0 0, 4 4 0 0;
 }
+
+.caret {
+    -fx-fill : white;
+     -fx-stroke : white;
+}

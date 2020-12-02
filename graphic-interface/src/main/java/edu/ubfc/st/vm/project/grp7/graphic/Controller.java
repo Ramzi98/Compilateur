@@ -58,7 +58,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private MiniJajaParser parser;
     private ParseTreeWalker walker =new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
-    private Executor backgroundThread1 = Executors.newSingleThreadExecutor();
+    private Executor threadWrite = Executors.newSingleThreadExecutor();
     private Memory memory = Memory.getInstance();
 
     @Override
@@ -197,9 +197,13 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 try {
                     walker.walk(listener, parser.classe());
                     ClasseNode classeNode = (ClasseNode)listener.getRoot();
-                    areaRun.appendText("new execution ... \n\n");
+                    this.threadWrite.execute(() -> {
+                                areaRun.appendText("new execution ... \n\n");
+                            });
                     MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-                    areaRun.appendText("\n\n");
+                    this.threadWrite.execute(() -> {
+                        areaRun.appendText("\nEnd of execution\n");
+                    });
                     areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
                 }catch (ASTParsingException e){
                     System.out.println(e.getMessage());
@@ -216,14 +220,14 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @Override
     public void mjjWrite(String str) {
-        this.backgroundThread1.execute(() -> {
+        this.threadWrite.execute(() -> {
             areaRun.appendText(str);
         });
     }
 
     @Override
     public void mjjWriteLn(String str) {
-        this.backgroundThread1.execute(() -> {
+        this.threadWrite.execute(() -> {
             areaRun.appendText(str);
             areaRun.appendText("\n");
         });
