@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,17 +14,14 @@ public class JcPushNodeTest {
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
-                .valeur(value)
+                .valeur(2)
                 .build();
 
     }
 
     private JcPushNode jcPushNode;
     private JcIfNode jajaCodeNode;
-    private JcNumberNode value = JcNumberNode.builder().value(2).build();
-
-
-
+    
     @Test
     public void check__JcPushNode__Line() {
         assertThat(jcPushNode.line(), is(30));
@@ -43,11 +39,8 @@ public class JcPushNodeTest {
 
     @Test
     public void check__JcPushNode__valeur() {
-
-        assertThat(jcPushNode.valeur(), is(value));
+        assertThat(jcPushNode.valeur(), is(2));
     }
-
-
 
     @Test
     public void check__JcPushNode__ChildrenMethod__FirstChild() {
