@@ -33,9 +33,8 @@ public class IDEMemory implements Memory {
     }
 
     @Override
-    public Memory depiler() {
-        stack.depiler();
-        return this;
+    public Quadruplet depiler() {
+        return stack.depiler();
     }
 
     @Override

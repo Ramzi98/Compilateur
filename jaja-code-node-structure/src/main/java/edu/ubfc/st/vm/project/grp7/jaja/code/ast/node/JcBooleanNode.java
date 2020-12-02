@@ -24,7 +24,7 @@ public interface JcBooleanNode extends JajaCodeNode{
         }
 
         public JcBooleanNode build() {
-            return new JcBooleanNodeImpl(this.line, this.column, this.breakpoint,this.value);
+            return new JcBooleanImpl(this.line, this.column, this.breakpoint,this.value);
         }
     }
 }

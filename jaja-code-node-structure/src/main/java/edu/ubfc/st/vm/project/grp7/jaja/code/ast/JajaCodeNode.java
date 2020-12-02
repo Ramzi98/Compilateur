@@ -12,6 +12,8 @@ public interface JajaCodeNode extends ASTNode {
 
     void setNext(JajaCodeNode next) throws IndexOutOfBoundsException;
 
+    JajaCodeNode next() throws IndexOutOfBoundsException;
+
     abstract class NodeBuilder<B extends NodeBuilder> extends ASTNode.NodeBuilder<B> {
         // No breakpoint as default behaviour
         protected Breakpoint breakpoint = Breakpoint.NONE;
@@ -27,7 +29,7 @@ public interface JajaCodeNode extends ASTNode {
         }
     }
 
-    public enum Type {
+    enum Type {
         INT, BOOLEAN, VOID
     }
 }

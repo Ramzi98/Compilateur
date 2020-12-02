@@ -64,8 +64,7 @@ public class NodeArrayCompileTest {
     }
 
     @Test
-    public void NodeArrayCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
-
+    public void NodeArrayCompilerVisitor() throws IOException, IllFormedNodeException {
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)
                 .column(0)
@@ -92,17 +91,5 @@ public class NodeArrayCompileTest {
 
         assertThat(compiler.getJajaCodeNodes().size(), is(3));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
-        /*
-        for(int i=0;i<compiler.getMinijajaNodes().size();i++)
-        {
-            System.out.println(compiler.getMinijajaNodes().get(i).toString());
-        }
-        for (int i = 0; i <compiler.getJajaCodeNodes().size() ; i++) {
-            System.out.println(compiler.getJajaCodeNodes().get(i).toString());
-        }
-         */
-
-
-
     }
 }

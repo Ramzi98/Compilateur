@@ -23,11 +23,11 @@ public interface JcTypeNode extends JajaCodeNode {
         }
 
         public JcTypeNode build() {
-            return new JcTypeNodeImpl(this.line, this.column, this.breakpoint,this.type);
+            return new JcTypeImpl(this.line, this.column, this.breakpoint,this.type);
         }
     }
-}
 
-enum Type{
-    INT,BOOLEAN,VOID;
+    enum Type{
+        INT,BOOLEAN,VOID
+    }
 }

@@ -144,24 +144,47 @@
 
 .text-area {
   -fx-font-family: Consolas;
-  -fx-highlight-fill: #ffffff;
-  -fx-highlight-text-fill: #000000;
-  -fx-text-fill: #ffffff;
+  -fx-highlight-fill: white;
+  -fx-highlight-text-fill: white;
+  -fx-text-fill: white;
   -fx-font-size: 12pt;
   -fx-background-color: derive(#1d1d1d,10%);
   -fx-control-inner-background:derive(#1d1d1d,30%);
 }
 
-.text-flow {
+.code-area {
+    -fx-text-color : white;
+    -fx-font-family: Consolas;
+    -fx-highlight-fill: white;
+    -fx-highlight-text-fill: white;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+    -fx-background-color: derive(#1d1d1d,20%);
+    -fx-control-inner-background:derive(#1d1d1d,30%);
+}
+
+.lineno{
+ -fx-background-color: black;
+ -fx-pref-width: 2em;
+}
+
+.paragraph-text{
+   -fx-fill: white;
+}
+
+.text-flow {    
   -fx-font-family: Consolas;
   -fx-highlight-fill: #ffffff;
-  -fx-highlight-text-fill: #000000;
+  -fx-highlight-text-fill: white;
   -fx-text-fill: #ffffff;
   -fx-font-size: 12pt;
   -fx-background-color: derive(#1d1d1d,10%);
   -fx-control-inner-background:derive(#1d1d1d,30%);
 }
 
+#codeTextArea .text {
+     -fx-fill: white;
+}
 .tree-view, .tree-cell {
     -fx-padding : 0.5em 0.5em 0.5em 0.5em;
     -fx-background-color: derive(#1d1d1d,50%) ;
@@ -223,4 +246,9 @@
 -fx-background-color: derive(#1d1d1d,50%);
 -fx-background-insets: 0, 1 1 0 1;
 -fx-background-radius: 5 5 0 0, 4 4 0 0;
+}
+
+.caret {
+    -fx-fill : white;
+     -fx-stroke : white;
 }

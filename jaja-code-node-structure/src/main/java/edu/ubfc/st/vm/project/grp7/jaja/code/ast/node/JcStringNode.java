@@ -23,7 +23,7 @@ public interface JcStringNode extends JajaCodeNode{
         }
 
         public JcStringNode build() {
-            return new JcStringNodeImpl(this.line, this.column, this.breakpoint,this.value);
+            return new JcStringImpl(this.line, this.column, this.breakpoint,this.value);
         }
     }
 }

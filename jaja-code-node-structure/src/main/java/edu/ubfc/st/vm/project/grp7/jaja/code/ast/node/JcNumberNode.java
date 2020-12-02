@@ -23,7 +23,7 @@ public interface JcNumberNode extends JajaCodeNode{
         }
 
         public JcNumberNode build() {
-            return new JcNumberNodeImpl(this.line, this.column, this.breakpoint,this.value);
+            return new JcNumberImpl(this.line, this.column, this.breakpoint,this.value);
         }
     }
 }

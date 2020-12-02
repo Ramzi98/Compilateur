@@ -13,21 +13,55 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     private final Memory memory;
     private boolean modeRetrait;
     private final Deque<Object> evals;
+    private final MJJInterpreterController controller;
 
-    public MiniJajaInterpreterVisitor(Memory memory) {
+    public MiniJajaInterpreterVisitor(Memory memory, MJJInterpreterController controller) {
         this.memory = memory;
         this.modeRetrait = false;
         this.evals = new ArrayDeque<>();
+        this.controller = controller;
     }
+
+    // to mock evals for tests purposes
+    public MiniJajaInterpreterVisitor(Memory memory, MJJInterpreterController controller, Deque<Object> deque) {
+        this.memory = memory;
+        this.modeRetrait = false;
+        this.evals = deque;
+        this.controller = controller;
+    }
+
+    public final boolean modeRetrait() {
+        return this.modeRetrait;
+    }
+
+    public void switchOnRetrait() {
+        this.modeRetrait = true;
+    }
+
+    public void switchOffRetrait() {
+        this.modeRetrait = false;
+    }
+
+
+
+
 
     @Override
     public void visit(ClasseNode node) throws Exception {
         memory.declVar(node.identifier().value(), null, null);
-        node.decls().accept(this);
+        if (node.decls() != null ) {
+            node.decls().accept(this);
+        }
         node.methmain().accept(this);
 
-        this.modeRetrait = true;
-        node.decls().accept(this);
+        switchOnRetrait();
+        
+        if (node.decls() != null ) {
+            node.decls().accept(this);
+        }
+
+        switchOffRetrait();
+
         memory.retirerDecl(node.identifier().value());
     }
 
@@ -107,6 +141,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(MethodNode node) throws Exception {
+        // TODO: 29/11/2020
     }
 
     @Override
@@ -199,7 +234,8 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AppelINode node) throws Exception {
-
+        // TODO: 29/11/2020
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
@@ -210,13 +246,16 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(WriteNode node) throws Exception {
-
+        node.printable().accept(this);
+        controller.write(evals.pop().toString());
     }
 
     @Override
     public void visit(WriteLnNode node) throws Exception {
-
+        node.printable().accept(this);
+        controller.writeLn(evals.pop().toString());
     }
+
 
     @Override
     public void visit(StringNode node) throws Exception {
@@ -237,17 +276,24 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(WhileNode node) throws Exception {
+
         node.expression().accept(this);
-        if ((boolean)evals.pop()) {
+        boolean in = (boolean)evals.pop();
+        while (in){
+
             if(node.instrs() != null) {
                 node.instrs().accept(this);
             }
+
+            node.expression().accept(this);
+            in = (boolean)evals.pop();
         }
     }
 
     @Override
     public void visit(ListExpNode node) throws Exception {
-
+        // TODO: 29/11/2020
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
@@ -257,20 +303,24 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     }
 
     private void evaluateBinOp(MiniJajaOperatorNode node) throws Exception {
-        node.leftOperand().accept(this);
         node.rightOperand().accept(this);
+        node.leftOperand().accept(this);
     }
 
     @Override
     public void visit(AndNode node) throws Exception {
         evaluateBinOp(node);
-        evals.push((boolean)evals.pop() && (boolean)evals.pop());
+        boolean b1 = (boolean)evals.pop();
+        boolean b2 = (boolean)evals.pop();
+        evals.push(b1 && b2);
     }
 
     @Override
     public void visit(OrNode node) throws Exception {
         evaluateBinOp(node);
-        evals.push((boolean)evals.pop() || (boolean)evals.pop());
+        boolean b1 = (boolean)evals.pop();
+        boolean b2 = (boolean)evals.pop();
+        evals.push(b1 || b2);
     }
 
     @Override
@@ -281,7 +331,8 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(GreaterNode node) throws Exception {
-
+        evaluateBinOp(node);
+        evals.push((int)evals.pop() > (int)evals.pop());
     }
 
     @Override
@@ -316,7 +367,8 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AppelENode node) throws Exception {
-
+        // TODO: 29/11/2020
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override

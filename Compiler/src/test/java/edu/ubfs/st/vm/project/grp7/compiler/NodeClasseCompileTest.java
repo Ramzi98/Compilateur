@@ -2,7 +2,10 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
+import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcIfNode;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerException;
@@ -21,6 +24,7 @@ import static org.hamcrest.Matchers.is;
 
 public class NodeClasseCompileTest {
     public CompilerVisitor compiler;
+
 
     @Before
     public void start() {
@@ -56,11 +60,13 @@ public class NodeClasseCompileTest {
         compiler.setStack(stack);
         compiler.setMinijajaNodes(miniJajaNodes);
 
+
+
     }
 
 
     @Test
-    public void NodeClasseCompilerVisitor() throws IOException, IllFormedNodeException, CompilerException {
+    public void NodeClasseCompilerVisitor() throws Exception {
 
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)
@@ -145,6 +151,18 @@ public class NodeClasseCompileTest {
         JcGotoNode gotonode = (JcGotoNode) compiler.getJajaCodeNodes().get(11);
         assertThat(ifnode.adresse(),is(13));
         assertThat(gotonode.adresse(),is(17));
+
+        Compiler compiler1 = Compiler.CompilerBuilder(classeNode);
+
+        compiler1.compile();
+        JajaCodeNode jajaCodeNode = compiler1.firstJajaCodeNode();
+        System.out.println(jajaCodeNode);
+        System.out.println(jajaCodeNode.next());
+
+
+        Compiler com = Compiler.CompilerBuilder(classeNode);
+        com.compile();
+
 
     }
 
