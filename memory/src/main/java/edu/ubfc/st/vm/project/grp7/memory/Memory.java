@@ -10,7 +10,7 @@ public interface Memory {
     Memory popContext();
 
     Memory empiler(Quadruplet q);
-    Memory depiler();
+    Quadruplet depiler();
     Memory echanger();
 
     Memory identVal(String id, SORTE t, int s);

@@ -6,4 +6,12 @@ public class JJCInterpreterController {
     public JJCInterpreterController(JJCInterpreterListener listener) {
         this.listener = listener;
     }
+
+    public void write(String str) {
+        listener.jjcWrite(str);
+    }
+
+    public void writeLn(String str) {
+        listener.jjcWriteLn(str);
+    }
 }

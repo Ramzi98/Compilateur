@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ public class JcNewNodeTest {
         jcNewNode = JcNewNode.builder()
                 .line(72)
                 .column(67)
-                .adresse(100)
+                .depth(100)
                 .next(jajaCodeNode)
                 .sorte(JcNewNode.Sorte.Var)
                 .type(JcNewNode.Type.INT)
@@ -38,7 +37,7 @@ public class JcNewNodeTest {
 
     @Test
     public void check__JcNewNode__adr() {
-        assertThat(jcNewNode.adresse(), is(100));
+        assertThat(jcNewNode.depth(), is(100));
     }
 
     @Test

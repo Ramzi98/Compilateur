@@ -5,10 +5,7 @@ import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.*;
 
-import java.io.IOException;
-
 public abstract class JajaCodeASTVisitor implements ASTVisitor {
-
     @Override
     public void visit(ASTNode node) throws Exception {
         if (node == null){
@@ -70,7 +67,7 @@ public abstract class JajaCodeASTVisitor implements ASTVisitor {
             this.visit(node);
         }else if (node instanceof JcWriteNode) {
             this.visit(node);
-        }else if (node instanceof JcWritelnNode) {
+        }else if (node instanceof JcWriteLnNode) {
             this.visit(node);
         } else {
             throw new IllFormedNodeException(node.line(), node.column(),
@@ -79,35 +76,35 @@ public abstract class JajaCodeASTVisitor implements ASTVisitor {
         }
     }
 
-    public abstract void visit(JcInitImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcAddImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcAincImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcAloadImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcAndImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcAstoreImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcCmpImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcDivImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcGotoImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcIfImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcIncImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcInvokeImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcLoadImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcMulImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcNegImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcNewarrayImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcNewImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcNopImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcNotImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcOrImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcPopImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcPushImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcReturnImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcStopImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcStoreImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcSubImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcSupImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcSwapImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcWriteImpl node) throws IllFormedNodeException, IOException;
-    public abstract void visit(JcWritelnImpl node) throws IllFormedNodeException, IOException;
+    public abstract void visit(JcInitNode node) throws Exception;
+    public abstract void visit(JcAddNode node) throws Exception;
+    public abstract void visit(JcAincNode node) throws Exception;
+    public abstract void visit(JcAloadNode node) throws Exception;
+    public abstract void visit(JcAndNode node) throws Exception;
+    public abstract void visit(JcAstoreNode node) throws Exception;
+    public abstract void visit(JcCmpNode node) throws Exception;
+    public abstract void visit(JcDivNode node) throws Exception;
+    public abstract void visit(JcGotoNode node) throws Exception;
+    public abstract void visit(JcIfNode node) throws Exception;
+    public abstract void visit(JcIncNode node) throws Exception;
+    public abstract void visit(JcInvokeNode node) throws Exception;
+    public abstract void visit(JcLoadNode node) throws Exception;
+    public abstract void visit(JcMulNode node) throws Exception;
+    public abstract void visit(JcNegNode node) throws Exception;
+    public abstract void visit(JcNewarrayNode node) throws Exception;
+    public abstract void visit(JcNewNode node) throws Exception;
+    public abstract void visit(JcNopNode node) throws Exception;
+    public abstract void visit(JcNotNode node) throws Exception;
+    public abstract void visit(JcOrNode node) throws Exception;
+    public abstract void visit(JcPopNode node) throws Exception;
+    public abstract void visit(JcPushNode node) throws Exception;
+    public abstract void visit(JcReturnNode node) throws Exception;
+    public abstract void visit(JcStopNode node) throws Exception;
+    public abstract void visit(JcStoreNode node) throws Exception;
+    public abstract void visit(JcSubNode node) throws Exception;
+    public abstract void visit(JcSupNode node) throws Exception;
+    public abstract void visit(JcSwapNode node) throws Exception;
+    public abstract void visit(JcWriteNode node) throws Exception;
+    public abstract void visit(JcWriteLnNode node) throws Exception;
 
 }

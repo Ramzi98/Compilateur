@@ -174,9 +174,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             minijajaNodes.add(vnil);
             stack.push(vnil);
         }
-
-
-
     }
 
     @Override
@@ -204,8 +201,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 } catch (Exception e) {
                     throw new IllFormedNodeException(e.toString());
                 }
-
-
             } else if (compilemode == Mode.RETRAIT) {
                 try {
                     nodeVars.accept(this);
@@ -224,14 +219,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     throw new IllFormedNodeException(e.toString());
                 }
             }
-        }
-        else {
+        }else {
             HashMap<MiniJajaNode, Integer> vnil = new HashMap<>();
             vnil.put(node, 0);
             minijajaNodes.add(vnil);
             stack.push(vnil);
         }
-
     }
 
     @Override
@@ -258,13 +251,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .identifier(node.identifier().value())
                     .sorte(JcNewNode.Sorte.Var)
                     .type(getType(node.typeMeth().value()))
-                    .adresse(0)
+                    .depth(0)
                     .build();
 
             setNextNode(jcNewNode);
 
-        }else if(compilemode == Mode.RETRAIT)
-        {
+        }else if(compilemode == Mode.RETRAIT){
             JcSwapNode jcSwapNode = JcSwapNode.builder()
                     .line(jajaCodeNodes.size()+1)
                     .column(1)
@@ -282,10 +274,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
-
         }
-
-
     }
 
     @Override
@@ -311,12 +300,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .line(jajaCodeNodes.size()+1)
                     .column(1)
                     .identifier(node.identifier().value())
-                    .type(node.typeMeth().value())
+                    .type(JcNewarrayNode.Type.of(node.typeMeth().value()))
                     .build();
             setNextNode(jcNewarrayNode);
 
-        }else if(compilemode == Mode.RETRAIT)
-        {
+        }else if(compilemode == Mode.RETRAIT){
             JcSwapNode jcSwapNode = JcSwapNode.builder()
                     .line(jajaCodeNodes.size()+1)
                     .column(1)
@@ -334,7 +322,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             h.replace(node,nf);
             minijajaNodes.set(minijajaNodes.indexOf(h),h);
             stack.set(stack.indexOf(h),h);
-
         }
     }
 
@@ -361,7 +348,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .identifier(node.identifier().value())
                     .sorte(JcNewNode.Sorte.Cst)
                     .type(getType(node.type().value()))
-                    .adresse(0)
+                    .depth(0)
                     .build();
 
             setNextNode(jcNewNode);
@@ -413,7 +400,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .identifier(node.identifier().value())
                         .sorte(JcNewNode.Sorte.Meth)
                         .type(getType(node.typeMeth().value()))
-                        .adresse(0)
+                        .depth(0)
                         .build();
                 setNextNode(jcNewNode);
 
@@ -590,7 +577,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .identifier(node.identifier().value())
                     .sorte(JcNewNode.Sorte.Var)
                     .type(getType(node.type().value()))
-                    .adresse(nheader)
+                    .depth(nheader)
                     .build();
             setNextNode(jcNewNode);
 

@@ -5,7 +5,6 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import org.antlr.v4.runtime.tree.ErrorNode;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

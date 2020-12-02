@@ -7,18 +7,18 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class JcWritelnNodeTest {
+public class JcWriteLnNodeTest {
 
     @Before
     public void setup() {
-        jcWritelnNode = JcWritelnNode.builder()
+        jcWritelnNode = JcWriteLnNode.builder()
                 .line(30)
                 .column(15)
                 .next(jajaCodeNode)
                 .build();
     }
 
-    private JcWritelnNode jcWritelnNode;
+    private JcWriteLnNode jcWritelnNode;
     private JajaCodeNode jajaCodeNode;
 
     @Test

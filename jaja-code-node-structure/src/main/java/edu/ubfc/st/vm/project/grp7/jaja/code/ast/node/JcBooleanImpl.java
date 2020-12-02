@@ -4,18 +4,19 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcTypeNodeImpl extends ASTNodeBreakpoint implements JcTypeNode {
-    private final JcTypeNode.Type type;
+public class JcBooleanImpl extends ASTNodeBreakpoint implements JcBooleanNode{
+    private Boolean value;
 
-    public JcTypeNodeImpl(int line, int column, Breakpoint bp, JcTypeNode.Type type) {
+    public JcBooleanImpl(int line, int column, Breakpoint bp, Boolean value) {
         super(line, column, bp);
-        this.type = type;
+        this.value = value;
     }
 
     @Override
-    public JcTypeNode.Type type() {
-        return this.type;
+    public Boolean value() {
+        return this.value;
     }
+
 
     @Override
     public JajaCodeNode children(int n) throws IndexOutOfBoundsException {

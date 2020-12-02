@@ -4,17 +4,17 @@ import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
-public class JcNumberNodeImpl  extends ASTNodeBreakpoint implements JcNumberNode{
-    private final double value;
+public class JcTypeImpl extends ASTNodeBreakpoint implements JcTypeNode {
+    private final JcTypeNode.Type type;
 
-    public JcNumberNodeImpl(int line, int column, Breakpoint bp, double value) {
+    public JcTypeImpl(int line, int column, Breakpoint bp, JcTypeNode.Type type) {
         super(line, column, bp);
-        this.value = value;
+        this.type = type;
     }
 
     @Override
-    public double value() {
-        return this.value;
+    public JcTypeNode.Type type() {
+        return this.type;
     }
 
     @Override

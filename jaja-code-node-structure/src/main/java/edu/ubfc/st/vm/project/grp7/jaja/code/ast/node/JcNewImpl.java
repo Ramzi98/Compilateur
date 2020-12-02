@@ -1,27 +1,21 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNodeBreakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.ASTNodeWithInfo;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
-
 
 public class JcNewImpl extends ASTNodeBreakpoint implements JcNewNode {
-
     private final String identifier;
-    private final int adresse;
+    private final int depth;
     private final Type type;
     private final Sorte sorte;
     private JajaCodeNode next;
 
-    public JcNewImpl(int line, int column, Breakpoint bp, String identifier, int adresse, Type type, Sorte sorte, JajaCodeNode next) {
+    public JcNewImpl(int line, int column, Breakpoint bp,
+                     String identifier, int depth, Type type, Sorte sorte, JajaCodeNode next) {
         super(line, column,bp);
         this.identifier = identifier;
-        this.adresse = adresse;
+        this.depth = depth;
         this.type = type;
         this.sorte = sorte;
         this.next = next;
@@ -33,8 +27,8 @@ public class JcNewImpl extends ASTNodeBreakpoint implements JcNewNode {
     }
 
     @Override
-    public int adresse() {
-        return this.adresse;
+    public int depth() {
+        return this.depth;
     }
 
     @Override

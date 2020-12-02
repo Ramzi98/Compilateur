@@ -1,5 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewarrayNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
 
@@ -40,6 +42,28 @@ public enum SORTE {
     public static SORTE of(TypeNode.Type value) {
         switch (value) {
              case INT:
+                return SORTE.INT;
+            case BOOLEAN:
+                return SORTE.BOOLEAN;
+            default :
+                return null;
+        }
+    }
+
+    public static SORTE of(JcNewNode.Type type) {
+        switch (type) {
+            case INT:
+                return SORTE.INT;
+            case BOOLEAN:
+                return SORTE.BOOLEAN;
+            default :
+                return null;
+        }
+    }
+
+    public static SORTE of(JcNewarrayNode.Type type) {
+        switch (type) {
+            case INT:
                 return SORTE.INT;
             case BOOLEAN:
                 return SORTE.BOOLEAN;

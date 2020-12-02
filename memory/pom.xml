@@ -34,5 +34,9 @@
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-node-structure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>jaja-code-node-structure</artifactId>
+        </dependency>
     </dependencies>
 </project>

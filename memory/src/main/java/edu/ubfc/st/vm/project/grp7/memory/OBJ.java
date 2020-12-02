@@ -1,5 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
+import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewNode;
+
 public enum OBJ {
     CST {
         @Override
@@ -30,5 +32,5 @@ public enum OBJ {
         public String toString() {
             return "tab";
         }
-    }
+    };
 }

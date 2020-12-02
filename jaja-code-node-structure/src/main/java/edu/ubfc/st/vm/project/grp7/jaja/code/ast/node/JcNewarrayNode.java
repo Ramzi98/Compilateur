@@ -1,13 +1,12 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
 
 public interface JcNewarrayNode extends JajaCodeNode {
     String identifier();
-    TypeMethNode.TypeMeth type();
+    Type type();
     JajaCodeNode next();
     void setNext(JajaCodeNode next);
 
@@ -27,8 +26,8 @@ public interface JcNewarrayNode extends JajaCodeNode {
             return this;
         }
 
-        TypeMethNode.TypeMeth type;
-        public JcNewarrayNode.Builder type(TypeMethNode.TypeMeth type) {
+        Type type;
+        public JcNewarrayNode.Builder type(Type type) {
             this.type = type;
             return this;
         }
@@ -40,12 +39,25 @@ public interface JcNewarrayNode extends JajaCodeNode {
         }
 
         public JcNewarrayNode build(){
-            return new JcNewarrayImpl(this.line, this.column,this.breakpoint, this.identifier,this.type,this.next);
+            return new JcNewarrayImpl(this.line, this.column, this.breakpoint, this.identifier, this.type, this.next);
         }
 
     }
 
     enum Type {
-        INT, BOOLEAN, VOID
+        INT, BOOLEAN, VOID;
+
+        public static Type of(TypeMethNode.TypeMeth value) {
+            switch (value) {
+                case INT:
+                    return INT;
+                case BOOLEAN:
+                    return BOOLEAN;
+                case VOID:
+                    return VOID;
+                default:
+                    return null;
+            }
+        }
     }
 }

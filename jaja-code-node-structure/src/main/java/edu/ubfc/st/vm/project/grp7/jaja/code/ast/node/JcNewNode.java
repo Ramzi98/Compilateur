@@ -1,20 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
 
 public interface JcNewNode extends JajaCodeNode {
     String identifier();
-    int adresse();
+    int depth();
     Type type();
     Sorte sorte();
     JajaCodeNode next();
-    void setNext(JajaCodeNode next);
-
-
 
     @Override
     default void accept(ASTVisitor visitor) throws Exception {
@@ -24,43 +18,41 @@ public interface JcNewNode extends JajaCodeNode {
     static JcNewNode.Builder builder(){ return new JcNewNode.Builder(); }
 
     class Builder extends JajaCodeNode.NodeBuilder<JcNewNode.Builder> {
-
         private String identifier;
         public Builder identifier(String id) {
             this.identifier = id;
             return this;
         }
 
-        int adresse;
-        public Builder adresse(int adresse) {
-            this.adresse = adresse;
+        private int depth;
+        public Builder depth(int depth) {
+            this.depth = depth;
             return this;
         }
 
-        Type type;
+        private Type type;
         public Builder type(Type type) {
             this.type = type;
             return this;
         }
-        Sorte sorte;
+        
+        private Sorte sorte;
         public Builder sorte(Sorte sorte) {
             this.sorte = sorte;
             return this;
         }
 
-        JajaCodeNode next;
+        private JajaCodeNode next;
         public Builder next(JajaCodeNode next) {
             this.next = next;
             return this;
         }
 
         public JcNewNode build(){
-            return new JcNewImpl(this.line, this.column,this.breakpoint, this.identifier,this.adresse,this.type,this.sorte,this.next);
+            return new JcNewImpl(this.line, this.column, this.breakpoint,
+                    this.identifier, this.depth, this.type, this.sorte, this.next);
         }
-
-
     }
-
 
     enum  Type{
         INT, BOOLEAN, VOID
@@ -69,6 +61,4 @@ public interface JcNewNode extends JajaCodeNode {
     enum Sorte {
         Cst, Var, Meth
     }
-
-
 }
