@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
-    public static final String SCOPE_GLOBAL = "global";
     public static final String SCOPE_MAIN = "main";
 
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
@@ -68,7 +67,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
-        System.out.println(node.value());
         if (node.value() != null) {
             int ind = symbolDictionnary.find(node.value());
             if (ind == -1) {
@@ -80,10 +78,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                     throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + node.value() + "\" has not been declared.");
                 }
             }
-
-            //TODO: Continue work on this part
-            //Quadruplet q = stack.peekFirst(node.value());
-            //miniJajaNodeType.put(node,q.type());
         }else{
             throw new IllFormedNodeException(node.line(),node.column(),"The Identifier does not have a value");
         }
@@ -146,7 +140,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 identNature.put(identifier,OBJ.VAR);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
-                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
                 throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
@@ -238,7 +231,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.METH);
                 symbolDictionnary.register(identifier.value(), indice++);
-                // TODO: See if we can add some information to the symbol as type, or we initialize a stack.
 
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
@@ -250,6 +242,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(existReturn(instrs) && miniJajaNodeType.get(typeNode) == SORTE.OMEGA){
 
             throw new IllFormedNodeException(node.line(),node.column(),"A return statement was specified but the method should return void");
+        }
+
+        if(!existReturn(instrs) && miniJajaNodeType.get(typeNode) != SORTE.OMEGA){
+
+            throw new IllFormedNodeException(node.line(),node.column(),"This method needs a return statement");
+
+
         }
 
         if(pass == Pass.FIRST_PASS)
@@ -337,9 +336,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.VAR);
                 symbolDictionnary.register(identifier.value(), indice++);
-                // TODO: See if we can add some information to the symbol as type, or we initialize a stack.
-
-
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
@@ -446,8 +442,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
                 if(identNature.get(identifier) == OBJ.VCST){
 
-                    //TODO : Check if scope is not in main
-                   // throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+                    if(symbolDictionnary.peekScope().startsWith("main")){
+
+                        throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to reassign a constant ");
+
+                    }
 
                     try {
                         symbolDictionnary.unregister(((IdentNode) identifier).value());
@@ -530,7 +529,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         else
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
-                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier)));
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
@@ -551,13 +549,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         int ind = symbolDictionnary.find(identifier.value());
         if(ind == -1)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called \""+identifier.value()+"\" .");
         }
 
-        if(identNature.get(identifier) != OBJ.METH)
-        {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
-        }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
@@ -567,35 +561,27 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public void visit(ReturnNode node) throws IllFormedNodeException, IOException {
 
         MiniJajaNode expression = node.ret();
-        // TODO : récupérer Scope courante et vérifier que on est pas dans Main ni classe
-        //  and recuper the type of the method from sumbolDictionnary to compare with expression type
+
+        if(symbolDictionnary.peekScope().startsWith("global") || symbolDictionnary.peekScope().startsWith("main")){
+
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't return something outside of the methode scope");
+
+        }
 
         try {
             expression.accept(this);
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line() ,node.column() , e.toString());
         }
-        //TODO : This verification
-        /*
+
+        String scope =  symbolDictionnary.peekScope();
+        scope = scope.replaceAll("-[0-9]","");
+
         int ind = symbolDictionnary.find(scope);
         if(ind == -1)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "Can't return something outside of a declared methode");
         }
-
-
-        if(miniJajaNodeType.get(expression) == SORTE.OMEGA){
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of method is\""+ miniJajaNodeType.get(expression) +"\" that can not return something");
-        }
-
-        if(miniJajaNodeType.get(expression) == miniJajaNodeType.get(expression)){
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of method is\""+ miniJajaNodeType.get(expression) +"\" that can not return something");
-        }
-
-
-         */
-
-
 
     }
 
@@ -612,8 +598,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(StringNode node) throws IllFormedNodeException, IOException {
 
-        // SORTE type = SORTE.of(TypeNode.Type.BOOLEAN);
-        // miniJajaNodeType.put(node,type);
     }
 
     @Override
@@ -630,7 +614,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         if(miniJajaNodeType.get(expression) != SORTE.BOOLEAN){
-            //System.out.println(new IllFormedNodeException(node.line(), node.column(), "11Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) + " as a conditional expression."));
             throw new IllFormedNodeException(node.line(), node.column(), "Can't evaluate expression with Type "+ miniJajaNodeType.get(expression) +" as a conditional expression.");
         }
 
@@ -920,13 +903,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         int ind = symbolDictionnary.find(identifier.value());
         if(ind == -1)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called  \""+identifier.value()+"\" ");
         }
 
-        if(identNature.get(identifier) != OBJ.METH)
-        {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
-        }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 

@@ -13,7 +13,10 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +33,7 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.IntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,7 +67,16 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        codeTextArea.setParagraphGraphicFactory(LineNumberFactory.get(codeTextArea));
+        IntFunction<Node> numberFactory = LineNumberFactory.get(codeTextArea);
+        IntFunction<Node> arrowFactory = new BreakPoint(codeTextArea.currentParagraphProperty());
+        IntFunction<Node> graphicFactory = line -> {
+            HBox hbox = new HBox(
+                    numberFactory.apply(line),
+                    arrowFactory.apply(line));
+            hbox.setAlignment(Pos.CENTER_LEFT);
+            return hbox;
+        };
+        codeTextArea.setParagraphGraphicFactory(graphicFactory);
         this.currentFile = "";
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
                     (v, oldValue, newValue) -> {
