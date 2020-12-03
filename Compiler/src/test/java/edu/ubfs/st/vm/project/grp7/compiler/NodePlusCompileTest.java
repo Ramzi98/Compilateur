@@ -22,12 +22,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class NodePlusCompileTest {
-
     public CompilerVisitor compiler;
 
     @Before
     public void start() {
-
         compiler = new CompilerVisitor();
         Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<>();
         MiniJajaNode classe = new MiniJajaNode() {
@@ -51,6 +49,7 @@ public class NodePlusCompileTest {
                 return 0;
             }
         };
+        
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
         startingHash.put(classe,35);
@@ -62,13 +61,11 @@ public class NodePlusCompileTest {
         JcInitNode init = JcInitNode.builder().build();
         jjnodes.add(init);
         compiler.setJajaCodeNodes(jjnodes);
-
     }
 
 
     @Test
     public void NodePlusCompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
-
         NumberNode expNode = NumberNode.builder().value(2).build();
         BooleanNode expNode2 = BooleanNode.builder().value(false).build();
 
@@ -76,6 +73,5 @@ public class NodePlusCompileTest {
         compiler.visit(plusNode);
         assertThat(compiler.getJajaCodeNodes().size(), is(4));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(3));
-
     }
 }

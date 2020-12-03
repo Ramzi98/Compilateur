@@ -15,10 +15,10 @@ public class JJCInterpreterImpl implements JJCInterpreter {
 
     @Override
     public void interpret(JJCInterpreterController controller) throws Exception {
-        JJCInterpreterVisitor visitor = new JJCInterpreterVisitor(this.memory, controller);
         if (nodes.isEmpty()) {
             throw new RuntimeException("Empty JajaCode structure to be interpreted");
         }
+        JJCInterpreterVisitor visitor = new JJCInterpreterVisitor(this.memory, nodes, controller);
         nodes.get(0).accept(visitor);
     }
 }

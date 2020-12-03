@@ -20,12 +20,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class NodeWriteCompileTest {
-
     public CompilerVisitor compiler;
 
     @Before
     public void start() {
-
         compiler = new CompilerVisitor();
         Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<>();
         MiniJajaNode classe = new MiniJajaNode() {
@@ -49,6 +47,7 @@ public class NodeWriteCompileTest {
                 return 0;
             }
         };
+        
         ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
         HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
         startingHash.put(classe,35);
@@ -60,20 +59,15 @@ public class NodeWriteCompileTest {
         JcInitNode init = JcInitNode.builder().build();
         jjnodes.add(init);
         compiler.setJajaCodeNodes(jjnodes);
-
     }
-
 
     @Test
     public void NodeWriteCompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
-
         NumberNode expNode = NumberNode.builder().value(2).build();
 
         WriteNode writeNode = WriteNode.builder().printable(expNode).build();
         compiler.visit(writeNode);
         assertThat(compiler.getJajaCodeNodes().size(), is(3));
-        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
-
+        assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0], is(2));
     }
-
 }
