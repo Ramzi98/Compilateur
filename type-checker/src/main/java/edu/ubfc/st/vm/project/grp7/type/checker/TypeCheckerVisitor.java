@@ -68,7 +68,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
-        System.out.println(node.value());
         if (node.value() != null) {
             int ind = symbolDictionnary.find(node.value());
             if (ind == -1) {
@@ -146,7 +145,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 identNature.put(identifier,OBJ.VAR);
                 symbolDictionnary.register(identifier.value(), indice++);
             } catch (Exception e) {
-                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + node.identifier().value() + "\" has already been declared.") + "In : "+node.line()+node.column());
                 throw new IllFormedNodeException(node.line(), node.column(), "The symbol \"" + identifier.value() + "\" has already been declared.");
             }
         }
@@ -250,6 +248,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(existReturn(instrs) && miniJajaNodeType.get(typeNode) == SORTE.OMEGA){
 
             throw new IllFormedNodeException(node.line(),node.column(),"A return statement was specified but the method should return void");
+        }
+
+        if(!existReturn(instrs) && miniJajaNodeType.get(typeNode) != SORTE.OMEGA){
+
+            throw new IllFormedNodeException(node.line(),node.column(),"This method needs a return statement");
+
+
         }
 
         if(pass == Pass.FIRST_PASS)
@@ -446,8 +451,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
                 if(identNature.get(identifier) == OBJ.VCST){
 
-                    //TODO : Check if scope is not in main
-                   // throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to assign a value to a constant ");
+                    if(symbolDictionnary.peekScope().startsWith("main")){
+
+                        throw new IllFormedNodeException(node.line() ,node.column() , "Impossible to reassign a constant ");
+
+                    }
 
                     try {
                         symbolDictionnary.unregister(((IdentNode) identifier).value());
@@ -530,7 +538,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         else
         {
             if(miniJajaNodeType.get(identifier) != SORTE.INT){
-                //System.out.println(new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier)));
                 throw new IllFormedNodeException(node.line(), node.column(), "Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
@@ -567,7 +574,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public void visit(ReturnNode node) throws IllFormedNodeException, IOException {
 
         MiniJajaNode expression = node.ret();
-        // TODO : récupérer Scope courante et vérifier que on est pas dans Main ni classe
+
+        if(symbolDictionnary.peekScope().startsWith("global") || symbolDictionnary.peekScope().startsWith("main")){
+
+            throw new IllFormedNodeException(node.line(), node.column(), "Can't return something outside of the methode scope");
+
+        }
         //  and recuper the type of the method from sumbolDictionnary to compare with expression type
 
         try {
@@ -575,6 +587,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line() ,node.column() , e.toString());
         }
+
         //TODO : This verification
         /*
         int ind = symbolDictionnary.find(scope);
