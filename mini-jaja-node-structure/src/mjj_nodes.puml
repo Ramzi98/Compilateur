@@ -1,0 +1,76 @@
+@startuml mjj_nodes
+
+interface ASTNode
+interface LeafNode
+abstract class ASTNodeWithInfo
+
+
+ASTNode <|.. ASTNodeWithInfo
+ASTNode <|-- LeafNode
+
+interface MiniJajaNode
+interface MiniJajaLeaf
+
+interface MiniJajaOperatorNode {
+    + MiniJajaNode leftOperand()
+    + MiniJajaNode rightOperand()
+}
+
+abstract class MiniJajaOperator {
+    + MiniJajaNode leftOperand()
+    + MiniJajaNode rightOperand()
+}
+
+ASTNode <|-- MiniJajaNode
+LeafNode <|-- MiniJajaLeaf
+MiniJajaNode <|-- MiniJajaOperatorNode
+MiniJajaOperatorNode <|.. MiniJajaOperator
+ASTNodeWithInfo <|-- MiniJajaOperator
+
+MiniJajaLeaf -r[hidden]- ASTNodeWithInfo
+MiniJajaOperatorNode -l[hidden]- ASTNodeWithInfo
+
+
+class MiniJajaNode.NodeBuilder <<(B, #FF7700) Abstract Builder>> {
+
+}
+
+class MiniJajaLeaf.LeafBuilder <<(B, #FF7700) Abstract Builder>> {
+
+}
+
+class NodeBuilder <<(B, #FF7700) Abstract>> {
+    # MiniJajaNode leftOperand
+    # MiniJajaNode rightOperand
+
+    + NodeBuilder leftOperand(MiniJajaNode node)
+    + NodeBuilder rightOperand(MiniJajaNode node)
+}
+
+MiniJajaLeaf.LeafBuilder -r[hidden]- MiniJajaLeaf
+
+MiniJajaNode -r[hidden]- MiniJajaNode.NodeBuilder
+
+MiniJajaNode.NodeBuilder <|-- NodeBuilder
+MiniJajaOperatorNode +-r- NodeBuilder
+
+class StringBuilder <<(B, #FF7700)>> {
+    + StringNode build()
+}
+
+MiniJajaLeaf.LeafBuilder <|-- StringBuilder
+
+interface StringNode<String> {
+    + StringBuilder builder()
+}
+
+MiniJajaLeaf <|-- StringNode
+
+class StringNodeImpl
+
+ASTNodeWithInfo <|-- StringNodeImpl
+StringNode <|.r. StringNodeImpl
+
+StringNode +-l- StringBuilder
+
+@enduml
