@@ -27,7 +27,7 @@ public class MethodeNodeCheckerTest {
 
 
      @Test
-    public void MethodeNodeTypeCheker__First__Second__Pass() throws IOException, IllFormedNodeException {
+    public void MethodeNodeTypeCheker__First__Second__Pass() throws IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -78,10 +78,10 @@ public class MethodeNodeCheckerTest {
 
     }
 
-    /***********************  Ca marche pas parceque ReturnNode ne marche pas encore
+
 
      @Test(expected = IllFormedNodeException.class)
-    public void MethodeNodeTypeCheker__Exception__OMEGA() throws IOException, IllFormedNodeException {
+    public void MethodeNodeTypeCheker__Exception__OMEGA() throws IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -132,7 +132,7 @@ public class MethodeNodeCheckerTest {
         assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
 
     }
-    */
+
 
 
     InstrsNode instrsnil = new InstrsNode() {
