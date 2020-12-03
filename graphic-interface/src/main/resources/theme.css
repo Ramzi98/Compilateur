@@ -236,24 +236,21 @@
      -fx-stroke : white;
 }
 
+.check-box{
+    -fx-max-height : 1px;
+}
+
 .check-box .box {
-
--fx-background-color: black;
--fx-border-color:grey;
--fx-border-radius:3px;
-
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-border-color:rgba(255, 255, 255, 0);
+    -fx-border-radius:0px;
 }
 
 .check-box:selected .mark {
-
--fx-background-color: red;
-
+    -fx-background-color: #34DCFF;
+    -fx-pref-width : 1em;
 }
 
-.check-box:selected .box {
-
--fx-background-color: red;
-}
 
 .text{
     -fx-fill : white;
@@ -286,6 +283,7 @@
  .text.keywordType{
     -fx-fill : #DBF18C;
  }
+
 
 
 
