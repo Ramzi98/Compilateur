@@ -264,7 +264,7 @@
 
 .check-box:selected .mark {
 
--fx-background-color: white;
+-fx-background-color: red;
 
 }
 
