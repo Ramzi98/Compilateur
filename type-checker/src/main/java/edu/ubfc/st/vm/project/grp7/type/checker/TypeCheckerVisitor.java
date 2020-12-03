@@ -558,13 +558,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         int ind = symbolDictionnary.find(identifier.value());
         if(ind == -1)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called \""+identifier.value()+"\" .");
         }
 
-        if(identNature.get(identifier) != OBJ.METH)
-        {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
-        }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
@@ -933,13 +929,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         int ind = symbolDictionnary.find(identifier.value());
         if(ind == -1)
         {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called  \""+identifier.value()+"\" ");
         }
 
-        if(identNature.get(identifier) != OBJ.METH)
-        {
-            throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" is not a Method but is"+identNature.get(identifier));
-        }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 

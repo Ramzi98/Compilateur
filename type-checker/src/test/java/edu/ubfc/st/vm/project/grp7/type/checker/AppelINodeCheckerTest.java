@@ -13,7 +13,8 @@ import java.io.IOException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class AppelENodeCheckerTest {
+public class AppelINodeCheckerTest {
+
 
     TypeChecker typeChecker;
     SymbolDictionnary symbolDictionnary;
@@ -27,7 +28,7 @@ public class AppelENodeCheckerTest {
 
 
     @Test
-    public void AppelENodeTypeCheker() throws IOException, IllFormedNodeException {
+    public void AppelINodeTypeCheker() throws IOException, IllFormedNodeException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -62,8 +63,8 @@ public class AppelENodeCheckerTest {
 
 
         ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(expnil).build();
-        AppelENode appelENode = AppelENode.builder().identifier(identfonction).listexp(listExpNode).build();
-        InstrsNode instrs = InstrsNode.builder().instruction(appelENode).instrs(instrsnil).build();
+        AppelINode appelINode = AppelINode.builder().identifier(identfonction).listexp(listExpNode).build();
+        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(instrsnil).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
         MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrs).build();
@@ -83,7 +84,7 @@ public class AppelENodeCheckerTest {
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void AppelENodeTypeCheker__WithException_NoIdentDeclared() throws IOException, IllFormedNodeException {
+    public void AppelINodeTypeCheker__WithException_NoIdentDeclared() throws IOException, IllFormedNodeException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -119,8 +120,8 @@ public class AppelENodeCheckerTest {
 
 
         ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(expnil).build();
-        AppelENode appelENode = AppelENode.builder().identifier(fakeidentfonction).listexp(listExpNode).build();
-        InstrsNode instrs = InstrsNode.builder().instruction(appelENode).instrs(instrsnil).build();
+        AppelINode appelINode = AppelINode.builder().identifier(fakeidentfonction).listexp(listExpNode).build();
+        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(instrsnil).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
         MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrs).build();
@@ -138,7 +139,6 @@ public class AppelENodeCheckerTest {
 
         assertThat(symbolDictionnary.find(identvar1.value()), is(-1));
     }
-
 
 
 
@@ -299,5 +299,4 @@ public class AppelENodeCheckerTest {
             return null;
         }
     } ;
-
 }

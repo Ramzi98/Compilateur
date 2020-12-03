@@ -314,6 +314,31 @@ public class AssignNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
+    @Test(expected = IllFormedNodeException.class)
+    public void AssignNodeTypeCheck__Table__VConstantReassign__WithException() throws IOException, IllFormedNodeException {
+
+        IdentNode identvar = IdentNode.builder().value("i").build();
+        TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        NumberNode numberNode = NumberNode.builder().value(5).build();
+        ArrayNode node = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar).expression(numberNode).build();
+
+        ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
+
+        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+
+        BooleanNode numberNode2 = BooleanNode.builder().value(false).build();
+        AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
+
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+
+
+        MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
+
+        typeChecker = new TypeChecker(mainNode);
+        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker.typeCheck();
+    }
+
     InstrsNode instrsnil = new InstrsNode() {
         @Override
         public MiniJajaNode instruction() {
