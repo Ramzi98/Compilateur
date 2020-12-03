@@ -8,6 +8,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,17 +25,57 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
+import org.reactfx.Subscription;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.IntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller implements Initializable, MJJInterpreterListener {
+
+    private ExecutorService executor= Executors.newSingleThreadExecutor();
+
+    private static final String[] KEYWORDS = new String[] {
+            "class", "else","final","if",  "while"
+    };
+
+    private static final String[] TYPE = new String[] {
+            "boolean","int", "void"
+    };
+
+    private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+    private static final String KEYWORD_TYPE_PATTERN = "\\b(" + String.join("|", TYPE) + ")\\b";
+    private static final String PAREN_PATTERN = "\\(|\\)";
+    private static final String BRACE_PATTERN = "\\{|\\}";
+    private static final String SEMICOLON_PATTERN = "\\;";
+    private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+    private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+
+    private static final Pattern PATTERN = Pattern.compile(
+                    "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
+                    + "|(?<PAREN>" + PAREN_PATTERN + ")"
+                    + "|(?<TYPE>" + KEYWORD_TYPE_PATTERN + ")"
+                    + "|(?<BRACE>" + BRACE_PATTERN + ")"
+                    + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
+                    + "|(?<STRING>" + STRING_PATTERN + ")"
+                    + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
+    );
+
 
     @FXML
     private CodeArea codeAreaMiniJaja;
@@ -58,7 +99,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     private Tab areaRunTab;
 
-    private String currentFile;
     private String currentFileMiniJaja;
     private String currentFileJajaCode;
 
@@ -84,34 +124,47 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
         currentArea = codeAreaMiniJaja;
 
+        Subscription cleanupWhenDone = currentArea.multiPlainChanges()
+                .successionEnds(Duration.ofMillis(100))
+                .supplyTask(this::computeHighlightingAsync)
+                .awaitLatest(currentArea.multiPlainChanges())
+                .filterMap(t -> {
+                    if(t.isSuccess()) {
+                        return Optional.of(t.get());
+                    } else {
+                        t.getFailure().printStackTrace();
+                        return Optional.empty();
+                    }
+                })
+                .subscribe(this::applyHighlighting);
 
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
-                    (v, oldValue, newValue) -> {
-                    saveFile(null);
-                    File f2 = new File(v.getValue().toString().split(" ")[3]);
-                    if (f2 != null) {
-                        try{
-                            setCurrentFile(f2.getAbsolutePath()) ;
-                            InputStream flux = new FileInputStream(f2.getAbsoluteFile());
-                            InputStreamReader lecture = new InputStreamReader(flux);
-                            BufferedReader buff = new BufferedReader(lecture);
-                            String ligne;
-                            currentArea.clear();
-                            while ((ligne = buff.readLine()) != null){
-                                currentArea.appendText(ligne);
-                                currentArea.appendText( System.getProperty("line.separator"));
-                            }
-                            buff.close();
-                        }
-                        catch (Exception e){
-                            System.out.println(e.toString());
-                        }
+            (v, oldValue, newValue) -> {
+            saveFile(null);
+            File f2 = new File(getPathFromTree(v.getValue().toString()));
+            if (f2 != null) {
+                try{
+                    setCurrentFile(f2.getAbsolutePath()) ;
+                    InputStream flux = new FileInputStream(f2.getAbsoluteFile());
+                    InputStreamReader lecture = new InputStreamReader(flux);
+                    BufferedReader buff = new BufferedReader(lecture);
+                    String ligne;
+                    currentArea.clear();
+                    while ((ligne = buff.readLine()) != null){
+                        currentArea.appendText(ligne);
+                        currentArea.appendText( System.getProperty("line.separator"));
                     }
-                });
+                    buff.close();
+                }
+                catch (Exception e){
+                    System.out.println(e.toString());
+                }
+            }
+        });
     }
 
-    private void treeListener(){
-
+    private String getPathFromTree(String str){
+        return str.split(" ")[3];
     }
 
     private void init_code_area(CodeArea codeArea){
@@ -119,7 +172,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
         IntFunction<Node> graphicFactory;
         if (codeArea.equals(codeAreaMiniJaja)){
             breakPointMiniJaja = new BreakPoint(codeArea.currentParagraphProperty());
-            graphicFactory= line -> {
+            graphicFactory = line -> {
                 HBox hbox = new HBox(
                         numberFactory.apply(line),
                         breakPointMiniJaja.apply(line));
@@ -239,14 +292,19 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     }
 
+    public void initParserAndLexerFromCurrentFile() throws IOException {
+        codePointCharStream = CharStreams.fromPath(Paths.get(getCurrentFile()));
+        lexer = new MiniJajaLexer(codePointCharStream);
+        parser = new MiniJajaParser(new CommonTokenStream(lexer));
+        listener = new MiniJajaListenerImpl();
+    }
+
+
     @FXML
     public void run(ActionEvent actionEvent) {
         saveFile(actionEvent);
             try {
-                codePointCharStream = CharStreams.fromPath(Paths.get(getCurrentFile()));
-                lexer = new MiniJajaLexer(codePointCharStream);
-                parser = new MiniJajaParser(new CommonTokenStream(lexer));
-                listener = new MiniJajaListenerImpl();
+                initParserAndLexerFromCurrentFile();
                 try {
                     walker.walk(listener, parser.classe());
                     ClasseNode classeNode = (ClasseNode)listener.getRoot();
@@ -324,5 +382,48 @@ public class Controller implements Initializable, MJJInterpreterListener {
         }else{
             return currentFileJajaCode;
         }
+    }
+
+
+
+    private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
+        currentArea = getCurrentCodeArea();
+        String text = currentArea.getText();
+        Task<StyleSpans<Collection<String>>> task = new Task<StyleSpans<Collection<String>>>() {
+            @Override
+            protected StyleSpans<Collection<String>> call() throws Exception {
+                return computeHighlighting(text);
+            }
+        };
+        executor.execute(task);
+        return task;
+    }
+
+    private void applyHighlighting(StyleSpans<Collection<String>> highlighting) {
+        currentArea = getCurrentCodeArea();
+        currentArea.setStyleSpans(0, highlighting);
+    }
+
+    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+        Matcher matcher = PATTERN.matcher(text);
+        int lastKwEnd = 0;
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        while(matcher.find()) {
+            String styleClass =
+                    matcher.group("KEYWORD") != null ? "keyword" :
+                    matcher.group("TYPE") != null ? "keywordType" :
+                    matcher.group("PAREN") != null ? "paren" :
+                    matcher.group("BRACE") != null ? "brace" :
+                    matcher.group("SEMICOLON") != null ? "semicolon" :
+                    matcher.group("STRING") != null ? "string" :
+                    matcher.group("COMMENT") != null ? "comment" :
+                    null; /* never happens */ assert styleClass != null;
+            System.out.println(styleClass);
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastKwEnd = matcher.end();
+        }
+        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        return spansBuilder.create();
     }
 }

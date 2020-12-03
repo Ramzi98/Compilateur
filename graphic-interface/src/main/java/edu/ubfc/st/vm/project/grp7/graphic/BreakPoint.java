@@ -40,13 +40,12 @@ class BreakPoint implements IntFunction<Node> {
             }
         }
         return lineList;
-
     }
 
 }
 
 class CheckBoxWithLine extends  CheckBox{
-    private int line;
+    private final int line;
 
     public CheckBoxWithLine(int line){
         super();

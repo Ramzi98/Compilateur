@@ -49,7 +49,7 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                          <CodeArea id="codeTextArea" fx:id="codeAreaMiniJaja" prefHeight="183.33333333333334" prefWidth="453.3333333333333" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                          <CodeArea id="codeAreaMiniJaja" fx:id="codeAreaMiniJaja" prefHeight="183.33333333333334" prefWidth="453.3333333333333" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                              </children>
                                           </AnchorPane>
                                     </content>
@@ -58,7 +58,7 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
                                           <children>
-                                          <CodeArea id="codeTextArea" fx:id="codeAreaJajaCode" prefHeight="183.33333333333334" prefWidth="453.3333333333333" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <CodeArea id="codeAreaJajaCode" fx:id="codeAreaJajaCode" prefHeight="183.33333333333334" prefWidth="453.3333333333333" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                           </children>
                                       </AnchorPane>
                                     </content>

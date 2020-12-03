@@ -153,11 +153,7 @@
 }
 
 .code-area {
-    -fx-text-color : white;
     -fx-font-family: Consolas;
-    -fx-highlight-fill: white;
-    -fx-highlight-text-fill: white;
-    -fx-text-fill: white;
     -fx-font-size: 12pt;
     -fx-background-color: derive(#1d1d1d,20%);
     -fx-control-inner-background:derive(#1d1d1d,30%);
@@ -168,23 +164,9 @@
  -fx-pref-width: 2em;
 }
 
-.paragraph-text{
-   -fx-fill: white;
-}
 
-.text-flow {    
-  -fx-font-family: Consolas;
-  -fx-highlight-fill: #ffffff;
-  -fx-highlight-text-fill: white;
-  -fx-text-fill: #ffffff;
-  -fx-font-size: 12pt;
-  -fx-background-color: derive(#1d1d1d,10%);
-  -fx-control-inner-background:derive(#1d1d1d,30%);
-}
 
-#codeTextArea .text {
-     -fx-fill: white;
-}
+
 .tree-view, .tree-cell {
     -fx-padding : 0.5em 0.5em 0.5em 0.5em;
     -fx-background-color: derive(#1d1d1d,50%) ;
@@ -272,3 +254,42 @@
 
 -fx-background-color: red;
 }
+
+.text{
+    -fx-fill : white;
+ }
+
+.text.keyword {
+     -fx-fill: #FF9AF2;
+     -fx-font-weight: bold;
+ }
+ .text.semicolon {
+     -fx-fill: #FE5757;
+ }
+ .text.paren {
+     -fx-fill: firebrick;
+     -fx-font-weight: bold;
+ }
+
+ .text.brace {
+     -fx-fill: #77FAEB;
+     -fx-font-weight: bold;
+ }
+ .text.string {
+     -fx-fill: #FEAF57;
+ }
+
+   .text.comment {
+ 	-fx-fill: #ACFA77;
+ }
+
+ .text.keywordType{
+    -fx-fill : #DBF18C;
+ }
+
+
+
+
+
+
+
