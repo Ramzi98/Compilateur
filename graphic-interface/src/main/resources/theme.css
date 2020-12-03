@@ -253,3 +253,22 @@
     -fx-fill : white;
      -fx-stroke : white;
 }
+
+.check-box .box {
+
+-fx-background-color: black;
+-fx-border-color:grey;
+-fx-border-radius:3px;
+
+}
+
+.check-box:selected .mark {
+
+-fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+-fx-background-color: red;
+}

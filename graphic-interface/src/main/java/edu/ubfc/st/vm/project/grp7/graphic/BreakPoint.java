@@ -34,6 +34,11 @@ class BreakPoint implements IntFunction<Node> {
 
     @Override
     public Node apply(int lineNumber) {
+        for (CheckBoxWithLine checkBoxWithLine : lineCheckBoxArrayList){
+            if ((lineNumber+1) == checkBoxWithLine.getLine()){
+                return checkBoxWithLine;
+            }
+        }
         CheckBoxWithLine checkBoxWithLine = new CheckBoxWithLine(lineNumber+1);
         lineCheckBoxArrayList.add(checkBoxWithLine);
         return checkBoxWithLine;

@@ -259,5 +259,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public void debug(ActionEvent actionEvent) {
         breakPoint.returnCheckedLine();
+
     }
 }
