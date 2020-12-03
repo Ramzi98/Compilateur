@@ -25,6 +25,11 @@
                     </items>
                 </Menu>
             </menus>
+            <Menu mnemonicParsing="false" text="Debug">
+                <items>
+                    <MenuItem fx:id="runWithDebug" mnemonicParsing="false" onAction="#debug" text="Run with debug" />
+                </items>
+            </Menu>
         </MenuBar>
         <SplitPane dividerPositions="0.23411371237458195" layoutX="100.0" layoutY="36.0" prefHeight="364.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
             <items>

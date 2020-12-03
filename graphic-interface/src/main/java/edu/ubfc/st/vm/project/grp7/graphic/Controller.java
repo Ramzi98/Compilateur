@@ -10,6 +10,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +31,8 @@ import org.fxmisc.richtext.LineNumberFactory;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -65,18 +68,25 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private Executor threadWrite = Executors.newSingleThreadExecutor();
     private Memory memory = Memory.getInstance();
 
+    private BreakPoint breakPoint;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeTextArea);
-        IntFunction<Node> arrowFactory = new BreakPoint(codeTextArea.currentParagraphProperty());
+        breakPoint = new BreakPoint(codeTextArea.currentParagraphProperty());
+        IntFunction<Node> checkBox = breakPoint;
         IntFunction<Node> graphicFactory = line -> {
             HBox hbox = new HBox(
                     numberFactory.apply(line),
-                    arrowFactory.apply(line));
+                    breakPoint.apply(line));
             hbox.setAlignment(Pos.CENTER_LEFT);
             return hbox;
         };
+
         codeTextArea.setParagraphGraphicFactory(graphicFactory);
+
         this.currentFile = "";
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
                     (v, oldValue, newValue) -> {
@@ -246,4 +256,8 @@ public class Controller implements Initializable, MJJInterpreterListener {
         });
     }
 
+    @FXML
+    public void debug(ActionEvent actionEvent) {
+        breakPoint.returnCheckedLine();
+    }
 }
