@@ -209,32 +209,32 @@
 
 .tab-pane {
   -fx-tab-min-width:3em;
-  -fx-tab-max-width:3em;
   -fx-tab-min-height:2em;
   -fx-tab-max-height:2em;
 
 }
 .tab
 {
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
-    -fx-padding: 0.083333em 0.5em 0.083333em 0.5em;
+    -fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
+
 }
 .tab:top
 {
--fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-color: derive(#1d1d1d,50%);
 }
 .tab:right
 {
--fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-color: derive(#1d1d1d,50%);
 }
 .tab:bottom
 {
--fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-color: derive(#1d1d1d,50%);
 }
 .tab:left
 {
--fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-color: derive(#1d1d1d,50%);
 }
 .tab:hover
 {
@@ -243,10 +243,11 @@
 
 .tab:selected
 {
--fx-background-color: derive(#1d1d1d,50%);
--fx-background-insets: 0, 1 1 0 1;
--fx-background-radius: 5 5 0 0, 4 4 0 0;
+    -fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-insets: 0, 1 1 0 1;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0;
 }
+
 
 .caret {
     -fx-fill : white;
