@@ -253,35 +253,37 @@
 
 
 .text{
-    -fx-fill : white;
+    -fx-fill : #ECECEC;
  }
 
 .text.keyword {
-     -fx-fill: #FF9AF2;
+     -fx-fill: #FFC776;
      -fx-font-weight: bold;
  }
  .text.semicolon {
-     -fx-fill: #FE5757;
+     -fx-fill: #B8FE85;
+     -fx-font-weight: bold;
  }
  .text.paren {
-     -fx-fill: firebrick;
+     -fx-fill: #85FEEB;
      -fx-font-weight: bold;
  }
 
  .text.brace {
-     -fx-fill: #77FAEB;
+     -fx-fill: #85FEEB;
      -fx-font-weight: bold;
  }
  .text.string {
-     -fx-fill: #FEAF57;
+     -fx-fill: #CDF5FF;
  }
 
    .text.comment {
- 	-fx-fill: #ACFA77;
+ 	-fx-fill: #B8FE85;
  }
 
  .text.keywordType{
-    -fx-fill : #DBF18C;
+    -fx-fill : #F2613E;
+    -fx-font-weight: bold;
  }
 
 

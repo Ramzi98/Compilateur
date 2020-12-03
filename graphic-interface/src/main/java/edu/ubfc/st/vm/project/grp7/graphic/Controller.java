@@ -51,7 +51,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private ExecutorService executor= Executors.newSingleThreadExecutor();
 
     private static final String[] KEYWORDS = new String[] {
-            "class", "else","final","if",  "while"
+            "class", "else","final","if",  "while","main", "write" , "writeln"
     };
 
     private static final String[] TYPE = new String[] {
@@ -198,8 +198,11 @@ public class Controller implements Initializable, MJJInterpreterListener {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-        setCurrentFile(selectedFile.getAbsolutePath());
+        File selectedFile = null;
+        try {
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+            setCurrentFile(selectedFile.getAbsolutePath());
+        }catch (Exception e){}
         if (selectedFile != null) {
             if (getCurrentFile() != selectedFile.getAbsolutePath() && getCurrentFile() != "" ) {
                 saveFile(actionEvent);
@@ -228,7 +231,11 @@ public class Controller implements Initializable, MJJInterpreterListener {
     public void openFolder(ActionEvent actionEvent) {
         DirectoryChooser folderChooser = new DirectoryChooser();
         folderChooser.setTitle("choose your directory");
-        File dir = folderChooser.showDialog(new Stage());
+        File dir = null;
+        try{
+            dir = folderChooser.showDialog(new Stage());
+        }catch(Exception e){}
+
         if (dir != null)
         {
             FolderTreeView treeView = new FolderTreeView(dir);
@@ -244,7 +251,10 @@ public class Controller implements Initializable, MJJInterpreterListener {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showSaveDialog(new Stage());
+        File file = null;
+        try {
+            file = fileChooser.showSaveDialog(new Stage());
+        }catch(Exception e){}
         setCurrentFile(file.getAbsolutePath());
         if (file != null) {
             saveTextToFile(currentArea.getText(), file);
@@ -259,9 +269,14 @@ public class Controller implements Initializable, MJJInterpreterListener {
             if (getCurrentFile() == null){
                 saveFileAs(actionEvent);
             }
-            File file = new File(getCurrentFile());
-            file.delete();
-            File newFile = new File(getCurrentFile());
+            File file = null;
+            File newFile = null;
+            try{
+                file = new File(getCurrentFile());
+                file.delete();
+                newFile = new File(getCurrentFile());
+            }catch(Exception e){}
+
             if (newFile != null) {
                 saveTextToFile(codeAreaMiniJaja.getText(), newFile);
             }
@@ -418,7 +433,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
                     matcher.group("STRING") != null ? "string" :
                     matcher.group("COMMENT") != null ? "comment" :
                     null; /* never happens */ assert styleClass != null;
-            System.out.println(styleClass);
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
