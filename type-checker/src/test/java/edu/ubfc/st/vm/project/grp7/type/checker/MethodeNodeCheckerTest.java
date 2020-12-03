@@ -25,7 +25,8 @@ public class MethodeNodeCheckerTest {
         symbolDictionnary = new SymbolDictionnary();
     }
 
-    @Test
+
+     @Test
     public void MethodeNodeTypeCheker__First__Second__Pass() throws IOException, IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -44,9 +45,11 @@ public class MethodeNodeCheckerTest {
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
+        InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 
-        HeaderNode headerNode = HeaderNode.builder()
+         HeaderNode headerNode = HeaderNode.builder()
                 .type(type)
                 .identifier(identheader)
                 .build();
@@ -75,8 +78,9 @@ public class MethodeNodeCheckerTest {
 
     }
 
-/***********************  Ca marche pas parceque ReturnNode ne marche pas encore
-    @Test(expected = IllFormedNodeException.class)
+    /***********************  Ca marche pas parceque ReturnNode ne marche pas encore
+
+     @Test(expected = IllFormedNodeException.class)
     public void MethodeNodeTypeCheker__Exception__OMEGA() throws IOException, IllFormedNodeException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
