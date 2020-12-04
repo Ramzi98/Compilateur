@@ -152,7 +152,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException {
-        System.out.println("hesy");
         HashMap<MiniJajaNode, Integer> h = new HashMap<>();
             int n = node_init(node, h);
             if (compilemode == Mode.NORMALE) {
