@@ -50,13 +50,33 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     //<< w, v, cst, w >.< w, ind, cst, w >.m,a> |- ainc(i) -> <AffecterValT(i,ind,ValT(i,ind,m)+v,m), a+1>
     @Override
     public void visit(JcAincNode node) throws Exception {
+        Quadruplet v = memory.depiler();
+        Quadruplet i = memory.depiler();
+        if (! (i.val() instanceof Integer && v.val() instanceof Integer)) {
+            jjcError(node, "ainc tab index or value aren't integers");
+        }
+        Object val = memory.valT(node.identifier() , (int)i.val());
+        if (! (val instanceof Integer)) {
+            jjcError(node, "ainc tab isn't embedding integers");
+        }
+        memory.affecterValT(node.identifier(), (int)i.val(), (int) v.val() + (int) val);
 
+        n++;
+        node.next().accept(this);
     }
 
     //<< w, ind, cst, w >.m,a> |- aload(i) -> << w, ValT(i, ind, m), cst,w>.m, a+1>
     @Override
     public void visit(JcAloadNode node) throws Exception {
+        Quadruplet i = memory.depiler();
+        if (! (i.val() instanceof Integer)) {
+            jjcError(node, "aload tab index isn't an integer");
+        }
+        Object val = memory.val(node.identifier());
+        memory.empiler(new Quadruplet(null, val, OBJ.CST, null));
 
+        n++;
+        node.next().accept(this);
     }
 
     //<< w, v2,cst,w>.< w, v1,cst,w>.m,a> |- oper2 -> << w, v1 && v2, cst,w>.m, a+1>
@@ -78,7 +98,15 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     //<< w, v, cst, w >.< w, ind, cst, w >.m,a> |- astore(i) -> < AffecterValT(i, ind, v, m), a+1>
     @Override
     public void visit(JcAstoreNode node) throws Exception {
+        Quadruplet i = memory.depiler();
+        Quadruplet v = memory.depiler();
+        if (! (i.val() instanceof Integer)) {
+            jjcError(node, "astore tab index isn't an integer");
+        }
+        memory.affecterValT(node.identifier(), (int) i.val(), v.val());
 
+        n++;
+        node.next().accept(this);
     }
 
     //<< w, v2,cst,w>.< w, v1,cst,w>.m,a> |- oper2 -> << w, v1 > v2, cst,w>.m, a+1>
