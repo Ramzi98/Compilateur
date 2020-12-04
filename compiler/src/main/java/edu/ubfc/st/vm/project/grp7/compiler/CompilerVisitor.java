@@ -942,6 +942,27 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(WriteLnNode node) throws IllFormedNodeException, IOException {
 
+        MiniJajaNode nodeprintln = node.printable();
+        HashMap<MiniJajaNode, Integer> h = new HashMap<>();
+        node_init(node, h);
+
+        try {
+            nodeprintln.accept(this);
+            int ne = (int) stack.pop().values().toArray()[0];
+            h.replace(node, ne + 1);
+            minijajaNodes.set(minijajaNodes.indexOf(h), h);
+            stack.set(stack.indexOf(h), h);
+        } catch (Exception e) {
+            throw new IllFormedNodeException(e.toString());
+        }
+        JcWriteLnNode jcWriteNode = JcWriteLnNode
+                .builder()
+                .line(jajaCodeNodes.size() + 1)
+                .column(1)
+                .build();
+
+        setNextNode(jcWriteNode);
+
     }
 
     @Override
