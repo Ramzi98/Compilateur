@@ -11,6 +11,11 @@ public interface JcInitNode extends JajaCodeNode {
 
     static JcInitNode.Builder builder(){ return new JcInitNode.Builder(); }
 
+    @Override
+    default void accept(ASTVisitor visitor) throws Exception {
+        visitor.visit(this);
+    }
+
     class Builder extends JajaCodeNode.NodeBuilder<JcInitNode.Builder>  {
         JajaCodeNode next;
         public JcInitNode.Builder next(JajaCodeNode next) {
