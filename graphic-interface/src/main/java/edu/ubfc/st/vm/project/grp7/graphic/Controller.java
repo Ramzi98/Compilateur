@@ -105,20 +105,18 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private CharStream codePointCharStream;
     private MiniJajaLexer lexer;
     private MiniJajaParser parser;
-    private ParseTreeWalker walker =new ParseTreeWalker();
+    private ParseTreeWalker walker = new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
     private Executor threadWrite = Executors.newSingleThreadExecutor();
-    private Memory memory ;
+    private Memory memory;
 
     private BreakPoint breakPointMiniJaja;
     private BreakPoint breakPointJajaCode;
 
-    private CodeArea currentArea ;
-
+    private CodeArea currentArea;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         init_code_area(codeAreaMiniJaja);
         init_code_area(codeAreaJajaCode);
 
@@ -129,7 +127,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 .supplyTask(this::computeHighlightingAsync)
                 .awaitLatest(currentArea.multiPlainChanges())
                 .filterMap(t -> {
-                    if(t.isSuccess()) {
+                    if (t.isSuccess()) {
                         return Optional.of(t.get());
                     } else {
                         t.getFailure().printStackTrace();
@@ -143,20 +141,20 @@ public class Controller implements Initializable, MJJInterpreterListener {
             saveFile(null);
             File f2 = new File(getPathFromTree(v.getValue().toString()));
             if (f2 != null) {
-                try{
+                try {
                     setCurrentFile(f2.getAbsolutePath()) ;
                     InputStream flux = new FileInputStream(f2.getAbsoluteFile());
                     InputStreamReader lecture = new InputStreamReader(flux);
                     BufferedReader buff = new BufferedReader(lecture);
                     String ligne;
                     currentArea.clear();
-                    while ((ligne = buff.readLine()) != null){
+                    while ((ligne = buff.readLine()) != null) {
                         currentArea.appendText(ligne);
-                        currentArea.appendText( System.getProperty("line.separator"));
+                        currentArea.appendText(System.getProperty("line.separator"));
                     }
                     buff.close();
                 }
-                catch (Exception e){
+                catch (Exception e) {
                     System.out.println(e.toString());
                 }
             }
@@ -170,7 +168,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private void init_code_area(CodeArea codeArea){
         IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
         IntFunction<Node> graphicFactory;
-        if (codeArea.equals(codeAreaMiniJaja)){
+        if (codeArea.equals(codeAreaMiniJaja)) {
             breakPointMiniJaja = new BreakPoint(codeArea.currentParagraphProperty());
             graphicFactory = line -> {
                 HBox hbox = new HBox(
@@ -179,9 +177,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 hbox.setAlignment(Pos.CENTER_LEFT);
                 return hbox;
             };
-        }else{
-            breakPointJajaCode =new BreakPoint(codeArea.currentParagraphProperty());
-            graphicFactory= line -> {
+        } else {
+            breakPointJajaCode = new BreakPoint(codeArea.currentParagraphProperty());
+            graphicFactory = line -> {
                 HBox hbox = new HBox(
                         numberFactory.apply(line),
                         breakPointJajaCode.apply(line));
@@ -202,7 +200,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
         try {
             selectedFile = fileChooser.showOpenDialog(new Stage());
             setCurrentFile(selectedFile.getAbsolutePath());
-        }catch (Exception e){}
+        } catch (Exception e){
+            //TODO trow choosen Exception or print
+        }
         if (selectedFile != null) {
             if (getCurrentFile() != selectedFile.getAbsolutePath() && getCurrentFile() != "" ) {
                 saveFile(actionEvent);
@@ -226,20 +226,18 @@ public class Controller implements Initializable, MJJInterpreterListener {
         }
     }
 
-
     @FXML
     public void openFolder(ActionEvent actionEvent) {
         DirectoryChooser folderChooser = new DirectoryChooser();
         folderChooser.setTitle("choose your directory");
         File dir = null;
-        try{
+        try {
             dir = folderChooser.showDialog(new Stage());
-        }catch(Exception e){}
+        } catch(Exception e){}
 
-        if (dir != null)
-        {
+        if (dir != null) {
             FolderTreeView treeView = new FolderTreeView(dir);
-            TreeItem<File> root =  treeView.tree;
+            TreeItem<File> root = treeView.tree;
             folderTreeView.setRoot(root);
         }
 
@@ -254,8 +252,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
         File file = null;
         try {
             file = fileChooser.showSaveDialog(new Stage());
-        }catch(Exception e){}
-
+        } catch (Exception e){
+            //TODO trow choosen Exception or print
+        }
         setCurrentFile(file.getAbsolutePath());
         if (file != null) {
             saveTextToFile(currentArea.getText(), file);
@@ -265,18 +264,19 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public void saveFile(ActionEvent actionEvent) {
         currentArea = getCurrentCodeArea();
-        if (currentArea.getText().trim() != "" && currentArea.getText().length() != 0)
-        {
-            if (getCurrentFile() == null){
+        if (currentArea.getText().trim() != "" && currentArea.getText().length() != 0) {
+            if (getCurrentFile() == null) {
                 saveFileAs(actionEvent);
             }
             File file = null;
             File newFile = null;
-            try{
+            try {
                 file = new File(getCurrentFile());
                 file.delete();
                 newFile = new File(getCurrentFile());
-            }catch(Exception e){}
+            } catch (Exception e) {
+                //TODO trow choosen Exception or print
+            }
 
             if (newFile != null) {
                 saveTextToFile(codeAreaMiniJaja.getText(), newFile);
@@ -297,7 +297,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public void newFile(ActionEvent actionEvent) {
         currentArea = getCurrentCodeArea();
-        if (currentArea.getText().trim() == ""){
+        if (currentArea.getText().trim() == "") {
             saveFile(actionEvent);
         }
         currentArea.clear();
@@ -305,45 +305,64 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
     @FXML
     public void compile(ActionEvent actionEvent) throws IOException {
+        saveFile(actionEvent);
+        try {
+            initParserAndLexerFromCurrentFile();
+            try {
+                walker.walk(listener, parser.classe());
+                memory = Memory.getInstance();
+                //MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
+                areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
+            } catch (ASTParsingException e) {
+                System.out.println(e.getMessage());
+                areaError.clear();
+                areaError.appendText(e.getMessage());
+                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     public void initParserAndLexerFromCurrentFile() throws IOException {
-        codePointCharStream = CharStreams.fromPath(Paths.get(getCurrentFile()));
+        codePointCharStream = CharStreams.fromPath(Paths.get(currentFileMiniJaja));
         lexer = new MiniJajaLexer(codePointCharStream);
         parser = new MiniJajaParser(new CommonTokenStream(lexer));
         listener = new MiniJajaListenerImpl();
     }
 
-
     @FXML
     public void run(ActionEvent actionEvent) {
         saveFile(actionEvent);
+        try {
+            initParserAndLexerFromCurrentFile();
             try {
-                initParserAndLexerFromCurrentFile();
-                try {
-                    walker.walk(listener, parser.classe());
-                    ClasseNode classeNode = (ClasseNode)listener.getRoot();
-                    this.threadWrite.execute(() -> {
-                        areaRun.appendText("new execution ... \n\n");
-                    });
-                    memory = Memory.getInstance();
-                    MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-                    this.threadWrite.execute(() -> {
-                        areaRun.appendText("\nEnd of execution\n");
-                    });
-                    areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
-                }catch (ASTParsingException e){
-                    System.out.println(e.getMessage());
-                    areaError.clear();
-                    areaError.appendText(e.getMessage());
-                    areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
+                walker.walk(listener, parser.classe());
+                ClasseNode classeNode = (ClasseNode)listener.getRoot();
+                this.threadWrite.execute(() -> {
+                    areaRun.appendText("new execution ... \n\n");
+                });
+                memory = Memory.getInstance();
+                MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
+                this.threadWrite.execute(() -> {
+                    areaRun.appendText("\nEnd of execution\n");
+                });
+                areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
+            } catch (ASTParsingException e) {
+                System.out.println(e.getMessage());
+                areaError.clear();
+                areaError.appendText(e.getMessage());
+                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -365,7 +384,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private void debug(ActionEvent actionEvent) {
         if (getCurrentCodeArea().equals(codeAreaMiniJaja)) {
             breakPointMiniJaja.returnCheckedLine();
-        }else{
+        } else {
             breakPointJajaCode.returnCheckedLine();
         }
     }
@@ -375,33 +394,31 @@ public class Controller implements Initializable, MJJInterpreterListener {
     }
 
     private CodeArea getCurrentCodeArea(){
-        if (getTabCodeSelected() == null){
+        if (getTabCodeSelected() == null) {
             return codeAreaMiniJaja;
         }
-        if (getTabCodeSelected().equals(tabMiniJaja)){
+        if (getTabCodeSelected().equals(tabMiniJaja)) {
             return codeAreaMiniJaja;
-        }else{
+        } else {
             return codeAreaJajaCode;
         }
     }
 
-    private void setCurrentFile(String path){
-        if (getCurrentCodeArea().equals(codeAreaMiniJaja)){
+    private void setCurrentFile(String path) {
+        if (getCurrentCodeArea().equals(codeAreaMiniJaja)) {
             currentFileMiniJaja = path;
-        }else{
+        } else {
             currentFileJajaCode = path;
         }
     }
 
     private String getCurrentFile(){
-        if (getCurrentCodeArea().equals(codeAreaMiniJaja)){
+        if (getCurrentCodeArea().equals(codeAreaMiniJaja)) {
             return currentFileMiniJaja;
-        }else{
+        } else {
             return currentFileJajaCode;
         }
     }
-
-
 
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
         currentArea = getCurrentCodeArea();
@@ -425,7 +442,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        while(matcher.find()) {
+        while (matcher.find()) {
             String styleClass =
                     matcher.group("KEYWORD") != null ? "keyword" :
                     matcher.group("TYPE") != null ? "keywordType" :

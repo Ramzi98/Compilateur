@@ -8,21 +8,19 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class CompilerImpl implements Compiler {
-
     private final MiniJajaNode node;
     private CompilerVisitor visitor;
     private Stack<HashMap<MiniJajaNode, Integer>> stack = new Stack<>();
-    private ArrayList<HashMap<MiniJajaNode,Integer>> miniJajaNodes = new ArrayList<>();
-    private HashMap<MiniJajaNode,Integer>startingHash = new HashMap<>();
+    private ArrayList<HashMap<MiniJajaNode, Integer>> miniJajaNodes = new ArrayList<>();
+    private HashMap<MiniJajaNode, Integer>startingHash = new HashMap<>();
 
 
-    CompilerImpl(MiniJajaNode node){
+    public CompilerImpl(MiniJajaNode node) {
         this.node = node;
     }
 
     @Override
     public void compile() throws Exception {
-
         visitor = new CompilerVisitor();
         visitor.setStack(stack);
         stack.push(startingHash);
@@ -41,6 +39,4 @@ public class CompilerImpl implements Compiler {
     public ArrayList<JajaCodeNode> jajaCodeNodes() {
         return visitor.getJajaCodeNodes();
     }
-
-
 }
