@@ -72,6 +72,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         try {
             //ndss
+            System.out.println("hey");
+
             node.decls().accept(this);
             int ndss = (int) stack.pop().values().toArray()[0];
             h.replace(node, n + ndss + 1);
@@ -143,6 +145,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException {
+        System.out.println("hesy");
         HashMap<MiniJajaNode, Integer> h = new HashMap<>();
             int n = node_init(node, h);
             if (compilemode == Mode.NORMALE) {
@@ -508,14 +511,20 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         if (compilemode == Mode.NORMALE) {
             try {
-                node.vars().accept(this);
-                int ndvs = (int) stack.pop().values().toArray()[0];
+                int ndvs = 0;
+                if(node.vars() != null) {
+                    node.vars().accept(this);
+                    ndvs = (int) stack.pop().values().toArray()[0];
+                }
                 h.replace(node, n + ndvs);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
 
-                node.instrs().accept(this);
-                int niss = (int) stack.pop().values().toArray()[0];
+                int niss = 0;
+                if(node.vars() != null) {
+                    node.instrs().accept(this);
+                    niss = (int) stack.pop().values().toArray()[0];
+                }
                 h.replace(node, n + ndvs + niss + 1);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
@@ -529,8 +538,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
                 compilemode = Mode.RETRAIT;
 
-                node.vars().accept(this);
-                int nrds = (int) stack.pop().values().toArray()[0];
+                int nrds = 0;
+                if(node.vars() != null) {
+                    node.vars().accept(this);
+                    nrds = (int) stack.pop().values().toArray()[0];
+                }
                 h.replace(node, ndvs + niss + nrds + 1);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);

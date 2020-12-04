@@ -146,8 +146,30 @@ public class CompilerVisitorTest {
             e.printStackTrace();
         }
 
-        JajaCodeNode init = compilere.firstJajaCodeNode();
 
+    }
+
+
+    @Test
+    public void compilerTest2() throws Exception {
+
+
+        IdentNode identClasse = IdentNode.builder().value("test").build();
+        IdentNode identI = IdentNode.builder().value("i").build();
+        NumberNode five = NumberNode.builder().value(5).build();
+        TypeMethNode integer = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        VarNode fiveVar = VarNode.builder().identifier(identI).typeMeth(integer).expression(five).build();
+        DeclsNode decl1 = DeclsNode.builder().decl(fiveVar).decls(null).build();
+
+        MainNode main = MainNode.builder().instrs(null).vars(null).build();
+        ClasseNode classe = ClasseNode.builder().decls(decl1).identifier(identClasse).methmain(main).build();
+
+        compiler.visit(classe);
+        /*
+        Compiler compilee = new CompilerImpl(classe);
+        compilee.compile();
+
+         */
 
 
     }

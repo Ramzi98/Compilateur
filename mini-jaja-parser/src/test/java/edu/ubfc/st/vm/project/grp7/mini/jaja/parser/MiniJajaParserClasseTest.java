@@ -48,6 +48,7 @@ public class MiniJajaParserClasseTest extends MiniJajaParserBaseTest {
         assertThat(classe.methmain().column(), is(4));
         assertThat(classe.methmain().vars(), is(nullValue()));
         assertThat(classe.methmain().instrs(), is(nullValue()));
+
     }
 
 

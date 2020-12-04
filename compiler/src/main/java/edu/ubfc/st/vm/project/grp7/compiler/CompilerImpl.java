@@ -26,7 +26,7 @@ public class CompilerImpl implements Compiler {
         stack.push(startingHash);
         visitor.setStack(stack);
         visitor.setMinijajaNodes(miniJajaNodes);
-        node.accept(visitor);
+        visitor.visit(node);
     }
 
     @Override
