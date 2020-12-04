@@ -55,11 +55,12 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private ExecutorService executor= Executors.newSingleThreadExecutor();
 
     private static final String[] KEYWORDS = new String[] {
-            "class", "else","final","if",  "while","main", "write" , "writeln"
+            "class", "else","final","if",  "while","main", "write" , "writeln",
+            "push","new","newarray", "ainc","swap","pop","jcstop","init"
     };
 
     private static final String[] TYPE = new String[] {
-            "boolean","int", "void"
+            "boolean","int", "void","entier"
     };
 
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
@@ -126,19 +127,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
 
         currentArea = codeAreaMiniJaja;
 
-        Subscription cleanupWhenDone = currentArea.multiPlainChanges()
-                .successionEnds(Duration.ofMillis(100))
-                .supplyTask(this::computeHighlightingAsync)
-                .awaitLatest(currentArea.multiPlainChanges())
-                .filterMap(t -> {
-                    if (t.isSuccess()) {
-                        return Optional.of(t.get());
-                    } else {
-                        t.getFailure().printStackTrace();
-                        return Optional.empty();
-                    }
-                })
-                .subscribe(this::applyHighlighting);
+        syntaxiqueColor(codeAreaJajaCode);
+        syntaxiqueColor(codeAreaMiniJaja);
+
 
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
             (v, oldValue, newValue) -> {
@@ -165,6 +156,21 @@ public class Controller implements Initializable, MJJInterpreterListener {
         });
     }
 
+    private void syntaxiqueColor(CodeArea codeArea){
+        Subscription cleanupWhenDone = codeArea.multiPlainChanges()
+                .successionEnds(Duration.ofMillis(100))
+                .supplyTask(this::computeHighlightingAsync)
+                .awaitLatest(codeArea.multiPlainChanges())
+                .filterMap(t -> {
+                    if (t.isSuccess()) {
+                        return Optional.of(t.get());
+                    } else {
+                        t.getFailure().printStackTrace();
+                        return Optional.empty();
+                    }
+                })
+                .subscribe(this::applyHighlighting);
+    }
     private String getPathFromTree(String str){
         return str.split(" ")[3];
     }
@@ -283,7 +289,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
             }
 
             if (newFile != null) {
-                saveTextToFile(codeAreaMiniJaja.getText(), newFile);
+                saveTextToFile(currentArea.getText(), newFile);
             }
         }
     }
