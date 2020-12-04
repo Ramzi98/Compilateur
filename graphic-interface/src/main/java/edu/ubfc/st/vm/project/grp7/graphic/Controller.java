@@ -174,8 +174,8 @@ public class Controller implements Initializable, MJJInterpreterListener {
             breakPointMiniJaja = new BreakPoint(codeArea.currentParagraphProperty());
             graphicFactory = line -> {
                 HBox hbox = new HBox(
-                        numberFactory.apply(line),
-                        breakPointMiniJaja.apply(line));
+                        breakPointMiniJaja.apply(line),
+                        numberFactory.apply(line));
                 hbox.setAlignment(Pos.CENTER_LEFT);
                 return hbox;
             };
