@@ -1,5 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
+import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
@@ -114,7 +116,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private BreakPoint breakPointJajaCode;
 
     private CodeArea currentArea;
-
     private Compiler compiler;
 
     @Override
@@ -312,22 +313,20 @@ public class Controller implements Initializable, MJJInterpreterListener {
             initParserAndLexerFromCurrentFile();
             try {
                 walker.walk(listener, parser.classe());
-                memory = Memory.getInstance();
-                //MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-                areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
+                ClasseNode classeNode = (ClasseNode)listener.getRoot();
+                compiler = new CompilerImpl(classeNode);
+                compiler.compile();
+                JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
+                codeAreaJajaCode.appendText(jccPrinter.toString());
+                tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
             } catch (ASTParsingException e) {
-                System.out.println(e.getMessage());
-                areaError.clear();
-                areaError.appendText(e.getMessage());
-                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
-            }
+                // TODO: 04/12/2020
+                }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void initParserAndLexerFromCurrentFile() throws IOException {
@@ -336,6 +335,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
         parser = new MiniJajaParser(new CommonTokenStream(lexer));
         listener = new MiniJajaListenerImpl();
     }
+
+
+
 
     @FXML
     public void run(ActionEvent actionEvent) {

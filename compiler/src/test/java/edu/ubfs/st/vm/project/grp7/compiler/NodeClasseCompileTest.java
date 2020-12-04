@@ -162,8 +162,6 @@ public class NodeClasseCompileTest {
 
         Compiler com = Compiler.CompilerBuilder(classeNode);
         com.compile();
-
-
     }
 
     private static final VarsNode vnil = new VarsNode() {

@@ -27,7 +27,6 @@ public class CompilerImpl implements Compiler {
         visitor.setStack(stack);
         visitor.setMinijajaNodes(miniJajaNodes);
         node.accept(visitor);
-        
     }
 
     @Override
