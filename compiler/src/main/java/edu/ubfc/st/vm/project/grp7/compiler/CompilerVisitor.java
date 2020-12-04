@@ -72,10 +72,13 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
         try {
             //ndss
-            System.out.println("hey");
 
-            node.decls().accept(this);
-            int ndss = (int) stack.pop().values().toArray()[0];
+            int ndss = 0;
+            if(node.decls() != null)
+            {
+                node.decls().accept(this);
+                ndss = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, n + ndss + 1);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
@@ -90,8 +93,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             compilemode = Mode.RETRAIT;
 
             //nrdss
-            node.decls().accept(this);
-            int nrdss = (int) stack.pop().values().toArray()[0];
+            int nrdss = 0;
+            if(node.decls() != null)
+            {
+                node.decls().accept(this);
+                nrdss = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, ndss + nmma + nrdss + 3);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
@@ -434,14 +441,22 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
 
-                node.vars().accept(this);
-                int ndvs = (int) stack.pop().values().toArray()[0];
+                int ndvs = 0;
+                if(node.vars() != null)
+                {
+                    node.vars().accept(this);
+                    ndvs = (int) stack.pop().values().toArray()[0];
+                }
                 h.replace(node, n + nens + ndvs + 3);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
 
-                node.instrs().accept(this);
-                int niss = (int) stack.pop().values().toArray()[0];
+                int niss = 0;
+                if(node.instrs() != null)
+                {
+                    node.instrs().accept(this);
+                    niss = (int) stack.pop().values().toArray()[0];
+                }
                 h.replace(node, n + nens + ndvs + niss + 3);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
@@ -458,8 +473,13 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
                 compilemode = Mode.RETRAIT;
 
-                node.vars().accept(this);
-                int nrdvs = (int) stack.pop().values().toArray()[0];
+                int nrdvs = 0;
+                if(node.vars() != null)
+                {
+                    node.vars().accept(this);
+                    nrdvs = (int) stack.pop().values().toArray()[0];
+                }
+
                 h.replace(node, nens + ndvs + niss + nrdvs + nr);
                 minijajaNodes.set(minijajaNodes.indexOf(h), h);
                 stack.set(stack.indexOf(h), h);
@@ -521,7 +541,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 stack.set(stack.indexOf(h), h);
 
                 int niss = 0;
-                if(node.vars() != null) {
+                if(node.instrs() != null) {
                     node.instrs().accept(this);
                     niss = (int) stack.pop().values().toArray()[0];
                 }
@@ -833,9 +853,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         node_init(node, h);
 
         try {
-            node.listexp().accept(this);
-            int nlexp = (int) stack.pop().values().toArray()[0];
-
+            int nlexp = 0;
+            if(node.listexp() != null) {
+                node.listexp().accept(this);
+                nlexp = (int) stack.pop().values().toArray()[0];
+            }
 
             JcInvokeNode jcInvokeNode = JcInvokeNode
                     .builder()
@@ -848,8 +870,11 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
             compilemode = Mode.RETRAIT;
 
-            node.listexp().accept(this);
-            int nrlexp = (int) stack.pop().values().toArray()[0];
+            int nrlexp = 0;
+            if(node.listexp() != null) {
+                node.listexp().accept(this);
+                nrlexp = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, nlexp + nrlexp + 2);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
@@ -963,8 +988,13 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .adresse(0)
                     .build();
             setNextNode(jcIfNode);
-            nodeis2.accept(this);
-            int ns1 = (int) stack.pop().values().toArray()[0];
+            int ns1 = 0;
+            if(nodeis2 != null)
+            {
+                nodeis2.accept(this);
+                ns1 = (int) stack.pop().values().toArray()[0];
+            }
+
             JcGotoNode jcGotoNode = JcGotoNode
                     .builder()
                     .line(jajaCodeNodes.size() + 1)
@@ -975,8 +1005,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             h.replace(node, n + ne + ns1 + 2);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
-            nodeis1.accept(this);
-            int ns = (int) stack.pop().values().toArray()[0];
+            int ns =0;
+            if(nodeis2 != null)
+            {
+                nodeis1.accept(this);
+                ns = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, ne + ns1 + ns + 2);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
@@ -1022,8 +1056,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .build();
             setNextNode(jcIfNode);
 
-            nodeinstrs.accept(this);
-            int niss = (int) stack.pop().values().toArray()[0];
+            int niss = 0;
+            if(nodeinstrs != null)
+            {
+                nodeinstrs.accept(this);
+                niss = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, ne + niss + 3);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
@@ -1461,10 +1499,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         node_init(node, h);
 
         try {
-
-            node.listexp().accept(this);
-            int nlexp = (int) stack.pop().values().toArray()[0];
-
+            int nlexp = 0;
+            if(node.listexp() != null)
+            {
+                node.listexp().accept(this);
+                nlexp = (int) stack.pop().values().toArray()[0];
+            }
 
             JcInvokeNode jcInvokeNode = JcInvokeNode
                     .builder()
@@ -1478,8 +1518,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             //Retrait
             compilemode = Mode.RETRAIT;
 
-            node.listexp().accept(this);
-            int nrlexp = (int) stack.pop().values().toArray()[0];
+            int nrlexp = 0;
+            if(node.listexp() != null)
+            {
+                node.listexp().accept(this);
+                nrlexp = (int) stack.pop().values().toArray()[0];
+            }
             h.replace(node, nlexp + nrlexp + 1);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
