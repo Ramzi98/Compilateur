@@ -32,7 +32,4 @@ public class JcAddImpl extends ASTNodeBreakpoint implements JcAddNode {
             default: {throw new IndexOutOfBoundsException();}
         }
     }
-
-
-
 }
