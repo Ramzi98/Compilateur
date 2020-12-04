@@ -193,7 +193,6 @@ public class JCCPrinter extends JajaCodeASTVisitor {
     @Override
     public void visit(JcStopNode node) throws Exception {
         builder.append("jcstop\n");
-        node.next().accept(this);
     }
 
     @Override
