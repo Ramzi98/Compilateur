@@ -321,7 +321,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
             } catch (ASTParsingException e) {
                 // TODO: 04/12/2020
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
