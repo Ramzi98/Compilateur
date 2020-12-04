@@ -45,7 +45,24 @@ public interface JcNewarrayNode extends JajaCodeNode {
     }
 
     enum Type {
-        INT, BOOLEAN, VOID;
+        INT{
+            @Override
+            public String toString() {
+                return "entier";
+            }
+        },
+        BOOLEAN{
+            @Override
+            public String toString() {
+                return "booléen";
+            }
+        },
+        VOID{
+            @Override
+            public String toString() {
+                return "void";
+            }
+        };
 
         public static Type of(TypeMethNode.TypeMeth value) {
             switch (value) {

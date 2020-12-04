@@ -263,7 +263,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .line(jajaCodeNodes.size() + 1)
                     .column(1)
                     .identifier(node.identifier().value())
-                    .sorte(JcNewNode.Sorte.Var)
+                    .sorte(JcNewNode.Sorte.VAR)
                     .type(getType(node.typeMeth().value()))
                     .depth(0)
                     .build();
@@ -358,7 +358,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .line(jajaCodeNodes.size() + 1)
                     .column(1)
                     .identifier(node.identifier().value())
-                    .sorte(JcNewNode.Sorte.Cst)
+                    .sorte(JcNewNode.Sorte.CST)
                     .type(getType(node.type().value()))
                     .depth(0)
                     .build();
@@ -410,7 +410,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                         .line(jajaCodeNodes.size() + 1)
                         .column(1)
                         .identifier(node.identifier().value())
-                        .sorte(JcNewNode.Sorte.Meth)
+                        .sorte(JcNewNode.Sorte.METH)
                         .type(getType(node.typeMeth().value()))
                         .depth(0)
                         .build();
@@ -584,7 +584,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     .line(jajaCodeNodes.size() + 1)
                     .column(1)
                     .identifier(node.identifier().value())
-                    .sorte(JcNewNode.Sorte.Var)
+                    .sorte(JcNewNode.Sorte.VAR)
                     .type(getType(node.type().value()))
                     .depth(nheader)
                     .build();

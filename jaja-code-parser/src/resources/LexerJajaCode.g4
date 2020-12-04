@@ -56,8 +56,8 @@ BOOLEAN : 'boolean';
 /* ===================== LITERRALS ===================== */
 
 BoolLitteral
-	:	'true'
-	|	'false'
+	:	'vrai'
+	|	'faux'
 	;
 
 // String Literals

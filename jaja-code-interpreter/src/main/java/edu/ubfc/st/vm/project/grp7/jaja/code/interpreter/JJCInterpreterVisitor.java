@@ -260,14 +260,14 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         int depth = node.depth();
         Quadruplet quad;
         switch (sorte) {
-            case Var:
+            case VAR:
                 memory.identVal(ident, SORTE.of(type), depth);
                 break;
-            case Cst:
+            case CST:
                 quad = memory.depiler();
                 memory.declCst(ident, quad.val(), SORTE.of(type));
                 break;
-            case Meth:
+            case METH:
                 quad = memory.depiler();
                 memory.declMeth(ident, quad.val(), SORTE.of(type));
                 break;
@@ -437,4 +437,5 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         n++;
         node.next().accept(this);
     }
+
 }

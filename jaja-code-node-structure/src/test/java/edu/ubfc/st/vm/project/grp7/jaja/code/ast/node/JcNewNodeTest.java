@@ -14,7 +14,7 @@ public class JcNewNodeTest {
                 .column(67)
                 .depth(100)
                 .next(jajaCodeNode)
-                .sorte(JcNewNode.Sorte.Var)
+                .sorte(JcNewNode.Sorte.VAR)
                 .type(JcNewNode.Type.INT)
                 .identifier("max")
                 .build();
@@ -47,7 +47,7 @@ public class JcNewNodeTest {
 
     @Test
     public void check__JcNewNode__sorte() {
-        assertThat(jcNewNode.sorte(), is(JcNewNode.Sorte.Var));
+        assertThat(jcNewNode.sorte(), is(JcNewNode.Sorte.VAR));
     }
 
     @Test
