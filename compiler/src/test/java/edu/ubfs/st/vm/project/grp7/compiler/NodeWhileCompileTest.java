@@ -73,7 +73,7 @@ public class NodeWhileCompileTest {
         IdentNode identNode = IdentNode.builder().value("J").build();
         NumberNode expression = NumberNode.builder().value(3).build();
         AssignNode assignNode = AssignNode.builder().identifier(identNode).expression(expression).build();
-        InstrsNode instrsNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(inil).build();
+        InstrsNode instrsNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(null).build();
 
         WhileNode whileNode = WhileNode.builder().expression(expNode).instrs(instrsNode).build();
         compiler.visit(whileNode);
@@ -85,36 +85,5 @@ public class NodeWhileCompileTest {
         assertThat(jcGotoNode.adresse(),is(35));
 
     }
-    private static final InstrsNode inil = new InstrsNode() {
 
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-    };
 }

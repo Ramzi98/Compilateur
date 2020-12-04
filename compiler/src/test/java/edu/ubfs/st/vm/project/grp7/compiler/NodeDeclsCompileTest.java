@@ -88,14 +88,14 @@ public class NodeDeclsCompileTest {
                 .line(1)
                 .column(10)
                 .var(varNode)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         DeclsNode declsNode = DeclsNode.builder()
                 .line(1)
                 .column(0)
                 .decl(varNode)
-                .decls(vnil1)
+                .decls(null)
                 .build();
 
         compiler.visit(declsNode);
@@ -104,68 +104,5 @@ public class NodeDeclsCompileTest {
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
     }
 
-    private static final VarsNode vnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final DeclsNode vnil1 = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 
 }

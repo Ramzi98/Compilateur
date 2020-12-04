@@ -67,41 +67,10 @@ public class NodeListExpCompileTest {
     @Test
     public void NodeListeExpCompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
-        ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(exnil).build();
+        ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(null).build();
         compiler.visit(lexp);
         assertThat(compiler.getJajaCodeNodes().size(), is(2));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
     }
 
-    private static final ListExpNode exnil = new ListExpNode() {
-        @Override
-        public MiniJajaNode expression() {
-            return null;
-        }
-
-        @Override
-        public ListExpNode listexp() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 }

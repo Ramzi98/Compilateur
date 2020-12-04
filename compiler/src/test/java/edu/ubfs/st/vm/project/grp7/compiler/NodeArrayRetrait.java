@@ -84,7 +84,7 @@ public class NodeArrayRetrait {
 
         VarsNode varsNode = VarsNode.builder()
                 .var(varNode)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         ArrayNode arrayNode = ArrayNode.builder()
@@ -99,7 +99,7 @@ public class NodeArrayRetrait {
                 .line(1)
                 .column(0)
                 .decl(arrayNode)
-                .decls(vnil1)
+                .decls(null)
                 .build();
 
         IdentNode ident2 = IdentNode.builder().value("I").build();
@@ -109,7 +109,7 @@ public class NodeArrayRetrait {
                 .line(1)
                 .column(0)
                 .instruction(assignNode)
-                .instrs(instrs)
+                .instrs(null)
                 .build();
 
         MainNode mainNode = MainNode.builder()
@@ -134,99 +134,4 @@ public class NodeArrayRetrait {
 
     }
 
-    private static final VarsNode vnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final DeclsNode vnil1 = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final InstrsNode instrs = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            throw new IndexOutOfBoundsException();
-        }
-
-        @Override
-        public int line() {
-            return 13;
-        }
-
-        @Override
-        public int column() {
-            return 10;
-        }
-    };
 }

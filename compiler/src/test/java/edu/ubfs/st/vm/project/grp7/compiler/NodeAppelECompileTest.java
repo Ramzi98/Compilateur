@@ -67,7 +67,7 @@ public class NodeAppelECompileTest {
     public void NodeAppelECompileVisitor() throws IOException, IllFormedNodeException, CompilerException {
 
         IdentNode ident = IdentNode.builder().value("I").build();
-        ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(exnil).build();
+        ListExpNode lexp = ListExpNode.builder().expression(NumberNode.builder().value(2).build()).listexp(null).build();
 
         AppelENode appelE = AppelENode.builder().identifier(ident).listexp(lexp).build();
         compiler.visit(appelE);
@@ -75,35 +75,5 @@ public class NodeAppelECompileTest {
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(4));
 
     }
-    private static final ListExpNode exnil = new ListExpNode() {
-        @Override
-        public MiniJajaNode expression() {
-            return null;
-        }
 
-        @Override
-        public ListExpNode listexp() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 }

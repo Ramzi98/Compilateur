@@ -67,7 +67,6 @@ public class NodeVarsCompileTest {
     public void NodeVarsCompilerVisitor1() throws IOException, IllFormedNodeException, CompilerException {
 
 
-
         TypeMethNode typeMeth = TypeMethNode.builder()
                 .line(1)
                 .column(0)
@@ -90,14 +89,13 @@ public class NodeVarsCompileTest {
                 .line(1)
                 .column(10)
                 .var(varNode)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         compiler.visit(varsNode);
 
         assertThat(compiler.getJajaCodeNodes().size(), is(3));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(2));
-        assertThat(compiler.getMinijajaNodes().size(),is(5));
 
 
     }
@@ -141,7 +139,7 @@ public class NodeVarsCompileTest {
                 .line(1)
                 .column(10)
                 .var(varNode2)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         VarsNode varsNode = VarsNode.builder()
@@ -155,42 +153,11 @@ public class NodeVarsCompileTest {
 
         assertThat(compiler.getJajaCodeNodes().size(), is(5));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(4));
-        assertThat(compiler.getMinijajaNodes().size(),is(8));
 
 
     }
 
-    private static final VarsNode vnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
 
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 
 
 }

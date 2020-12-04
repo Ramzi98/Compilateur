@@ -77,7 +77,7 @@ public class NodeInstrsCompileTest {
         IdentNode ident2 = IdentNode.builder().value("J").build();
         NumberNode expression2 = NumberNode.builder().value(3).build();
         AssignNode assignNode2 = AssignNode.builder().identifier(ident2).expression(expression2).build();
-        InstrsNode instsrNode2 = InstrsNode.builder().line(1).column(0).instruction(assignNode2).instrs(instrs).build();
+        InstrsNode instsrNode2 = InstrsNode.builder().line(1).column(0).instruction(assignNode2).instrs(null).build();
         InstrsNode instsrNode = InstrsNode.builder().line(1).column(0).instruction(assignNode).instrs(instsrNode2).build();
 
         compiler.visit(instsrNode);
@@ -87,35 +87,5 @@ public class NodeInstrsCompileTest {
 
     }
 
-    private static final InstrsNode instrs = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
 
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            throw new IndexOutOfBoundsException();
-        }
-
-        @Override
-        public int line() {
-            return 13;
-        }
-
-        @Override
-        public int column() {
-            return 10;
-        }
-    };
 }

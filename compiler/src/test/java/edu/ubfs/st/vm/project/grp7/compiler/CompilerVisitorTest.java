@@ -3,6 +3,7 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcPushNode;
@@ -88,14 +89,14 @@ public class CompilerVisitorTest {
                 .line(1)
                 .column(10)
                 .var(varNode)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         DeclsNode declsNode = DeclsNode.builder()
                 .line(1)
                 .column(0)
                 .decl(varNode)
-                .decls(vnil1)
+                .decls(null)
                 .build();
 
         IdentNode ident2 = IdentNode.builder().value("I").build();
@@ -109,12 +110,12 @@ public class CompilerVisitorTest {
         IdentNode ident2If = IdentNode.builder().value("J").build();
         NumberNode expression2If = NumberNode.builder().value(3).build();
         AssignNode assignNode2If = AssignNode.builder().identifier(ident2If).expression(expression2If).build();
-        InstrsNode instsrNode2If = InstrsNode.builder().line(1).column(0).instruction(assignNode2If).instrs(instrs).build();
+        InstrsNode instsrNode2If = InstrsNode.builder().line(1).column(0).instruction(assignNode2If).instrs(null).build();
         InstrsNode instsrNodeIf = InstrsNode.builder().line(1).column(0).instruction(assignNodeIf).instrs(instsrNode2If).build();
 
         IfNode ifNode = IfNode.builder().expression(expNodeIf).trueInstrs(instsrNodeIf).falseInstrs(instsrNode2If).build();
 
-        InstrsNode InstrNodeIfGlobal = InstrsNode.builder().instruction(ifNode).instrs(instrs).build();
+        InstrsNode InstrNodeIfGlobal = InstrsNode.builder().instruction(ifNode).instrs(null).build();
         InstrsNode instsrNode = InstrsNode.builder()
                 .line(1)
                 .column(0)
@@ -138,117 +139,17 @@ public class CompilerVisitorTest {
                 .methmain(mainNode)
                 .build();
 
-        Compiler compiler = Compiler.CompilerBuilder(classeNode);
+        Compiler compilere = new CompilerImpl(classeNode);
         try {
-            compiler.compile();
+            compilere.compile();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        JajaCodeNode init = compiler.firstJajaCodeNode();
-        System.out.println(compiler.jajaCodeNodes());
-        System.out.println(init.next());
+        JajaCodeNode init = compilere.firstJajaCodeNode();
+
 
 
     }
-
-
-
-    private static final VarsNode vnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final DeclsNode vnil1 = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final InstrsNode instrs = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            throw new IndexOutOfBoundsException();
-        }
-
-        @Override
-        public int line() {
-            return 13;
-        }
-
-        @Override
-        public int column() {
-            return 10;
-        }
-    };
-
 
 }

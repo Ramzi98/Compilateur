@@ -92,14 +92,14 @@ public class NodeClasseCompileTest {
                 .line(1)
                 .column(10)
                 .var(varNode)
-                .vars(vnil)
+                .vars(null)
                 .build();
 
         DeclsNode declsNode = DeclsNode.builder()
                 .line(1)
                 .column(0)
                 .decl(varNode)
-                .decls(vnil1)
+                .decls(null)
                 .build();
 
         IdentNode ident2 = IdentNode.builder().value("I").build();
@@ -113,12 +113,12 @@ public class NodeClasseCompileTest {
         IdentNode ident2If = IdentNode.builder().value("J").build();
         NumberNode expression2If = NumberNode.builder().value(3).build();
         AssignNode assignNode2If = AssignNode.builder().identifier(ident2If).expression(expression2If).build();
-        InstrsNode instsrNode2If = InstrsNode.builder().line(1).column(0).instruction(assignNode2If).instrs(instrs).build();
+        InstrsNode instsrNode2If = InstrsNode.builder().line(1).column(0).instruction(assignNode2If).instrs(null).build();
         InstrsNode instsrNodeIf = InstrsNode.builder().line(1).column(0).instruction(assignNodeIf).instrs(instsrNode2If).build();
 
         IfNode ifNode = IfNode.builder().expression(expNodeIf).trueInstrs(instsrNodeIf).falseInstrs(instsrNode2If).build();
 
-        InstrsNode InstrNodeIfGlobal = InstrsNode.builder().instruction(ifNode).instrs(instrs).build();
+        InstrsNode InstrNodeIfGlobal = InstrsNode.builder().instruction(ifNode).instrs(null).build();
         InstrsNode instsrNode = InstrsNode.builder()
                 .line(1)
                 .column(0)
@@ -156,108 +156,12 @@ public class NodeClasseCompileTest {
 
         compiler1.compile();
         JajaCodeNode jajaCodeNode = compiler1.firstJajaCodeNode();
-        System.out.println(jajaCodeNode);
-        System.out.println(jajaCodeNode.next());
 
 
         Compiler com = Compiler.CompilerBuilder(classeNode);
         com.compile();
     }
 
-    private static final VarsNode vnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
 
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final DeclsNode vnil1 = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final InstrsNode instrs = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            throw new IndexOutOfBoundsException();
-        }
-
-        @Override
-        public int line() {
-            return 13;
-        }
-
-        @Override
-        public int column() {
-            return 10;
-        }
-    };
 
 }

@@ -102,7 +102,7 @@ public class GetHeadersNumberMethodTest {
                 .line(1)
                 .column(10)
                 .header(headerNode)
-                .headers(enil)
+                .headers(null)
                 .build();
 
         HeadersNode headersNode2 = HeadersNode.builder()
@@ -118,35 +118,5 @@ public class GetHeadersNumberMethodTest {
 
     }
 
-    private static final HeadersNode enil = new HeadersNode() {
-        @Override
-        public HeaderNode header() {
-            return null;
-        }
 
-        @Override
-        public HeadersNode headers() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 }
