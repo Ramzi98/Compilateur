@@ -1,4 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
+import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
@@ -76,7 +77,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
                     + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
     );
 
-
     @FXML
     private CodeArea codeAreaMiniJaja;
     @FXML
@@ -114,6 +114,8 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private BreakPoint breakPointJajaCode;
 
     private CodeArea currentArea;
+
+    private Compiler compiler;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
