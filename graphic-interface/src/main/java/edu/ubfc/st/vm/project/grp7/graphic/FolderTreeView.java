@@ -32,7 +32,6 @@ public class FolderTreeView  {
                     File f = getValue();
                     isLeaf = f.isFile();
                 }
-
                 return isLeaf;
             }
 

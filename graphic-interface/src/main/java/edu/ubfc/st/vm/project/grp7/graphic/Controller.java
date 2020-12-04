@@ -108,7 +108,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private ParseTreeWalker walker =new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
     private Executor threadWrite = Executors.newSingleThreadExecutor();
-    private Memory memory = Memory.getInstance();
+    private Memory memory ;
 
     private BreakPoint breakPointMiniJaja;
     private BreakPoint breakPointJajaCode;
@@ -255,6 +255,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
         try {
             file = fileChooser.showSaveDialog(new Stage());
         }catch(Exception e){}
+
         setCurrentFile(file.getAbsolutePath());
         if (file != null) {
             saveTextToFile(currentArea.getText(), file);
@@ -324,8 +325,9 @@ public class Controller implements Initializable, MJJInterpreterListener {
                     walker.walk(listener, parser.classe());
                     ClasseNode classeNode = (ClasseNode)listener.getRoot();
                     this.threadWrite.execute(() -> {
-                                areaRun.appendText("new execution ... \n\n");
-                            });
+                        areaRun.appendText("new execution ... \n\n");
+                    });
+                    memory = Memory.getInstance();
                     MiniJajaInterpreter.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
                     this.threadWrite.execute(() -> {
                         areaRun.appendText("\nEnd of execution\n");
