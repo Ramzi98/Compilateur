@@ -4,6 +4,8 @@ import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreter;
+import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterController;
 import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterVisitor;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
@@ -457,7 +459,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
     @FXML
     public void runJajaCode(ActionEvent actionEvent) {
         //Jcc.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-        //JJCInterpreter.getFactory().createFrom(memoryJajaCode,jcInitNode).interpret(new JJCInterpreterController(jjcInterpreterVisitor) );
+       // JJCInterpreter.getFactory().createFrom(memoryJajaCode,jcInitNode).interpret(new JJCInterpreterController(this) );
     }
 
     @FXML
@@ -487,5 +489,8 @@ public class Controller implements Initializable, MJJInterpreterListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void step(ActionEvent actionEvent) {
     }
 }
