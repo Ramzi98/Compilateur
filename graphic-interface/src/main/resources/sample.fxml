@@ -21,15 +21,15 @@
                 <Menu mnemonicParsing="false" text="Code">
                     <items>
                         <MenuItem fx:id="itemCompile" mnemonicParsing="false" onAction="#compile" text="Compile" />
-                        <MenuItem fx:id="itemRunMiniJaja" mnemonicParsing="false" onAction="#runMiniJaja" text="Run Mini Jaja" />
-                        <MenuItem fx:id="itemRunJajaCode" mnemonicParsing="false" onAction="#runJajaCode" text="Run Jaja Code" />
+                        <MenuItem fx:id="itemRunMiniJaja" mnemonicParsing="false" onAction="#runCode" text="Run" />
                     </items>
                 </Menu>
             </menus>
             <Menu mnemonicParsing="false" text="Debug">
                 <items>
-                    <MenuItem fx:id="runWithDebug" mnemonicParsing="false" onAction="#debug" text="Run with debug" />
+                    <MenuItem fx:id="runWithDebug" mnemonicParsing="false" onAction="#runWithDebug" text="Run with debug" />
                     <MenuItem fx:id="runStepDebug" accelerator="Ctrl + r"  mnemonicParsing="false" onAction="#step" text="Next step" />
+                    <MenuItem fx:id="runBreakpointDebug" accelerator="Ctrl + b"  mnemonicParsing="false" onAction="#nextBreakPoint" text="Next BreakPoint" />
                 </items>
             </Menu>
         </MenuBar>

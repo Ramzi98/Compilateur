@@ -64,7 +64,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         memory.retirerDecl(node.identifier().value());
     }
 
-    private void debug(ASTNode node) {
+    private void debug(ASTNode node) throws InterruptedException {
         controller.debug(node.line());
     }
 

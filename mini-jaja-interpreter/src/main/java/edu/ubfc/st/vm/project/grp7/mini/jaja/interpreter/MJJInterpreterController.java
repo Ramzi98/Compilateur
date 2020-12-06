@@ -15,7 +15,7 @@ public class MJJInterpreterController {
         this.listener.mjjWriteLn(str);
     }
     
-    public void debug(int line) {
+    public void debug(int line) throws InterruptedException {
         listener.debug(line);
     }
 }

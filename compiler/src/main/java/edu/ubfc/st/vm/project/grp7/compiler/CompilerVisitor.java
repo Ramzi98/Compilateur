@@ -890,14 +890,12 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         stack.set(stack.indexOf(h), h);
     }
 
-
     @Override
     public void visit(WriteNode node) throws IllFormedNodeException, IOException {
         MiniJajaNode nodePrintable = node.printable();
         HashMap<MiniJajaNode, Integer> h = new HashMap<>();
         node_init(node, h);
-
-        try {
+        try{
             nodePrintable.accept(this);
             int ne = (int) stack.pop().values().toArray()[0];
             h.replace(node, ne + 1);
@@ -947,14 +945,14 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         minijajaNodes.add(h);
         stack.push(h);
 
-        JcPushNode jcPushNode = JcPushNode
+        JcPushNode.Builder jcPushNodeBuilder = JcPushNode
                 .builder()
                 .line(jajaCodeNodes.size() + 1)
-                .column(1)
-                .valeur(String.format("\"%s\"", node.value()))
-                .build();
+                .column(1);
 
-        setNextNode(jcPushNode);
+        jcPushNodeBuilder.valeur(node.value());
+
+        setNextNode(jcPushNodeBuilder.build());
     }
 
     @Override
