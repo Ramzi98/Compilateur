@@ -74,13 +74,13 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
 
     private static final Pattern PATTERN = Pattern.compile(
-                    "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
-                    + "|(?<PAREN>" + PAREN_PATTERN + ")"
-                    + "|(?<TYPE>" + KEYWORD_TYPE_PATTERN + ")"
-                    + "|(?<BRACE>" + BRACE_PATTERN + ")"
-                    + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
-                    + "|(?<STRING>" + STRING_PATTERN + ")"
-                    + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
+        "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
+        + "|(?<PAREN>" + PAREN_PATTERN + ")"
+        + "|(?<TYPE>" + KEYWORD_TYPE_PATTERN + ")"
+        + "|(?<BRACE>" + BRACE_PATTERN + ")"
+        + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
+        + "|(?<STRING>" + STRING_PATTERN + ")"
+        + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
     );
 
     @FXML
