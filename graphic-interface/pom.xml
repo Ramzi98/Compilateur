@@ -15,6 +15,7 @@
     <name>Interface Graphique</name>
 
     <dependencies>
+        <!-- EXT -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -27,37 +28,35 @@
             <groupId>org.fxmisc.richtext</groupId>
             <artifactId>richtextfx</artifactId>
         </dependency>
-        
-        
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
         </dependency>
-
+        <!-- END EXT -->
 
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-interpreter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>jaja-code-interpreter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-node-structure</artifactId>
         </dependency>
-
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-parser</artifactId>
         </dependency>
-
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>compiler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>utils</artifactId>
         </dependency>
     </dependencies>
 

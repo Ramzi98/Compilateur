@@ -1,5 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
+import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
@@ -43,11 +44,9 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     }
 
 
-
-
-
     @Override
     public void visit(ClasseNode node) throws Exception {
+        debug(node);
         memory.declVar(node.identifier().value(), null, null);
         if (node.decls() != null ) {
             node.decls().accept(this);
@@ -65,6 +64,10 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         memory.retirerDecl(node.identifier().value());
     }
 
+    private void debug(ASTNode node) {
+        controller.debug(node.line());
+    }
+
     @Override
     public void visit(IdentNode node) throws Exception {
         evals.push(memory.val(node.value()));
@@ -72,6 +75,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(DeclsNode node) throws Exception {
+        debug(node);
         if (modeRetrait) {
             if (node.decls() != null) {
                 node.decls().accept(this);
@@ -102,6 +106,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(VarNode node) throws Exception {
+        debug(node);
         if (modeRetrait) {
             memory.retirerDecl(node.identifier().value());
         } else {
@@ -115,6 +120,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ArrayNode node) throws Exception {
+        debug(node);
         if (modeRetrait) {
             memory.retirerDecl(node.identifier().value());
         } else {
@@ -128,6 +134,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(CstNode node) throws Exception {
+        debug(node);
         if (modeRetrait) {
             memory.retirerDecl(node.identifier().value());
         } else {
@@ -146,6 +153,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(MainNode node) throws Exception {
+        debug(node);
         if (modeRetrait) {
             if (node.vars() != null ){
                 node.vars().accept(this);
@@ -192,6 +200,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AssignNode node) throws Exception {
+        debug(node);
         node.expression().accept(this);
         if (node.identifier() instanceof ArrayItemNode) { // affectationT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
@@ -205,6 +214,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(SumNode node) throws Exception {
+        debug(node);
         node.expression().accept(this);
         if (node.identifier() instanceof ArrayItemNode) { // sommeT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
@@ -220,6 +230,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(IncrementNode node) throws Exception {
+        debug(node);
         if (node.identifier() instanceof ArrayItemNode) { // incrémentT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
             tab.identifier().accept(this);  // Val(i,m)
@@ -246,12 +257,14 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(WriteNode node) throws Exception {
+        debug(node);
         node.printable().accept(this);
         controller.write(evals.pop().toString());
     }
 
     @Override
     public void visit(WriteLnNode node) throws Exception {
+        debug(node);
         node.printable().accept(this);
         controller.writeLn(evals.pop().toString());
     }
@@ -264,6 +277,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(IfNode node) throws Exception {
+        debug(node);
         node.expression().accept(this);
         if ((boolean)evals.pop()) {
             if(node.trueInstrs() != null) {
@@ -276,7 +290,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(WhileNode node) throws Exception {
-
+        debug(node);
         node.expression().accept(this);
         boolean in = (boolean)evals.pop();
         while (in){
@@ -298,6 +312,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(NotNode node) throws Exception {
+        debug(node);
         node.expression().accept(this);
         evals.push(!(boolean)evals.pop());
     }
@@ -309,6 +324,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AndNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         boolean b1 = (boolean)evals.pop();
         boolean b2 = (boolean)evals.pop();
@@ -317,6 +333,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(OrNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         boolean b1 = (boolean)evals.pop();
         boolean b2 = (boolean)evals.pop();
@@ -325,42 +342,49 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(EqualsNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push(evals.pop() == evals.pop()); // maybe .equals() ?
     }
 
     @Override
     public void visit(GreaterNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push((int)evals.pop() > (int)evals.pop());
     }
 
     @Override
     public void visit(PlusNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push((int)evals.pop() + (int)evals.pop());
     }
 
     @Override
     public void visit(SubNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push((int)evals.pop() - (int)evals.pop());
     }
 
     @Override
     public void visit(MinusNode node) throws Exception {
+        debug(node);
         node.expression().accept(this);
         evals.push(- (int) evals.pop());
     }
 
     @Override
     public void visit(MultNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push((int)evals.pop() * (int)evals.pop());
     }
 
     @Override
     public void visit(DivNode node) throws Exception {
+        debug(node);
         evaluateBinOp(node);
         evals.push((int)evals.pop() / (int)evals.pop());
     }
