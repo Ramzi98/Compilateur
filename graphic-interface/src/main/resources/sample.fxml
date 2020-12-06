@@ -21,7 +21,8 @@
                 <Menu mnemonicParsing="false" text="Code">
                     <items>
                         <MenuItem fx:id="itemCompile" mnemonicParsing="false" onAction="#compile" text="Compile" />
-                        <MenuItem fx:id="itemRun" mnemonicParsing="false" onAction="#run" text="Run" />
+                        <MenuItem fx:id="itemRunMiniJaja" mnemonicParsing="false" onAction="#runMiniJaja" text="Run Mini Jaja" />
+                        <MenuItem fx:id="itemRunJajaCode" mnemonicParsing="false" onAction="#runJajaCode" text="Run Jaja Code" />
                     </items>
                 </Menu>
             </menus>
