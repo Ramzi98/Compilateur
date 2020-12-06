@@ -4,6 +4,9 @@ import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreter;
+import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterController;
+import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterVisitor;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
@@ -49,9 +52,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Controller implements Initializable, MJJInterpreterListener {
-
-    private ExecutorService executor= Executors.newSingleThreadExecutor();
+public class Controller implements Initializable, MJJInterpreterListener, JJCInterpreterListener {
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private static final String[] KEYWORDS = new String[] {
             "class", "else","final","if",  "while","main", "write" , "writeln",
@@ -112,7 +114,6 @@ public class Controller implements Initializable, MJJInterpreterListener {
     private ParseTreeWalker walker = new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
     private Executor threadWrite = Executors.newSingleThreadExecutor();
-    private JJCInterpreterVisitor jjcInterpreterVisitor;
     private Memory memoryMiniJaja;
     private Memory memoryJajaCode;
 
@@ -339,7 +340,7 @@ public class Controller implements Initializable, MJJInterpreterListener {
                 codeAreaJajaCode.appendText(jccPrinter.toString());
                 tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
             } catch (ASTParsingException e) {
-                // TODO: 04/12/2020
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -455,9 +456,20 @@ public class Controller implements Initializable, MJJInterpreterListener {
     }
 
     @FXML
-    public void runJajaCode(ActionEvent actionEvent) {
-        //Jcc.getFactory().createFrom(memory,classeNode).interpret(new MJJInterpreterController(this));
-        //JJCInterpreter.getFactory().createFrom(memoryJajaCode,jcInitNode).interpret(new JJCInterpreterController(jjcInterpreterVisitor) );
+    public void runJajaCode(ActionEvent actionEvent) throws Exception {
+        if(jcInitNode != null){
+                try{
+                    JJCInterpreter.getFactory().createFrom(memoryJajaCode,jcInitNode).interpret(new JJCInterpreterController(this) );
+                    areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+        }else{
+               areaError.clear();
+               areaError.appendText("You need to compile before interpret JajaCode");
+               areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+        }
+
     }
 
     @FXML
@@ -469,13 +481,10 @@ public class Controller implements Initializable, MJJInterpreterListener {
             try {
                 walker.walk(listener, parser.classe());
                 ClasseNode classeNode = (ClasseNode)listener.getRoot();
-                this.threadWrite.execute(() -> {
-                    areaRun.appendText("new execution ... \n\n");
-                });
                 memoryMiniJaja = Memory.getInstance();
                 MiniJajaInterpreter.getFactory().createFrom(memoryMiniJaja,classeNode).interpret(new MJJInterpreterController(this));
                 this.threadWrite.execute(() -> {
-                    areaRun.appendText("\nEnd of execution\n");
+                    areaRun.appendText("\n----------------------------------\n");
                 });
                 areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
             } catch (ASTParsingException e) {
@@ -487,5 +496,25 @@ public class Controller implements Initializable, MJJInterpreterListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void jjcWrite(String str) {
+
+    }
+
+    @Override
+    public void jjcWriteLn(String str) {
+
+    }
+
+    @Override
+    public void nop() {
+
+    }
+
+    @Override
+    public void debug(int line) {
+        
     }
 }
