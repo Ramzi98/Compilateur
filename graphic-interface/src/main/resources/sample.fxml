@@ -29,6 +29,7 @@
             <Menu mnemonicParsing="false" text="Debug">
                 <items>
                     <MenuItem fx:id="runWithDebug" mnemonicParsing="false" onAction="#debug" text="Run with debug" />
+                    <MenuItem fx:id="runStepDebug" mnemonicParsing="false" onAction="#step" text="Next step" />
                 </items>
             </Menu>
         </MenuBar>

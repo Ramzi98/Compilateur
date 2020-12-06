@@ -7,7 +7,6 @@ import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreter;
 import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterController;
 import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterListener;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterVisitor;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
@@ -469,12 +468,10 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
                areaError.appendText("You need to compile before interpret JajaCode");
                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
         }
-
     }
 
     @FXML
     public void runMiniJaja(ActionEvent actionEvent) {
-
         saveFile(actionEvent);
         try {
             initParserAndLexerFromCurrentFile();
@@ -515,6 +512,9 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
 
     @Override
     public void debug(int line) {
-        
+
+    }
+
+    public void step(ActionEvent actionEvent) {
     }
 }
