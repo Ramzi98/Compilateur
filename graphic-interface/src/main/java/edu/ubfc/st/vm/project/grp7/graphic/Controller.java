@@ -97,7 +97,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
     private CodeArea currentArea;
     private Compiler compiler;
     private Waiter currentWaiter;
-    PausableExecutor pausableExecutor;
+    private Thread pausableThread = new Thread(()->{run();});
 
     private List<JajaCodeNode> jcInitNode;
 
@@ -197,7 +197,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
             selectedFile = fileChooser.showOpenDialog(new Stage());
             setCurrentFile(selectedFile.getAbsolutePath());
         } catch (Exception e){
-            //TODO trow choosen Exception or print
+            e.printStackTrace();
         }
         if (selectedFile != null) {
             if (getCurrentFile() != selectedFile.getAbsolutePath() && getCurrentFile() != "" ) {
@@ -249,7 +249,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
         try {
             file = fileChooser.showSaveDialog(new Stage());
         } catch (Exception e){
-            //TODO trow choosen Exception or print
+            e.printStackTrace();
         }
         setCurrentFile(file.getAbsolutePath());
         if (file != null) {
@@ -271,7 +271,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
                 file.delete();
                 newFile = new File(getCurrentFile());
             } catch (Exception e) {
-                //TODO trow choosen Exception or print
+                e.printStackTrace();
             }
 
             if (newFile != null) {
@@ -315,6 +315,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
                 compiler.compile();
                 jcInitNode = compiler.jajaCodeNodes();
                 JCCPrinter jccPrinter = new JCCPrinter(jcInitNode);
+                codeAreaJajaCode.clear();
                 codeAreaJajaCode.appendText(jccPrinter.toString());
                 tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
             } catch (ASTParsingException e) {
@@ -421,12 +422,11 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
     }
 
     @FXML
-    public void runCode(ActionEvent actionEvent) {
+    public void runCode(ActionEvent actionEvent) throws IOException {
         currentBreakPoint = null;
         saveFile(actionEvent);
-
         currentWaiter = new DebugOffWaiter();
-        run();
+        pausableThread.run();
     }
 
     @Override
@@ -461,75 +461,82 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
     @FXML
     private void runWithDebug(ActionEvent actionEvent) throws Exception {
 
-        currentWaiter = new DebugOnWaiter(pausableExecutor);
+        currentWaiter = new DebugOnWaiter(pausableThread);
         if (getCurrentCodeArea().equals(codeAreaMiniJaja)) {
+            initParserAndLexerFromCurrentFile();
             currentBreakPoint = breakPointMiniJaja;
             breakPointMiniJaja.returnCheckedLine();
         } else {
             currentBreakPoint = breakPointJajaCode;
             breakPointJajaCode.returnCheckedLine();
         }
-
-        run();
+        pausableThread.run();
     }
 
     public void step(ActionEvent actionEvent) {
-        System.out.println("step");
         currentWaiter.nextStep();
     }
 
     public void nextBreakPoint(ActionEvent actionEvent) {
-        System.out.println("breapoint");
         currentWaiter.nextBreakpoint();
     }
 
     public void run(){
-        pausableExecutor = new PausableExecutor();
         currentArea = getCurrentCodeArea();
         try {
-            initParserAndLexerFromCurrentFile();
-            try {
-                memory = Memory.getInstance();
-                if (currentArea.equals(codeAreaMiniJaja)){
-                    walker.walk(listener, parser.classe());
-                    ClasseNode classeNode = (ClasseNode)listener.getRoot();
-                    pausableExecutor.execute(() -> {
-                        try {
-                            MiniJajaInterpreter.getFactory().createFrom(memory, classeNode).interpret(new MJJInterpreterController(this));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                    this.threadWrite.execute(() -> {
-                        areaRun.appendText("\n----------------------------------\n");
-                    });
-                }else{
-                    if(jcInitNode != null){
-                        try{
-                            pausableExecutor.execute(() -> {
-                                try {
-                                    JJCInterpreter.getFactory().createFrom(memory,jcInitNode).interpret(new JJCInterpreterController(this) );
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                            this.threadWrite.execute(() -> {
-                                areaRun.appendText("\n----------------------------------\n");
-                            });
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
+            memory = Memory.getInstance();
+            if (currentArea.equals(codeAreaMiniJaja)){
+                runMiniJaja();
+            }else{
+                if(jcInitNode != null){
+                    runJajaCode();
                 }
-                areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
-            } catch (ASTParsingException e) {
-                System.out.println(e.getMessage());
-                areaError.clear();
-                areaError.appendText(e.getMessage());
-                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
             }
-        } catch (Exception e) {
+            areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
+        } catch (ASTParsingException | IOException e) {
+            System.out.println(e.getMessage());
+            areaError.clear();
+            areaError.appendText(e.getMessage());
+            areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+        }
+    }
+
+    public void runMiniJaja() throws IOException {
+        initParserAndLexerFromCurrentFile();
+        walker.walk(listener, parser.classe());
+        ClasseNode classeNode = (ClasseNode)listener.getRoot();
+
+            this.threadWrite.execute(() -> {
+                areaRun.appendText("\nRun MiniJaja\n\n");
+            });
+
+            try {
+                MiniJajaInterpreter.getFactory().createFrom(memory, classeNode).interpret(new MJJInterpreterController(this));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            this.threadWrite.execute(() -> {
+                areaRun.appendText("\n\n----------------------------------\n");
+            });
+
+
+    }
+
+    public void runJajaCode(){
+        try{
+            this.threadWrite.execute(() -> {
+                areaRun.appendText("\nRun JajaCode\n\n");
+            });
+
+
+            JJCInterpreter.getFactory().createFrom(memory,jcInitNode).interpret(new JJCInterpreterController(this) );
+
+            this.threadWrite.execute(() -> {
+                areaRun.appendText("\n----------------------------------\n");
+            });
+
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

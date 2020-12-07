@@ -2,35 +2,33 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.debug.DebugListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
 
 public class DebugOnWaiter implements DebugListener.Waiter {
-     private final PausableExecutor thread;
+     private final Thread thread;
+    private final Object lock = new Object();
 
-     public DebugOnWaiter(PausableExecutor executor){
-         this.thread = executor;
+     public DebugOnWaiter(Thread thread){
+         this.thread = thread;
      }
 
     private boolean lineMode = false;
 
     @Override
     public void waitForUser(boolean breakpointedLine) throws InterruptedException {
-        if (lineMode || breakpointedLine) {
-            thread.pause();
+        while(lineMode || breakpointedLine) {
+            thread.wait();
         }
     }
 
     @Override
     public void nextBreakpoint() {
         lineMode = false;
-        thread.resume();
+        thread.notify();
     }
 
     @Override
     public void nextStep() {
         lineMode = true;
-        thread.resume();
+        thread.notify();
     }
 }
