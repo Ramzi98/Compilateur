@@ -63,43 +63,13 @@ public class CstNodeCheckerTest {
         IdentNode identVar = IdentNode.builder().value("i").build();
         VarNode varNode = VarNode.builder().typeMeth(typeNode2).identifier(identVar).expression(numberNode).build();
         CstNode cstNode = CstNode.builder().type(typeNode).identifier(identCst).expression(numberNode).build();
-        VarsNode varsNode2 = VarsNode.builder().var(cstNode).vars(varnil).build();
+        VarsNode varsNode2 = VarsNode.builder().var(cstNode).vars(null).build();
         VarsNode node = VarsNode.builder().var(varNode).vars(varsNode2).build();
         typeChecker.visit(node);
 
     }
 
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
 
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 
 
 }

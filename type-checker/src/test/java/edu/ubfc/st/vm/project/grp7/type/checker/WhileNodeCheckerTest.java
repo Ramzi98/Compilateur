@@ -37,15 +37,15 @@ public class WhileNodeCheckerTest {
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
         WhileNode whileNode = WhileNode.builder().expression(equalsNode).instrs(instrsNode).build();
 
-        InstrsNode instrsNode2 = InstrsNode.builder().instruction(whileNode).instrs(instrsnil).build();
+        InstrsNode instrsNode2 = InstrsNode.builder().instruction(whileNode).instrs(null).build();
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode2).build();
 
@@ -67,15 +67,15 @@ public class WhileNodeCheckerTest {
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
         WhileNode whileNode = WhileNode.builder().expression(incrementNode).instrs(instrsNode).build();
 
-        InstrsNode instrsNode2 = InstrsNode.builder().instruction(whileNode).instrs(instrsnil).build();
+        InstrsNode instrsNode2 = InstrsNode.builder().instruction(whileNode).instrs(null).build();
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode2).build();
 
@@ -85,66 +85,4 @@ public class WhileNodeCheckerTest {
     }
 
 
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 }

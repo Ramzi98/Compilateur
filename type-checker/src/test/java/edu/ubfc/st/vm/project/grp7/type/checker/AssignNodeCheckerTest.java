@@ -37,12 +37,12 @@ public class AssignNodeCheckerTest {
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(3).build();
         AssignNode assignNode = AssignNode.builder().identifier(identvar1).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -75,12 +75,12 @@ public class AssignNodeCheckerTest {
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
         CstNode cstNode = CstNode.builder().type(typeNode).identifier(identvar).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(cstNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(cstNode).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(3).build();
         AssignNode assignNode = AssignNode.builder().identifier(identvar).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -105,11 +105,11 @@ public class AssignNodeCheckerTest {
 
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
         HeaderNode headerNode = HeaderNode.builder()
                 .type(type)
@@ -118,18 +118,18 @@ public class AssignNodeCheckerTest {
 
         HeadersNode headersNode = HeadersNode.builder()
                 .header(headerNode)
-                .headers(enil)
+                .headers(null)
                 .build();
 
         AssignNode assignMethod = AssignNode.builder().identifier(identfonction).expression(numberNode).build();
 
 
-        InstrsNode instrMain = InstrsNode.builder().instruction(assignMethod).instrs(instrsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(assignMethod).instrs(null).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
 
-        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(declsnil).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(null).build();
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
@@ -148,12 +148,12 @@ public class AssignNodeCheckerTest {
         ArrayNode node = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar).expression(numberNode).build();
 
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().build();
         AssignNode assignNode = AssignNode.builder().identifier(identvar).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -174,12 +174,12 @@ public class AssignNodeCheckerTest {
         ArrayNode node = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar).expression(numberNode).build();
 
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(5).build();
         AssignNode assignNode = AssignNode.builder().identifier(identvar).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -200,12 +200,12 @@ public class AssignNodeCheckerTest {
         NumberNode numberNode = NumberNode.builder().value(2).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         BooleanNode numberNode2 = BooleanNode.builder().value(false).build();
         AssignNode assignNode = AssignNode.builder().identifier(identvar1).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -225,12 +225,12 @@ public class AssignNodeCheckerTest {
 
         ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(5).build();
         AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -250,12 +250,12 @@ public class AssignNodeCheckerTest {
 
         ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(5).build();
         AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -275,12 +275,12 @@ public class AssignNodeCheckerTest {
 
         ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         NumberNode numberNode2 = NumberNode.builder().value(5).build();
         AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -299,12 +299,12 @@ public class AssignNodeCheckerTest {
 
         ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         BooleanNode numberNode2 = BooleanNode.builder().value(false).build();
         AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -324,12 +324,12 @@ public class AssignNodeCheckerTest {
 
         ArrayItemNode nodeArray = ArrayItemNode.builder().identifier(identvar).expression(numberNode).build();
 
-        VarsNode varsNode = VarsNode.builder().var(node).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(node).vars(null).build();
 
         BooleanNode numberNode2 = BooleanNode.builder().value(false).build();
         AssignNode assignNode = AssignNode.builder().identifier(nodeArray).expression(numberNode2).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(assignNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
@@ -339,132 +339,7 @@ public class AssignNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
 
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    private static final HeadersNode enil = new HeadersNode() {
-        @Override
-        public HeaderNode header() {
-            return null;
-        }
-
-        @Override
-        public HeadersNode headers() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    DeclsNode declsnil = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    } ;
 
 
 }

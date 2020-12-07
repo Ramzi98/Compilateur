@@ -56,7 +56,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         try {
-            decls.accept(this);
+            if(decls != null) {
+                decls.accept(this);
+            }
             main.accept(this);
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
@@ -87,29 +89,32 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode nodeDecl = node.decl();
         MiniJajaNode nodeDecls = node.decls();
-        if(node.decl() != null) {
             try {
                 nodeDecl.accept(this);
-                nodeDecls.accept(this);
+                if(nodeDecls != null) {
+                    nodeDecls.accept(this);
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
         }
-    }
+
 
     @Override
     public void visit(VarsNode node) throws IllFormedNodeException, IOException {
 
         MiniJajaNode nodeVar = node.var();
         MiniJajaNode nodeVars = node.vars();
-        if(node.var() != null) {
+
             try {
                 nodeVar.accept(this);
-                nodeVars.accept(this);
+                if(nodeVars != null) {
+                    nodeVars.accept(this);
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
-        }
+
     }
 
     @Override
@@ -257,9 +262,15 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         try {
-            headers.accept(this);
-            vars.accept(this);
-            instrs.accept(this);
+            if(headers != null){
+                headers.accept(this);
+            }
+            if(vars != null) {
+                vars.accept(this);
+            }
+            if(instrs != null) {
+                instrs.accept(this);
+            }
 
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
@@ -285,8 +296,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
 
         try {
-            nodeVars.accept(this);
-            nodeInstrs.accept(this);
+            if(nodeVars != null) {
+                nodeVars.accept(this);
+            }
+            if(nodeInstrs != null) {
+                nodeInstrs.accept(this);
+            }
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
@@ -304,17 +319,16 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodeHeader = node.header();
         MiniJajaNode nodeHeaders = node.headers();
 
-        if(nodeHeader != null)
-        {
             try {
                 nodeHeader.accept(this);
-                nodeHeaders.accept(this);
+                if(nodeHeaders != null) {
+                    nodeHeaders.accept(this);
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
         }
 
-    }
 
     @Override
     public void visit(HeaderNode node) throws IllFormedNodeException, IOException {
@@ -347,14 +361,15 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode instr = node.instruction();
         MiniJajaNode instrs = node.instrs();
-        if(instr != null)
-        {
+
             if(pass == Pass.SECOND_PASS){
 
                 try
                 {
                     instr.accept(this);
-                    instrs.accept(this);
+                    if(instrs != null) {
+                        instrs.accept(this);
+                    }
                 }
                 catch(Exception e){
 
@@ -363,7 +378,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 }
             }
         }
-    }
 
     @Override
     public void visit(AssignNode node) throws IllFormedNodeException, IOException {
@@ -542,7 +556,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodelistexp = node.listexp();
 
         try {
-            nodelistexp.accept(this);
+            if(nodelistexp != null) {
+                nodelistexp.accept(this);
+            }
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line(), node.column(), e.toString());
         }
@@ -618,8 +634,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         try {
-            nodeTrueInstr.accept(this);
-            nodeFalseInstr.accept(this);
+            if(nodeTrueInstr != null) {
+                nodeTrueInstr.accept(this);
+            }
+            if(nodeFalseInstr !=null) {
+                nodeFalseInstr.accept(this);
+            }
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
@@ -645,7 +665,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         try {
-            nodeInstr.accept(this);
+            if(nodeInstr != null) {
+                nodeInstr.accept(this);
+            }
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
@@ -653,7 +675,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
-
 
 
     }
@@ -896,7 +917,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode nodelistexp = node.listexp();
 
         try {
-            nodelistexp.accept(this);
+            if(nodelistexp != null) {
+                nodelistexp.accept(this);
+            }
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line(), node.column(), e.toString());
         }
