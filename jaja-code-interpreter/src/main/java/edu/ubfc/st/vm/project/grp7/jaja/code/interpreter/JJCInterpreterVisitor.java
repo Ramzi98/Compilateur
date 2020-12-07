@@ -15,7 +15,7 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     private final Memory memory;
     private final JJCInterpreterController controller;
     private final List<JajaCodeNode> nodes;
-    private int n = 0;
+    private int n = 0; // TODO: 07/12/2020 eliminate n with node.line()
 
     public JJCInterpreterVisitor(Memory memory, List<JajaCodeNode> nodes, JJCInterpreterController controller) {
         this.memory = memory;
@@ -242,7 +242,7 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         node.next().accept(this);
     }
 
-    private void checkValidIntegers(JajaCodeNode node, Quadruplet rhs, Quadruplet lhs) {
+    private void checkValidIntegers(JajaCodeNode node, Quadruplet rhs, Quadruplet lhs) throws IllegalStateException {
         if (rhs.id() != null || lhs.id() != null ||
                 !(rhs.val() instanceof Integer) || !(lhs.val() instanceof Integer)) {
                     jjcError(node, "the last elements of memory aren't valid integers");
