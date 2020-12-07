@@ -101,7 +101,6 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
 
     private List<JajaCodeNode> jcInitNode;
 
-    private  boolean debug;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -381,13 +380,13 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
         }
     }
 
-    private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
+    public Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
         currentArea = getCurrentCodeArea();
         String text = currentArea.getText();
         Task<StyleSpans<Collection<String>>> task = new Task<StyleSpans<Collection<String>>>() {
             @Override
             protected StyleSpans<Collection<String>> call() throws Exception {
-                return computeHighlighting(text);
+                return Pattern.computeHighlighting(text);
             }
         };
         executor.execute(task);
@@ -399,27 +398,7 @@ public class Controller implements Initializable, MJJInterpreterListener, JJCInt
         currentArea.setStyleSpans(0, highlighting);
     }
 
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-        Matcher matcher = Pattern.PATTERN.matcher(text);
-        int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        while (matcher.find()) {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                    matcher.group("TYPE") != null ? "keywordType" :
-                    matcher.group("PAREN") != null ? "paren" :
-                    matcher.group("BRACE") != null ? "brace" :
-                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                    matcher.group("STRING") != null ? "string" :
-                    matcher.group("COMMENT") != null ? "comment" :
-                    null; /* never happens */ assert styleClass != null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
-        }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
-        return spansBuilder.create();
-    }
+
 
     @FXML
     public void runCode(ActionEvent actionEvent) throws IOException {
