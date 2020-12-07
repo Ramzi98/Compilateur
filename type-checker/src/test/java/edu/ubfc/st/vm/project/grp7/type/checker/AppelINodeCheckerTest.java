@@ -42,12 +42,12 @@ public class AppelINodeCheckerTest {
 
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
         ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
-        InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(instrsnil).build();
+        InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(null).build();
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 
         HeaderNode headerNode = HeaderNode.builder()
@@ -57,21 +57,21 @@ public class AppelINodeCheckerTest {
 
         HeadersNode headersNode = HeadersNode.builder()
                 .header(headerNode)
-                .headers(enil)
+                .headers(null)
                 .build();
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(expnil).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
         AppelINode appelINode = AppelINode.builder().identifier(identfonction).listexp(listExpNode).build();
-        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(instrsnil).build();
+        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(null).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrs).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrs).build();
 
 
 
-        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(declsnil).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(null).build();
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
@@ -99,12 +99,12 @@ public class AppelINodeCheckerTest {
 
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
         ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
-        InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(instrsnil).build();
+        InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(null).build();
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 
         HeaderNode headerNode = HeaderNode.builder()
@@ -114,21 +114,21 @@ public class AppelINodeCheckerTest {
 
         HeadersNode headersNode = HeadersNode.builder()
                 .header(headerNode)
-                .headers(enil)
+                .headers(null)
                 .build();
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(expnil).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
         AppelINode appelINode = AppelINode.builder().identifier(fakeidentfonction).listexp(listExpNode).build();
-        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(instrsnil).build();
+        InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(null).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrs).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrs).build();
 
 
 
-        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(declsnil).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(null).build();
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
@@ -142,161 +142,4 @@ public class AppelINodeCheckerTest {
 
 
 
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    HeadersNode enil = new HeadersNode() {
-        @Override
-        public HeaderNode header() {
-            return null;
-        }
-
-        @Override
-        public HeadersNode headers() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    DeclsNode declsnil = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    } ;
-    ListExpNode expnil = new ListExpNode() {
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode expression() {
-            return null;
-        }
-
-        @Override
-        public ListExpNode listexp() {
-            return null;
-        }
-    } ;
 }

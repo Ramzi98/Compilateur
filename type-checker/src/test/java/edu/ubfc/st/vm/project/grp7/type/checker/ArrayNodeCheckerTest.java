@@ -67,40 +67,10 @@ public class ArrayNodeCheckerTest {
         NumberNode numberNode2 = NumberNode.builder().value(2).build();
         VarNode varNode = VarNode.builder().identifier(identvar2).typeMeth(typeMethNode).expression(numberNode2).build();
         ArrayNode node = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar).expression(numberNode).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(null).build();
         DeclsNode declsNode2 = DeclsNode.builder().decl(varNode).decls(declsNode).build();
         typeChecker.visit(declsNode2);
     }
 
-    DeclsNode declsnil = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
 
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    } ;
 }

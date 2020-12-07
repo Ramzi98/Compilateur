@@ -74,7 +74,6 @@ public class NodeIdentCompileTest {
         compiler.visit(ident);
         assertThat(compiler.getJajaCodeNodes().size(), is(2));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(1));
-        System.out.println(compiler.getJajaCodeNodes().get(compiler.getJajaCodeNodes().size() - 2).children(0));
 
 
     }

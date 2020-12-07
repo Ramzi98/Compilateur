@@ -165,11 +165,7 @@ public class CompilerVisitorTest {
         ClasseNode classe = ClasseNode.builder().decls(decl1).identifier(identClasse).methmain(main).build();
 
         compiler.visit(classe);
-        /*
-        Compiler compilee = new CompilerImpl(classe);
-        compilee.compile();
 
-         */
 
 
     }
