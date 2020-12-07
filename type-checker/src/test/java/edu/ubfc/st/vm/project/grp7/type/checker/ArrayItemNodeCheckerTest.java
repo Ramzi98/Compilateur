@@ -39,9 +39,9 @@ public class ArrayItemNodeCheckerTest {
 
         PlusNode plus = PlusNode.builder().leftOperand(nodeArray).rightOperand(numberNode).build();
 
-        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(instrsnil).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(null).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
         typeChecker = new TypeChecker(classeNode1);
@@ -67,9 +67,9 @@ public class ArrayItemNodeCheckerTest {
 
         PlusNode plus = PlusNode.builder().leftOperand(nodeArray).rightOperand(numberNode).build();
 
-        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(instrsnil).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(null).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
         typeChecker = new TypeChecker(classeNode1);
@@ -94,9 +94,9 @@ public class ArrayItemNodeCheckerTest {
 
         PlusNode plus = PlusNode.builder().leftOperand(nodeArray).rightOperand(numberNode).build();
 
-        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(instrsnil).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(null).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
         typeChecker = new TypeChecker(classeNode1);
@@ -122,9 +122,9 @@ public class ArrayItemNodeCheckerTest {
 
         PlusNode plus = PlusNode.builder().leftOperand(nodeArray).rightOperand(numberNode).build();
 
-        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(instrsnil).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(declsnil).build();
-        MainNode mainNode = MainNode.builder().vars(varnil).instrs(instrMain).build();
+        InstrsNode instrMain = InstrsNode.builder().instruction(plus).instrs(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(node).decls(null).build();
+        MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
         typeChecker = new TypeChecker(classeNode1);
@@ -136,129 +136,4 @@ public class ArrayItemNodeCheckerTest {
 
 
 
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-
-    HeadersNode enil = new HeadersNode() {
-        @Override
-        public HeaderNode header() {
-            return null;
-        }
-
-        @Override
-        public HeadersNode headers() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    DeclsNode declsnil = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    } ;
 }

@@ -17,4 +17,8 @@ public class JJCInterpreterController {
     public void nop() {
         listener.nop();
     }
+
+    public void debug(int line) throws InterruptedException {
+        listener.debug(line);
+    }
 }

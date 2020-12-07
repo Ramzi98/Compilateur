@@ -84,8 +84,6 @@ public class NodeIfCompileTest {
         assertThat(compiler.getJajaCodeNodes().size(), is(10));
         assertThat(compiler.getMinijajaNodes().get(1).values().toArray()[0],is(9));
         JcIfNode jcif = (JcIfNode) compiler.getJajaCodeNodes().get(2);
-        System.out.println(jcif.adresse());
-
     }
 
 }

@@ -39,15 +39,15 @@ public class IdentNodeCheckerTest {
         NumberNode numberNode4 = NumberNode.builder().value(4).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar4).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
         VarNode varNode1 = VarNode.builder().identifier(identvar1).typeMeth(typeMethNode).expression(numberNode4).build();
-        VarsNode varsNode1 = VarsNode.builder().var(varNode1).vars(varnil).build();
-        DeclsNode declsNode = DeclsNode.builder().decl(varsNode1).decls(declsnil).build();
+        VarsNode varsNode1 = VarsNode.builder().var(varNode1).vars(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(varsNode1).decls(null).build();
 
 
 
@@ -60,99 +60,5 @@ public class IdentNodeCheckerTest {
 
     }
 
-
-    DeclsNode declsnil = new DeclsNode() {
-        @Override
-        public MiniJajaNode decl() {
-            return null;
-        }
-
-        @Override
-        public DeclsNode decls() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    } ;
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 
 }
