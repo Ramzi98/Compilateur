@@ -11,6 +11,8 @@
 
     <artifactId>type-checker</artifactId>
 
+    <name>Contrôleur de type</name>
+    <description>Vérifie les types des expressions d'un arbre MiniJaja</description>
 
     <dependencies>
         <dependency>
@@ -30,6 +32,4 @@
             <artifactId>hamcrest</artifactId>
         </dependency>
     </dependencies>
-
-
 </project>
