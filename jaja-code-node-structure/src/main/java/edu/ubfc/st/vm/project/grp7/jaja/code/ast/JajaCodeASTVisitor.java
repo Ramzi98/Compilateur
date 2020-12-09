@@ -57,7 +57,7 @@ public abstract class JajaCodeASTVisitor implements ASTVisitor {
         } else if (node instanceof JcReturnNode) {
             this.visit((JcReturnNode) node);
         } else if (node instanceof JcStoreNode) {
-            this.visit((JcStopNode) node);
+            this.visit((JcStoreNode) node);
         } else if (node instanceof JcSubNode) {
             this.visit((JcSubNode) node);
         } else if (node instanceof JcSupNode) {
