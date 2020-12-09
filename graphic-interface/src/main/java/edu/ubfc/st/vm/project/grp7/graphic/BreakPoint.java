@@ -35,7 +35,6 @@ class BreakPoint implements IntFunction<Node> {
         List<Integer> lineList = new ArrayList<>();
         for (CheckBoxWithLine c : lineCheckBoxArrayList){
             if (c.isSelected()){
-                System.out.println("line : "+c.getLine());
                 lineList.add(c.getLine());
             }
         }

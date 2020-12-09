@@ -178,9 +178,13 @@ public class JCCPrinter extends JajaCodeASTVisitor {
 
     @Override
     public void visit(JcPushNode node) throws Exception {
-        builder.append("push(")
-                .append(node.valeur())
-                .append(")\n");
+        builder.append("push(");
+        if (node.valeur() instanceof String) {
+                builder.append("\"").append(node.valeur()).append("\"");
+        } else {
+            builder.append(node.valeur());
+        }
+        builder.append(")\n");
         node.next().accept(this);
     }
 

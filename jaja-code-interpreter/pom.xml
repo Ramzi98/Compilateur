@@ -38,5 +38,9 @@
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>memory</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -17,6 +17,7 @@
     <description>Interpréteur utilisant une pile et un tas et visite un AST MiniJaja</description>
 
     <dependencies>
+        <!-- EXT -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -25,6 +26,15 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+        </dependency>
+        <!--END EXT-->
 
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
@@ -35,12 +45,8 @@
             <artifactId>memory</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>utils</artifactId>
         </dependency>
     </dependencies>
 </project>

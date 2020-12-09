@@ -1,14 +1,12 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
-import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcInitNode extends JajaCodeNode {
     JajaCodeNode next();
     void setNext(JajaCodeNode next);
-
-
+    
     static JcInitNode.Builder builder(){ return new JcInitNode.Builder(); }
 
     @Override
