@@ -131,6 +131,11 @@
                 <artifactId>mini-jaja-interpreter</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+                <artifactId>type-checker</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
             <!-- End MiniJaja -->
 
             <!-- Start JajaCode -->
