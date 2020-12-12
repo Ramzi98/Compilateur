@@ -677,6 +677,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public void visit(ListExpNode node) throws IllFormedNodeException, IOException {
 
 
+
     }
 
     @Override

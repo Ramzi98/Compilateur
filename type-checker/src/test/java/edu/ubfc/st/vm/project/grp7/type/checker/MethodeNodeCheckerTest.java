@@ -43,6 +43,8 @@ public class MethodeNodeCheckerTest {
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
         VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
+        VarNode varNode1 = VarNode.builder().identifier(identfonction).typeMeth(typeMethNode).expression(numberNode).build();
+        VarsNode varsDecls = VarsNode.builder().var(varNode1).vars(null).build();
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
         ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
@@ -61,11 +63,12 @@ public class MethodeNodeCheckerTest {
 
 
 
+        DeclsNode declsNode2 = DeclsNode.builder().decl(varsDecls).decls(null).build();
         MainNode mainNode = MainNode.builder().vars(null).instrs(null).build();
 
         MethodNode methodNode = MethodNode.builder().typeMeth(typeMethNode).vars(varsNode).identifier(identfonction).headers(headersNode).instrs(instrsNode).build();
 
-        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(null).build();
+        DeclsNode declsNode = DeclsNode.builder().decl(methodNode).decls(declsNode2).build();
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
