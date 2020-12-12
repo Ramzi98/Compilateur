@@ -9,16 +9,18 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_MAIN = "main";
+    public static final String SCOPE_GLOBAL = "global-0";
 
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     HashMap<MiniJajaNode,OBJ> identNature = new HashMap<>();
+    HashMap<MiniJajaNode,String> methodesignature = new HashMap<>();
 
     private Pass pass;
     int indice;
+    String currentscope;
 
     public void setPass(Pass pass) {
         this.pass = pass;
@@ -44,6 +46,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         IdentNode identifier = node.identifier();
         MiniJajaNode decls = node.decls();
         MiniJajaNode main = node.methmain();
+        currentscope = SCOPE_GLOBAL;
 
 
         if (pass == Pass.FIRST_PASS)
@@ -72,12 +75,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public void visit(IdentNode node) throws IllFormedNodeException, IOException {
 
         if (node.value() != null) {
-            int ind = symbolDictionnary.find(node.value());
+            int ind = symbolDictionnary.find(node.value(),currentscope);
             if (ind == -1) {
-                SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
-                symbolDictionnary1.popScope();
-                int ind2 = symbolDictionnary1.find(node.value());
-
+                int ind2 = symbolDictionnary.find(node.value(),SCOPE_GLOBAL);
                 if (ind2 == -1) {
                     throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + node.value() + "\" has not been declared.");
                 }
@@ -85,6 +85,17 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }else{
             throw new IllFormedNodeException(node.line(),node.column(),"The Identifier does not have a value");
         }
+        for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
+        {
+            if(m.getKey() instanceof IdentNode)
+            {
+                if(((IdentNode) m.getKey()).value().equals(node.value()))
+                {
+                    miniJajaNodeType.put(node,m.getValue());
+                }
+            }
+        }
+
     }
     @Override
     public void visit(DeclsNode node) throws IllFormedNodeException, IOException {
@@ -230,7 +241,10 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         InstrsNode instrs = node.instrs();
         MiniJajaNode vars = node.vars();
         IdentNode identifier = node.identifier();
+        currentscope = identifier.value();
 
+        String signature = generateMethodSignature(headers);
+        methodesignature.put(identifier,signature);
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -278,24 +292,18 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(e.toString());
         }
 
-        if(pass == Pass.SECOND_PASS)
-        {
-            symbolDictionnary.popScope();
-        }
-
     }
 
     @Override
     public void visit(MainNode node) throws IllFormedNodeException, IOException {
         MiniJajaNode nodeVars = node.vars();
         MiniJajaNode nodeInstrs = node.instrs();
+        currentscope = SCOPE_MAIN;
 
         if(pass == Pass.FIRST_PASS)
         {
             symbolDictionnary.pushScope(SCOPE_MAIN);
         }
-
-
 
         try {
             if(nodeVars != null) {
@@ -570,6 +578,12 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called \""+identifier.value()+"\" .");
         }
 
+        String signature = generateCallSignature(nodelistexp);
+        if(!methodesignature.get(identifier).equals(signature))
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is a probleme in methode signature \""+identifier.value()+"\" .");
+        }
+
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
@@ -580,7 +594,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode expression = node.ret();
 
-        if(symbolDictionnary.peekScope().startsWith("global") || symbolDictionnary.peekScope().startsWith("main")){
+        if(currentscope.startsWith("global") || currentscope.startsWith("main")){
 
             throw new IllFormedNodeException(node.line(), node.column(), "Can't return something outside of the methode scope");
 
@@ -590,15 +604,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             expression.accept(this);
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line() ,node.column() , e.toString());
-        }
-
-        String scope =  symbolDictionnary.peekScope();
-        scope = scope.replaceAll("-[0-9]","");
-
-        int ind = symbolDictionnary.find(scope);
-        if(ind == -1)
-        {
-            throw new IllFormedNodeException(node.line() ,node.column() , "Can't return something outside of a declared methode");
         }
 
     }
@@ -873,7 +878,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandMult) != SORTE.INT) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandMult+ "Is not compatible with the MULT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandMult + "Is not compatible with the MULT operator");
 
         }
 
@@ -932,7 +937,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called  \""+identifier.value()+"\" ");
         }
 
-
+        String signature = generateCallSignature(nodelistexp);
+        if(!methodesignature.get(identifier).equals(signature))
+        {
+            throw new IllFormedNodeException(node.line() ,node.column() , "There is a probleme in methode signature \""+identifier.value()+"\" .");
+        }
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
@@ -1053,6 +1062,69 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         return exist;
     }
 
+    private String generateCallSignature(MiniJajaNode nodeExpList) {
+        StringBuilder buffer = new StringBuilder();
 
+        while (nodeExpList instanceof ListExpNode) {
+            MiniJajaNode nodeExp = ((ListExpNode) nodeExpList).expression();
+
+            if(nodeExp != null)
+            {
+                try {
+                    nodeExp.accept(this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (miniJajaNodeType.get(nodeExp) == SORTE.INT) {
+                    buffer.append("int");
+                } else if (miniJajaNodeType.get(nodeExp) == SORTE.BOOLEAN) {
+                    buffer.append("boolean");
+                }
+            }
+
+            nodeExpList = ((ListExpNode) nodeExpList).listexp();
+
+            if (nodeExpList instanceof ListExpNode) {
+                buffer.append("_");
+            }
+        }
+
+        return buffer.toString();
+    }
+
+    private String generateMethodSignature(MiniJajaNode nodeHeaders) {
+        StringBuilder buffer = new StringBuilder();
+
+        while (nodeHeaders instanceof HeadersNode) {
+            MiniJajaNode nodeHeader = ((HeadersNode) nodeHeaders).header();
+
+            if(nodeHeader != null)
+            {
+                TypeNode nodeType = ((HeaderNode) nodeHeader).type();
+
+                try {
+                    nodeType.accept(this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (miniJajaNodeType.get(nodeType) == SORTE.INT) {
+                    buffer.append("int");
+                } else if (miniJajaNodeType.get(nodeType) == SORTE.BOOLEAN) {
+                    buffer.append("boolean");
+                }
+
+            }
+
+            nodeHeaders = ((HeadersNode) nodeHeaders).headers();
+
+            if (nodeHeaders instanceof HeadersNode) {
+                buffer.append("_");
+            }
+        }
+
+        return buffer.toString();
+    }
 
 }

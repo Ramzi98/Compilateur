@@ -37,6 +37,7 @@ public class AppelINodeCheckerTest {
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(true).build();
 
         TypeNode type = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
 
@@ -62,7 +63,7 @@ public class AppelINodeCheckerTest {
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(booleanNode).listexp(null).build();
         AppelINode appelINode = AppelINode.builder().identifier(identfonction).listexp(listExpNode).build();
         InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(null).build();
 
@@ -78,9 +79,6 @@ public class AppelINodeCheckerTest {
         typeChecker = new TypeChecker(classeNode1);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-
-        assertThat(symbolDictionnary.find(identvar1.value()), is(-1));
     }
 
     @Test(expected = IllFormedNodeException.class)
@@ -94,6 +92,7 @@ public class AppelINodeCheckerTest {
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(true).build();
 
         TypeNode type = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
 
@@ -119,7 +118,7 @@ public class AppelINodeCheckerTest {
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(booleanNode).listexp(null).build();
         AppelINode appelINode = AppelINode.builder().identifier(fakeidentfonction).listexp(listExpNode).build();
         InstrsNode instrs = InstrsNode.builder().instruction(appelINode).instrs(null).build();
 
@@ -135,9 +134,6 @@ public class AppelINodeCheckerTest {
         typeChecker = new TypeChecker(classeNode1);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-
-        assertThat(symbolDictionnary.find(identvar1.value()), is(-1));
     }
 
 

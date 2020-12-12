@@ -27,7 +27,7 @@ public class AppelENodeCheckerTest {
 
 
     @Test
-    public void AppelENodeTypeCheker() throws IOException, IllFormedNodeException {
+    public void AppelENodeTypeCheker() throws IllFormedNodeException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -36,6 +36,7 @@ public class AppelENodeCheckerTest {
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(false).build();
 
         TypeNode type = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
 
@@ -45,7 +46,7 @@ public class AppelENodeCheckerTest {
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
+        ReturnNode returnNode = ReturnNode.builder().ret(identvar1).build();
         InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(null).build();
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 
@@ -61,7 +62,7 @@ public class AppelENodeCheckerTest {
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(booleanNode).listexp(null).build();
         AppelENode appelENode = AppelENode.builder().identifier(identfonction).listexp(listExpNode).build();
         InstrsNode instrs = InstrsNode.builder().instruction(appelENode).instrs(null).build();
 
@@ -77,13 +78,10 @@ public class AppelENodeCheckerTest {
         typeChecker = new TypeChecker(classeNode1);
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
-
-
-        assertThat(symbolDictionnary.find(identvar1.value()), is(-1));
     }
 
     @Test(expected = IllFormedNodeException.class)
-    public void AppelENodeTypeCheker__WithException_NoIdentDeclared() throws IOException, IllFormedNodeException {
+    public void AppelENodeTypeCheker__WithException_NoIdentDeclared() throws IllFormedNodeException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -93,6 +91,7 @@ public class AppelENodeCheckerTest {
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         NumberNode numberNode = NumberNode.builder().value(2).build();
+        BooleanNode booleanNode = BooleanNode.builder().value(false).build();
 
         TypeNode type = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
 
@@ -118,7 +117,7 @@ public class AppelENodeCheckerTest {
 
 
 
-        ListExpNode listExpNode = ListExpNode.builder().expression(numberNode).listexp(null).build();
+        ListExpNode listExpNode = ListExpNode.builder().expression(booleanNode).listexp(null).build();
         AppelENode appelENode = AppelENode.builder().identifier(fakeidentfonction).listexp(listExpNode).build();
         InstrsNode instrs = InstrsNode.builder().instruction(appelENode).instrs(null).build();
 
@@ -135,8 +134,6 @@ public class AppelENodeCheckerTest {
         typeChecker.setsymbolDictionnary(symbolDictionnary);
         typeChecker.typeCheck();
 
-
-        assertThat(symbolDictionnary.find(identvar1.value()), is(-1));
     }
 
 
