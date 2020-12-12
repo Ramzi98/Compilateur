@@ -8,6 +8,8 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 public class TypeCheckerVisitor extends MiniJajaASTVisitor {
     public static final String SCOPE_MAIN = "main";
@@ -871,7 +873,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         if (miniJajaNodeType.get(leftOperandMult) != SORTE.INT) {
 
-            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandMult + "Is not compatible with the MULT operator");
+            throw new IllFormedNodeException(node.line(), node.column(), "The type of " + leftOperandMult+ "Is not compatible with the MULT operator");
 
         }
 
@@ -929,6 +931,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         {
             throw new IllFormedNodeException(node.line() ,node.column() , "There is no declared method called  \""+identifier.value()+"\" ");
         }
+
 
 
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
@@ -1049,4 +1052,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         return exist;
     }
+
+
+
 }
