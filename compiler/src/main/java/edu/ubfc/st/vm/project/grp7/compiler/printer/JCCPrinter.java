@@ -78,8 +78,8 @@ public class JCCPrinter extends JajaCodeASTVisitor {
 
     @Override
     public void visit(JcGotoNode node) throws Exception {
-        builder.append("ainc(")
-                .append(node.adresse()+1)
+        builder.append("goto(")
+                .append(node.adresse())
                 .append(")\n");
         node.next().accept(this);
     }
@@ -87,7 +87,7 @@ public class JCCPrinter extends JajaCodeASTVisitor {
     @Override
     public void visit(JcIfNode node) throws Exception {
         builder.append("if(")
-                .append(node.adresse() + 1)
+                .append(node.adresse())
                 .append(")\n");
         node.next().accept(this);
     }
