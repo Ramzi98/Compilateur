@@ -32,6 +32,14 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+        </dependency>
         <!-- END EXT -->
 
         <dependency>
@@ -49,6 +57,10 @@
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>mini-jaja-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>type-checker</artifactId>
         </dependency>
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
