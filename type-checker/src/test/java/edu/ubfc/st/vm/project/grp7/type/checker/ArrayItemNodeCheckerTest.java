@@ -44,8 +44,7 @@ public class ArrayItemNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }
@@ -72,8 +71,7 @@ public class ArrayItemNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }
@@ -99,10 +97,8 @@ public class ArrayItemNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
-
     }
 
 
@@ -127,8 +123,7 @@ public class ArrayItemNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(null).instrs(instrMain).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }

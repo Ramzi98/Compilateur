@@ -49,8 +49,7 @@ public class WhileNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode2).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
         assertThat(symbolDictionnary.find(identvar1.value()),is(-1));
@@ -79,8 +78,7 @@ public class WhileNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode2).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 

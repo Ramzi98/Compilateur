@@ -39,10 +39,8 @@ public class IncrementNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
-
     }
 
     @Test(expected = IllFormedNodeException.class)
@@ -70,8 +68,7 @@ public class IncrementNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
     }

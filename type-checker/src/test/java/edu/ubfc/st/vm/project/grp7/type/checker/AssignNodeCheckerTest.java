@@ -47,8 +47,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
     @Test(expected = IllFormedNodeException.class)
@@ -61,8 +60,7 @@ public class AssignNodeCheckerTest {
         CstNode cstNode = CstNode.builder().type(typeNode).identifier(identvar).expression(numberNode).build();
         NumberNode numberNode2 = NumberNode.builder().value(3).build();
         AssignNode assign = AssignNode.builder().identifier(identvar).expression(numberNode2).build();
-        typeChecker = new TypeChecker(assign);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(assign);
         typeChecker.typeCheck();
 
 
@@ -84,8 +82,7 @@ public class AssignNodeCheckerTest {
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
     }
@@ -133,8 +130,7 @@ public class AssignNodeCheckerTest {
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
     }
@@ -158,8 +154,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
 
@@ -184,8 +179,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
 
@@ -210,8 +204,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 
@@ -235,8 +228,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 
@@ -260,8 +252,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 
@@ -285,8 +276,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
     @Test(expected = IllFormedNodeException.class)
@@ -309,8 +299,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 
@@ -334,8 +323,7 @@ public class AssignNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
 

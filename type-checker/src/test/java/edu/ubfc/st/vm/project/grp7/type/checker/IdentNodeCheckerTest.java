@@ -54,8 +54,7 @@ public class IdentNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }

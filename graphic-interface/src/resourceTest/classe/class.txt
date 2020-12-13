@@ -4,7 +4,7 @@ class C {
     int c = 1;
     void ret(int j, int b){
        int k = 0;
-       tab[2] = 2;
+       tab[2] = 5;
        while(5 > k){
            tab[k] = 1;
            k++;

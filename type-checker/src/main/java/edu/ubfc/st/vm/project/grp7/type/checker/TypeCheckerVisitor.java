@@ -210,7 +210,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }
 
             if (miniJajaNodeType.get(expression) != null && miniJajaNodeType.get(expression) != miniJajaNodeType.get(typeNode) ) {
-                throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
+                throw new IllFormedNodeException(node.line(),node.column(),"The type"+miniJajaNodeType.get(expression)+" is not compatible with "+miniJajaNodeType.get(typeNode));
             }
 
             try {
@@ -401,8 +401,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             updateSorte(identifier);
 
             if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
-                throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
-            }
+                throw new IllFormedNodeException(node.line(),node.column(),"The type"+miniJajaNodeType.get(expression)+" is not compatible with "+miniJajaNodeType.get(identifier));            }
 
         }else{
 
@@ -433,8 +432,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 }
 
                 if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
-                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
-                }
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type"+miniJajaNodeType.get(expression)+" is not compatible with "+miniJajaNodeType.get(identifier));                }
 
                 if (!(expression instanceof IdentNode) ) {
                     throw new IllFormedNodeException(node.line(),node.column(),"An array can only be assigned to an array not an expression");
@@ -450,8 +448,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 }
 
                 if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
-                    throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
-                }
+                    throw new IllFormedNodeException(node.line(),node.column(),"The type "+miniJajaNodeType.get(expression)+" is not compatible with "+miniJajaNodeType.get(identifier));                }
 
                 if(identNature.get(identifier) == OBJ.CST){
 

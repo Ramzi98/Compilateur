@@ -51,12 +51,13 @@ public class ClasseNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode2).instrs(null).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
-
+/*
         assertThat(symbolDictionnary.find(identclasse.value()),is(0));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
+
+ */
     }
 
     @Test(expected = IllFormedNodeException.class)
@@ -82,10 +83,8 @@ public class ClasseNodeCheckerTest {
         MainNode mainNode = MainNode.builder().vars(varsNode3).instrs(null).build();
         ClasseNode classeNode1 = ClasseNode.builder().line(1).column(1).identifier(identclasse).decls(null).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
-
     }
 
     @Test(expected = IllFormedNodeException.class)
@@ -113,8 +112,8 @@ public class ClasseNodeCheckerTest {
 
         MainNode mainNode = MainNode.builder().vars(varsNode1).instrs(null).build();
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }
