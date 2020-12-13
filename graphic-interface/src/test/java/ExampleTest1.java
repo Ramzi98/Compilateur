@@ -20,7 +20,7 @@ public class ExampleTest1 extends BaseTest {
         symbolDictionnary = new SymbolDictionnary();
     }
 
-    /*
+
     @Test
     public void example1Test() throws Exception {
         TestConstructor testConstructor = new TestConstructor("classe","class");
@@ -35,5 +35,4 @@ public class ExampleTest1 extends BaseTest {
 
     }
 
-     */
 }

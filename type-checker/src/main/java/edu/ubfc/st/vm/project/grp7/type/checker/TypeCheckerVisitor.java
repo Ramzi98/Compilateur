@@ -85,16 +85,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }else{
             throw new IllFormedNodeException(node.line(),node.column(),"The Identifier does not have a value");
         }
-        for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
-        {
-            if(m.getKey() instanceof IdentNode)
-            {
-                if(((IdentNode) m.getKey()).value().equals(node.value()))
-                {
-                    miniJajaNodeType.put(node,m.getValue());
-                }
-            }
-        }
+        updateSorte(node);
+
 
     }
     @Override
@@ -395,6 +387,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode identifier = node.identifier();
         MiniJajaNode expression = node.expression();
 
+
         if(identifier instanceof ArrayItemNode){
 
             try {
@@ -404,6 +397,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             }catch(Exception e){
                 throw new IllFormedNodeException(e.toString());
             }
+
+            updateSorte(identifier);
 
             if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
                 throw new IllFormedNodeException(node.line(),node.column(),"The type of the expression is not compatible with the specified type");
@@ -992,17 +987,15 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         }
 
-        int ind1 = symbolDictionnary.find(identifier.value());
-        if(ind1 == -1)
-        {
-            SymbolDictionnary symbolDictionnary1 = symbolDictionnary;
-            symbolDictionnary1.popScope();
-            int ind2 = symbolDictionnary1.find(identifier.value());
-            if(ind2 == -1)
-            {
+        int ind = symbolDictionnary.find(identifier.value(),currentscope);
+        if (ind == -1) {
+            int ind2 = symbolDictionnary.find(identifier.value(),SCOPE_GLOBAL);
+            if (ind2 == -1) {
                 throw new IllFormedNodeException(node.line() ,node.column() , "The identifier \""+identifier.value()+"\" has not been declared.");
             }
         }
+
+        updateObj(identifier);
 
         if(identNature.get(identifier) != OBJ.TAB)
         {
@@ -1125,6 +1118,56 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         return buffer.toString();
+    }
+
+    //Faire relation entre ident node est ident node existant deja dans la table minijajaType
+    void updateSorte(MiniJajaNode node)
+    {
+        if(node instanceof IdentNode)
+        {
+            for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
+            {
+                if(m.getKey() instanceof IdentNode)
+                {
+                    if(((IdentNode) m.getKey()).value().equals(((IdentNode)node).value()))
+                    {
+                        miniJajaNodeType.put(node,m.getValue());
+                        break;
+                    }
+                }
+            }
+        }
+        else if (node instanceof ArrayItemNode)
+        {
+            for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
+            {
+                if(m.getKey() instanceof IdentNode)
+                {
+                    if(((IdentNode) m.getKey()).value().equals(((ArrayItemNode) node).identifier().value()))
+                    {
+                        miniJajaNodeType.put(node,m.getValue());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    //Faire relation entre ident node est ident node existant deja dans la table identnature
+    void updateObj(IdentNode node)
+    {
+
+        for (Map.Entry<MiniJajaNode, OBJ> m : identNature.entrySet())
+        {
+            if(m.getKey() instanceof IdentNode)
+            {
+                if(((IdentNode) m.getKey()).value().equals(node.value()))
+                {
+                    identNature.put(node,m.getValue());
+                    break;
+                }
+            }
+        }
     }
 
 }
