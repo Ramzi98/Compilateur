@@ -16,7 +16,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     HashMap<MiniJajaNode,OBJ> identNature = new HashMap<>();
-    HashMap<MiniJajaNode,String> methodesignature = new HashMap<>();
+    HashMap<String,String> methodesignature = new HashMap<>();
 
     private Pass pass;
     int indice;
@@ -236,7 +236,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         currentscope = identifier.value();
 
         String signature = generateMethodSignature(headers);
-        methodesignature.put(identifier,signature);
+        methodesignature.put(identifier.value(),signature);
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -411,11 +411,14 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
 
             }
-                int ind = symbolDictionnary.find(((IdentNode) identifier).value());
-                if (ind == -1) {
-                    throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + ((IdentNode) identifier).value() + "\" has not been declared.");
-                }
+            int ind = symbolDictionnary.find(((IdentNode) identifier).value());
+            if (ind == -1) {
+                throw new IllFormedNodeException(node.line(), node.column(), "The identifier \"" + ((IdentNode) identifier).value() + "\" has not been declared.");
+            }
 
+            updateSorte(identifier);
+            updateSorte(expression);
+            updateObj((IdentNode) identifier);
 
             if(identNature.get(identifier) == OBJ.METH){
 
@@ -516,6 +519,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
             }
 
+            updateSorte(identifier);
+            updateSorte(expression);
+
             if (miniJajaNodeType.get(identifier) != SORTE.INT) {
                 throw new IllFormedNodeException(node.line(), node.column(), "Cannot add a value to type "+miniJajaNodeType.get(identifier));
             }
@@ -534,6 +540,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(e.toString());
         }
+
+        updateSorte(identifier);
 
         if (identifier instanceof ArrayItemNode)
         {
@@ -571,7 +579,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         String signature = generateCallSignature(nodelistexp);
-        if(!methodesignature.get(identifier).equals(signature))
+        if(!methodesignature.get(identifier.value()).equals(signature))
         {
             throw new IllFormedNodeException(node.line() ,node.column() , "There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
@@ -930,7 +938,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         String signature = generateCallSignature(nodelistexp);
-        if(!methodesignature.get(identifier).equals(signature))
+        if(!methodesignature.get(identifier.value()).equals(signature))
         {
             throw new IllFormedNodeException(node.line() ,node.column() , "There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
@@ -1141,6 +1149,34 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 if(m.getKey() instanceof IdentNode)
                 {
                     if(((IdentNode) m.getKey()).value().equals(((ArrayItemNode) node).identifier().value()))
+                    {
+                        miniJajaNodeType.put(node,m.getValue());
+                        break;
+                    }
+                }
+            }
+        }
+        else if (node instanceof AppelENode)
+        {
+            for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
+            {
+                if(m.getKey() instanceof IdentNode)
+                {
+                    if(((IdentNode) m.getKey()).value().equals(((AppelENode) node).identifier().value()))
+                    {
+                        miniJajaNodeType.put(node,m.getValue());
+                        break;
+                    }
+                }
+            }
+        }
+        else if (node instanceof AppelINode)
+        {
+            for (Map.Entry<MiniJajaNode, SORTE> m : miniJajaNodeType.entrySet())
+            {
+                if(m.getKey() instanceof IdentNode)
+                {
+                    if(((IdentNode) m.getKey()).value().equals(((AppelINode) node).identifier().value()))
                     {
                         miniJajaNodeType.put(node,m.getValue());
                         break;

@@ -53,11 +53,10 @@ public class ClasseNodeCheckerTest {
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
         typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
-/*
-        assertThat(symbolDictionnary.find(identclasse.value()),is(0));
+
+        assertThat(symbolDictionnary.find(identclasse.value()),is(-1));
         assertThat(symbolDictionnary.find(identvar2.value()),is(-1));
 
- */
     }
 
     @Test(expected = IllFormedNodeException.class)
