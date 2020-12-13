@@ -16,15 +16,6 @@ import static org.hamcrest.Matchers.is;
 public class AppelENodeCheckerTest {
 
     TypeChecker typeChecker;
-    SymbolDictionnary symbolDictionnary;
-    TypeCheckerVisitor typeCheckerVisitor;
-
-    @Before
-    public void start() {
-        typeCheckerVisitor = new TypeCheckerVisitor();
-        symbolDictionnary = new SymbolDictionnary();
-    }
-
 
     @Test
     public void AppelENodeTypeCheker() throws IllFormedNodeException {
@@ -75,8 +66,7 @@ public class AppelENodeCheckerTest {
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
     }
 
@@ -130,8 +120,7 @@ public class AppelENodeCheckerTest {
 
         ClasseNode classeNode1 = ClasseNode.builder().identifier(identclasse).decls(declsNode).methmain(mainNode).build();
 
-        typeChecker = new TypeChecker(classeNode1);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(classeNode1);
         typeChecker.typeCheck();
 
     }
