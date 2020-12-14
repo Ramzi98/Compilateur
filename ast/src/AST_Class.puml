@@ -1,0 +1,48 @@
+@startuml ast_class
+
+interface ASTNode {
+    + int line()
+    + int column()
+    + ASTNode children(int n)
+    + accept(ASTVisitor visitor)
+}
+
+interface LeafNode<C> {
+    + C value()
+}
+
+ASTNode <|-- LeafNode
+
+class NodeBuilder<B extends NodeBuilder> <<(B, #FF7700) Abstract>> {
+    # int line
+    # int column
+
+    + B line(int line)
+    + B column(int column)
+}
+
+class LeafBuilder<B extends LeafBuilder, C> <<(B, #FF7700) Abstract>> {
+    # C value
+    + B value(C value)
+}
+
+ASTNode +-l- NodeBuilder : intern builder
+LeafNode +-l- LeafBuilder : intern builder
+NodeBuilder <|-- LeafBuilder
+
+interface ASTVisitor {
+    + void visit(ASTNode node) throws Exception
+}
+
+ASTNode -u- ASTVisitor : visitor
+
+abstract class ASTNodeWithInfo {
+    + int line()
+    + int column()
+}
+
+ASTNode <|.. ASTNodeWithInfo
+
+ASTNodeWithInfo -l[hidden]- LeafNode
+
+@enduml

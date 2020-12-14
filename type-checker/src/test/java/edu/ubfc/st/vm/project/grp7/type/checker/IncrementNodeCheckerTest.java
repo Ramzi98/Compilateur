@@ -30,19 +30,17 @@ public class IncrementNodeCheckerTest {
         BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
 
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(booleanNode).build();
-        VarsNode varsNode = VarsNode.builder().var(varNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
-
     }
 
     @Test(expected = IllFormedNodeException.class)
@@ -60,83 +58,20 @@ public class IncrementNodeCheckerTest {
         ArrayNode arrayNode = ArrayNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
         ArrayItemNode arrayItemNode = ArrayItemNode.builder().identifier(identvar1).expression(numberNode2).build();
 
-        VarsNode varsNode = VarsNode.builder().var(arrayNode).vars(varnil).build();
+        VarsNode varsNode = VarsNode.builder().var(arrayNode).vars(null).build();
 
 
         IncrementNode incrementNode = IncrementNode.builder().identifier(arrayItemNode).build();
 
-        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsnil).build();
+        InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(null).build();
 
 
         MainNode mainNode = MainNode.builder().vars(varsNode).instrs(instrsNode).build();
 
-        typeChecker = new TypeChecker(mainNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
 
     }
 
 
-    InstrsNode instrsnil = new InstrsNode() {
-        @Override
-        public MiniJajaNode instruction() {
-            return null;
-        }
-
-        @Override
-        public InstrsNode instrs() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
-    VarsNode varnil = new VarsNode() {
-        @Override
-        public MiniJajaNode var() {
-            return null;
-        }
-
-        @Override
-        public VarsNode vars() {
-            return null;
-        }
-
-        @Override
-        public Breakpoint breakpoint() {
-            return null;
-        }
-
-        @Override
-        public MiniJajaNode children(int n) throws IndexOutOfBoundsException {
-            return null;
-        }
-
-        @Override
-        public int line() {
-            return 0;
-        }
-
-        @Override
-        public int column() {
-            return 0;
-        }
-    };
 }

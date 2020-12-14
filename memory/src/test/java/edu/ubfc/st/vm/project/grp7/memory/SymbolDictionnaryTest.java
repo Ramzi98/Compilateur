@@ -45,6 +45,18 @@ public class SymbolDictionnaryTest  {
     }
 
     @Test
+    public void peekScopeTest(){
+        symbolDictionnary.register("i",0);
+        Assert.assertEquals(symbolDictionnary.find("i"),0);
+
+        symbolDictionnary.pushScope("function");
+        symbolDictionnary.register("i",1);
+        Assert.assertEquals(symbolDictionnary.find("i"),1);
+
+        Assert.assertEquals(symbolDictionnary.peekScope(),"function-1");
+    }
+
+    @Test
     public void registerAndUnregister(){
         symbolDictionnary.register("i",0);
         Assert.assertEquals(symbolDictionnary.find("i"),0);
@@ -90,6 +102,12 @@ public class SymbolDictionnaryTest  {
     public void dontFindInOtherScope(){
         symbolDictionnary.pushScope("function");
         Assert.assertEquals(symbolDictionnary.find("i"),-1);
+    }
+
+    @Test
+    public void dontFindInCurrentScope(){
+        symbolDictionnary.pushScope("function");
+        Assert.assertEquals(symbolDictionnary.find("i","function-1"),-1);
     }
 
 

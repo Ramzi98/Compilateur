@@ -10,7 +10,6 @@ public class SymbolDictionnary {
     private final ArrayList<String> scopes;
     private final HashMap<String, HashMap<String,Integer>> symbols;
 
-
     public SymbolDictionnary() {
         scopes = new ArrayList<>();
         symbols = new HashMap<>();
@@ -50,6 +49,19 @@ public class SymbolDictionnary {
         }
     }
 
+    public void register(String ident,String scope,int indice) throws IllegalArgumentException {
+        HashMap<String, Integer> currentScope = symbols.get(scope);
+
+        if(ident == null || ident.trim().isEmpty()){
+            throw new IllegalArgumentException("Can't replace with null Id");
+        }
+        if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
+            throw new IllegalArgumentException("The value is already in the list.");
+        }else{
+            currentScope.put(ident,indice);
+        }
+    }
+
     public void unregister(String ident) throws IllegalArgumentException {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
@@ -61,6 +73,33 @@ public class SymbolDictionnary {
 
     public int find(String ident) {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
+        if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
+            return currentScope.get(ident);
+        }
+
+        if (top == GLOBAL_SCOPE) {
+            return  -1;
+        }
+
+        HashMap<String, Integer> globalScope = symbols.get(NAME_GLOBAL_SCOPE);
+        if (globalScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
+            return globalScope.get(ident);
+        }
+
+        return -1;
+    }
+
+    public int find(String ident,String scope) {
+        for (String sc : scopes)
+        {
+            if(sc.startsWith(scope))
+            {
+                scope = sc;
+                break;
+            }
+
+        }
+        HashMap<String, Integer> currentScope = symbols.get(scope);
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
             return currentScope.get(ident);
         }

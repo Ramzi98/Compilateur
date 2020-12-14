@@ -54,11 +54,45 @@ public interface JcNewNode extends JajaCodeNode {
         }
     }
 
-    enum  Type{
-        INT, BOOLEAN, VOID
+    enum Type{
+        INT{
+            @Override
+            public String toString() {
+                return "entier";
+            }
+        },
+        BOOLEAN{
+            @Override
+            public String toString() {
+                return "booléen";
+            }
+        },
+        VOID{
+            @Override
+            public String toString() {
+                return "void";
+            }
+        };
     }
 
     enum Sorte {
-        Cst, Var, Meth
+        CST{
+            @Override
+            public String toString() {
+                return "cst";
+            }
+        },
+        VAR{
+            @Override
+            public String toString() {
+                return "var";
+            }
+        },
+        METH{
+            @Override
+            public String toString() {
+                return "meth";
+            }
+        };
     }
 }

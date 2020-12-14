@@ -80,18 +80,21 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitVarNode(MiniJajaParser.VarNodeContext ctx) {
+        //typemeth ident vexp
         VarNode.Builder builder = VarNode.builder()
                 .line(line(ctx))
                 .column(column(ctx));
 
-        MiniJajaNode node = stack.pop();
-        if (node instanceof  IdentNode){
+        MiniJajaNode first = stack.pop();
+        MiniJajaNode second = stack.pop();
+        if (first instanceof IdentNode && ! (second instanceof IdentNode)) {
             builder.expression(null)
-                    .identifier((IdentNode) node)
-                    .typeMeth((TypeMethNode) stack.pop());
-        }else{
-            builder.expression(node)
-                    .identifier((IdentNode) stack.pop())
+                    .identifier((IdentNode) first)
+                    .typeMeth((TypeMethNode) second);
+
+        } else {
+            builder.expression(first)
+                    .identifier((IdentNode) second)
                     .typeMeth((TypeMethNode) stack.pop());
         }
 
@@ -293,8 +296,8 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
         MiniJajaNode node = stack.pop();
         if (node instanceof IdentNode){
             builder.listexp(null)
-                    .identifier((IdentNode) stack.pop());
-        }else{
+                    .identifier((IdentNode) node);
+        } else {
             builder.listexp((ListExpNode) node)
                     .identifier((IdentNode) stack.pop());
         }

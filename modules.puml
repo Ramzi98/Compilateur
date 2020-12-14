@@ -1,0 +1,34 @@
+@startuml modules
+node "Backend" {
+together {
+    [MJJ Node Structure] as MJJNS
+    [JJC Node Structure] as JJCNS
+    [AST] <.up. MJJNS
+    [AST] <.up. JJCNS
+  }
+
+    [MJJ Parser] as parser
+    parser ..> MJJNS
+    antlr <-u- parser
+
+    MJJNS <.up. [Compiler]
+    JJCNS <.up. [Compiler]
+
+    [Memory] as mem
+    [JJC Interpreter] as JJCI
+    [MJJ Interpreter] as MJJI
+    MJJI ..> MJJNS
+    MJJI ..> mem
+    JJCI ..> JJCNS
+    JJCI ..> mem
+
+    [Type Checker] ..> MJJNS
+}
+
+[GUI] ..> Compiler
+[GUI] ..> [Type Checker]
+[GUI] ..> MJJI
+[GUI] ..> JJCI
+[GUI] ..> parser
+JavaFX <-- [GUI]
+@enduml

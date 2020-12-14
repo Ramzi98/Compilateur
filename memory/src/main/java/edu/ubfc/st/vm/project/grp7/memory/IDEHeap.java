@@ -15,7 +15,7 @@ public class IDEHeap implements Heap {
     }
 
     @Override
-    public Object ajouterRef(Object ref, SORTE type) throws IllegalArgumentException {
+        public Object ajouterRef(Object ref, SORTE type) throws IllegalArgumentException {
         if (ref instanceof UUID && refs.containsKey(ref)) {
             refs.put((UUID) ref, refs.get(ref) + 1);
             return ref;

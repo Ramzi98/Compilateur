@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.ast.node;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 
 public interface JcNopNode extends JajaCodeNode{
@@ -11,6 +12,11 @@ public interface JcNopNode extends JajaCodeNode{
 
     static JcNopNode.Builder builder() {
         return new JcNopNode.Builder();
+    }
+
+    @Override
+    default void accept(ASTVisitor visitor) throws Exception {
+        visitor.visit(this);
     }
 
     class Builder extends JajaCodeNode.NodeBuilder<JcNopNode.Builder> {

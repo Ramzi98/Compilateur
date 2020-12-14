@@ -1,5 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
-import java.io.File;
+import java.io.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +32,6 @@ public class FolderTreeView  {
                     File f = getValue();
                     isLeaf = f.isFile();
                 }
-
                 return isLeaf;
             }
 
@@ -54,5 +53,9 @@ public class FolderTreeView  {
                 return FXCollections.emptyObservableList();
             }
         };
+
+
+
     }
+
 }
