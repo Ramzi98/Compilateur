@@ -245,7 +245,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 typeNode.accept(this);
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.METH);
-                symbolDictionnary.register(identifier.value(), indice++);
+                symbolDictionnary.register(identifier.value(), SCOPE_GLOBAL , indice++);
 
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
@@ -413,7 +413,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new IllFormedNodeException(e.toString());
 
             }
-            int ind = symbolDictionnary.find(((IdentNode) identifier).value());
+            int ind = symbolDictionnary.find(((IdentNode) identifier).value(),currentscope);
             if (ind == -1) {
                 throw new IllFormedNodeException("Exception in line : " + node.line()+" : "+ node.column()+" The identifier \"" + ((IdentNode) identifier).value() + "\" has not been declared.");
             }
@@ -574,7 +574,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line(), node.column(), e.toString());
         }
-        int ind = symbolDictionnary.find(identifier.value());
+        int ind = symbolDictionnary.find(identifier.value(),"global");
         if(ind == -1)
         {
             throw new IllFormedNodeException("Exception in line : " + node.line()+" : "+ node.column()+" There is no declared method called \""+identifier.value()+"\" .");
@@ -586,7 +586,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException("Exception in line : " + node.line()+" : "+ node.column()+" There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
 
-
+        updateSorte(identifier);
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }
@@ -933,7 +933,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line(), node.column(), e.toString());
         }
-        int ind = symbolDictionnary.find(identifier.value());
+        int ind = symbolDictionnary.find(identifier.value(),"global");
         if(ind == -1)
         {
             throw new IllFormedNodeException("Exception in line : " + node.line()+" : "+ node.column()+" There is no declared method called  \""+identifier.value()+"\" ");
@@ -945,6 +945,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             throw new IllFormedNodeException("Exception in line : " + node.line()+" : "+ node.column()+" There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
 
+        updateSorte(identifier);
         miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }

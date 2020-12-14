@@ -62,6 +62,19 @@ public class ParserTypeCheckerTest extends BaseTest {
 
     }
 
+    @Test
+    public void Test3() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("classe","classWithFunctionCall");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.classe());
+
+        ClasseNode classeNode = (ClasseNode) listener.getRoot();
+        typeChecker = new TypeCheckerImpl(classeNode);
+        typeChecker.typeCheck();
+
+
+    }
+
 
 
     @Test(expected = IllFormedNodeException.class)
@@ -76,21 +89,6 @@ public class ParserTypeCheckerTest extends BaseTest {
 
 
     }
-
-    /*
-    @Test(expected = IllFormedNodeException.class)
-    public void MethodVoidReturnDeclsTest__WithException() throws Exception {
-        TestConstructor testConstructor = new TestConstructor("decls","voidMethodWithError");
-        parser = testConstructor.getParser();
-        walker.walk(listener, parser.classe());
-
-        MethodNode methodNode = (MethodNode) listener.getRoot();
-        typeChecker = new TypeCheckerImpl(methodNode);
-        typeChecker.typeCheck();
-
-
-    }
-*/
 
 
 }
