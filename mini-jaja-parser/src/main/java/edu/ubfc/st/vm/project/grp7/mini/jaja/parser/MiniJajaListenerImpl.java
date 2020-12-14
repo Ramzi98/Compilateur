@@ -80,11 +80,13 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitVarNode(MiniJajaParser.VarNodeContext ctx) {
+        //typemeth ident vexp
         VarNode.Builder builder = VarNode.builder()
                 .line(line(ctx))
                 .column(column(ctx));
 
         MiniJajaNode node = stack.pop();
+        System.out.println(node.getClass());
         if (node instanceof  IdentNode){
             builder.expression(null)
                     .identifier((IdentNode) node)
