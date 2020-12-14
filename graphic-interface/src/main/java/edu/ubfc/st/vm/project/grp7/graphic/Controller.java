@@ -1,50 +1,26 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
-import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
-import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
-import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreter;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterController;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.reactfx.Subscription;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.IntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,46 +53,30 @@ public class Controller implements Initializable{
     private ExecutorService colorSyntaxique = Executors.newSingleThreadExecutor();
 
 
-    private InterpreterMiniJaja interpreterMiniJaja;
-    private InterpreterJajaCode interpreterJajaCode;
-    CompilerGraphic compilerGraphic;
+    private InterpreterMiniJajaModel interpreterMiniJajaModel;
+    private InterpreterJajaCodeModel interpreterJajaCodeModel;
+    private CompilerModel compilerGraphic;
     private Memory memory;
 
     public String currentFileMiniJaja;
-    private CharStream codePointCharStream;
-
-
     private String currentFileJajaCode;
 
-    private BreakPoint currentBreakPoint;
-
-    private BreakPoint breakPointMiniJaja;
-    private BreakPoint breakPointJajaCode;
-
     private CodeArea currentArea;
-    private Compiler compiler;
-    private Thread pausableThread = new Thread(()->{
-        run();
-    });
 
-    private List<JajaCodeNode> jcInitNode;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        interpreterMiniJaja  = new InterpreterMiniJaja(areaRun,areaError,areaDebug);
-        interpreterJajaCode = new InterpreterJajaCode(areaRun,areaError,areaDebug,codeAreaJajaCode);
-        compilerGraphic = new CompilerGraphic(interpreterJajaCode,interpreterMiniJaja);
-        init_code_area(codeAreaMiniJaja);
-        init_code_area(codeAreaJajaCode);
+        interpreterMiniJajaModel = new InterpreterMiniJajaModel(areaRun,areaError,areaDebug,codeAreaMiniJaja);
+        interpreterJajaCodeModel = new InterpreterJajaCodeModel(areaRun,areaError,areaDebug,codeAreaJajaCode);
+        compilerGraphic = new CompilerModel(interpreterJajaCodeModel, interpreterMiniJajaModel);
 
         currentArea = codeAreaMiniJaja;
 
         syntaxiqueColor(codeAreaJajaCode);
         syntaxiqueColor(codeAreaMiniJaja);
 
-        jcInitNode = new ArrayList<>();
 
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
             (v, oldValue, newValue) -> {
@@ -163,30 +123,7 @@ public class Controller implements Initializable{
         return str.split(" ")[3];
     }
 
-    private void init_code_area(CodeArea codeArea){
-        IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
-        IntFunction<Node> graphicFactory;
-        if (codeArea.equals(codeAreaMiniJaja)) {
-            breakPointMiniJaja = new BreakPoint(codeArea.currentParagraphProperty());
-            graphicFactory = line -> {
-                HBox hbox = new HBox(
-                        breakPointMiniJaja.apply(line),
-                        numberFactory.apply(line));
-                hbox.setAlignment(Pos.CENTER_LEFT);
-                return hbox;
-            };
-        } else {
-            breakPointJajaCode = new BreakPoint(codeArea.currentParagraphProperty());
-            graphicFactory = line -> {
-                HBox hbox = new HBox(
-                        breakPointJajaCode.apply(line),
-                        numberFactory.apply(line));
-                hbox.setAlignment(Pos.CENTER_LEFT);
-                return hbox;
-            };
-        }
-        codeArea.setParagraphGraphicFactory(graphicFactory);
-    }
+
 
     @FXML
     public void openFile(ActionEvent actionEvent) {
@@ -260,6 +197,7 @@ public class Controller implements Initializable{
         }
     }
 
+
     @FXML
     public void saveFile(ActionEvent actionEvent) {
         currentArea = getCurrentCodeArea();
@@ -308,10 +246,9 @@ public class Controller implements Initializable{
 
     @FXML
     public void compile(ActionEvent actionEvent) throws IOException {
-
         saveFile(actionEvent);
-
         compilerGraphic.compile(currentFileMiniJaja);
+        tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
     }
 
 
@@ -368,35 +305,28 @@ public class Controller implements Initializable{
 
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
-        currentBreakPoint = null;
         saveFile(actionEvent);
-        run();
+        run(false);
     }
 
 
     @FXML
     private void runWithDebug(ActionEvent actionEvent) throws Exception {
-        if (getCurrentCodeArea().equals(codeAreaMiniJaja)) {
-            currentBreakPoint = breakPointMiniJaja;
-            breakPointMiniJaja.returnCheckedLine();
-        } else {
-            currentBreakPoint = breakPointJajaCode;
-            breakPointJajaCode.returnCheckedLine();
-        }
-        pausableThread.run();
+        saveFile(actionEvent);
+        run(true);
     }
 
 
 
-    public void run(){
+    public void run(boolean debug){
         currentArea = getCurrentCodeArea();
         memory = Memory.getInstance();
         try {
             if (currentArea.equals(codeAreaMiniJaja)){
-                runMiniJaja();
+                runMiniJaja(debug);
             }else{
-                if(jcInitNode != null){
-                    runJajaCode();
+                if(interpreterJajaCodeModel.getNodes().size()!=0){
+                    runJajaCode(debug);
                 }
             }
             areaRunTab.getTabPane().getSelectionModel().select(areaRunTab);
@@ -410,31 +340,32 @@ public class Controller implements Initializable{
         }
     }
 
-    public void runMiniJaja() throws Exception {
-        interpreterMiniJaja = new InterpreterMiniJaja(areaRun,areaError,areaDebug);
-        interpreterMiniJaja.setBreakpoints(breakPointMiniJaja.returnCheckedLine());
-        interpreterMiniJaja.init(currentFileMiniJaja);
-        interpreterMiniJaja.setMemory(memory);
-        interpreterMiniJaja.interpret();
-        interpreterMiniJaja.run(false);
+    public void runMiniJaja(boolean debug) throws Exception {
+        interpreterMiniJajaModel.setBreakpoints();
+        interpreterMiniJajaModel.init(currentFileMiniJaja);
+        interpreterMiniJajaModel.setMemory(memory);
+        interpreterMiniJajaModel.interpret();
+        interpreterMiniJajaModel.run(debug);
     }
 
 
 
-    public void runJajaCode() throws Exception {
-        if (interpreterJajaCode.getNodes().size() == 0){
+    public void runJajaCode(boolean debug) throws Exception {
+        if (interpreterJajaCodeModel.getNodes().size() == 0){
             areaError.clear();
             areaError.appendText("You need compile MiniJajaBefore Execute");
         }else {
-            interpreterJajaCode.setBreakpoints(breakPointJajaCode.returnCheckedLine());
-            interpreterJajaCode.run(false);
+            interpreterJajaCodeModel.setBreakpoints();
+            interpreterJajaCodeModel.run(debug);
         }
     }
 
 
     public void nextBreakPoint(ActionEvent actionEvent) {
+
     }
 
     public void step(ActionEvent actionEvent) {
+        
     }
 }

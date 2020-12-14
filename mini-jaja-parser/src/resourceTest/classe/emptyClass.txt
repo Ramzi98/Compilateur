@@ -1,5 +1,28 @@
 class C {
+	int addition(int i, int j){
+		return i+j;
+	};
+	
 	main{
-
+		int add = 0;
+		add = addition(1+2);
+		write(add);
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
