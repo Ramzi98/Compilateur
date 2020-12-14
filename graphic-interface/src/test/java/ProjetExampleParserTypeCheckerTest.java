@@ -42,6 +42,7 @@ public class ProjetExampleParserTypeCheckerTest extends BaseTest {
 
      */
 
+
     @Test
     public void example3Test() throws Exception {
         TestConstructor testConstructor = new TestConstructor("ProjectExample","1");
@@ -54,5 +55,6 @@ public class ProjetExampleParserTypeCheckerTest extends BaseTest {
 
 
     }
+
 
 }

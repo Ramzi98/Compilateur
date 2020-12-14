@@ -247,13 +247,17 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         node_init(node, h);
 
         if (compilemode == Mode.NORMALE) {
+            int ne = 0;
             try {
-                node.expression().accept(this);
+                if(node.expression() != null)
+                {
+                    node.expression().accept(this);
+                    ne = (int) stack.pop().values().toArray()[0];
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
 
-            int ne = (int) stack.pop().values().toArray()[0];
             h.replace(node, ne + 1);
             minijajaNodes.set(minijajaNodes.indexOf(h), h);
             stack.set(stack.indexOf(h), h);
