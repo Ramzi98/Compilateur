@@ -49,6 +49,19 @@ public class SymbolDictionnary {
         }
     }
 
+    public void register(String ident,String scope,int indice) throws IllegalArgumentException {
+        HashMap<String, Integer> currentScope = symbols.get(scope);
+
+        if(ident == null || ident.trim().isEmpty()){
+            throw new IllegalArgumentException("Can't replace with null Id");
+        }
+        if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
+            throw new IllegalArgumentException("The value is already in the list.");
+        }else{
+            currentScope.put(ident,indice);
+        }
+    }
+
     public void unregister(String ident) throws IllegalArgumentException {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
