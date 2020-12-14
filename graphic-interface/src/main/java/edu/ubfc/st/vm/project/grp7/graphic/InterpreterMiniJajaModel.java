@@ -8,39 +8,58 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.fxmisc.richtext.CodeArea;
-import sun.rmi.runtime.NewThreadAction;
+import org.fxmisc.richtext.LineNumberFactory;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.IntFunction;
 
-public class InterpreterMiniJaja implements MJJInterpreterListener{
-    ClasseNode classeNode;
-    Waiter waiter;
-    private Thread interpreter;
+public class InterpreterMiniJajaModel implements MJJInterpreterListener{
+    private ClasseNode classeNode;
+    private Waiter waiter;
     private Executor threadWrite = Executors.newSingleThreadExecutor();
-    TextArea run;
-    TextArea error;
-    TextArea debug;
-    List<Integer> breakpoints;
+    private TextArea run;
+    private TextArea error;
+    private TextArea debug;
+    private CodeArea codeArea;
+    private List<Integer> breakpoints;
     private Memory memory;
+    private BreakPoint breakPoint;
 
-    InterpreterMiniJaja(TextArea run,TextArea error,TextArea debug){
+    Thread pausable = new Thread(()->{
+        try {
+            runnable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+
+    InterpreterMiniJajaModel(TextArea run, TextArea error, TextArea debug, CodeArea codeArea){
         this.run = run;
         this.error = error;
         this.debug = debug;
+        this.codeArea = codeArea;
+        init();
     }
 
-    public void setBreakpoints(List<Integer> breakpoints) {
-        this.breakpoints = breakpoints;
+    public void setBreakpoints() {
+        this.breakpoints = breakPoint.returnCheckedLine();
+        for (int i : breakpoints){
+            System.out.println("breakpoint line : "+i);
+        }
     }
 
     private CharStream codePointCharStream;
@@ -63,11 +82,15 @@ public class InterpreterMiniJaja implements MJJInterpreterListener{
     }
 
     public void run(boolean debug) throws Exception {
-        if (debug){
+        if (!debug){
             waiter = new DebugOffWaiter();
         }else{
-            waiter = new DebugOnWaiter(interpreter);
+            waiter = new DebugOnWaiter(pausable);
         }
+        pausable.run();
+    }
+
+    public void runnable() throws Exception {
         this.threadWrite.execute(() -> {
             run.appendText("\nRun MiniJaja\n\n");
         });
@@ -94,17 +117,38 @@ public class InterpreterMiniJaja implements MJJInterpreterListener{
         });
     }
 
-    @Override
     public void setMemory(Memory memory) {
         this.memory = memory;
     }
 
     @Override
     public void debug(int line) throws InterruptedException {
+        waiter.waitForUser(breakpoints.contains(line));
+    }
 
+    public void init(){
+        IntFunction<Node> numberFactory = LineNumberFactory.get(codeArea);
+        IntFunction<Node> graphicFactory;
+        breakPoint = new BreakPoint(codeArea.currentParagraphProperty());
+        graphicFactory = line -> {
+            HBox hbox = new HBox(
+                    breakPoint.apply(line),
+                    numberFactory.apply(line));
+            hbox.setAlignment(Pos.CENTER_LEFT);
+            return hbox;
+        };
+        codeArea.setParagraphGraphicFactory(graphicFactory);
     }
 
     public ClasseNode getClasseNode() {
         return classeNode;
+    }
+
+    public void nextBreakPoint(ActionEvent actionEvent) {
+        waiter.nextBreakpoint();
+    }
+
+    public void step(ActionEvent actionEvent) {
+        waiter.nextStep();
     }
 }

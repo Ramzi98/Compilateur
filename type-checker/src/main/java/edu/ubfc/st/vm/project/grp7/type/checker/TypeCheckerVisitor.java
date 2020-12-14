@@ -48,7 +48,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         MiniJajaNode main = node.methmain();
         currentscope = SCOPE_GLOBAL;
 
-
         if (pass == Pass.FIRST_PASS)
         {
             try{
