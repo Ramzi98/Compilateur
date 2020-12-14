@@ -1003,6 +1003,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         updateObj(identifier);
+        updateSorte(identifier);
 
         if(identNature.get(identifier) != OBJ.TAB)
         {

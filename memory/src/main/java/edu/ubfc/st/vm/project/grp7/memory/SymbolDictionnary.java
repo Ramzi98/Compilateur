@@ -92,7 +92,8 @@ public class SymbolDictionnary {
     public int find(String ident,String scope) {
         for (String sc : scopes)
         {
-            if(sc.startsWith(scope))
+            String s1 = sc.split("-")[0];
+            if(s1.equals(scope))
             {
                 scope = sc;
                 break;
