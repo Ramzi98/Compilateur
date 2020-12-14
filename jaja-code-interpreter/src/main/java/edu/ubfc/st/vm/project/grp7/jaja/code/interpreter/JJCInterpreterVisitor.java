@@ -11,7 +11,7 @@ import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 
 import java.util.List;
 
-public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
+public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     private final Memory memory;
     private final JJCInterpreterController controller;
     private final List<JajaCodeNode> nodes;

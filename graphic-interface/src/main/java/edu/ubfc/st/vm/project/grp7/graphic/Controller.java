@@ -92,7 +92,6 @@ public class Controller implements Initializable{
                     currentArea.clear();
                     while ((ligne = buff.readLine()) != null) {
                         currentArea.appendText(ligne);
-                        currentArea.appendText(System.getProperty("line.separator"));
                     }
                     buff.close();
                 }
@@ -224,7 +223,7 @@ public class Controller implements Initializable{
     private void saveTextToFile(String content, File file) {
         try {
             PrintWriter writer = new PrintWriter(file);
-            writer.println(content);
+            writer.print(content);
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
