@@ -1,3 +1,4 @@
+import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
@@ -15,6 +16,7 @@ public class ParserTypeCheckerTest extends BaseTest {
 
     protected Compiler compiler;
     protected TypeChecker typeChecker;
+
 
 
     @Test
@@ -48,8 +50,8 @@ public class ParserTypeCheckerTest extends BaseTest {
 
 
     @Test
-    public void example2__Class__Test() throws Exception {
-        TestConstructor testConstructor = new TestConstructor("classe","Test2");
+    public void functionCallClassTest() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("classe","classWithFunctionCall");
         parser = testConstructor.getParser();
         walker.walk(listener, parser.classe());
 
@@ -60,42 +62,35 @@ public class ParserTypeCheckerTest extends BaseTest {
 
     }
 
-/*
-    @Test
-    public void example3__Class__Test() throws Exception {
-        TestConstructor testConstructor = new TestConstructor("classe","Test3");
+
+
+    @Test(expected = IllFormedNodeException.class)
+    public void FunctionCallClassTest__WithException() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("classe","classWithFunctionCallSignatureError");
         parser = testConstructor.getParser();
         walker.walk(listener, parser.classe());
 
         ClasseNode classeNode = (ClasseNode) listener.getRoot();
         typeChecker = new TypeCheckerImpl(classeNode);
         typeChecker.typeCheck();
+
+
     }
 
- */
-
-/*
-
-    @Test
-    public void exampleInstrs__WithException() throws Exception {
-        TestConstructor testConstructor = new TestConstructor("b = 6;");
+    /*
+    @Test(expected = IllFormedNodeException.class)
+    public void MethodVoidReturnDeclsTest__WithException() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("decls","voidMethodWithError");
         parser = testConstructor.getParser();
         walker.walk(listener, parser.classe());
 
-        InstrsNode classeNode = (InstrsNode) listener.getRoot();
-        typeChecker = new TypeChecker(classeNode);
-        typeChecker.setsymbolDictionnary(symbolDictionnary);
+        MethodNode methodNode = (MethodNode) listener.getRoot();
+        typeChecker = new TypeCheckerImpl(methodNode);
         typeChecker.typeCheck();
 
 
     }
-
-
- */
-
-
-
-
+*/
 
 
 }

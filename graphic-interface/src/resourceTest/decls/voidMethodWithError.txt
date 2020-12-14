@@ -1,0 +1,10 @@
+void ret(int j, int b){
+       int k = 0;
+       tab[2] = 5;
+       while(5 > k){
+           tab[k] = 1;
+           k++;
+       };
+
+       return k;
+    };
