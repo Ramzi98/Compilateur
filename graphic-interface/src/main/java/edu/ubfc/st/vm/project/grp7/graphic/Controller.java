@@ -364,8 +364,15 @@ public class Controller implements Initializable{
             areaError.clear();
             areaError.appendText("You need compile MiniJajaBefore Execute");
         }else {
-            interpreterJajaCodeModel.setBreakpoints();
-            interpreterJajaCodeModel.run(debug);
+            executorService.execute(()-> {
+                interpreterJajaCodeModel.setBreakpoints();
+                interpreterJajaCodeModel.setMemory(memory);
+                try {
+                    interpreterJajaCodeModel.run(debug);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
