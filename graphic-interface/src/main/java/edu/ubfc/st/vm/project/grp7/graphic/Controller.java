@@ -250,7 +250,6 @@ public class Controller implements Initializable{
         tabJajaCode.getTabPane().getSelectionModel().select(tabJajaCode);
     }
 
-
     private Tab getTabCodeSelected(){
         return tabPaneCode.getSelectionModel().getSelectedItem();
     }
@@ -358,7 +357,6 @@ public class Controller implements Initializable{
             interpreterJajaCodeModel.run(debug);
         }
     }
-
 
     public void nextBreakPoint(ActionEvent actionEvent) {
 
