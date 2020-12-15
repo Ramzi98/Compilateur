@@ -369,10 +369,10 @@ public class Controller implements Initializable{
     }
 
     public void nextBreakPoint(ActionEvent actionEvent) {
-
+        interpreterMiniJajaModel.nextBreakPoint(actionEvent);
     }
 
     public void step(ActionEvent actionEvent) {
-        
+        interpreterMiniJajaModel.step(actionEvent);
     }
 }

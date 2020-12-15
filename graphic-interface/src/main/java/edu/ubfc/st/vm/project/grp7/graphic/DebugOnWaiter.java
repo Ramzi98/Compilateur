@@ -17,7 +17,7 @@ public class DebugOnWaiter implements DebugListener.Waiter {
         while(lineMode || breakpointedLine) {
             try {
                 synchronized (lock){
-                    thread.wait();
+                    lock.wait();
                 }
             }catch (Exception e){e.printStackTrace();}
         }
@@ -29,6 +29,7 @@ public class DebugOnWaiter implements DebugListener.Waiter {
         try {
             synchronized (lock){
                 lock.notify();
+                System.out.println("here");
             }
         }catch (Exception e){
             e.printStackTrace();
