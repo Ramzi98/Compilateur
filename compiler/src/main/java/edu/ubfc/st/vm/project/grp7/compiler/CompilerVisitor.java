@@ -1013,7 +1013,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
             try {
                 nodeExp.accept(this);
                 int nexp = (int) stack.pop().values().toArray()[0];
-                h.replace(node, n + nexp);
+
                 int nlexp = 0;
                 if (nodeListExp != null) {
                     nodeListExp.accept(this);
