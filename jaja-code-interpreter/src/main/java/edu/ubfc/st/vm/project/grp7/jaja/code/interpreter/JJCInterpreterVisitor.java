@@ -10,6 +10,7 @@ import edu.ubfc.st.vm.project.grp7.memory.OBJ;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 
 import java.util.List;
+import java.util.UUID;
 
 public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     private final Memory memory;
@@ -212,7 +213,10 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
             jjcError(node, "invoke destination out of range");
         }
         n = next;
+
+        memory.pushContext(UUID.randomUUID().toString());
         nodes.get(n).accept(this);
+        memory.popContext();
     }
 
     //<m,a> |- load(i) -> << w, Val(i,m), cst,w>.m, a+1>
