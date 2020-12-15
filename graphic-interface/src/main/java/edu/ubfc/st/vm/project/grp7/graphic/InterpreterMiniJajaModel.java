@@ -39,13 +39,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     private Memory memory;
     private BreakPoint breakPoint;
 
-    Thread pausable = new Thread(()->{
-        try {
-            runnable();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });
+
 
     InterpreterMiniJajaModel(TextArea run, TextArea error, TextArea debug, CodeArea codeArea){
         this.run = run;
@@ -85,12 +79,8 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         if (!debug){
             waiter = new DebugOffWaiter();
         }else{
-            waiter = new DebugOnWaiter(pausable);
+            waiter = new DebugOnWaiter();
         }
-        pausable.run();
-    }
-
-    public void runnable() throws Exception {
         this.threadWrite.execute(() -> {
             run.appendText("\nRun MiniJaja\n\n");
         });

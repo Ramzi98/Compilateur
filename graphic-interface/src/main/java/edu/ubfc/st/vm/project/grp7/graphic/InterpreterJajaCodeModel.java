@@ -100,7 +100,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         if (debug){
             waiter = new DebugOffWaiter();
         }else{
-            waiter = new DebugOnWaiter(pausable);
+            waiter = new DebugOnWaiter();
         }
     }
 

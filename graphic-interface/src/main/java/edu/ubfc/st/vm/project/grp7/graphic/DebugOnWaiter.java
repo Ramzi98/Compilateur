@@ -3,18 +3,16 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 import edu.ubfc.st.vm.project.grp7.debug.DebugListener;
 
 public class DebugOnWaiter implements DebugListener.Waiter {
-     private final Thread thread;
      private Object lock = new Object();
 
-     public DebugOnWaiter(Thread thread){
-         this.thread = thread;
+     public DebugOnWaiter(){
      }
 
     private boolean lineMode = false;
 
     @Override
     public void waitForUser(boolean breakpointedLine) throws InterruptedException {
-        while(lineMode || breakpointedLine) {
+        if(lineMode || breakpointedLine) {
             try {
                 synchronized (lock){
                     lock.wait();
@@ -29,7 +27,6 @@ public class DebugOnWaiter implements DebugListener.Waiter {
         try {
             synchronized (lock){
                 lock.notify();
-                System.out.println("here");
             }
         }catch (Exception e){
             e.printStackTrace();
