@@ -377,7 +377,6 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     public void visit(JcPushNode node) throws Exception {
         debug(node);
         memory.empiler(new Quadruplet(null, node.valeur(), OBJ.CST, null));
-
         n++;
         node.next().accept(this);
     }

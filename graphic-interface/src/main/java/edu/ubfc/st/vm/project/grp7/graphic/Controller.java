@@ -324,6 +324,7 @@ public class Controller implements Initializable{
                 runMiniJaja(debug);
             }else{
                 if(interpreterJajaCodeModel.getNodes().size()!=0){
+                    System.out.println("here");
                     runJajaCode(debug);
                 }
             }
@@ -369,10 +370,18 @@ public class Controller implements Initializable{
     }
 
     public void nextBreakPoint(ActionEvent actionEvent) {
-        interpreterMiniJajaModel.nextBreakPoint(actionEvent);
+        currentArea = getCurrentCodeArea();
+        if (currentArea.equals(codeAreaMiniJaja))
+            interpreterMiniJajaModel.nextBreakPoint(actionEvent);
+        else
+            interpreterJajaCodeModel.nextBreakPoint(actionEvent);
     }
 
     public void step(ActionEvent actionEvent) {
-        interpreterMiniJajaModel.step(actionEvent);
+        currentArea = getCurrentCodeArea();
+        if (currentArea.equals(codeAreaMiniJaja))
+            interpreterMiniJajaModel.step(actionEvent);
+        else
+            interpreterJajaCodeModel.step(actionEvent);
     }
 }

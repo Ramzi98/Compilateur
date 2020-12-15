@@ -51,9 +51,6 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
 
     public void setBreakpoints() {
         this.breakpoints = breakPoint.returnCheckedLine();
-        for (int i : breakpoints){
-            System.out.println("breakpoint line : "+i);
-        }
     }
 
     private CharStream codePointCharStream;
@@ -81,30 +78,20 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         }else{
             waiter = new DebugOnWaiter();
         }
-        this.threadWrite.execute(() -> {
-            run.appendText("\nRun MiniJaja\n\n");
-        });
-
+        run.appendText("\nRun MiniJaja\n\n");
         MiniJajaInterpreter.getFactory().createFrom(memory, classeNode).interpret(new MJJInterpreterController(this));
-
-        this.threadWrite.execute(() -> {
-            run.appendText("\n---------------------\n\n");
-        });
+        run.appendText("\n---------------------\n\n");
     }
 
     @Override
     public void mjjWrite(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-        });
+        run.appendText(str);
     }
 
     @Override
     public void mjjWriteLn(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-            run.appendText("\n");
-        });
+        run.appendText(str);
+        run.appendText("\n");
     }
 
     public void setMemory(Memory memory) {

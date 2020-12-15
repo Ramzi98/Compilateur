@@ -49,13 +49,6 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         this.error = error;
         this.debug = debug;
         this.codeArea = codeArea;
-        this.pausable = new Thread(()->{
-            try {
-                runnable();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     public void setBreakpoints() {
@@ -102,20 +95,13 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         }else{
             waiter = new DebugOnWaiter();
         }
-    }
-
-
-    public void runnable() throws Exception {
-        this.threadWrite.execute(() -> {
-            run.appendText("\nRun JajaCode\n\n");
-        });
-
+        run.appendText("\nRun JajaCode\n\n");
         JJCInterpreter.getFactory().createFrom(memory,nodes).interpret(new JJCInterpreterController(this) );
-
-        this.threadWrite.execute(() -> {
-            run.appendText("\n----------------------------------\n");
-        });
+        run.appendText("\n----------------------------------\n");
     }
+
+
+
 
     public void nextBreakPoint(ActionEvent actionEvent) {
         waiter.nextBreakpoint();
