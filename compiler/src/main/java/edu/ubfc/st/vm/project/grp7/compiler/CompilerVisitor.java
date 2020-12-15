@@ -27,7 +27,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         jajaCodeNodes = new ArrayList<>();
         minijajaNodes = new ArrayList<>();
         stack = new Stack<>();
-        stack = new Stack<>();
         compilemode = Mode.NORMALE;
     }
 
@@ -64,6 +63,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 .line(jajaCodeNodes.size() + 1)
                 .column(1)
                 .build();
+
         jajaCodeNodes.add(jcInitNode);
         h.replace(node, n + 1);
         minijajaNodes.set(minijajaNodes.indexOf(h), h);
