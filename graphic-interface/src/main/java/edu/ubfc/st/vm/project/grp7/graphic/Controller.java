@@ -51,7 +51,7 @@ public class Controller implements Initializable{
     private Tab areaDebugTab;
 
     private ExecutorService colorSyntaxique = Executors.newSingleThreadExecutor();
-
+    private ExecutorService executorService =  Executors.newSingleThreadExecutor();
 
     private InterpreterMiniJajaModel interpreterMiniJajaModel;
     private InterpreterJajaCodeModel interpreterJajaCodeModel;
@@ -62,7 +62,7 @@ public class Controller implements Initializable{
     private String currentFileJajaCode;
 
     private CodeArea currentArea;
-
+    private Thread thread;
 
 
     @Override
@@ -339,11 +339,21 @@ public class Controller implements Initializable{
     }
 
     public void runMiniJaja(boolean debug) throws Exception {
-        interpreterMiniJajaModel.setBreakpoints();
-        interpreterMiniJajaModel.init(currentFileMiniJaja);
-        interpreterMiniJajaModel.setMemory(memory);
-        interpreterMiniJajaModel.interpret();
-        interpreterMiniJajaModel.run(debug);
+        executorService.execute(()->{
+            interpreterMiniJajaModel.setBreakpoints();
+            try {
+                interpreterMiniJajaModel.init(currentFileMiniJaja);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            interpreterMiniJajaModel.setMemory(memory);
+            interpreterMiniJajaModel.interpret();
+            try {
+                interpreterMiniJajaModel.run(debug);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 
