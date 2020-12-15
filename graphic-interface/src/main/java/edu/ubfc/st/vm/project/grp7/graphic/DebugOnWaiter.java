@@ -4,6 +4,7 @@ import edu.ubfc.st.vm.project.grp7.debug.DebugListener;
 
 public class DebugOnWaiter implements DebugListener.Waiter {
      private final Thread thread;
+     private Object lock = new Object();
 
      public DebugOnWaiter(Thread thread){
          this.thread = thread;
@@ -15,8 +16,7 @@ public class DebugOnWaiter implements DebugListener.Waiter {
     public void waitForUser(boolean breakpointedLine) throws InterruptedException {
         while(lineMode || breakpointedLine) {
             try {
-                synchronized (this.thread){
-                    System.out.println("here");
+                synchronized (lock){
                     thread.wait();
                 }
             }catch (Exception e){e.printStackTrace();}
@@ -27,8 +27,8 @@ public class DebugOnWaiter implements DebugListener.Waiter {
     public void nextBreakpoint() {
         lineMode = false;
         try {
-            synchronized (this.thread){
-                thread.notify();
+            synchronized (lock){
+                lock.notify();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -39,8 +39,8 @@ public class DebugOnWaiter implements DebugListener.Waiter {
     public void nextStep() {
         lineMode = true;
         try {
-            synchronized (this.thread){
-                thread.notify();
+            synchronized (lock){
+                lock.notify();
             }
         }catch (Exception e){
             e.printStackTrace();
