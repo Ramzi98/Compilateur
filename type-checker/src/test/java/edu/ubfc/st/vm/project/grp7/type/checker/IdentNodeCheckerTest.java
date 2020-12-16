@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.IDEStack;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
@@ -26,8 +25,8 @@ public class IdentNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IdentNodeTypeCheker__Second_Pass() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IdentNodeTypeCheker__Second_Pass() throws TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();

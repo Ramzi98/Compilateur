@@ -25,7 +25,7 @@ public class DivNodeCheckerTest {
     }
 
     @Test
-    public void DivNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void DivNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -36,8 +36,8 @@ public class DivNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void DivNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void DivNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -46,8 +46,8 @@ public class DivNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void DivNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void DivNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -55,8 +55,8 @@ public class DivNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();

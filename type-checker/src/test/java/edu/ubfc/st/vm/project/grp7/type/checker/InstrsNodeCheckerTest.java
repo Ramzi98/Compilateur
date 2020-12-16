@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -25,7 +24,7 @@ public class InstrsNodeCheckerTest {
     }
 
     @Test
-    public void InstrsNodeTypeCheker__First__Second__Pass() throws IOException, IllFormedNodeException {
+    public void InstrsNodeTypeCheker__First__Second__Pass() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 

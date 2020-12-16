@@ -26,7 +26,7 @@ public class CstNodeCheckerTest {
     }
 
     @Test
-    public void CstNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void CstNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -39,8 +39,8 @@ public class CstNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
@@ -51,8 +51,8 @@ public class CstNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__ExistingSymbol__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__ExistingSymbol__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identCst = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.INT).build();

@@ -27,7 +27,7 @@ public class VarNodeCheckerTest {
     }
 
     @Test
-    public void VarNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void VarNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -39,8 +39,8 @@ public class VarNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__TypeOmega__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__TypeOmega__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -53,8 +53,8 @@ public class VarNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 

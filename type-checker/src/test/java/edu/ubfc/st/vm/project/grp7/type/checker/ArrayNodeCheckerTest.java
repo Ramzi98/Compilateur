@@ -26,7 +26,7 @@ public class ArrayNodeCheckerTest {
     }
 
     @Test
-    public void ArrayNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void ArrayNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -36,8 +36,8 @@ public class ArrayNodeCheckerTest {
         typeChecker.visit(node);
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayNodeTypeCheck__withException__TypeNodeOmega() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayNodeTypeCheck__withException__TypeNodeOmega() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.VOID).build();
@@ -46,8 +46,8 @@ public class ArrayNodeCheckerTest {
         typeChecker.visit(node);
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayNodeTypeCheck__withException__SizeNotInt() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayNodeTypeCheck__withException__SizeNotInt() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -57,8 +57,8 @@ public class ArrayNodeCheckerTest {
         typeChecker.visit(node);
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayNodeTypeCheck__withException__NodeExists() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayNodeTypeCheck__withException__NodeExists() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         IdentNode identvar2 = IdentNode.builder().value("i").build();

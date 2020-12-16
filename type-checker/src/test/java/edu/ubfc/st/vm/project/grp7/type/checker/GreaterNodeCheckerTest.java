@@ -22,7 +22,7 @@ public class GreaterNodeCheckerTest {
     }
 
     @Test
-    public void GreaterNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void GreaterNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -33,8 +33,8 @@ public class GreaterNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void GreaterNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void GreaterNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -42,8 +42,8 @@ public class GreaterNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void GreaterNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void GreaterNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         NumberNode leftOperand = NumberNode.builder().value(6).build();
@@ -51,8 +51,8 @@ public class GreaterNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void GreaterNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void GreaterNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();

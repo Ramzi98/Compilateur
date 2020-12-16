@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -22,7 +21,7 @@ public class MethodeSignatureCheckerTest {
 
 
     @Test
-    public void MethodeSignatureTypeCheker__First__Second__Pass() throws IllFormedNodeException {
+    public void MethodeSignatureTypeCheker__First__Second__Pass() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identvark = IdentNode.builder().value("k").build();
@@ -82,8 +81,8 @@ public class MethodeSignatureCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MethodeSignatureTypeCheker__Exception__Dif__Signature__MethodDecl__MethodCall() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MethodeSignatureTypeCheker__Exception__Dif__Signature__MethodDecl__MethodCall() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identvark = IdentNode.builder().value("k").build();

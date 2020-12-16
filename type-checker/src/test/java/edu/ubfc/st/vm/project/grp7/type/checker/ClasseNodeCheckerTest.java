@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -27,7 +26,7 @@ public class ClasseNodeCheckerTest {
     }
 
     @Test
-    public void ClasseNodeTypeCheker__FirstPass() throws IOException, IllFormedNodeException {
+    public void ClasseNodeTypeCheker__FirstPass() throws IOException, TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -59,8 +58,8 @@ public class ClasseNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ClasseNodeTypeCheker__FirstPass__withException__InMainScope() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ClasseNodeTypeCheker__FirstPass__withException__InMainScope() throws IOException, TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -86,8 +85,8 @@ public class ClasseNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ClasseNodeTypeCheker__FirstPass__withException__InClassScope() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ClasseNodeTypeCheker__FirstPass__withException__InClassScope() throws IOException, TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();

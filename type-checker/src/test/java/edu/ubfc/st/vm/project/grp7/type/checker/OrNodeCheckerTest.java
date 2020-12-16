@@ -22,7 +22,7 @@ public class OrNodeCheckerTest {
     }
 
     @Test
-    public void OrNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void OrNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
@@ -33,8 +33,8 @@ public class OrNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
         BooleanNode rightOperand = BooleanNode.builder().build();
@@ -43,8 +43,8 @@ public class OrNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         NumberNode leftOperand = NumberNode.builder().value(6).build();
@@ -52,8 +52,8 @@ public class OrNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();

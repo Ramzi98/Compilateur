@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
 import org.junit.Before;
@@ -22,15 +21,15 @@ public class NumberNodeCheckerTest {
     }
 
     @Test
-    public void numberNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void numberNodeTypeCheck() throws IOException, TypeCheckerException {
 
         NumberNode node = NumberNode.builder().value(2).build();
         typeChecker.visit(node);
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void numberNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void numberNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode node = NumberNode.builder().build();
         typeChecker.visit(node);

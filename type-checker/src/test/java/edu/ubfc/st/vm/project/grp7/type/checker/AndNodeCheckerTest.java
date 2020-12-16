@@ -24,7 +24,7 @@ public class AndNodeCheckerTest {
     }
 
     @Test
-    public void AndNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void AndNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
@@ -35,8 +35,8 @@ public class AndNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AndNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AndNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
         BooleanNode rightOperand = BooleanNode.builder().build();
@@ -45,8 +45,8 @@ public class AndNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AndNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AndNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         NumberNode leftOperand = NumberNode.builder().value(6).build();
@@ -54,8 +54,8 @@ public class AndNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void AndNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AndNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();

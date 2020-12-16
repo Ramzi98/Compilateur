@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -21,8 +20,8 @@ public class IncrementNodeCheckerTest {
         symbolDictionnary = new SymbolDictionnary();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IncrementNodeTypeCheker__Exception() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IncrementNodeTypeCheker__Exception() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -43,8 +42,8 @@ public class IncrementNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IncrementNodeTypeCheker__ArrayItem__Exception__Identifier__NOT_INT() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IncrementNodeTypeCheker__ArrayItem__Exception__Identifier__NOT_INT() throws IOException, TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 

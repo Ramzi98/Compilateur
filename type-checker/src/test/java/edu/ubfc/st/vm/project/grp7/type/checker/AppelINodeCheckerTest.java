@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
@@ -28,7 +27,7 @@ public class AppelINodeCheckerTest {
 
 
     @Test
-    public void AppelINodeTypeCheker() throws IOException, IllFormedNodeException {
+    public void AppelINodeTypeCheker() throws IOException, TypeCheckerException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -80,8 +79,8 @@ public class AppelINodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AppelINodeTypeCheker__WithException_NoIdentDeclared() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AppelINodeTypeCheker__WithException_NoIdentDeclared() throws IOException, TypeCheckerException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();

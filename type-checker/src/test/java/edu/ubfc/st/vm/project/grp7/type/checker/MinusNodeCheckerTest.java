@@ -25,7 +25,7 @@ public class MinusNodeCheckerTest {
     }
 
     @Test
-    public void MinusNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void MinusNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         NumberNode number = NumberNode.builder().value(5).build() ;
@@ -34,8 +34,8 @@ public class MinusNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MinusNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MinusNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode number = NumberNode.builder().build();
         MinusNode node = MinusNode.builder().expression(number).build();
@@ -43,8 +43,8 @@ public class MinusNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MinusNodeTypeCheck__WrongType__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MinusNodeTypeCheck__WrongType__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode number = BooleanNode.builder().value(true).build();
         MinusNode node = MinusNode.builder().expression(number).build();

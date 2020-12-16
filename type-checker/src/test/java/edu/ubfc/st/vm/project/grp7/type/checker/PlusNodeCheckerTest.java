@@ -25,7 +25,7 @@ public class PlusNodeCheckerTest {
     }
 
     @Test
-    public void PlusNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void PlusNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -35,8 +35,8 @@ public class PlusNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -45,8 +45,8 @@ public class PlusNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -54,8 +54,8 @@ public class PlusNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();
