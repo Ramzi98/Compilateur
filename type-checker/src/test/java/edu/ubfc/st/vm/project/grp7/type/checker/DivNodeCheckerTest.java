@@ -1,11 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DivNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.PlusNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +23,7 @@ public class DivNodeCheckerTest {
     }
 
     @Test
-    public void DivNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void DivNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -37,7 +35,7 @@ public class DivNodeCheckerTest {
 
 
     @Test(expected = TypeCheckerException.class)
-    public void DivNodeTypeCheck__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void DivNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -47,7 +45,7 @@ public class DivNodeCheckerTest {
     }
 
     @Test(expected = TypeCheckerException.class)
-    public void DivNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void DivNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -56,7 +54,7 @@ public class DivNodeCheckerTest {
 
     }
     @Test(expected = TypeCheckerException.class)
-    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();

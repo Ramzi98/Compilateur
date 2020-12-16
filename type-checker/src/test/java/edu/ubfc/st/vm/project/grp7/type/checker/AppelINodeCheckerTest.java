@@ -1,16 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class AppelINodeCheckerTest {
 
@@ -27,7 +21,7 @@ public class AppelINodeCheckerTest {
 
 
     @Test
-    public void AppelINodeTypeCheker() throws IOException, TypeCheckerException {
+    public void AppelINodeTypeCheker() throws TypeCheckerException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -80,7 +74,7 @@ public class AppelINodeCheckerTest {
     }
 
     @Test(expected = TypeCheckerException.class)
-    public void AppelINodeTypeCheker__WithException_NoIdentDeclared() throws IOException, TypeCheckerException {
+    public void AppelINodeTypeCheker__WithException_NoIdentDeclared() throws TypeCheckerException {
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         IdentNode identheader = IdentNode.builder().value("j").build();

@@ -1,14 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -26,7 +21,7 @@ public class ClasseNodeCheckerTest {
     }
 
     @Test
-    public void ClasseNodeTypeCheker__FirstPass() throws IOException, TypeCheckerException {
+    public void ClasseNodeTypeCheker__FirstPass() throws TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -59,7 +54,7 @@ public class ClasseNodeCheckerTest {
     }
 
     @Test(expected = TypeCheckerException.class)
-    public void ClasseNodeTypeCheker__FirstPass__withException__InMainScope() throws IOException, TypeCheckerException {
+    public void ClasseNodeTypeCheker__FirstPass__withException__InMainScope() throws TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();
@@ -86,7 +81,7 @@ public class ClasseNodeCheckerTest {
     }
 
     @Test(expected = TypeCheckerException.class)
-    public void ClasseNodeTypeCheker__FirstPass__withException__InClassScope() throws IOException, TypeCheckerException {
+    public void ClasseNodeTypeCheker__FirstPass__withException__InClassScope() throws TypeCheckerException {
 
         IdentNode identclasse = IdentNode.builder().value("C").build();
         IdentNode identvar1 = IdentNode.builder().value("i").build();
