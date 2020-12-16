@@ -125,7 +125,7 @@ public class ParserTest extends BaseTest{
     private String getExpectedFile(String FileName) throws IOException {
 
         byte[] encoded = Files.readAllBytes(Paths.get("src/resourceTest/ExpectedParserResults/"+FileName+".txt"));
-        return  new String(encoded, StandardCharsets.US_ASCII).replace("\r","");
+        return  new String(encoded, StandardCharsets.UTF_8).replace("\r","");
 
     }
 

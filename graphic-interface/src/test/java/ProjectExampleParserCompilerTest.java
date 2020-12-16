@@ -29,7 +29,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler = new CompilerImpl(classeNode);
         compiler.compile();
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        //assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_1")));
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_1")));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
     private String getExpectedFile(String FileName) throws IOException {
 
         byte[] encoded = Files.readAllBytes(Paths.get("src/resourceTest/ExpectedCompilerResults/"+FileName+".txt"));
-        return  new String(encoded, StandardCharsets.US_ASCII).replace("\r","");
+        return  new String(encoded, StandardCharsets.UTF_8).replace("\r","");
 
     }
 }
