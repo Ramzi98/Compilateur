@@ -117,14 +117,8 @@ public class ParserTest extends BaseTest{
         this.visitor = new MiniJajaAstToYamlVisitor(generator);
     }
 
-    private void flushAndDisplayYaml() throws IOException {
-        this.generator.flush();
-        System.out.println("<================  YAML  ================>");
-        System.out.println(this.out.toString());
-        System.out.println("<========================================>");
-    }
     private void compareOutputWithYamlString(String yaml) throws Exception {
-        flushAndDisplayYaml();
+        this.generator.flush();
         assertThat(out.toString(), is(yaml));
     }
     
