@@ -197,7 +197,6 @@ public class Controller implements Initializable{
     public void run(boolean debug){
         setCurrent();
         memory = Memory.getInstance();
-
         if (currentArea.equals(codeAreaMiniJaja)){
             runMiniJaja(debug);
         }else{
@@ -217,7 +216,6 @@ public class Controller implements Initializable{
     }
 
     public void runJajaCode(boolean debug){
-
         if (interpreterJajaCodeModel.runAll(debug,memory) == -1){
             selectTabPan(areaErrorTab);
         }else{

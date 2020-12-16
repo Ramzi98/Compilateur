@@ -81,7 +81,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         listener = new MiniJajaListenerImpl();
     }
 
-    public void build() {
+    public void build(){
         try {
             walker.walk(listener, parser.classe());
         }catch (ASTParsingException e){

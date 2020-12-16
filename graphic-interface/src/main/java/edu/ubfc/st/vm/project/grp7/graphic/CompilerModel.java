@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 
 import java.io.IOException;
