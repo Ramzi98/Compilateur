@@ -812,9 +812,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("trueInstrs");
         try {
-            node.trueInstrs().accept(this);
+            if(node.trueInstrs() != null) {
+                generator.writeFieldName("trueInstrs");
+                node.trueInstrs().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;
@@ -825,9 +827,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("falseInstrs");
         try {
-            node.falseInstrs().accept(this);
+            if(node.falseInstrs() != null) {
+                generator.writeFieldName("falseInstrs");
+                node.falseInstrs().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;
@@ -865,9 +869,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("instrs");
         try {
-            node.instrs().accept(this);
+            if(node.instrs() != null) {
+                generator.writeFieldName("instrs");
+                node.instrs().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;

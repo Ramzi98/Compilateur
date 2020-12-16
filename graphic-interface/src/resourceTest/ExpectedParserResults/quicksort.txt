@@ -1,0 +1,738 @@
+ClassNode:
+  identifier:
+    IdentNode:
+      identifier: quicksort
+  decls:
+    DeclsNode:
+      decl:
+        CstNode:
+          identifier:
+            IdentNode:
+              identifier: longueur
+          type:
+            TypeNode:
+              type: INT
+          expression:
+            NumberNode:
+              value: 20
+      decls:
+        DeclsNode:
+          decl:
+            ArrayNode:
+              identifier:
+                IdentNode:
+                  identifier: tableau
+              type:
+                TypeMethNode:
+                  type: INT
+              expression:
+                IdentNode:
+                  identifier: longueur
+          decls:
+            DeclsNode:
+              decl:
+                MethodNode:
+                  identifier:
+                    IdentNode:
+                      identifier: partition
+                  typeMeth:
+                    TypeMethNode:
+                      type: INT
+                  headers:
+                    HeadersNode:
+                      header:
+                        HeaderNode:
+                          identifier:
+                            IdentNode:
+                              identifier: deb
+                          type:
+                            TypeNode:
+                              type: INT
+                      headers:
+                        HeadersNode:
+                          header:
+                            HeaderNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: fin
+                              type:
+                                TypeNode:
+                                  type: INT
+                  vars:
+                    VarsNode:
+                      var:
+                        VarNode:
+                          identifier:
+                            IdentNode:
+                              identifier: compt
+                          type:
+                            TypeMethNode:
+                              type: INT
+                          expression:
+                            IdentNode:
+                              identifier: deb
+                      vars:
+                        VarsNode:
+                          var:
+                            VarNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: pivot
+                              type:
+                                TypeMethNode:
+                                  type: INT
+                              expression:
+                                ArrayItemNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: tableau
+                                  expression:
+                                    IdentNode:
+                                      identifier: deb
+                          vars:
+                            VarsNode:
+                              var:
+                                VarNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: i
+                                  type:
+                                    TypeMethNode:
+                                      type: INT
+                                  expression:
+                                    PlusNode:
+                                      leftOperand:
+                                        IdentNode:
+                                          identifier: deb
+                                      rightOperand:
+                                        NumberNode:
+                                          value: 1
+                              vars:
+                                VarsNode:
+                                  var:
+                                    VarNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: temp
+                                      type:
+                                        TypeMethNode:
+                                          type: INT
+                  instrs:
+                    InstrsNode:
+                      instruction:
+                        WhileNode:
+                          expression:
+                            OrNode:
+                              leftOperand:
+                                GreaterNode:
+                                  leftOperand:
+                                    IdentNode:
+                                      identifier: fin
+                                  rightOperand:
+                                    IdentNode:
+                                      identifier: i
+                              rightOperand:
+                                EqualsNode:
+                                  leftOperand:
+                                    IdentNode:
+                                      identifier: i
+                                  rightOperand:
+                                    IdentNode:
+                                      identifier: fin
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                IfNode:
+                                  expression:
+                                    GreaterNode:
+                                      leftOperand:
+                                        IdentNode:
+                                          identifier: pivot
+                                      rightOperand:
+                                        ArrayItemNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: tableau
+                                          expression:
+                                            IdentNode:
+                                              identifier: i
+                                  trueInstrs:
+                                    InstrsNode:
+                                      instruction:
+                                        IncrementNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: compt
+                                      instrs:
+                                        InstrsNode:
+                                          instruction:
+                                            AssignNode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: temp
+                                              expression:
+                                                ArrayItemNode:
+                                                  identifier:
+                                                    IdentNode:
+                                                      identifier: tableau
+                                                  expression:
+                                                    IdentNode:
+                                                      identifier: compt
+                                          instrs:
+                                            InstrsNode:
+                                              instruction:
+                                                AssignNode:
+                                                  identifier:
+                                                    ArrayItemNode:
+                                                      identifier:
+                                                        IdentNode:
+                                                          identifier: tableau
+                                                      expression:
+                                                        IdentNode:
+                                                          identifier: compt
+                                                  expression:
+                                                    ArrayItemNode:
+                                                      identifier:
+                                                        IdentNode:
+                                                          identifier: tableau
+                                                      expression:
+                                                        IdentNode:
+                                                          identifier: i
+                                              instrs:
+                                                InstrsNode:
+                                                  instruction:
+                                                    AssignNode:
+                                                      identifier:
+                                                        ArrayItemNode:
+                                                          identifier:
+                                                            IdentNode:
+                                                              identifier: tableau
+                                                          expression:
+                                                            IdentNode:
+                                                              identifier: i
+                                                      expression:
+                                                        IdentNode:
+                                                          identifier: temp
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    IncrementNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: i
+                      instrs:
+                        InstrsNode:
+                          instruction:
+                            AssignNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: temp
+                              expression:
+                                ArrayItemNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: tableau
+                                  expression:
+                                    IdentNode:
+                                      identifier: compt
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                AssignNode:
+                                  identifier:
+                                    ArrayItemNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: tableau
+                                      expression:
+                                        IdentNode:
+                                          identifier: compt
+                                  expression:
+                                    ArrayItemNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: tableau
+                                      expression:
+                                        IdentNode:
+                                          identifier: deb
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    AssignNode:
+                                      identifier:
+                                        ArrayItemNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: tableau
+                                          expression:
+                                            IdentNode:
+                                              identifier: deb
+                                      expression:
+                                        IdentNode:
+                                          identifier: temp
+                                  instrs:
+                                    InstrsNode:
+                                      instruction:
+                                        RetrunNode:
+                                          ret:
+                                            IdentNode:
+                                              identifier: compt
+              decls:
+                DeclsNode:
+                  decl:
+                    MethodNode:
+                      identifier:
+                        IdentNode:
+                          identifier: pause
+                      typeMeth:
+                        TypeMethNode:
+                          type: VOID
+                  decls:
+                    DeclsNode:
+                      decl:
+                        MethodNode:
+                          identifier:
+                            IdentNode:
+                              identifier: trirapide
+                          typeMeth:
+                            TypeMethNode:
+                              type: VOID
+                          headers:
+                            HeadersNode:
+                              header:
+                                HeaderNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: debut
+                                  type:
+                                    TypeNode:
+                                      type: INT
+                              headers:
+                                HeadersNode:
+                                  header:
+                                    HeaderNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: fin
+                                      type:
+                                        TypeNode:
+                                          type: INT
+                          vars:
+                            VarsNode:
+                              var:
+                                VarNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: pivot
+                                  type:
+                                    TypeMethNode:
+                                      type: INT
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                IfNode:
+                                  expression:
+                                    GreaterNode:
+                                      leftOperand:
+                                        IdentNode:
+                                          identifier: fin
+                                      rightOperand:
+                                        IdentNode:
+                                          identifier: debut
+                                  trueInstrs:
+                                    InstrsNode:
+                                      instruction:
+                                        AssignNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: pivot
+                                          expression:
+                                            AppelENode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: partition
+                                              listexp:
+                                                ListExpNode:
+                                                  expression:
+                                                    IdentNode:
+                                                      identifier: debut
+                                                  listexp:
+                                                    ListExpNode:
+                                                      expression:
+                                                        IdentNode:
+                                                          identifier: fin
+                                      instrs:
+                                        InstrsNode:
+                                          instruction:
+                                            AppelINode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: trirapide
+                                              listexp:
+                                                ListExpNode:
+                                                  expression:
+                                                    IdentNode:
+                                                      identifier: debut
+                                                  listexp:
+                                                    ListExpNode:
+                                                      expression:
+                                                        subNode:
+                                                          leftOperand:
+                                                            IdentNode:
+                                                              identifier: pivot
+                                                          rightOperand:
+                                                            NumberNode:
+                                                              value: 1
+                                          instrs:
+                                            InstrsNode:
+                                              instruction:
+                                                AppelINode:
+                                                  identifier:
+                                                    IdentNode:
+                                                      identifier: trirapide
+                                                  listexp:
+                                                    ListExpNode:
+                                                      expression:
+                                                        PlusNode:
+                                                          leftOperand:
+                                                            IdentNode:
+                                                              identifier: pivot
+                                                          rightOperand:
+                                                            NumberNode:
+                                                              value: 1
+                                                      listexp:
+                                                        ListExpNode:
+                                                          expression:
+                                                            IdentNode:
+                                                              identifier: fin
+  main:
+    MainNode:
+      instrs:
+        InstrsNode:
+          instruction:
+            AssignNode:
+              identifier:
+                ArrayItemNode:
+                  identifier:
+                    IdentNode:
+                      identifier: tableau
+                  expression:
+                    NumberNode:
+                      value: 0
+              expression:
+                NumberNode:
+                  value: 5
+          instrs:
+            InstrsNode:
+              instruction:
+                AssignNode:
+                  identifier:
+                    ArrayItemNode:
+                      identifier:
+                        IdentNode:
+                          identifier: tableau
+                      expression:
+                        NumberNode:
+                          value: 1
+                  expression:
+                    NumberNode:
+                      value: 2
+              instrs:
+                InstrsNode:
+                  instruction:
+                    AssignNode:
+                      identifier:
+                        ArrayItemNode:
+                          identifier:
+                            IdentNode:
+                              identifier: tableau
+                          expression:
+                            NumberNode:
+                              value: 2
+                      expression:
+                        NumberNode:
+                          value: 10
+                  instrs:
+                    InstrsNode:
+                      instruction:
+                        AssignNode:
+                          identifier:
+                            ArrayItemNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: tableau
+                              expression:
+                                NumberNode:
+                                  value: 3
+                          expression:
+                            NumberNode:
+                              value: 11
+                      instrs:
+                        InstrsNode:
+                          instruction:
+                            AssignNode:
+                              identifier:
+                                ArrayItemNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: tableau
+                                  expression:
+                                    NumberNode:
+                                      value: 4
+                              expression:
+                                NumberNode:
+                                  value: 4
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                AssignNode:
+                                  identifier:
+                                    ArrayItemNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: tableau
+                                      expression:
+                                        NumberNode:
+                                          value: 5
+                                  expression:
+                                    NumberNode:
+                                      value: 52
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    AssignNode:
+                                      identifier:
+                                        ArrayItemNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: tableau
+                                          expression:
+                                            NumberNode:
+                                              value: 6
+                                      expression:
+                                        NumberNode:
+                                          value: 13
+                                  instrs:
+                                    InstrsNode:
+                                      instruction:
+                                        AssignNode:
+                                          identifier:
+                                            ArrayItemNode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: tableau
+                                              expression:
+                                                NumberNode:
+                                                  value: 7
+                                          expression:
+                                            NumberNode:
+                                              value: 12
+                                      instrs:
+                                        InstrsNode:
+                                          instruction:
+                                            AssignNode:
+                                              identifier:
+                                                ArrayItemNode:
+                                                  identifier:
+                                                    IdentNode:
+                                                      identifier: tableau
+                                                  expression:
+                                                    NumberNode:
+                                                      value: 8
+                                              expression:
+                                                NumberNode:
+                                                  value: 5
+                                          instrs:
+                                            InstrsNode:
+                                              instruction:
+                                                AssignNode:
+                                                  identifier:
+                                                    ArrayItemNode:
+                                                      identifier:
+                                                        IdentNode:
+                                                          identifier: tableau
+                                                      expression:
+                                                        NumberNode:
+                                                          value: 9
+                                                  expression:
+                                                    NumberNode:
+                                                      value: 1
+                                              instrs:
+                                                InstrsNode:
+                                                  instruction:
+                                                    AssignNode:
+                                                      identifier:
+                                                        ArrayItemNode:
+                                                          identifier:
+                                                            IdentNode:
+                                                              identifier: tableau
+                                                          expression:
+                                                            NumberNode:
+                                                              value: 10
+                                                      expression:
+                                                        NumberNode:
+                                                          value: 62
+                                                  instrs:
+                                                    InstrsNode:
+                                                      instruction:
+                                                        AssignNode:
+                                                          identifier:
+                                                            ArrayItemNode:
+                                                              identifier:
+                                                                IdentNode:
+                                                                  identifier: tableau
+                                                              expression:
+                                                                NumberNode:
+                                                                  value: 11
+                                                          expression:
+                                                            NumberNode:
+                                                              value: 32
+                                                      instrs:
+                                                        InstrsNode:
+                                                          instruction:
+                                                            AssignNode:
+                                                              identifier:
+                                                                ArrayItemNode:
+                                                                  identifier:
+                                                                    IdentNode:
+                                                                      identifier: tableau
+                                                                  expression:
+                                                                    NumberNode:
+                                                                      value: 12
+                                                              expression:
+                                                                NumberNode:
+                                                                  value: 14
+                                                          instrs:
+                                                            InstrsNode:
+                                                              instruction:
+                                                                AssignNode:
+                                                                  identifier:
+                                                                    ArrayItemNode:
+                                                                      identifier:
+                                                                        IdentNode:
+                                                                          identifier: tableau
+                                                                      expression:
+                                                                        NumberNode:
+                                                                          value: 13
+                                                                  expression:
+                                                                    NumberNode:
+                                                                      value: 16
+                                                              instrs:
+                                                                InstrsNode:
+                                                                  instruction:
+                                                                    AssignNode:
+                                                                      identifier:
+                                                                        ArrayItemNode:
+                                                                          identifier:
+                                                                            IdentNode:
+                                                                              identifier: tableau
+                                                                          expression:
+                                                                            NumberNode:
+                                                                              value: 14
+                                                                      expression:
+                                                                        NumberNode:
+                                                                          value: 9
+                                                                  instrs:
+                                                                    InstrsNode:
+                                                                      instruction:
+                                                                        AssignNode:
+                                                                          identifier:
+                                                                            ArrayItemNode:
+                                                                              identifier:
+                                                                                IdentNode:
+                                                                                  identifier: tableau
+                                                                              expression:
+                                                                                NumberNode:
+                                                                                  value: 15
+                                                                          expression:
+                                                                            NumberNode:
+                                                                              value: 8
+                                                                      instrs:
+                                                                        InstrsNode:
+                                                                          instruction:
+                                                                            AssignNode:
+                                                                              identifier:
+                                                                                ArrayItemNode:
+                                                                                  identifier:
+                                                                                    IdentNode:
+                                                                                      identifier: tableau
+                                                                                  expression:
+                                                                                    NumberNode:
+                                                                                      value: 16
+                                                                              expression:
+                                                                                NumberNode:
+                                                                                  value: 3
+                                                                          instrs:
+                                                                            InstrsNode:
+                                                                              instruction:
+                                                                                AssignNode:
+                                                                                  identifier:
+                                                                                    ArrayItemNode:
+                                                                                      identifier:
+                                                                                        IdentNode:
+                                                                                          identifier: tableau
+                                                                                      expression:
+                                                                                        NumberNode:
+                                                                                          value: 17
+                                                                                  expression:
+                                                                                    NumberNode:
+                                                                                      value: 21
+                                                                              instrs:
+                                                                                InstrsNode:
+                                                                                  instruction:
+                                                                                    AssignNode:
+                                                                                      identifier:
+                                                                                        ArrayItemNode:
+                                                                                          identifier:
+                                                                                            IdentNode:
+                                                                                              identifier: tableau
+                                                                                          expression:
+                                                                                            NumberNode:
+                                                                                              value: 18
+                                                                                      expression:
+                                                                                        NumberNode:
+                                                                                          value: 29
+                                                                                  instrs:
+                                                                                    InstrsNode:
+                                                                                      instruction:
+                                                                                        AssignNode:
+                                                                                          identifier:
+                                                                                            ArrayItemNode:
+                                                                                              identifier:
+                                                                                                IdentNode:
+                                                                                                  identifier: tableau
+                                                                                              expression:
+                                                                                                NumberNode:
+                                                                                                  value: 19
+                                                                                          expression:
+                                                                                            NumberNode:
+                                                                                              value: 23
+                                                                                      instrs:
+                                                                                        InstrsNode:
+                                                                                          instruction:
+                                                                                            AppelINode:
+                                                                                              identifier:
+                                                                                                IdentNode:
+                                                                                                  identifier: trirapide
+                                                                                              listexp:
+                                                                                                ListExpNode:
+                                                                                                  expression:
+                                                                                                    NumberNode:
+                                                                                                      value: 0
+                                                                                                  listexp:
+                                                                                                    ListExpNode:
+                                                                                                      expression:
+                                                                                                        subNode:
+                                                                                                          leftOperand:
+                                                                                                            IdentNode:
+                                                                                                              identifier: longueur
+                                                                                                          rightOperand:
+                                                                                                            NumberNode:
+                                                                                                              value: 1
+                                                                                          instrs:
+                                                                                            InstrsNode:
+                                                                                              instruction:
+                                                                                                AppelINode:
+                                                                                                  identifier:
+                                                                                                    IdentNode:
+                                                                                                      identifier: pause
