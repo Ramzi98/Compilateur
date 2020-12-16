@@ -116,6 +116,10 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     @Override
     public void debug(int line) throws InterruptedException {
         waiter.waitForUser(breakpoints.contains(line));
+        if (breakpoints.contains(line)){
+            debug.clear();
+            debug.appendText(memory.toString());
+        }
     }
 
     public void init(){
