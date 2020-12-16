@@ -158,7 +158,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         interpret();
         try {
             typeCheck();
-        } catch (IllFormedNodeException e) {
+        } catch (TypeCheckerException e) {
             writeerror.execute(()->{error.appendText(e.getMessage());});
             return ;
         }
