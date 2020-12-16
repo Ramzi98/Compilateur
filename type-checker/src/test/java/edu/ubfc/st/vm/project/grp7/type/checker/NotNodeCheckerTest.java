@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
@@ -22,7 +21,7 @@ public class NotNodeCheckerTest {
     }
 
     @Test
-    public void NotNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void NotNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         BooleanNode expression = BooleanNode.builder().value(true).build() ;
@@ -31,8 +30,8 @@ public class NotNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.BOOLEAN));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void NotNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void NotNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         BooleanNode expression = BooleanNode.builder().build() ;
         NotNode node = NotNode.builder().expression(expression).build();
@@ -40,8 +39,8 @@ public class NotNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void NotNodeTypeCheck__WrongType__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void NotNodeTypeCheck__WrongType__withException() throws IOException, TypeCheckerException{
 
         NumberNode expression = NumberNode.builder().value(5).build() ;
         NotNode node = NotNode.builder().expression(expression).build();

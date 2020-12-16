@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
@@ -27,7 +26,7 @@ public class VarNodeCheckerTest {
     }
 
     @Test
-    public void VarNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void VarNodeTypeCheck() throws IOException, TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -39,8 +38,8 @@ public class VarNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__TypeOmega__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__TypeOmega__WithException() throws IOException, TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -53,8 +52,8 @@ public class VarNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 

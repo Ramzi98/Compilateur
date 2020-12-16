@@ -7,6 +7,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DeclsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MethodNode;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
+import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,7 +78,7 @@ public class ParserTypeCheckerTest extends BaseTest {
 
 
 
-    @Test(expected = IllFormedNodeException.class)
+    @Test(expected = TypeCheckerException.class)
     public void FunctionCallClassTest__WithException() throws Exception {
         TestConstructor testConstructor = new TestConstructor("classe","classWithFunctionCallSignatureError");
         parser = testConstructor.getParser();

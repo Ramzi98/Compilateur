@@ -1,16 +1,12 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.PlusNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.SubNode;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -25,7 +21,7 @@ public class PlusNodeCheckerTest {
     }
 
     @Test
-    public void PlusNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void PlusNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -35,8 +31,8 @@ public class PlusNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -45,8 +41,8 @@ public class PlusNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -54,8 +50,8 @@ public class PlusNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void PlusNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();

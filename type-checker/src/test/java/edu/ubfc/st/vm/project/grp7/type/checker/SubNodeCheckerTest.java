@@ -1,13 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -22,7 +19,7 @@ public class SubNodeCheckerTest {
     }
 
     @Test
-    public void SubNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void SubNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -32,8 +29,8 @@ public class SubNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SubNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SubNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -42,8 +39,8 @@ public class SubNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SubNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SubNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -51,8 +48,8 @@ public class SubNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void SubNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SubNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();

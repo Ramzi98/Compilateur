@@ -10,6 +10,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
+import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -82,7 +83,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         typeChecker = new TypeCheckerImpl(classeNode);
     }
 
-    public void typeCheck() throws IllFormedNodeException {
+    public void typeCheck() throws TypeCheckerException {
         typeChecker.typeCheck();
     }
 

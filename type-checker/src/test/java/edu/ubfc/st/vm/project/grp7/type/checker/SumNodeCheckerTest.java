@@ -1,18 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
-import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class SumNodeCheckerTest {
 
@@ -26,8 +17,8 @@ public class SumNodeCheckerTest {
         symbolDictionnary = new SymbolDictionnary();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Exception__Type_Identifier_NOT_INT() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SumNodeTypeCheker__Exception__Type_Identifier_NOT_INT() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -51,8 +42,8 @@ public class SumNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Exception__Type_Expression_NOT_INT() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SumNodeTypeCheker__Exception__Type_Expression_NOT_INT() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -81,8 +72,8 @@ public class SumNodeCheckerTest {
 
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Identifier_NOT_INT() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Identifier_NOT_INT() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -106,8 +97,8 @@ public class SumNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Expression_NOT_INT() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void SumNodeTypeCheker__Identifier__ArrayItem__Type_Expression_NOT_INT() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 

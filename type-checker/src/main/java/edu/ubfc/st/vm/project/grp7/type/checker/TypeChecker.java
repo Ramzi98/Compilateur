@@ -12,7 +12,7 @@ public interface TypeChecker {
         return new TypeCheckerImpl(node);
 
     }
-    default void typeCheck() throws IllFormedNodeException { }
+    default void typeCheck() throws TypeCheckerException { }
 
 
 }

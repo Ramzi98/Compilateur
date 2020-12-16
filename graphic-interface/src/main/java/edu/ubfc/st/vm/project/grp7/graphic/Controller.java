@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
+import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -220,6 +221,7 @@ public class Controller implements Initializable{
     public void runMiniJaja(boolean debug) throws Exception {
         setCurrent();
         interpreterMiniJajaModel.runAll(currentFile,debug, memory);
+
     }
 
     public void runJajaCode(boolean debug) throws Exception {
