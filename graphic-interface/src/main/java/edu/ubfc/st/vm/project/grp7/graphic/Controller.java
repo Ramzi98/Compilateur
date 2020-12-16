@@ -139,7 +139,6 @@ public class Controller implements Initializable{
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
         setCurrent();
-        System.out.println("file : "+currentFile);
         fileModel.saveFile(currentArea,currentFile);
         run(false);
     }
@@ -247,7 +246,6 @@ public class Controller implements Initializable{
         } else {
             currentArea = codeAreaJajaCode;
             currentFile = currentFileJajaCode;
-            System.out.println("file : "+ currentFile);
         }
     }
 
