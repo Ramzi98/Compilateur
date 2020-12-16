@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class CompilerModel {
         try {
             interpreterMiniJajaModel.init(file);
             try {
-                interpreterMiniJajaModel.interpret();
+                interpreterMiniJajaModel.build();
                 compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
                 compiler.compile();
                 interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());
@@ -34,5 +35,6 @@ public class CompilerModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

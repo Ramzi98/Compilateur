@@ -1,11 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
@@ -70,15 +70,24 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     private ParseTreeWalker walker = new ParseTreeWalker();
     private MiniJajaListenerImpl listener;
 
-    public void init(String file) throws IOException {
-        codePointCharStream = CharStreams.fromPath(Paths.get(file));
+    public void init(String file)  {
+        try {
+            codePointCharStream = CharStreams.fromPath(Paths.get(file));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         lexer = new MiniJajaLexer(codePointCharStream);
         parser = new MiniJajaParser(new CommonTokenStream(lexer));
         listener = new MiniJajaListenerImpl();
     }
 
-    public void interpret() {
-        walker.walk(listener, parser.classe());
+    public void build(){
+        try {
+            walker.walk(listener, parser.classe());
+        }catch (ASTParsingException e){
+            writeerror.execute(()->{error.appendText(e.getMessage());});
+            return;
+        }
         classeNode = (ClasseNode) listener.getRoot();
         typeChecker = new TypeCheckerImpl(classeNode);
     }
@@ -87,7 +96,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         typeChecker.typeCheck();
     }
 
-    public void run(boolean debug) throws Exception {
+    public void interpret(boolean debug) throws Exception {
         if (!debug){
             waiter = new DebugOffWaiter();
         }else{
@@ -148,30 +157,26 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         waiter.nextStep();
     }
 
-    public void runAll(String file,boolean debug, Memory memory){
+    public int runAll(String file,boolean debug, Memory memory){
         setBreakpoints();
-        try {
-            init(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            writeerror.execute(()->{error.appendText(e.getMessage());});
-
-            return;
-        }
+        init(file);
         setMemory(memory);
-        interpret();
+        if (memory == null){
+            System.out.println("nooooooo");
+        }
+        build();
         try {
             typeCheck();
         } catch (TypeCheckerException e) {
             writeerror.execute(()->{error.appendText(e.getMessage());});
-            return ;
+            return -1 ;
         }
         try {
-            run(debug);
+            interpret(debug);
         } catch (Exception e) {
-            e.printStackTrace();
             writeerror.execute(()->{error.appendText(e.getMessage());});
-            return ;
+            return -1;
         }
+        return 0;
     }
 }
