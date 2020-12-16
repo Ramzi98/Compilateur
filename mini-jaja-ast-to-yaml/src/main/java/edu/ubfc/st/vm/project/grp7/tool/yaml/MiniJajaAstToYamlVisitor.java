@@ -38,9 +38,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                             e.getMessage()
                     );
                 }
-            generator.writeFieldName("decls");
             try {
                 if(node.decls() != null) {
+                    generator.writeFieldName("decls");
                     node.decls().accept(this);
                 }
             }catch (IllFormedNodeException | IOException e){
@@ -101,9 +101,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("decls");
         try {
             if(node.decls() != null) {
+                generator.writeFieldName("decls");
                 node.decls().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -138,9 +138,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("vars");
         try {
             if(node.vars() != null) {
+                generator.writeFieldName("vars");
                 node.vars().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -152,6 +152,7 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
+
         generator.writeEndObject();
         generator.writeEndObject();
 
@@ -192,9 +193,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("expression");
         try {
             if(node.expression() != null) {
+                generator.writeFieldName("expression");
                 node.expression().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -350,10 +351,10 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("headers");
         try {
 
             if(node.headers() != null) {
+                generator.writeFieldName("headers");
                 node.headers().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -365,10 +366,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("vars");
         try {
-
             if(node.vars() != null) {
+                generator.writeFieldName("vars");
                 node.vars().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -380,9 +380,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("instrs");
         try {
             if(node.instrs() != null) {
+                generator.writeFieldName("instrs");
                 node.instrs().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -408,9 +408,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
         }
         generator.writeStartObject();
         generator.writeObjectFieldStart("MainNode");
-        generator.writeFieldName("vars");
         try {
             if(node.vars() != null) {
+                generator.writeFieldName("vars");
                 node.vars().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -422,9 +422,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("instrs");
         try {
             if(node.instrs() != null) {
+                generator.writeFieldName("instrs");
                 node.instrs().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -458,9 +458,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("headers");
         try {
             if(node.headers() != null) {
+                generator.writeFieldName("headers");
                 node.headers().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -520,9 +520,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
 
         generator.writeStartObject();
         generator.writeObjectFieldStart("InstrsNode");
-        generator.writeFieldName("instruction");
         try {
-            node.instruction().accept(this);
+            if(node.instruction() != null) {
+                generator.writeFieldName("instruction");
+                node.instruction().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;
@@ -533,9 +535,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("instrs");
         try {
             if(node.instrs() != null) {
+                generator.writeFieldName("instrs");
                 node.instrs().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -681,9 +683,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("listexp");
         try {
-            node.listexp().accept(this);
+            if(node.listexp() !=null) {
+                generator.writeFieldName("listexp");
+                node.listexp().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;
@@ -896,9 +900,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("listexp");
         try {
             if(node.listexp() != null) {
+                generator.writeFieldName("listexp");
                 node.listexp().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -954,9 +958,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -990,9 +994,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1026,9 +1030,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1062,9 +1066,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1098,9 +1102,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1134,9 +1138,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1192,9 +1196,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1228,9 +1232,9 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("rightOperand");
         try {
             if(node.rightOperand() != null) {
+                generator.writeFieldName("rightOperand");
                 node.rightOperand().accept(this);
             }
         }catch (IllFormedNodeException | IOException e){
@@ -1269,9 +1273,11 @@ public class MiniJajaAstToYamlVisitor extends MiniJajaASTVisitor {
                     e.getMessage()
             );
         }
-        generator.writeFieldName("listexp");
         try {
-            node.listexp().accept(this);
+            if(node.listexp() !=null) {
+                generator.writeFieldName("listexp");
+                node.listexp().accept(this);
+            }
 
         }catch (IllFormedNodeException | IOException e){
             throw e;

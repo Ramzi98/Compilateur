@@ -24,6 +24,7 @@ public class MethodeNodeCheckerTest {
     public void MethodeNodeTypeCheker__First__Second__Pass() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
+        IdentNode identvar2 = IdentNode.builder().value("k").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
         IdentNode identfonction = IdentNode.builder().value("fonction").build();
         IdentNode identclasse = IdentNode.builder().value("C").build();
@@ -37,7 +38,7 @@ public class MethodeNodeCheckerTest {
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
         VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
-        VarNode varNode1 = VarNode.builder().identifier(identfonction).typeMeth(typeMethNode).expression(numberNode).build();
+        VarNode varNode1 = VarNode.builder().identifier(identvar2).typeMeth(typeMethNode).expression(numberNode).build();
         VarsNode varsDecls = VarsNode.builder().var(varNode1).vars(null).build();
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
@@ -68,7 +69,6 @@ public class MethodeNodeCheckerTest {
 
          typeChecker = new TypeCheckerImpl(classeNode1);
          typeChecker.typeCheck();
-
 
     }
 
