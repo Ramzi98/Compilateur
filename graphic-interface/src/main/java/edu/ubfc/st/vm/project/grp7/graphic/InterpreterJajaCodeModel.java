@@ -122,7 +122,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         codeArea.setParagraphGraphicFactory(graphicFactory);
     }
 
-    public int runAll(boolean debug){
+    public int runAll(boolean debug,Memory memory){
         if (getNodes().size() == 0){
             error.clear();
             error.appendText("You need compile MiniJajaBefore Execute");

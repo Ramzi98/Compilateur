@@ -134,10 +134,12 @@ public class Controller implements Initializable{
         saveFile(actionEvent);
         compilerGraphic.compile(currentFileMiniJaja);
         selectTabPan(tabJajaCode);
+        setCurrentFile(fileModel.saveFileAs(currentArea));
     }
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
         setCurrent();
+        System.out.println("file : "+currentFile);
         fileModel.saveFile(currentArea,currentFile);
         run(false);
     }
@@ -206,8 +208,7 @@ public class Controller implements Initializable{
     }
 
     public void runMiniJaja(boolean debug){
-        setCurrent();
-        if (interpreterMiniJajaModel.runAll(currentFile,debug, memory)==-1){
+        if (interpreterMiniJajaModel.runAll(currentFile,debug, memory) == -1){
             selectTabPan(areaErrorTab);
         }else{
             selectTabPan(areaRunTab);
@@ -216,8 +217,13 @@ public class Controller implements Initializable{
     }
 
     public void runJajaCode(boolean debug){
-        setCurrent();
-        interpreterJajaCodeModel.runAll(debug);
+
+        if (interpreterJajaCodeModel.runAll(debug,memory) == -1){
+            selectTabPan(areaErrorTab);
+        }else{
+            selectTabPan(areaRunTab);
+        }
+
     }
 
     public void nextBreakPoint(ActionEvent actionEvent) {
@@ -243,11 +249,11 @@ public class Controller implements Initializable{
         } else {
             currentArea = codeAreaJajaCode;
             currentFile = currentFileJajaCode;
+            System.out.println("file : "+ currentFile);
         }
     }
 
     private void setCurrentFile(String path) {
-        setCurrent();
         if (currentArea.equals(codeAreaMiniJaja)) {
             currentFileMiniJaja = path;
         } else {

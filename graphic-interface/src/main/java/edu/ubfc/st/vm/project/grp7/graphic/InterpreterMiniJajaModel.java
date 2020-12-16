@@ -5,6 +5,7 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
@@ -81,7 +82,12 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     }
 
     public void build() {
-        walker.walk(listener, parser.classe());
+        try {
+            walker.walk(listener, parser.classe());
+        }catch (ASTParsingException e){
+            writeerror.execute(()->{error.appendText(e.getMessage());});
+            return;
+        }
         classeNode = (ClasseNode) listener.getRoot();
         typeChecker = new TypeCheckerImpl(classeNode);
     }
@@ -155,6 +161,9 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         setBreakpoints();
         init(file);
         setMemory(memory);
+        if (memory == null){
+            System.out.println("nooooooo");
+        }
         build();
         try {
             typeCheck();
