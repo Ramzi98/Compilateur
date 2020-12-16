@@ -20,7 +20,7 @@ public class CompilerModel {
         try {
             interpreterMiniJajaModel.init(file);
             try {
-                interpreterMiniJajaModel.interpret();
+                interpreterMiniJajaModel.build();
                 compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
                 compiler.compile();
                 interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());

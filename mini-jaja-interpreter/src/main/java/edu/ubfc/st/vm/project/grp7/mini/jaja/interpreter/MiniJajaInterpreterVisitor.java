@@ -257,7 +257,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         Object meth = memory.val(node.identifier().value());
         if (!(meth instanceof MethodNode)) {
             throw new IllegalStateException(
-                    "Expecting the memory to peek a METHOD but got " + meth.getClass().getSimpleName()
+                    "Expecting the memory to peek a METHOD but got " + meth.getClass().getSimpleName()+ "at line : ["+node.line()+";"+node.column()+"]"
             );
         }
         MethodNode method = (MethodNode) meth;
@@ -439,7 +439,12 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(DivNode node) throws Exception {
         debug(node);
         evaluateBinOp(node);
-        evals.push((int)evals.pop() / (int)evals.pop());
+        int opl = (int)evals.pop();
+        int opr = (int)evals.pop();
+        if (opr == 0){
+            throw new IllegalStateException("Division by zero at line : ["+node.line()+";"+node.column()+"]");
+        }
+        evals.push(opl/opr);
     }
 
     @Override
@@ -453,7 +458,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
         Object ret = memory.classVar(null);
         if (ret == null) {
-            throw new IllegalStateException("Class Var must be non-null after an appelE");
+            throw new IllegalStateException("Class Var must be non-null after an appelE  at line : ["+node.line()+";"+node.column()+"]");
         }
         evals.push(ret);
     }

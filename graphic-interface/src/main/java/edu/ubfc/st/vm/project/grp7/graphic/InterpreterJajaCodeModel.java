@@ -14,8 +14,6 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.function.IntFunction;
 
 public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
