@@ -75,7 +75,7 @@ public class MiniJajaAstToYamlVisitorTest {
         compareOutputWithYamlString("NumberNode:\n  value: 17");
     }
 
-    /*
+/*
     @Test
     public void withVarsNode__whenVisit__thenYamlOK() throws Exception {
         stringRelatedVisitor__setUp();
@@ -89,12 +89,12 @@ public class MiniJajaAstToYamlVisitorTest {
         TypeMethNode type = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
         VarNode var = VarNode.builder().identifier(ident).typeMeth(type).expression(number).build();
         VarsNode vars = VarsNode.builder().var(var).vars(null).build();
-
         vars.accept(this.visitor);
         flushAndDisplayYaml();
     }
 
-     */
+
+*/
 
     /*
     @Test
