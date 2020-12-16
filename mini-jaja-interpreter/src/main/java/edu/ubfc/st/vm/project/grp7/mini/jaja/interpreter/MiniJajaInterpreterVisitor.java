@@ -477,11 +477,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(TypeMethNode node) throws Exception {
-
+        throw new RuntimeException("TypeMethNode is't supposed to be visited during MJJ Interpretation");
     }
 
     @Override
     public void visit(TypeNode node) throws Exception {
-
+        throw new RuntimeException("TypeNode is't supposed to be visited during MJJ Interpretation");
     }
 }

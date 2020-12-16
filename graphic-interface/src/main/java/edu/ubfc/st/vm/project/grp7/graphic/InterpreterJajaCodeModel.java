@@ -28,9 +28,13 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
     private CodeArea codeArea;
     private List<Integer> listBreakpoints   ;
     private String code;
-    private Thread pausable;
     private BreakPoint breakPoint;
-    private Executor threadWrite = Executors.newSingleThreadExecutor();
+    private String currentFile;
+    public void setCurrentFile(String currentFile) {
+        this.currentFile = currentFile;
+    }
+
+
 
     public void setCode(String code) {
         this.code = code;
@@ -118,5 +122,23 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
             return hbox;
         };
         codeArea.setParagraphGraphicFactory(graphicFactory);
+    }
+
+    public int runAll(boolean debug){
+        if (getNodes().size() == 0){
+            error.clear();
+            error.appendText("You need compile MiniJajaBefore Execute");
+            return -1;
+        }else {
+            setBreakpoints();
+            setMemory(memory);
+            try {
+                run(debug);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+        return 1;
     }
 }

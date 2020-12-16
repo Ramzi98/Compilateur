@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.IntFunction;
 
@@ -43,8 +44,13 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     private Memory memory;
     private BreakPoint breakPoint;
     private TypeChecker typeChecker;
+    private String currentFile;
+    ExecutorService writerun = Executors.newSingleThreadExecutor();
+    ExecutorService writeerror = Executors.newSingleThreadExecutor();
 
-
+    public void setCurrentFile(String currentFile) {
+        this.currentFile = currentFile;
+    }
 
     InterpreterMiniJajaModel(TextArea run, TextArea error, TextArea debug, CodeArea codeArea){
         this.run = run;
@@ -87,9 +93,9 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         }else{
             waiter = new DebugOnWaiter();
         }
-        run.appendText("\nRun MiniJaja\n\n");
+        run.appendText("\n-----Run MiniJaja-----\n\n");
         MiniJajaInterpreter.getFactory().createFrom(memory, classeNode).interpret(new MJJInterpreterController(this));
-        run.appendText("\n---------------------\n\n");
+        run.appendText("\n----------------------\n\n");
     }
 
     @Override
@@ -110,6 +116,10 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     @Override
     public void debug(int line) throws InterruptedException {
         waiter.waitForUser(breakpoints.contains(line));
+        if (breakpoints.contains(line)){
+            debug.clear();
+            debug.appendText(memory.toString());
+        }
     }
 
     public void init(){
@@ -136,5 +146,32 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
 
     public void step(ActionEvent actionEvent) {
         waiter.nextStep();
+    }
+
+    public void runAll(String file,boolean debug, Memory memory){
+        setBreakpoints();
+        try {
+            init(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            writeerror.execute(()->{error.appendText(e.getMessage());});
+
+            return;
+        }
+        setMemory(memory);
+        interpret();
+        try {
+            typeCheck();
+        } catch (TypeCheckerException e) {
+            writeerror.execute(()->{error.appendText(e.getMessage());});
+            return ;
+        }
+        try {
+            run(debug);
+        } catch (Exception e) {
+            e.printStackTrace();
+            writeerror.execute(()->{error.appendText(e.getMessage());});
+            return ;
+        }
     }
 }

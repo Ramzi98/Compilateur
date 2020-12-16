@@ -5,7 +5,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
 import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 

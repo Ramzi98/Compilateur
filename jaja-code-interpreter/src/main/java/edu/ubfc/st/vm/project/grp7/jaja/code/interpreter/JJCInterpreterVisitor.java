@@ -1,6 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
+import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.*;
@@ -132,7 +133,7 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
             jjcError(node, "You try to compare two incompatible type");
         }
 
-        memory.empiler(new Quadruplet(null, rhs.val().equals(lhs.val()), OBJ.CST, SORTE.INT));
+        memory.empiler(new Quadruplet(null, rhs.val().equals(lhs.val()), OBJ.CST, SORTE.BOOLEAN));
 
         n++;
         node.next().accept(this);
@@ -146,6 +147,12 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
         Quadruplet lhs = memory.depiler();
 
         checkValidIntegers(node, lhs, rhs);
+
+        if ((int) rhs.val() == 0) {
+            throw new ArithmeticException(
+                    String.format("ligne %d ; colonne %d : Division by zero", node.line(), node.column())
+            );
+        }
 
         int newVal = ((int) lhs.val()) / ((int) rhs.val());
         memory.empiler(new Quadruplet(null, newVal, OBJ.CST, SORTE.INT));
