@@ -66,4 +66,16 @@ public class ProjetExampleParserTypeCheckerTest extends BaseTest {
     }
 
 
+    @Test
+    public void TestClasstestexempleTypeCheckerParser() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("ProjectExample","test1");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.classe());
+
+        ClasseNode classeNode = (ClasseNode) listener.getRoot();
+        typeChecker = new TypeCheckerImpl(classeNode);
+        typeChecker.typeCheck();
+    }
+
+
 }
