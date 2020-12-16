@@ -1,0 +1,86 @@
+init
+push(512)
+new(taille, entier, var, 0)
+load(taille)
+push(2)
+div
+push(1)
+add
+newarray(t, entier)
+push(13)
+new(f, void, meth, 0)
+goto(30)
+new(x, entier, var, 1)
+load(taille)
+push(2)
+load(x)
+mul
+div
+push(1)
+sub
+newarray(t1, entier)
+load(x)
+load(x)
+astore(t1)
+push(0)
+swap
+pop
+swap
+return
+push(33)
+new(g, void, meth, 0)
+goto(45)
+load(taille)
+push(2)
+div
+newarray(t1, entier)
+push(1)
+push(1)
+astore(t1)
+push(0)
+swap
+pop
+swap
+return
+push(48)
+new(pause, void, meth, 0)
+goto(51)
+push(0)
+swap
+return
+push(2)
+invoke(f)
+swap
+pop
+pop
+push(2)
+invoke(f)
+swap
+pop
+pop
+invoke(pause)
+pop
+push(1)
+invoke(f)
+swap
+pop
+pop
+invoke(pause)
+pop
+invoke(g)
+pop
+invoke(pause)
+pop
+push(0)
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+pop
+jcstop

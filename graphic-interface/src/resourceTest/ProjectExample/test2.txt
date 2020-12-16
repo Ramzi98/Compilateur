@@ -1,0 +1,24 @@
+class C{
+    int addition(int i ){
+        int resultat = i+1;
+        write(resultat);
+        writeln(" is the number");
+        return resultat;
+    };
+
+    int DoubleAddition(int i, int j ){
+        int resultat = i+j;
+        write(resultat);
+        writeln(" is the number");
+        return resultat;
+    };
+
+    main{
+        int T[5];
+        int i = 1;
+        while (5 > i){
+            T[i] = DoubleAddition(i,5);
+            i++;
+        };
+    }
+}

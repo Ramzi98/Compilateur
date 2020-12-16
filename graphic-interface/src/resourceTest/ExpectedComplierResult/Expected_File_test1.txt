@@ -1,0 +1,68 @@
+init
+push(5)
+new(addition, entier, meth, 0)
+goto(19)
+new(i, entier, var, 1)
+load(i)
+push(1)
+add
+new(resultat, entier, var, 0)
+load(resultat)
+write
+push(" is the number")
+writeln
+load(resultat)
+swap
+pop
+swap
+return
+push(22)
+new(DoubleAddition, entier, meth, 0)
+goto(37)
+new(j, entier, var, 2)
+new(i, entier, var, 1)
+load(i)
+load(j)
+add
+new(resultat, entier, var, 0)
+load(resultat)
+write
+push(" is the number")
+writeln
+load(resultat)
+swap
+pop
+swap
+return
+push(5)
+newarray(T, entier)
+push(1)
+new(i, entier, var, 0)
+push(5)
+load(i)
+sup
+not
+if(58)
+load(i)
+load(i)
+push(5)
+invoke(DoubleAddition)
+swap
+pop
+swap
+pop
+astore(T)
+push(1)
+inc(i)
+goto(41)
+push(0)
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+pop
+jcstop
