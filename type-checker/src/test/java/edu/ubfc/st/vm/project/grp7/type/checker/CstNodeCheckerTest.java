@@ -1,13 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
 
 public class CstNodeCheckerTest {
@@ -26,7 +22,7 @@ public class CstNodeCheckerTest {
     }
 
     @Test
-    public void CstNodeTypeCheck() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void CstNodeTypeCheck() throws IOException, TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
 
@@ -40,7 +36,7 @@ public class CstNodeCheckerTest {
 
 
     @Test(expected = TypeCheckerException.class)
-    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void VarNodeTypeCheck__IncompatibleType__WithException() throws IOException, TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.BOOLEAN).build();
@@ -52,7 +48,7 @@ public class CstNodeCheckerTest {
     }
 
     @Test(expected = TypeCheckerException.class)
-    public void VarNodeTypeCheck__ExistingSymbol__WithException() throws IOException, TypeCheckerException, IllFormedNodeException {
+    public void VarNodeTypeCheck__ExistingSymbol__WithException() throws IOException, TypeCheckerException {
 
         IdentNode identCst = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.INT).build();
