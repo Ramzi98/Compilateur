@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,20 +29,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler = new CompilerImpl(classeNode);
         compiler.compile();
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_1.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+        //assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_1")));
     }
 
     @Test
@@ -51,20 +42,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler = new CompilerImpl(classeNode);
         compiler.compile();
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_fact.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_fact")));
     }
 
     @Test
@@ -78,20 +56,8 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_quicksort.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
 
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_quicksort")));
     }
 
     @Test
@@ -105,20 +71,8 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_synonymie.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_synonymie")));
 
-        assertThat(jccPrinter.toString(),is(expected.toString()));
     }
 
     @Test
@@ -132,20 +86,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_tas.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_tas")));
     }
 
     @Test
@@ -159,20 +100,7 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_test1.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_test1")));
     }
 
 
@@ -187,19 +115,14 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-        StringBuilder expected = new StringBuilder();
-        try {
-            File file = new File("src/resourceTest/ExpectedComplierResult/Expected_File_test2.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                expected.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_test2")));
+    }
 
-        assertThat(jccPrinter.toString(),is(expected.toString()));
+
+    private String getExpectedFile(String FileName) throws IOException {
+
+        byte[] encoded = Files.readAllBytes(Paths.get("src/resourceTest/ExpectedCompilerResults/"+FileName+".txt"));
+        return  new String(encoded, StandardCharsets.US_ASCII).replace("\r","");
+
     }
 }
