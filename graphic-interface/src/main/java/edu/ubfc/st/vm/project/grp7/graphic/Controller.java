@@ -1,5 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
+import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
@@ -346,14 +347,27 @@ public class Controller implements Initializable{
                 interpreterMiniJajaModel.init(currentFileMiniJaja);
             } catch (IOException e) {
                 e.printStackTrace();
+                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+                return;
             }
             interpreterMiniJajaModel.setMemory(memory);
+
             interpreterMiniJajaModel.interpret();
+            try {
+                interpreterMiniJajaModel.typeCheck();
+            } catch (IllFormedNodeException e) {
+                areaError.appendText(e.getMessage());
+                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+                return;
+            }
             try {
                 interpreterMiniJajaModel.run(debug);
             } catch (Exception e) {
                 e.printStackTrace();
+                areaErrorTab.getTabPane().getSelectionModel().select(areaErrorTab);
+                return;
             }
+
         });
     }
 
@@ -391,4 +405,7 @@ public class Controller implements Initializable{
         else
             interpreterJajaCodeModel.step(actionEvent);
     }
+
+
+
 }
