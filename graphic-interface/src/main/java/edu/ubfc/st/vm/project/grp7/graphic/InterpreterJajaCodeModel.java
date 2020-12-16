@@ -57,7 +57,6 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     public void setNodes(List<JajaCodeNode> nodes) {
         this.nodes = nodes;
-
     }
 
     public List<JajaCodeNode> getNodes() {
@@ -66,17 +65,13 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     @Override
     public void jjcWrite(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-        });
+        run.appendText(str);
     }
 
     @Override
     public void jjcWriteLn(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-            run.appendText("\n");
-        });
+        run.appendText(str);
+        run.appendText("\n");
     }
 
     @Override
@@ -86,11 +81,11 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     @Override
     public void debug(int line) throws InterruptedException {
-
+        waiter.waitForUser(listBreakpoints.contains(line));
     }
 
     public void run(boolean debug) throws Exception {
-        if (debug){
+        if (!debug){
             waiter = new DebugOffWaiter();
         }else{
             waiter = new DebugOnWaiter();

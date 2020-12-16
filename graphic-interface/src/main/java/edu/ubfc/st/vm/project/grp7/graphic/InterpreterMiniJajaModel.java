@@ -67,7 +67,6 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     }
 
     public void interpret(){
-
         walker.walk(listener, parser.classe());
         classeNode = (ClasseNode)listener.getRoot();
     }

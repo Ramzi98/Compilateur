@@ -92,6 +92,7 @@ public class Controller implements Initializable{
                     currentArea.clear();
                     while ((ligne = buff.readLine()) != null) {
                         currentArea.appendText(ligne);
+                        currentArea.appendText(System.getProperty("line.separator"));
                     }
                     buff.close();
                 }
@@ -324,7 +325,6 @@ public class Controller implements Initializable{
                 runMiniJaja(debug);
             }else{
                 if(interpreterJajaCodeModel.getNodes().size()!=0){
-                    System.out.println("here");
                     runJajaCode(debug);
                 }
             }

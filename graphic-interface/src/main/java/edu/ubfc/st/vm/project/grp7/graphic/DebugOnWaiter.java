@@ -5,8 +5,7 @@ import edu.ubfc.st.vm.project.grp7.debug.DebugListener;
 public class DebugOnWaiter implements DebugListener.Waiter {
      private Object lock = new Object();
 
-     public DebugOnWaiter(){
-     }
+     public DebugOnWaiter(){}
 
     private boolean lineMode = false;
 
@@ -28,9 +27,7 @@ public class DebugOnWaiter implements DebugListener.Waiter {
             synchronized (lock){
                 lock.notify();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception e){e.printStackTrace();}
     }
 
     @Override
@@ -40,8 +37,6 @@ public class DebugOnWaiter implements DebugListener.Waiter {
             synchronized (lock){
                 lock.notify();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception e){e.printStackTrace();}
     }
 }
