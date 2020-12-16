@@ -15,11 +15,9 @@ public class TypeCheckerImpl implements TypeChecker{
         typeCheckerVisitor = new TypeCheckerVisitor();
         symbolDictionnary = new SymbolDictionnary();
         typeCheckerVisitor.setDataDictionnary(symbolDictionnary);
-
     }
 
     public void typeCheck() throws IllFormedNodeException {
-
         try {
             typeCheckerVisitor.setPass(Pass.FIRST_PASS);
             node.accept(this.typeCheckerVisitor);
@@ -29,7 +27,6 @@ public class TypeCheckerImpl implements TypeChecker{
         } catch (Exception e) {
             throw new IllFormedNodeException(node.line(), node.column(), e.toString());
         }
-
 
     }
 }

@@ -3,9 +3,11 @@ package edu.ubfc.st.vm.project.grp7.ast;
 public class IllFormedNodeException extends Exception {
     private final int line;
     private final int column;
+    private final String message;
 
     public IllFormedNodeException(int line, int column, String message){
-        super(message);
+        super(String.format("[%d,%d] : %s", line, column, message));
+        this.message = message;
         this.line = line;
         this.column = column;
     }
@@ -20,5 +22,10 @@ public class IllFormedNodeException extends Exception {
 
     public int column() {
         return this.column;
+    }
+
+    @Override
+    public String getMessage() {
+        return "line : "+line+" column : "+column+" "+message;
     }
 }

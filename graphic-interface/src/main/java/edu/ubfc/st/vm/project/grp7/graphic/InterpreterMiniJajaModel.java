@@ -1,5 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
+import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
@@ -8,6 +9,8 @@ import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
+import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -38,6 +41,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
     private List<Integer> breakpoints;
     private Memory memory;
     private BreakPoint breakPoint;
+    private TypeChecker typeChecker;
 
 
 
@@ -66,9 +70,14 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         listener = new MiniJajaListenerImpl();
     }
 
-    public void interpret(){
+    public void interpret() {
         walker.walk(listener, parser.classe());
-        classeNode = (ClasseNode)listener.getRoot();
+        classeNode = (ClasseNode) listener.getRoot();
+        typeChecker = new TypeCheckerImpl(classeNode);
+    }
+
+    public void typeCheck() throws IllFormedNodeException {
+        typeChecker.typeCheck();
     }
 
     public void run(boolean debug) throws Exception {
