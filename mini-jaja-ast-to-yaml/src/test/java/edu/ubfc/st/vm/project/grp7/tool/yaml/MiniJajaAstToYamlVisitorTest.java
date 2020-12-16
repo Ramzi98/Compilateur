@@ -75,6 +75,48 @@ public class MiniJajaAstToYamlVisitorTest {
         compareOutputWithYamlString("NumberNode:\n  value: 17");
     }
 
+/*
+    @Test
+    public void withVarsNode__whenVisit__thenYamlOK() throws Exception {
+        stringRelatedVisitor__setUp();
+
+        NumberNode number = NumberNode.builder()
+                .value(17)
+                .build();
+
+        number.accept(this.visitor);
+        IdentNode ident = IdentNode.builder().value("hey").build();
+        TypeMethNode type = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
+        VarNode var = VarNode.builder().identifier(ident).typeMeth(type).expression(number).build();
+        VarsNode vars = VarsNode.builder().var(var).vars(null).build();
+        vars.accept(this.visitor);
+        flushAndDisplayYaml();
+    }
+
+
+*/
+
+    /*
+    @Test
+    public void withAddNode__whenVisit__thenYamlOK() throws Exception {
+        stringRelatedVisitor__setUp();
+
+        NumberNode number = NumberNode.builder()
+                .value(17)
+                .build();
+        NumberNode number2 = NumberNode.builder().value(18).build();
+        PlusNode plusNode = PlusNode.builder().leftOperand(number).rightOperand(number2).build();
+
+        plusNode.accept(this.visitor);
+        flushAndDisplayYaml();
+
+
+       compareOutputWithYamlString("PlusNode:\n   leftOperand:\n    NumberNode:\n      value: 17\n  rightOperand:\n    NumberNode:\n      value: 18");
+    }
+
+
+     */
+
     @Test
     public void withTypeMethNode__whenVisit__thenYamlOK() throws Exception {
         stringRelatedVisitor__setUp();
