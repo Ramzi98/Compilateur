@@ -2,7 +2,10 @@ package edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
+import edu.ubfc.st.vm.project.grp7.memory.OBJ;
+import edu.ubfc.st.vm.project.grp7.memory.Quadruplet;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaOperatorNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
@@ -148,7 +151,13 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(MethodNode node) throws Exception {
-        // TODO: 29/11/2020
+        debug(node);
+        if (modeRetrait) {
+            memory.retirerDecl(node.identifier().value());
+        } else {
+            Quadruplet quad = new Quadruplet(node.identifier().value(), node, OBJ.METH, SORTE.of(node.typeMeth().value()));
+            memory.empiler(quad);
+        }
     }
 
     @Override
@@ -245,8 +254,32 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AppelINode node) throws Exception {
-        // TODO: 29/11/2020
-        throw new RuntimeException("Not implemented yet");
+        Object meth = memory.val(node.identifier().value());
+        if (!(meth instanceof MethodNode)) {
+            throw new IllegalStateException(
+                    "Expecting the memory to peek a METHOD but got " + meth.getClass().getSimpleName()
+            );
+        }
+        MethodNode method = (MethodNode) meth;
+        memory.pushContext(node.identifier().value());
+
+        switchOffRetrait();
+        expParam(node.listexp(), method.headers());
+        if (method.vars() != null) {
+            method.vars().accept(this);
+        }
+            if (method.instrs() != null) {
+                method.instrs().accept(this);
+            }
+        switchOnRetrait();
+        if (method.vars() != null) {
+            method.vars().accept(this);
+        }
+        if (method.headers() != null) {
+            method.headers().accept(this);
+        }
+
+        memory.popContext();
     }
 
     @Override
@@ -306,9 +339,29 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(ListExpNode node) throws Exception {
-        // TODO: 29/11/2020
-        throw new RuntimeException("Not implemented yet");
+        throw new RuntimeException("Not Supposed to be visited");
     }
+
+    /**
+     * Memeory ExpParam extension out of Memory Interface
+     * @param lexp  (e, le1)                : EXP x LISTEXP
+     * @param ent   (entete(t, i), ents)    : ENTÊTE x ENTÊTES
+     */
+    private final void expParam(ListExpNode lexp, HeadersNode ent) throws Exception {
+        if (lexp != null && ent != null) {
+            MiniJajaNode e  = lexp.expression();
+            ListExpNode le1 = lexp.listexp();
+            HeaderNode  header = ent.header();
+            HeadersNode  ents  = ent.headers();
+
+            e.accept(this);
+
+            memory.declVar(header.identifier().value(), evals.pop(), SORTE.of(header.type().value()));
+
+            expParam(le1, ents);
+        }
+    }
+
 
     @Override
     public void visit(NotNode node) throws Exception {
@@ -391,8 +444,18 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
     @Override
     public void visit(AppelENode node) throws Exception {
-        // TODO: 29/11/2020
-        throw new RuntimeException("Not implemented yet");
+        debug(node);
+        AppelINode.builder()
+                .identifier(node.identifier())
+                .listexp(node.listexp())
+                .build()
+                .accept(this);
+
+        Object ret = memory.classVar(null);
+        if (ret == null) {
+            throw new IllegalStateException("Class Var must be non-null after an appelE");
+        }
+        evals.push(ret);
     }
 
     @Override
