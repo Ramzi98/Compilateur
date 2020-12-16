@@ -167,7 +167,7 @@ public class JJCInterpreterVisitorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void visitDIV_noIntegerOnMemoryTop__throwException() throws Exception {
+    public void visitDIV_notIntegersOnMemoryTop__throwException() throws Exception {
         JcDivNode jcDiv = JcDivNode.builder()
                 .next(nextNode)
                 .line(0)
@@ -261,7 +261,7 @@ public class JJCInterpreterVisitorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void visitOR_noIntegerOnMemoryTop__throwException() throws Exception {
+    public void visitOR_NotBooleansOnMemoryTop__throwException() throws Exception {
         JcOrNode jcOr = JcOrNode.builder()
                 .next(nextNode)
                 .line(0)
@@ -300,7 +300,7 @@ public class JJCInterpreterVisitorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void visitSUP_noIntegerOnMemoryTop__throwException() throws Exception {
+    public void visitSUP_notIntegersOnMemoryTop__throwException() throws Exception {
         JcSupNode jcSup = JcSupNode.builder()
                 .next(nextNode)
                 .line(0)
@@ -388,7 +388,7 @@ public class JJCInterpreterVisitorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void visitCMP_noIntegerOnMemoryTop__throwException() throws Exception {
+    public void visitCMP_differentTypesOnMemoryTop__throwException() throws Exception {
         JcCmpNode jcCmp = JcCmpNode.builder()
                 .next(nextNode)
                 .line(0)
@@ -498,5 +498,195 @@ public class JJCInterpreterVisitorTest {
         orderedCalls.verify(nextNode).accept(jjcVisitor);
     }
 
+    @Test
+    public void visitNOT__true__applyNOT__false() throws Exception {
+        JcNotNode jcNot = JcNotNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
 
+        Quadruplet quad = new Quadruplet(null, true, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcNot.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(0);
+        orderedCalls.verify(memory).empiler(argThat(new ArgumentMatcher<Quadruplet>() {
+            @Override public boolean matches(Object o) {
+                return o.equals(new Quadruplet(null, false, OBJ.CST, SORTE.BOOLEAN));
+            }
+        }));
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitNOT__false__applyNOT__true() throws Exception {
+        JcNotNode jcNot = JcNotNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, false, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcNot.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(0);
+        orderedCalls.verify(memory).empiler(argThat(new ArgumentMatcher<Quadruplet>() {
+            @Override public boolean matches(Object o) {
+                return o.equals(new Quadruplet(null, true, OBJ.CST, SORTE.BOOLEAN));
+            }
+        }));
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void visitNOT_noBooleanOnMemoryTop__throwException() throws Exception {
+        JcNotNode jcNot = JcNotNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, 5, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcNot.accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitNEG____applyNEG() throws Exception {
+        JcNegNode jcNegNode = JcNegNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, 5, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcNegNode.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(0);
+        orderedCalls.verify(memory).empiler(argThat(new ArgumentMatcher<Quadruplet>() {
+            @Override public boolean matches(Object o) {
+                return o.equals(new Quadruplet(null, -5, OBJ.CST, SORTE.INT));
+            }
+        }));
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void visitNEG_notIntegerOnMemoryTop__throwException() throws Exception {
+        JcNegNode jcNeg = JcNegNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, false, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcNeg.accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitWrite__Write() throws Exception {
+        final String test = "test";
+        JcWriteNode jcWrite = JcWriteNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, test, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcWrite.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(0);
+        orderedCalls.verify(controller).write(test);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitWriteLn__WriteLn() throws Exception {
+        final String test = "test";
+        JcWriteLnNode jcWrite = JcWriteLnNode.builder()
+                .next(nextNode)
+                .line(0)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, test, null, null);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcWrite.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(0);
+        orderedCalls.verify(controller).writeLn(test);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitNOP__nop() throws Exception {
+        JcNopNode JcNop = JcNopNode.builder()
+                .next(nextNode)
+                .line(4)
+                .column(1)
+                .build();
+
+        JcNop.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode);
+        orderedCalls.verify(controller).debug(4);
+        orderedCalls.verify(controller).nop();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void visitINC__noIntegerOnMemoryTop__throwException() throws Exception {
+        final String id = "id";
+        JcIncNode jcInc = JcIncNode.builder()
+                .next(nextNode)
+                .identifier(id)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet val = new Quadruplet(null, true, null, null);
+        when(memory.depiler()).thenReturn(val);
+
+        jcInc.accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitINC__actuallyINC() throws Exception {
+        final String id = "id";
+        JcIncNode jcInc = JcIncNode.builder()
+                .next(nextNode)
+                .identifier(id)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet val = new Quadruplet(null, 1, OBJ.CST, SORTE.INT);
+        when(memory.depiler()).thenReturn(val);
+        when(memory.val(id)).thenReturn(5);
+
+        jcInc.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).val(id);
+        orderedCalls.verify(memory).affecterVal(id, 6);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
 }

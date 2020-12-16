@@ -1,7 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.jaja.code.interpreter;
 
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeASTVisitor;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
 import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.*;
@@ -268,8 +267,8 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (! (quad.val() instanceof Integer)) {
             jjcError(node, "invalid top of the stack element type");
         }
-        quad.val(!((boolean) quad.val()));
-        memory.empiler(quad);
+
+        memory.empiler(new Quadruplet(null, - ((int) quad.val()), OBJ.CST, SORTE.INT));
 
         n++;
         node.next().accept(this);
@@ -334,8 +333,8 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (! (quad.val() instanceof Boolean)) {
              jjcError(node, "Expression of not is not a boolean");
         }
-        quad.val(!((boolean) quad.val()));
-        memory.empiler(quad);
+
+        memory.empiler(new Quadruplet(null, !((boolean) quad.val()), OBJ.CST, SORTE.BOOLEAN));
 
         n++;
         node.next().accept(this);
