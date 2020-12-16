@@ -50,6 +50,16 @@ public class SymbolDictionnary {
     }
 
     public void register(String ident,String scope,int indice) throws IllegalArgumentException {
+        for (String sc : scopes)
+        {
+            String s1 = sc.split("-")[0];
+            if(s1.equals(scope))
+            {
+                scope = sc;
+                break;
+            }
+
+        }
         HashMap<String, Integer> currentScope = symbols.get(scope);
 
         if(ident == null || ident.trim().isEmpty()){
