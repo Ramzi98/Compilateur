@@ -60,6 +60,10 @@
         </dependency>
         <dependency>
             <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+            <artifactId>mini-jaja-ast-to-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.ubfc.st.vm.project.grp7</groupId>
             <artifactId>type-checker</artifactId>
         </dependency>
         <dependency>
