@@ -19,7 +19,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     private Pass pass;
     int indice;
-    String currentscope;
+    String currentscope = SCOPE_GLOBAL;
 
     public void setPass(Pass pass) {
         this.pass = pass;
@@ -40,9 +40,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         return miniJajaNodeType;
     }
 
-    public void throwCorrectExeption(MiniJajaNode node,String str) throws TypeCheckerException {
-        throw new TypeCheckerException(node.line(),node.column(),str);
-    }
     @Override
     public void visit(ClasseNode node) throws TypeCheckerException, IOException {
         IdentNode identifier = node.identifier();
@@ -55,7 +52,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try{
                 miniJajaNodeType.put(identifier,null);
                 identNature.put(identifier,OBJ.VAR);
-                symbolDictionnary.register(identifier.value(),indice++);
+                symbolDictionnary.register(identifier.value(), currentscope, indice++);
             }catch (Exception e){
                 throw new TypeCheckerException(node.line() ,  node.column()," The symbol \"" + identifier.value() + "\" has already been declared.");
             }
@@ -151,7 +148,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(nodeType));
                 identNature.put(identifier,OBJ.VAR);
-                symbolDictionnary.register(identifier.value(), indice++);
+                symbolDictionnary.register(identifier.value(), currentscope, indice++);
             } catch (Exception e) {
                 throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" The symbol \"" + identifier.value() + "\" has already been declared.");
             }
@@ -187,7 +184,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.TAB);
-                symbolDictionnary.register(identifier.value(), indice++);
+                symbolDictionnary.register(identifier.value(), currentscope, indice++);
             } catch (Exception e) {
 
                 throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" The symbol \"" + identifier.value() + "\" has already been declared.");
@@ -219,7 +216,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.CST);
-                symbolDictionnary.register(identifier.value(), indice++);
+                symbolDictionnary.register(identifier.value(), currentscope, indice++);
             } catch (Exception e) {
 
                 throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" The symbol \"" + identifier.value() + "\" has already been declared.");
@@ -246,7 +243,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 typeNode.accept(this);
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.METH);
-                symbolDictionnary.register(identifier.value(), SCOPE_GLOBAL , indice++);
+                symbolDictionnary.register(identifier.value(), "global" , indice++);
 
             } catch (Exception e) {
                 throw new TypeCheckerException(e);
@@ -286,6 +283,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new TypeCheckerException(e);
         }
+
+        currentscope = "global";
 
     }
 
@@ -354,7 +353,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
             try {
                 miniJajaNodeType.put(identifier,miniJajaNodeType.get(typeNode));
                 identNature.put(identifier,OBJ.VAR);
-                symbolDictionnary.register(identifier.value(), indice++);
+                symbolDictionnary.register(identifier.value(), currentscope, indice++);
             } catch (Exception e) {
                 throw new TypeCheckerException(e);
             }
@@ -480,7 +479,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
                     try {
                         identNature.put(identifier, OBJ.CST);
-                        symbolDictionnary.register(((IdentNode) identifier).value(), indice++);
+                        symbolDictionnary.register(((IdentNode) identifier).value(), currentscope, indice++);
                     } catch (Exception e) {
                     throw new TypeCheckerException(e);
                 }

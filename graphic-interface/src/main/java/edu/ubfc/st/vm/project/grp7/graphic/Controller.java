@@ -1,7 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
-import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,7 +90,7 @@ public class Controller implements Initializable{
                     buff.close();
                 }
                 catch (Exception e) {
-                    System.out.println(e.toString());
+                    e.printStackTrace();
                 }
             }
         });
@@ -135,11 +133,13 @@ public class Controller implements Initializable{
     public void compile(ActionEvent actionEvent) throws IOException {
         saveFile(actionEvent);
         compilerGraphic.compile(currentFileMiniJaja);
-        selctTabPan(tabJajaCode);
+        selectTabPan(tabJajaCode);
+        setCurrentFile(fileModel.saveFileAs(currentArea));
     }
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
         setCurrent();
+        System.out.println("file : "+currentFile);
         fileModel.saveFile(currentArea,currentFile);
         run(false);
     }
@@ -197,36 +197,31 @@ public class Controller implements Initializable{
     public void run(boolean debug){
         setCurrent();
         memory = Memory.getInstance();
-
-
-        try {
-            if (currentArea.equals(codeAreaMiniJaja)){
-                runMiniJaja(debug);
-            }else{
-                if(interpreterJajaCodeModel.getNodes().size()!=0){
-                    runJajaCode(debug);
-                }
+        if (currentArea.equals(codeAreaMiniJaja)){
+            runMiniJaja(debug);
+        }else{
+            if(interpreterJajaCodeModel.getNodes().size()!=0){
+                runJajaCode(debug);
             }
-            selctTabPan(areaRunTab);
-        } catch (ASTParsingException | IOException e) {
-            System.out.println(e.getMessage());
-            areaError.clear();
-            areaError.appendText(e.getMessage());
-            selctTabPan(areaErrorTab);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public void runMiniJaja(boolean debug) throws Exception {
-        setCurrent();
-        interpreterMiniJajaModel.runAll(currentFile,debug, memory);
+    public void runMiniJaja(boolean debug){
+        if (interpreterMiniJajaModel.runAll(currentFile,debug, memory) == -1){
+            selectTabPan(areaErrorTab);
+        }else{
+            selectTabPan(areaRunTab);
+        }
 
     }
 
-    public void runJajaCode(boolean debug) throws Exception {
-        setCurrent();
-        interpreterJajaCodeModel.runAll(debug);
+    public void runJajaCode(boolean debug){
+        if (interpreterJajaCodeModel.runAll(debug,memory) == -1){
+            selectTabPan(areaErrorTab);
+        }else{
+            selectTabPan(areaRunTab);
+        }
+
     }
 
     public void nextBreakPoint(ActionEvent actionEvent) {
@@ -252,11 +247,11 @@ public class Controller implements Initializable{
         } else {
             currentArea = codeAreaJajaCode;
             currentFile = currentFileJajaCode;
+            System.out.println("file : "+ currentFile);
         }
     }
 
     private void setCurrentFile(String path) {
-        setCurrent();
         if (currentArea.equals(codeAreaMiniJaja)) {
             currentFileMiniJaja = path;
         } else {
@@ -268,7 +263,7 @@ public class Controller implements Initializable{
         return tabPaneCode.getSelectionModel().getSelectedItem();
     }
 
-    public void selctTabPan(Tab tab){
+    public void selectTabPan(Tab tab){
         tab.getTabPane().getSelectionModel().select(tab);
     }
 

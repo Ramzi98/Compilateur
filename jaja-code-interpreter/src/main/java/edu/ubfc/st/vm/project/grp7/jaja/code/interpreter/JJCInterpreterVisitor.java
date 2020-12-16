@@ -382,6 +382,7 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcPushNode node) throws Exception {
         debug(node);
+        memory.toString();
         memory.empiler(new Quadruplet(null, node.valeur(), OBJ.CST, null));
         n++;
         node.next().accept(this);

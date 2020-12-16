@@ -14,8 +14,6 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.function.IntFunction;
 
 public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
@@ -29,11 +27,6 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
     private List<Integer> listBreakpoints   ;
     private String code;
     private BreakPoint breakPoint;
-    private String currentFile;
-    public void setCurrentFile(String currentFile) {
-        this.currentFile = currentFile;
-    }
-
 
 
     public void setCode(String code) {
@@ -124,7 +117,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         codeArea.setParagraphGraphicFactory(graphicFactory);
     }
 
-    public int runAll(boolean debug){
+    public int runAll(boolean debug, Memory memory){
         if (getNodes().size() == 0){
             error.clear();
             error.appendText("You need compile MiniJajaBefore Execute");
