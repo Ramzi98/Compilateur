@@ -48,7 +48,17 @@ public class ParserTypeCheckerTest extends BaseTest {
 
     }
 
+    @Test(expected = TypeCheckerException.class)
+    public void exampleMethodTest__WithException() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("decls","voidMethodWithError");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.decls());
 
+        DeclsNode classeNode = (DeclsNode) listener.getRoot();
+        typeChecker = new TypeCheckerImpl(classeNode);
+        typeChecker.typeCheck();
+
+    }
 
     @Test
     public void functionCallClassTest() throws Exception {
