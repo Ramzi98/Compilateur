@@ -246,7 +246,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 symbolDictionnary.register(identifier.value(), "global" , indice++);
 
             } catch (Exception e) {
-                throw new TypeCheckerException(e);
+                throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" "+e);
             }
 
 
