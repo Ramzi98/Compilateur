@@ -87,9 +87,9 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         }else{
             waiter = new DebugOnWaiter();
         }
-        run.appendText("\nRun JajaCode\n\n");
+        run.appendText("\n-----Run JajaCode----\n\n");
         JJCInterpreter.getFactory().createFrom(memory,nodes).interpret(new JJCInterpreterController(this) );
-        run.appendText("\n----------------------------------\n");
+        run.appendText("\n----------------------\n");
     }
 
 

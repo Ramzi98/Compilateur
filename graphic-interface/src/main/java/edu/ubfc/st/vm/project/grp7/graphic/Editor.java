@@ -16,6 +16,9 @@ public class Editor extends Application {
         Scene scene = new Scene(root, 1080, 720);
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
     }
 
     public static void main(String[] args) {
