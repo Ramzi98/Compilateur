@@ -42,7 +42,7 @@ public class MethodeNodeCheckerTest {
         VarsNode varsDecls = VarsNode.builder().var(varNode1).vars(null).build();
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
+        ReturnNode returnNode = ReturnNode.builder().ret(incrementNode).build();
         InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(null).build();
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 

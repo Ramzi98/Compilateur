@@ -15,7 +15,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
     HashMap<MiniJajaNode,SORTE> miniJajaNodeType = new HashMap<>();
     HashMap<MiniJajaNode,OBJ> identNature = new HashMap<>();
-    HashMap<String,String> methodesignature = new HashMap<>();
+    HashMap<String,HashMap<String, SORTE>> methodesignature = new HashMap<>();
 
     private Pass pass;
     int indice;
@@ -236,7 +236,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         currentscope = identifier.value();
 
         String signature = getMethodArguments(headers);
-        methodesignature.put(identifier.value(),signature);
+        HashMap<String, SORTE> h = new HashMap<>();
+        h.put(signature,SORTE.of(node.typeMeth().value()));
+        methodesignature.put(identifier.value(),h);
 
         if (pass == Pass.FIRST_PASS) {
             try {
@@ -557,6 +559,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Can't increment a variable of Type "+ miniJajaNodeType.get(identifier));
             }
         }
+        miniJajaNodeType.put(node,miniJajaNodeType.get(identifier));
 
     }
 
@@ -580,7 +583,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         String signature = getCallArguments(nodelistexp);
-        if(!methodesignature.get(identifier.value()).equals(signature))
+        if(!methodesignature.get(identifier.value()).keySet().toArray()[0].equals(signature))
         {
             throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
@@ -609,6 +612,11 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         } catch (Exception e) {
             throw new TypeCheckerException(node.line() ,node.column() , e.toString());
         }
+        if(methodesignature.get(currentscope).values().toArray()[0] != miniJajaNodeType.get(expression))
+        {
+            throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" The returned Type is not compatible with the expected method return ");
+        }
+
 
     }
 
@@ -942,7 +950,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         }
 
         String signature = getCallArguments(nodelistexp);
-        if(!methodesignature.get(identifier.value()).equals(signature))
+        if(!methodesignature.get(identifier.value()).keySet().toArray()[0].equals(signature))
         {
             throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" There is a probleme in methode signature \""+identifier.value()+"\" .");
         }
