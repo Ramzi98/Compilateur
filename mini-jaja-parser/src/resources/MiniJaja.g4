@@ -70,9 +70,9 @@
                      |                                      #EmptyListexp
                      ;
 
- exp                 : BANG exp1                            #Not
-                     | exp AND exp1                         #And
-                     | exp OR exp1                          #Or
+ exp                 : BANG exp                            #Not
+                     | exp AND exp                         #And
+                     | exp OR exp                          #Or
                      | exp1                                 #ExpIsExp1
                      ;
 
