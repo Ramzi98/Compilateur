@@ -78,12 +78,13 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     @Override
     public void debug(int line) throws InterruptedException {
-        waiter.waitForUser(listBreakpoints.contains(line));
         if (listBreakpoints.contains(line)){
             debug.clear();
             debug.appendText("line : "+line+"\n");
             debug.appendText(memory.toString());
         }
+        waiter.waitForUser(listBreakpoints.contains(line));
+
     }
 
     public void run(boolean debug) throws Exception {
@@ -122,7 +123,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         codeArea.setParagraphGraphicFactory(graphicFactory);
     }
 
-    public int runAll(boolean debug, Memory memory){
+    public int runAll(boolean debug, Memory memory) throws Exception {
         if (getNodes().size() == 0){
             error.clear();
             error.appendText("You need compile MiniJajaBefore Execute");
@@ -130,12 +131,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         }else {
             setBreakpoints();
             setMemory(memory);
-            try {
-                run(debug);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return -1;
-            }
+            run(debug);
         }
         return 1;
     }

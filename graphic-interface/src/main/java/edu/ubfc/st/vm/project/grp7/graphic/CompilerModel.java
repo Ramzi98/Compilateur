@@ -17,24 +17,14 @@ public class CompilerModel {
         this.interpreterJajaCodeModel = interpreterJajaCodeModel;
     }
 
-    public void compile(String file){
-        try {
+    public void compile(String file) throws Exception {
             interpreterMiniJajaModel.init(file);
-            try {
-                interpreterMiniJajaModel.build();
-                compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
-                compiler.compile();
-                interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());
-                JCCPrinter jccPrinter = new JCCPrinter(interpreterJajaCodeModel.getNodes());
-                interpreterJajaCodeModel.setCode(jccPrinter.toString());
-            } catch (ASTParsingException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            interpreterMiniJajaModel.build();
+            compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
+            compiler.compile();
+            interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());
+            JCCPrinter jccPrinter = new JCCPrinter(interpreterJajaCodeModel.getNodes());
+            interpreterJajaCodeModel.setCode(jccPrinter.toString());
 
     }
 }

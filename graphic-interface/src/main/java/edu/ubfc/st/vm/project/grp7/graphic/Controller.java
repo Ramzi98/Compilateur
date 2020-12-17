@@ -132,7 +132,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void compile(ActionEvent actionEvent) throws IOException {
+    public void compile(ActionEvent actionEvent) throws Exception {
         saveFile(actionEvent);
         compilerGraphic.compile(currentFileMiniJaja);
         selectTabPan(tabJajaCode);
@@ -200,15 +200,25 @@ public class Controller implements Initializable{
         setCurrent();
         memory = Memory.getInstance();
         if (currentArea.equals(codeAreaMiniJaja)){
-            runMiniJaja(debug);
+            try {
+                runMiniJaja(debug);
+            } catch (Exception e) {
+                areaError.appendText(e.getMessage());
+                selectTabPan(areaErrorTab);
+            }
         }else{
             if(interpreterJajaCodeModel.getNodes().size()!=0){
-                runJajaCode(debug);
+                try {
+                    runJajaCode(debug);
+                } catch (Exception e) {
+                    areaError.appendText(e.getMessage());
+                    selectTabPan(areaErrorTab);
+                }
             }
         }
     }
 
-    public void runMiniJaja(boolean debug){
+    public void runMiniJaja(boolean debug) throws Exception {
         if (interpreterMiniJajaModel.runAll(currentFile,debug, memory) == -1){
             selectTabPan(areaErrorTab);
         }else{
@@ -217,7 +227,7 @@ public class Controller implements Initializable{
 
     }
 
-    public void runJajaCode(boolean debug){
+    public void runJajaCode(boolean debug) throws Exception {
         if (interpreterJajaCodeModel.runAll(debug,memory) == -1){
             selectTabPan(areaErrorTab);
         }else{

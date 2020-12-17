@@ -125,12 +125,12 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
 
     @Override
     public void debug(int line) throws InterruptedException {
-        waiter.waitForUser(breakpoints.contains(line));
         if (breakpoints.contains(line)){
             debug.clear();
             debug.appendText("line : "+line+"\n");
             debug.appendText(memory.toString());
         }
+        waiter.waitForUser(breakpoints.contains(line));
     }
 
     public void init(){
@@ -159,23 +159,13 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         waiter.nextStep();
     }
 
-    public int runAll(String file,boolean debug, Memory memory){
+    public int runAll(String file,boolean debug, Memory memory) throws Exception {
         setBreakpoints();
         init(file);
         setMemory(memory);
         build();
-        try {
-            typeCheck();
-        } catch (TypeCheckerException e) {
-            error.appendText(e.getMessage());
-            return -1 ;
-        }
-        try {
-            interpret(debug);
-        } catch (Exception e) {
-            error.appendText(e.getMessage());
-            return -1;
-        }
+        typeCheck();
+        interpret(debug);
         return 0;
     }
 }
