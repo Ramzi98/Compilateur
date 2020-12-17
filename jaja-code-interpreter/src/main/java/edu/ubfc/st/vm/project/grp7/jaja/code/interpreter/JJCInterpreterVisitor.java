@@ -423,7 +423,11 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     public void visit(JcStoreNode node) throws Exception {
         debug(node);
         Quadruplet quad = memory.depiler();
-        memory.affecterVal(node.identifier(), quad.val());
+        try {
+            memory.affecterVal(node.identifier(), quad.val());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
 
         n++;
         node.next().accept(this);
