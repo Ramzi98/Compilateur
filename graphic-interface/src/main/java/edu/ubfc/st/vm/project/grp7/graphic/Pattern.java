@@ -15,11 +15,11 @@ public interface Pattern {
      static final String[] KEYWORDS = new String[] {
             "class", "else","final","if",  "while","main", "write" , "writeln",
             "push","new","newarray", "ainc","swap","pop","jcstop","init","add"
-            ,"mul","div", "sub", "load"
+            ,"mul","div", "sub", "load", "return","goto"
     };
 
      static final String[] TYPE = new String[] {
-            "boolean","int", "void","entier"
+            "boolean","int", "void","entier","booléen"
     };
 
      static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
