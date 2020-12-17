@@ -173,7 +173,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
                 mjjError(node, e.getMessage());
             }
         } else {
-            Object vexp = node.type().value().equals(TypeNode.Type.BOOLEAN) ? false : 0;
+            Object vexp = null;
             if (node.expression() != null) { // vexp = omega
                 node.expression().accept(this);
                 vexp = evals.pop();
