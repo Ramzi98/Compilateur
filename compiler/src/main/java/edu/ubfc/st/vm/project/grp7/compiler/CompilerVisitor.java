@@ -228,6 +228,28 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     node.expression().accept(this);
                     ne = (int) stack.pop().values().toArray()[0];
                 }
+                else
+                {
+                    if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(0)
+                                .build();
+                        setNextNode(jcPushNode);
+                    }
+                    else if(node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(false)
+                                .build();
+                        setNextNode(jcPushNode);
+                    }
+                    ne = 1;
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
