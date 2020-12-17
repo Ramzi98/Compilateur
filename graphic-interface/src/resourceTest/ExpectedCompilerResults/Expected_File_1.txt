@@ -1,13 +1,15 @@
 init
+push(0)
 new(x, entier, var, 0)
 push(10)
 new(y, entier, var, 0)
 push(false)
 new(b1, booléen, var, 0)
+push(false)
 new(b2, booléen, var, 0)
-push(11)
+push(13)
 new(somme, entier, meth, 0)
-goto(26)
+goto(28)
 new(max, entier, var, 1)
 push(5)
 new(t, entier, var, 0)
@@ -15,14 +17,14 @@ load(max)
 push(0)
 sup
 not
-if(22)
+if(24)
 load(max)
 inc(t)
 load(max)
 push(1)
 sub
 store(max)
-goto(14)
+goto(16)
 load(t)
 swap
 pop
@@ -67,10 +69,10 @@ load(b2)
 not
 or
 and
-if(53)
+if(54)
 push(1)
 inc(x)
-goto(58)
+goto(59)
 push(2)
 invoke(somme)
 swap

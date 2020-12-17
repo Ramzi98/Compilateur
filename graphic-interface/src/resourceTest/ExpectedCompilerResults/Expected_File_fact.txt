@@ -3,22 +3,24 @@ push(7)
 new(x, entier, var, 0)
 push(7)
 new(pause, void, meth, 0)
-goto(13)
+goto(14)
+push(0)
 new(i, entier, var, 0)
 push(0)
 swap
 pop
 swap
 return
-push(16)
+push(17)
 new(fact, entier, meth, 0)
-goto(39)
+goto(41)
 new(x, entier, var, 1)
+push(0)
 new(retour, entier, var, 0)
 load(x)
 push(0)
 cmp
-if(32)
+if(34)
 load(x)
 load(x)
 push(1)
@@ -28,7 +30,7 @@ swap
 pop
 mul
 store(retour)
-goto(34)
+goto(36)
 push(1)
 store(retour)
 load(retour)

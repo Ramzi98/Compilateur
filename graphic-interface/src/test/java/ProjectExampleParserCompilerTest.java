@@ -56,7 +56,6 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-
         assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_quicksort")));
     }
 
