@@ -111,7 +111,13 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(VarNode node) throws Exception {
         debug(node);
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                throw new IllegalStateException(
+                        String.format("error line %d, column %d : %s", node.line(), node.column(), e.getMessage())
+                );
+            }
         } else {
             Object vexp = null;
             if (node.expression() != null) { // vexp = omega
@@ -286,7 +292,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (method.headers() != null) {
             method.headers().accept(this);
         }
-
+        switchOffRetrait();
         memory.popContext();
     }
 
