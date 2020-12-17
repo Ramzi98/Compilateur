@@ -287,9 +287,13 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         node.expression().accept(this);
         if (node.identifier() instanceof ArrayItemNode) { // sommeT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
-            tab.identifier().accept(this);  // Val(i,m)
+            tab.accept(this);  // Val(i,m)
             tab.expression().accept(this);  // process index
-            memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + (int) evals.pop());
+            try {
+                memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + (int) evals.pop());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         } else { // somme
             IdentNode ident = (IdentNode) node.identifier();
             ident.accept(this);     // Val(i,m)
@@ -306,11 +310,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         debug(node);
         if (node.identifier() instanceof ArrayItemNode) { // incrémentT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
-            tab.identifier().accept(this);  // Val(i,m)
+            tab.accept(this);  // ValT(i,m)
             tab.expression().accept(this);  // process index
             try {
                 memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + 1);
-            } catch (IllegalAccessException e) {
+            } catch (Exception e) {
                 mjjError(node, e.getMessage());
             }
         } else { // incrément
@@ -318,7 +322,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
             ident.accept(this);     // Val(i,m)
             try {
                 memory.affecterVal(ident.value(), (int) evals.pop() + 1);
-            } catch (IllegalAccessException e) {
+            } catch (Exception e) {
                 mjjError(node, e.getMessage());
             }
         }
@@ -334,7 +338,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         memory.pushContext(node.identifier().value());
 
         switchOffRetrait();
-        expParam(node.listexp(), method.headers());
+        try {
+            expParam(node.listexp(), method.headers());
+        } catch (Exception e) {
+            mjjError(node, e.getMessage());
+        }
         if (method.vars() != null) {
             method.vars().accept(this);
         }
@@ -549,7 +557,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         Object e = null;
         try {
             e = memory.valT(node.identifier().value(), (int) evals.pop());
-        } catch (IllegalAccessException ex) {
+        } catch (Exception ex) {
             mjjError(node, ex.getMessage());
         }
         evals.push(e);
