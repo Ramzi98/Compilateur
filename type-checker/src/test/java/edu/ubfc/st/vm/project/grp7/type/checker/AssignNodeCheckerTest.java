@@ -1,17 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class AssignNodeCheckerTest {
 
@@ -29,7 +22,7 @@ public class AssignNodeCheckerTest {
     }
 
     @Test
-    public void AssignNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void AssignNodeTypeCheck() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -50,8 +43,8 @@ public class AssignNodeCheckerTest {
         typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__WithException__NotDeclared() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__WithException__NotDeclared() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.INT).build();
@@ -65,8 +58,8 @@ public class AssignNodeCheckerTest {
 
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__WithConstantException() throws IOException, IllFormedNodeException {
+    @Test
+    public void AssignNodeTypeCheck__WithConstantException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeNode typeNode = TypeNode.builder().value(TypeNode.Type.INT).build();
@@ -87,8 +80,8 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__WithMethodException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__WithMethodException() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
@@ -135,8 +128,8 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__WithTabException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__WithTabException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -160,8 +153,8 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__WithTabIncompatibleTypeException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__WithTabIncompatibleTypeException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
@@ -185,8 +178,8 @@ public class AssignNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__IncompatibleType__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__IncompatibleType__WithException() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -209,7 +202,7 @@ public class AssignNodeCheckerTest {
     }
 
     @Test
-    public void AssignNodeTypeCheck__Table() throws IOException, IllFormedNodeException {
+    public void AssignNodeTypeCheck__Table() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -232,8 +225,8 @@ public class AssignNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__Table__InvalidExpression__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__Table__InvalidExpression__WithException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -257,7 +250,7 @@ public class AssignNodeCheckerTest {
     }
 
     @Test
-    public void AssignNodeTypeCheck__Table__InvalidIdentifier__WithException() throws IOException, IllFormedNodeException {
+    public void AssignNodeTypeCheck__Table__InvalidIdentifier__WithException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -279,8 +272,8 @@ public class AssignNodeCheckerTest {
         typeChecker = new TypeCheckerImpl(mainNode);
         typeChecker.typeCheck();
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__Table__IncompatibleTypes__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__Table__IncompatibleTypes__WithException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();
@@ -303,8 +296,8 @@ public class AssignNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void AssignNodeTypeCheck__Table__VConstantReassign__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void AssignNodeTypeCheck__Table__VConstantReassign__WithException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.INT).build();

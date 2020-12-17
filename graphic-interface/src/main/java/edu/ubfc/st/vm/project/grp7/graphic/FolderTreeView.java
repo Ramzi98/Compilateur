@@ -42,7 +42,7 @@ public class FolderTreeView  {
                     if (files != null) {
                         ObservableList<TreeItem<File>> children = FXCollections.observableArrayList();
                         for (File childFile : files) {
-                            if (childFile.getName().endsWith(".txt") || childFile.isDirectory())
+                            if (childFile.getName().endsWith(".txt") || childFile.getName().endsWith(".mjj") ||childFile.getName().endsWith(".MMJ") || childFile.isDirectory())
                             {
                                 children.add(createNode(childFile));
                             }

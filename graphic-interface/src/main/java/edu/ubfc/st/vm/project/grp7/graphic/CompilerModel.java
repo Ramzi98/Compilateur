@@ -2,6 +2,7 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
+import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
 
 import java.io.IOException;
@@ -16,23 +17,14 @@ public class CompilerModel {
         this.interpreterJajaCodeModel = interpreterJajaCodeModel;
     }
 
-    public void compile(String file){
-        try {
+    public void compile(String file) throws Exception {
             interpreterMiniJajaModel.init(file);
-            try {
-                interpreterMiniJajaModel.interpret();
-                compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
-                compiler.compile();
-                interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());
-                JCCPrinter jccPrinter = new JCCPrinter(interpreterJajaCodeModel.getNodes());
-                interpreterJajaCodeModel.setCode(jccPrinter.toString());
-            } catch (ASTParsingException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            interpreterMiniJajaModel.build();
+            compiler = new CompilerImpl(interpreterMiniJajaModel.getClasseNode());
+            compiler.compile();
+            interpreterJajaCodeModel.setNodes(compiler.jajaCodeNodes());
+            JCCPrinter jccPrinter = new JCCPrinter(interpreterJajaCodeModel.getNodes());
+            interpreterJajaCodeModel.setCode(jccPrinter.toString());
+
     }
 }

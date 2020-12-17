@@ -2,24 +2,19 @@ package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.debug.DebugListener;
 
-import java.io.IOException;
-
-
 public class DebugOnWaiter implements DebugListener.Waiter {
-     private final Thread thread;
+     private Object lock = new Object();
 
-     public DebugOnWaiter(Thread thread){
-         this.thread = thread;
-     }
+     public DebugOnWaiter(){}
 
     private boolean lineMode = false;
 
     @Override
     public void waitForUser(boolean breakpointedLine) throws InterruptedException {
-        while(lineMode || breakpointedLine) {
+        if(lineMode || breakpointedLine) {
             try {
-                synchronized (this.thread){
-                    thread.wait();
+                synchronized (lock){
+                    lock.wait();
                 }
             }catch (Exception e){e.printStackTrace();}
         }
@@ -29,25 +24,19 @@ public class DebugOnWaiter implements DebugListener.Waiter {
     public void nextBreakpoint() {
         lineMode = false;
         try {
-            synchronized (this.thread){
-                thread.notify();
+            synchronized (lock){
+                lock.notify();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
+        }catch (Exception e){e.printStackTrace();}
     }
 
     @Override
     public void nextStep() {
         lineMode = true;
         try {
-            synchronized (this.thread){
-                thread.notify();
+            synchronized (lock){
+                lock.notify();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception e){e.printStackTrace();}
     }
 }

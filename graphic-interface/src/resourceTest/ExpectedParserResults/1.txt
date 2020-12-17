@@ -1,0 +1,295 @@
+ClassNode:
+  identifier:
+    IdentNode:
+      identifier: C
+  decls:
+    DeclsNode:
+      decl:
+        VarNode:
+          identifier:
+            IdentNode:
+              identifier: x
+          type:
+            TypeMethNode:
+              type: INT
+      decls:
+        DeclsNode:
+          decl:
+            VarNode:
+              identifier:
+                IdentNode:
+                  identifier: "y"
+              type:
+                TypeMethNode:
+                  type: INT
+              expression:
+                NumberNode:
+                  value: 10
+          decls:
+            DeclsNode:
+              decl:
+                VarNode:
+                  identifier:
+                    IdentNode:
+                      identifier: b1
+                  type:
+                    TypeMethNode:
+                      type: BOOLEAN
+                  expression:
+                    BooleanNode:
+                      value: false
+              decls:
+                DeclsNode:
+                  decl:
+                    VarNode:
+                      identifier:
+                        IdentNode:
+                          identifier: b2
+                      type:
+                        TypeMethNode:
+                          type: BOOLEAN
+                  decls:
+                    DeclsNode:
+                      decl:
+                        MethodNode:
+                          identifier:
+                            IdentNode:
+                              identifier: somme
+                          typeMeth:
+                            TypeMethNode:
+                              type: INT
+                          headers:
+                            HeadersNode:
+                              header:
+                                HeaderNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: max
+                                  type:
+                                    TypeNode:
+                                      type: INT
+                          vars:
+                            VarsNode:
+                              var:
+                                VarNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: t
+                                  type:
+                                    TypeMethNode:
+                                      type: INT
+                                  expression:
+                                    NumberNode:
+                                      value: 5
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                WhileNode:
+                                  expression:
+                                    GreaterNode:
+                                      leftOperand:
+                                        IdentNode:
+                                          identifier: max
+                                      rightOperand:
+                                        NumberNode:
+                                          value: 0
+                                  instrs:
+                                    InstrsNode:
+                                      instruction:
+                                        SumNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: t
+                                          expression:
+                                            IdentNode:
+                                              identifier: max
+                                      instrs:
+                                        InstrsNode:
+                                          instruction:
+                                            AssignNode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: max
+                                              expression:
+                                                subNode:
+                                                  leftOperand:
+                                                    IdentNode:
+                                                      identifier: max
+                                                  rightOperand:
+                                                    NumberNode:
+                                                      value: 1
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    RetrunNode:
+                                      ret:
+                                        IdentNode:
+                                          identifier: t
+                      decls:
+                        DeclsNode:
+                          decl:
+                            MethodNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: test
+                              typeMeth:
+                                TypeMethNode:
+                                  type: BOOLEAN
+                              headers:
+                                HeadersNode:
+                                  header:
+                                    HeaderNode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: a
+                                      type:
+                                        TypeNode:
+                                          type: INT
+                                  headers:
+                                    HeadersNode:
+                                      header:
+                                        HeaderNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: b
+                                          type:
+                                            TypeNode:
+                                              type: INT
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    RetrunNode:
+                                      ret:
+                                        GreaterNode:
+                                          leftOperand:
+                                            IdentNode:
+                                              identifier: a
+                                          rightOperand:
+                                            IdentNode:
+                                              identifier: b
+                          decls:
+                            DeclsNode:
+                              decl:
+                                MethodNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: f
+                                  typeMeth:
+                                    TypeMethNode:
+                                      type: VOID
+                                  headers:
+                                    HeadersNode:
+                                      header:
+                                        HeaderNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: z
+                                          type:
+                                            TypeNode:
+                                              type: INT
+                                  instrs:
+                                    InstrsNode:
+                                      instruction:
+                                        AssignNode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: x
+                                          expression:
+                                            MultNode:
+                                              leftOperand:
+                                                IdentNode:
+                                                  identifier: "y"
+                                              rightOperand:
+                                                IdentNode:
+                                                  identifier: z
+                                      instrs:
+                                        InstrsNode:
+                                          instruction:
+                                            AssignNode:
+                                              identifier:
+                                                IdentNode:
+                                                  identifier: x
+                                              expression:
+                                                DivNode:
+                                                  leftOperand:
+                                                    IdentNode:
+                                                      identifier: x
+                                                  rightOperand:
+                                                    IdentNode:
+                                                      identifier: z
+                                          instrs:
+                                            InstrsNode:
+                                              instruction:
+                                                IncrementNode:
+                                                  identifier:
+                                                    IdentNode:
+                                                      identifier: x
+  main:
+    MainNode:
+      instrs:
+        InstrsNode:
+          instruction:
+            IfNode:
+              expression:
+                AndNode:
+                  leftOperand:
+                    AppelENode:
+                      identifier:
+                        IdentNode:
+                          identifier: test
+                      listexp:
+                        ListExpNode:
+                          expression:
+                            IdentNode:
+                              identifier: "y"
+                          listexp:
+                            ListExpNode:
+                              expression:
+                                NumberNode:
+                                  value: 9
+                  rightOperand:
+                    OrNode:
+                      leftOperand:
+                        IdentNode:
+                          identifier: b1
+                      rightOperand:
+                        NotNode:
+                          expression:
+                            IdentNode:
+                              identifier: b2
+              trueInstrs:
+                InstrsNode:
+                  instruction:
+                    AssignNode:
+                      identifier:
+                        IdentNode:
+                          identifier: x
+                      expression:
+                        AppelENode:
+                          identifier:
+                            IdentNode:
+                              identifier: somme
+                          listexp:
+                            ListExpNode:
+                              expression:
+                                NumberNode:
+                                  value: 2
+              falseInstrs:
+                InstrsNode:
+                  instruction:
+                    IncrementNode:
+                      identifier:
+                        IdentNode:
+                          identifier: x
+          instrs:
+            InstrsNode:
+              instruction:
+                AppelINode:
+                  identifier:
+                    IdentNode:
+                      identifier: f
+                  listexp:
+                    ListExpNode:
+                      expression:
+                        NumberNode:
+                          value: 10

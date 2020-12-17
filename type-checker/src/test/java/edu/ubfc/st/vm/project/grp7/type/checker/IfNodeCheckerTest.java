@@ -1,15 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -25,7 +19,7 @@ public class IfNodeCheckerTest {
     }
 
     @Test
-    public void IfNodeTypeCheker__First__Second__Pass() throws IllFormedNodeException {
+    public void IfNodeTypeCheker__First__Second__Pass() throws TypeCheckerException {
 
         NumberNode numberNode1 = NumberNode.builder().value(1).build();
         NumberNode numberNode3 = NumberNode.builder().value(3).build();
@@ -58,8 +52,8 @@ public class IfNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IfNodeTypeCheker__Exception__In__Condition() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IfNodeTypeCheker__Exception__In__Condition() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 

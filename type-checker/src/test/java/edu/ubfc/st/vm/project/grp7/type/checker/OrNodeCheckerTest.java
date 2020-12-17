@@ -1,13 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -22,7 +19,7 @@ public class OrNodeCheckerTest {
     }
 
     @Test
-    public void OrNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void OrNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
@@ -33,8 +30,8 @@ public class OrNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build() ;
         BooleanNode rightOperand = BooleanNode.builder().build();
@@ -43,8 +40,8 @@ public class OrNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();
         NumberNode leftOperand = NumberNode.builder().value(6).build();
@@ -52,8 +49,8 @@ public class OrNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void OrNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void OrNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();

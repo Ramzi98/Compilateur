@@ -1,9 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DivNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MultNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
 import org.junit.Before;
@@ -24,7 +22,7 @@ public class MultNodeCheckerTest {
     }
 
     @Test
-    public void MultNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void MultNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         NumberNode leftOperand = NumberNode.builder().value(5).build() ;
@@ -35,8 +33,8 @@ public class MultNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MultNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MultNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -45,8 +43,8 @@ public class MultNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MultNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MultNodeTypeCheck__LeftOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         BooleanNode leftOperand = BooleanNode.builder().value(true).build();
         NumberNode rightOperand = NumberNode.builder().value(6).build();
@@ -54,8 +52,8 @@ public class MultNodeCheckerTest {
         typeChecker.visit(node);
 
     }
-    @Test(expected = IllFormedNodeException.class)
-    public void MultNodeTypeCheck__RightOperandInvalid__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MultNodeTypeCheck__RightOperandInvalid__withException() throws IOException, TypeCheckerException {
 
         NumberNode leftOperand = NumberNode.builder().value(6).build();
         BooleanNode rightOperand = BooleanNode.builder().value(true).build();

@@ -113,6 +113,7 @@ public class IDEStack implements Stack {
             index--;
         }
         Quadruplet quad = quads.get(index);
+        quad.nature(OBJ.VAR);
         quad.id(id);
         quad.type(t);
         symbolDictionnary.register(id, index);

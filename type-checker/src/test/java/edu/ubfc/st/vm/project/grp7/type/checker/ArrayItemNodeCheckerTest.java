@@ -1,14 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class ArrayItemNodeCheckerTest {
 
@@ -25,7 +20,7 @@ public class ArrayItemNodeCheckerTest {
     }
 
     @Test
-    public void ArrayItemNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void ArrayItemNodeTypeCheck() throws TypeCheckerException {
 
 
         IdentNode identvar = IdentNode.builder().value("i").build();
@@ -49,8 +44,8 @@ public class ArrayItemNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayItemNodeTypeCheck__ExpressionInvalid__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayItemNodeTypeCheck__ExpressionInvalid__WithException() throws TypeCheckerException {
 
 
         IdentNode identvar = IdentNode.builder().value("i").build();
@@ -76,8 +71,8 @@ public class ArrayItemNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayItemNodeTypeCheck__ExpressionNotInt__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayItemNodeTypeCheck__ExpressionNotInt__WithException() throws TypeCheckerException {
 
 
         IdentNode identvar = IdentNode.builder().value("i").build();
@@ -102,8 +97,8 @@ public class ArrayItemNodeCheckerTest {
     }
 
 
-    @Test(expected = IllFormedNodeException.class)
-    public void ArrayItemNodeTypeCheck__ArrayIdentUnexistant__WithException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void ArrayItemNodeTypeCheck__ArrayIdentUnexistant__WithException() throws TypeCheckerException {
 
 
         IdentNode identvar = IdentNode.builder().value("i").build();

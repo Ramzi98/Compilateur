@@ -311,8 +311,8 @@ public class MiniJajaInterpreterVisitorTest {
         InOrder inOrder = inOrder(memory, identNode, exp, typeMeth, deque);
 
         inOrder.verify(exp).accept(mjjVisitor);
-        inOrder.verify(identNode).value();
         inOrder.verify(deque).pop();
+        inOrder.verify(identNode).value();
         inOrder.verify(typeMeth).value();
         inOrder.verify(memory).declVar("id", 5, SORTE.INT);
     }
@@ -417,8 +417,8 @@ public class MiniJajaInterpreterVisitorTest {
         InOrder inOrder = inOrder(memory, identNode, exp, type, deque);
 
         inOrder.verify(exp).accept(mjjVisitor);
-        inOrder.verify(identNode).value();
         inOrder.verify(deque).pop();
+        inOrder.verify(identNode).value();
         inOrder.verify(type).value();
         inOrder.verify(memory).declCst("N", 100, SORTE.INT);
     }

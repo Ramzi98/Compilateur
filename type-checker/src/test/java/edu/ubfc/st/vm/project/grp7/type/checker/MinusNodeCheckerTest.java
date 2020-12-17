@@ -1,11 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.BooleanNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MinusNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.SubNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +23,7 @@ public class MinusNodeCheckerTest {
     }
 
     @Test
-    public void MinusNodeTypeCheck() throws IOException, IllFormedNodeException {
+    public void MinusNodeTypeCheck() throws IOException, TypeCheckerException {
 
 
         NumberNode number = NumberNode.builder().value(5).build() ;
@@ -34,8 +32,8 @@ public class MinusNodeCheckerTest {
         assertThat(typeChecker.miniJajaNodeType.get(node),is(SORTE.INT));
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MinusNodeTypeCheck__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MinusNodeTypeCheck__withException() throws IOException, TypeCheckerException {
 
         NumberNode number = NumberNode.builder().build();
         MinusNode node = MinusNode.builder().expression(number).build();
@@ -43,8 +41,8 @@ public class MinusNodeCheckerTest {
 
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void MinusNodeTypeCheck__WrongType__withException() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void MinusNodeTypeCheck__WrongType__withException() throws IOException, TypeCheckerException {
 
         BooleanNode number = BooleanNode.builder().value(true).build();
         MinusNode node = MinusNode.builder().expression(number).build();

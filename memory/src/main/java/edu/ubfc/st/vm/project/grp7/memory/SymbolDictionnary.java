@@ -50,6 +50,16 @@ public class SymbolDictionnary {
     }
 
     public void register(String ident,String scope,int indice) throws IllegalArgumentException {
+        for (String sc : scopes)
+        {
+            String s1 = sc.split("-")[0];
+            if(s1.equals(scope))
+            {
+                scope = sc;
+                break;
+            }
+
+        }
         HashMap<String, Integer> currentScope = symbols.get(scope);
 
         if(ident == null || ident.trim().isEmpty()){
@@ -66,8 +76,6 @@ public class SymbolDictionnary {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
             currentScope.remove(ident);
-        }else{
-            throw new IllegalArgumentException("The value does not exist.");
         }
     }
 
@@ -92,7 +100,8 @@ public class SymbolDictionnary {
     public int find(String ident,String scope) {
         for (String sc : scopes)
         {
-            if(sc.startsWith(scope))
+            String s1 = sc.split("-")[0];
+            if(s1.equals(scope))
             {
                 scope = sc;
                 break;

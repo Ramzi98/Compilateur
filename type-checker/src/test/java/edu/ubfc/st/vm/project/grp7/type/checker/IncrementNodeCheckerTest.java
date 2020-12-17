@@ -1,14 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class IncrementNodeCheckerTest {
     TypeChecker typeChecker;
@@ -21,8 +16,8 @@ public class IncrementNodeCheckerTest {
         symbolDictionnary = new SymbolDictionnary();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IncrementNodeTypeCheker__Exception() throws IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IncrementNodeTypeCheker__Exception() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
@@ -43,14 +38,13 @@ public class IncrementNodeCheckerTest {
         typeChecker.typeCheck();
     }
 
-    @Test(expected = IllFormedNodeException.class)
-    public void IncrementNodeTypeCheker__ArrayItem__Exception__Identifier__NOT_INT() throws IOException, IllFormedNodeException {
+    @Test(expected = TypeCheckerException.class)
+    public void IncrementNodeTypeCheker__ArrayItem__Exception__Identifier__NOT_INT() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
 
         TypeMethNode typeMethNode = TypeMethNode.builder().value(TypeMethNode.TypeMeth.BOOLEAN).build();
 
-        BooleanNode booleanNode = BooleanNode.builder().value(Boolean.TRUE).build();
 
         NumberNode numberNode = NumberNode.builder().value(6).build();
         NumberNode numberNode2 = NumberNode.builder().value(2).build();

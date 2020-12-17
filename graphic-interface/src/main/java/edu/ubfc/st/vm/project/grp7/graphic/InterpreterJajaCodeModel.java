@@ -14,8 +14,6 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.function.IntFunction;
 
 public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
@@ -28,9 +26,8 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
     private CodeArea codeArea;
     private List<Integer> listBreakpoints   ;
     private String code;
-    private Thread pausable;
     private BreakPoint breakPoint;
-    private Executor threadWrite = Executors.newSingleThreadExecutor();
+
 
     public void setCode(String code) {
         this.code = code;
@@ -49,13 +46,6 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         this.error = error;
         this.debug = debug;
         this.codeArea = codeArea;
-        this.pausable = new Thread(()->{
-            try {
-                runnable();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     public void setBreakpoints() {
@@ -64,7 +54,6 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     public void setNodes(List<JajaCodeNode> nodes) {
         this.nodes = nodes;
-
     }
 
     public List<JajaCodeNode> getNodes() {
@@ -73,17 +62,13 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     @Override
     public void jjcWrite(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-        });
+        run.appendText(str);
     }
 
     @Override
     public void jjcWriteLn(String str) {
-        this.threadWrite.execute(() -> {
-            run.appendText(str);
-            run.appendText("\n");
-        });
+        run.appendText(str);
+        run.appendText("\n");
     }
 
     @Override
@@ -93,29 +78,28 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
 
     @Override
     public void debug(int line) throws InterruptedException {
+        if (listBreakpoints.contains(line)){
+            debug.clear();
+            debug.appendText("line : "+line+"\n");
+            debug.appendText(memory.toString());
+        }
+        waiter.waitForUser(listBreakpoints.contains(line));
 
     }
 
     public void run(boolean debug) throws Exception {
-        if (debug){
+        if (!debug){
             waiter = new DebugOffWaiter();
         }else{
-            waiter = new DebugOnWaiter(pausable);
+            waiter = new DebugOnWaiter();
         }
-    }
-
-
-    public void runnable() throws Exception {
-        this.threadWrite.execute(() -> {
-            run.appendText("\nRun JajaCode\n\n");
-        });
-
+        run.appendText("\n-----Run JajaCode----\n\n");
         JJCInterpreter.getFactory().createFrom(memory,nodes).interpret(new JJCInterpreterController(this) );
-
-        this.threadWrite.execute(() -> {
-            run.appendText("\n----------------------------------\n");
-        });
+        run.appendText("\n----------------------\n");
     }
+
+
+
 
     public void nextBreakPoint(ActionEvent actionEvent) {
         waiter.nextBreakpoint();
@@ -137,5 +121,18 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
             return hbox;
         };
         codeArea.setParagraphGraphicFactory(graphicFactory);
+    }
+
+    public int runAll(boolean debug, Memory memory) throws Exception {
+        if (getNodes().size() == 0){
+            error.clear();
+            error.appendText("You need compile MiniJajaBefore Execute");
+            return -1;
+        }else {
+            setBreakpoints();
+            setMemory(memory);
+            run(debug);
+        }
+        return 1;
     }
 }

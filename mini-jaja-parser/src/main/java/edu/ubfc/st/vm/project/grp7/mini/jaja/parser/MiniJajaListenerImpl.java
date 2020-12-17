@@ -619,12 +619,19 @@ public class MiniJajaListenerImpl extends MiniJajaBaseListener {
 
     @Override
     public void exitNumber(MiniJajaParser.NumberContext ctx) {
-        NumberNode numberNode = NumberNode.builder()
-                .line(line(ctx))
-                .column(column(ctx))
-                .value(Integer.parseInt(ctx.getText()))
-                .build();
-        
+        NumberNode numberNode;
+        try {
+            numberNode = NumberNode.builder()
+                    .line(line(ctx))
+                    .column(column(ctx))
+                    .value(Integer.parseInt(ctx.getText()))
+                    .build();
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(
+              String.format("Error while parsing at [%d ; %d] : %s", line(ctx), column(ctx), e.getMessage())
+            );
+        }
+
         stack.push(numberNode);
     }
 

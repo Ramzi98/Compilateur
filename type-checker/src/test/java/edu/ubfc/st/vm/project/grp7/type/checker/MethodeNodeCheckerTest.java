@@ -1,15 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
 import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -27,9 +21,10 @@ public class MethodeNodeCheckerTest {
 
 
      @Test
-    public void MethodeNodeTypeCheker__First__Second__Pass() throws IllFormedNodeException {
+    public void MethodeNodeTypeCheker__First__Second__Pass() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
+        IdentNode identvar2 = IdentNode.builder().value("k").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
         IdentNode identfonction = IdentNode.builder().value("fonction").build();
         IdentNode identclasse = IdentNode.builder().value("C").build();
@@ -43,11 +38,11 @@ public class MethodeNodeCheckerTest {
         VarNode varNode = VarNode.builder().typeMeth(typeMethNode).identifier(identvar1).expression(numberNode).build();
         VarsNode varsNode = VarsNode.builder().var(varNode).vars(null).build();
 
-        VarNode varNode1 = VarNode.builder().identifier(identfonction).typeMeth(typeMethNode).expression(numberNode).build();
+        VarNode varNode1 = VarNode.builder().identifier(identvar2).typeMeth(typeMethNode).expression(numberNode).build();
         VarsNode varsDecls = VarsNode.builder().var(varNode1).vars(null).build();
         IncrementNode incrementNode = IncrementNode.builder().identifier(identvar1).build();
 
-        ReturnNode returnNode = ReturnNode.builder().ret(varNode).build();
+        ReturnNode returnNode = ReturnNode.builder().ret(incrementNode).build();
         InstrsNode instrsReturn = InstrsNode.builder().instruction(returnNode).instrs(null).build();
         InstrsNode instrsNode = InstrsNode.builder().instruction(incrementNode).instrs(instrsReturn).build();
 
@@ -75,13 +70,12 @@ public class MethodeNodeCheckerTest {
          typeChecker = new TypeCheckerImpl(classeNode1);
          typeChecker.typeCheck();
 
-
     }
 
 
 
-     @Test(expected = IllFormedNodeException.class)
-    public void MethodeNodeTypeCheker__Exception__OMEGA() throws IllFormedNodeException {
+     @Test(expected = TypeCheckerException.class)
+    public void MethodeNodeTypeCheker__Exception__OMEGA() throws TypeCheckerException {
 
         IdentNode identvar1 = IdentNode.builder().value("i").build();
         IdentNode identheader = IdentNode.builder().value("j").build();
