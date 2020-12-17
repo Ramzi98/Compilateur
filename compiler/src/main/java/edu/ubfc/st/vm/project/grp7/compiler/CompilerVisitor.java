@@ -338,13 +338,40 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         node_init(node, h);
 
         if (compilemode == Mode.NORMALE) {
+            int ne = 0;
             try {
-                node.expression().accept(this);
+                if(node.expression() != null)
+                {
+                    node.expression().accept(this);
+                    ne = (int) stack.pop().values().toArray()[0];
+                }
+                else
+                {
+                    if(node.type().value() == TypeNode.Type.INT)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(0)
+                                .build();
+                        setNextNode(jcPushNode);
+                        ne = 1;
+                    }
+                    else if(node.type().value() == TypeNode.Type.BOOLEAN)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(false)
+                                .build();
+                        setNextNode(jcPushNode);
+                        ne = 1;
+                    }
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
 
-            int ne = (int) stack.pop().values().toArray()[0];
             node_update(node,ne + 1,h);
 
             JcNewNode jcNewNode = JcNewNode.builder()
