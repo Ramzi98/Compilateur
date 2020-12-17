@@ -173,7 +173,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         try {
             interpret(debug);
         } catch (Exception e) {
-            e.printStackTrace();
+            error.appendText(e.getMessage());
             return -1;
         }
         return 0;

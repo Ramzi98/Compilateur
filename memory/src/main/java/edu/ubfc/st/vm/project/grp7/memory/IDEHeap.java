@@ -26,6 +26,7 @@ public class IDEHeap implements Heap {
     @Override
     public void affecterTas(Object ref, int index, Object val) throws IllegalArgumentException, IndexOutOfBoundsException {
            if (objects.containsKey(ref)) {
+               if( objects.get(ref).length < index -1 || index < 0){throw new IllegalArgumentException("Out of the Array : "+ref+" at index : "+index );}
                objects.get(ref)[index] = val;
            } else {
                throw new IllegalArgumentException("Invalid ref on array");

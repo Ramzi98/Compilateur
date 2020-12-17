@@ -140,6 +140,7 @@ public class Controller implements Initializable{
     }
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
+        areaError.clear();
         setCurrent();
         setCurrentFile(fileModel.saveFile(currentArea,currentFile));
         run(false);
