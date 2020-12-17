@@ -950,7 +950,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
 
 
             int ns = 0;
-            if (nodeis2 != null) {
+            if (nodeis1 != null) {
                 nodeis1.accept(this);
                 ns = (int) stack.pop().values().toArray()[0];
             }
