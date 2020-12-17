@@ -116,7 +116,7 @@ public class HeapTest {
         heap.affecterTas(refBoolean20, 20, true);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void affecterTas__NegativeIndex__throwException() {
         heap.affecterTas(refBoolean5, -1, false);
     }
@@ -126,12 +126,12 @@ public class HeapTest {
         heap.valeurTas(8, 0);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void valeurTas__SuperiorIndex__throwException() {
         heap.valeurTas(refBoolean20, 20);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void valeurTas__NegativeIndex__throwException() {
         heap.valeurTas(refBoolean5, -1);
     }
