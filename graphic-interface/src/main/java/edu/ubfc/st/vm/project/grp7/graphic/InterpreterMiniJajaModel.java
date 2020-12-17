@@ -85,7 +85,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         try {
             walker.walk(listener, parser.classe());
         }catch (ASTParsingException e){
-            writeerror.execute(()->{error.appendText(e.getMessage());});
+            error.appendText(e.getMessage());
             return;
         }
         classeNode = (ClasseNode) listener.getRoot();
@@ -166,7 +166,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         try {
             typeCheck();
         } catch (TypeCheckerException e) {
-            writeerror.execute(()->{error.appendText(e.getMessage());});
+            error.appendText(e.getMessage());
             return -1 ;
         }
         try {
