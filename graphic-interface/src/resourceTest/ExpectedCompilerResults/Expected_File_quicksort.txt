@@ -5,7 +5,7 @@ load(longueur)
 newarray(tableau, entier)
 push(9)
 new(partition, entier, meth, 0)
-goto(61)
+goto(73)
 new(fin, entier, var, 2)
 new(deb, entier, var, 1)
 load(deb)
@@ -27,13 +27,25 @@ load(fin)
 cmp
 or
 not
-if(40)
+if(52)
 load(pivot)
 load(i)
 aload(tableau)
 sup
 if(37)
-goto(37)
+goto(49)
+push(1)
+inc(compt)
+load(compt)
+aload(tableau)
+store(temp)
+load(compt)
+load(i)
+aload(tableau)
+astore(tableau)
+load(i)
+load(temp)
+astore(tableau)
 push(1)
 inc(i)
 goto(22)
@@ -58,15 +70,15 @@ swap
 pop
 swap
 return
-push(64)
+push(76)
 new(pause, void, meth, 0)
-goto(67)
+goto(79)
 push(0)
 swap
 return
-push(70)
+push(82)
 new(trirapide, void, meth, 0)
-goto(84)
+goto(124)
 new(fin, entier, var, 2)
 new(debut, entier, var, 1)
 push(0)
@@ -74,8 +86,36 @@ new(pivot, entier, var, 0)
 load(fin)
 load(debut)
 sup
-if(79)
-goto(79)
+if(91)
+goto(119)
+load(debut)
+load(fin)
+invoke(partition)
+swap
+pop
+swap
+pop
+store(pivot)
+load(debut)
+load(pivot)
+push(1)
+sub
+invoke(trirapide)
+swap
+pop
+swap
+pop
+pop
+load(pivot)
+push(1)
+add
+load(fin)
+invoke(trirapide)
+swap
+pop
+swap
+pop
+pop
 push(0)
 swap
 pop
