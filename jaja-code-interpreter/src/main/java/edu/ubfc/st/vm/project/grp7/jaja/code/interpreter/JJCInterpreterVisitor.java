@@ -75,7 +75,7 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         }
         try {
             memory.affecterValT(node.identifier(), (int) i.val(), (int) v.val() + (int) val);
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             jjcError(node, e.getMessage());
         }
 
@@ -93,7 +93,7 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         }
         Object val = null;
         try {
-            val = memory.val(node.identifier());
+            val = memory.valT(node.identifier(), (int)i.val());
         } catch (IllegalAccessException e) {
             jjcError(node, e.getMessage());
         }
@@ -124,14 +124,14 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcAstoreNode node) throws Exception {
         debug(node);
-        Quadruplet i = memory.depiler();
         Quadruplet v = memory.depiler();
+        Quadruplet i = memory.depiler();
         if (!(i.val() instanceof Integer)) {
             jjcError(node, "astore tab index isn't an integer");
         }
         try {
             memory.affecterValT(node.identifier(), (int) i.val(), v.val());
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             jjcError(node, e.getMessage());
         }
 
