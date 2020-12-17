@@ -81,6 +81,7 @@ public class InterpreterJajaCodeModel implements  JJCInterpreterListener {
         waiter.waitForUser(listBreakpoints.contains(line));
         if (listBreakpoints.contains(line)){
             debug.clear();
+            debug.appendText("line : "+line+"\n");
             debug.appendText(memory.toString());
         }
     }

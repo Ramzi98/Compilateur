@@ -128,6 +128,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         waiter.waitForUser(breakpoints.contains(line));
         if (breakpoints.contains(line)){
             debug.clear();
+            debug.appendText("line : "+line+"\n");
             debug.appendText(memory.toString());
         }
     }

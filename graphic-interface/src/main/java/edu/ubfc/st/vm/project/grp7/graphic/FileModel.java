@@ -78,6 +78,7 @@ public class FileModel {
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Mini Jaja Files", "*.mjj"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Mini Jaja Files", "*.MJJ"));
         File selectedFile = null;
         try {
             selectedFile = fileChooser.showOpenDialog(new Stage());
