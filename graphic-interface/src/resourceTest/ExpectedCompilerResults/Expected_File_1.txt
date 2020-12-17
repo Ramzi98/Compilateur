@@ -9,7 +9,7 @@ push(false)
 new(b2, booléen, var, 0)
 push(13)
 new(somme, entier, meth, 0)
-goto(28)
+goto(33)
 new(max, entier, var, 1)
 push(5)
 new(t, entier, var, 0)
@@ -17,7 +17,7 @@ load(max)
 push(0)
 sup
 not
-if(24)
+if(28)
 load(max)
 inc(t)
 load(max)
@@ -30,9 +30,9 @@ swap
 pop
 swap
 return
-push(21)
+push(36)
 new(test, booléen, meth, 0)
-goto(28)
+goto(43)
 new(b, entier, var, 2)
 new(a, entier, var, 1)
 load(a)
@@ -40,9 +40,9 @@ load(b)
 sup
 swap
 return
-push(31)
+push(46)
 new(f, void, meth, 0)
-goto(45)
+goto(60)
 new(z, entier, var, 1)
 load(y)
 load(z)
@@ -69,10 +69,10 @@ load(b2)
 not
 or
 and
-if(54)
+if(76)
 push(1)
 inc(x)
-goto(59)
+goto(81)
 push(2)
 invoke(somme)
 swap
