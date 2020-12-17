@@ -125,7 +125,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
                 mjjError(node, e.getMessage());
             }
         } else {
-            Object vexp = null;
+            Object vexp = node.typeMeth().value().equals(TypeMethNode.TypeMeth.BOOLEAN) ? false : 0;
             if (node.expression() != null) { // vexp = omega
                 node.expression().accept(this);
                 vexp = evals.pop();
