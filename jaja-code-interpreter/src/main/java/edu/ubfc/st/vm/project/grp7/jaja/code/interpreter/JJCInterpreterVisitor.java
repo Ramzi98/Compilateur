@@ -222,7 +222,6 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
 
         memory.pushContext(UUID.randomUUID().toString());
         nodes.get(n).accept(this);
-        memory.popContext();
     }
 
     //<m,a> |- load(i) -> << w, Val(i,m), cst,w>.m, a+1>
@@ -407,6 +406,8 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (n < 0 || n >= nodes.size()) {
             jjcError(node, "return destination out of range");
         }
+
+        memory.popContext();
         nodes.get(n).accept(this);
     }
 

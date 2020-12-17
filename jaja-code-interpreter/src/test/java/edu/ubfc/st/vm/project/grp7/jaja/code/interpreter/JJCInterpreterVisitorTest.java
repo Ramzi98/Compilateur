@@ -729,4 +729,20 @@ public class JJCInterpreterVisitorTest {
         orderedCalls.verify(memory).empiler(val);
         orderedCalls.verify(nextNode).accept(jjcVisitor);
     }
+
+    @Test
+    public void visitSWAP() throws Exception {
+        JcSwapNode jcSwap = JcSwapNode.builder()
+                .next(nextNode)
+                .line(6)
+                .column(1)
+                .build();
+
+        jcSwap.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).echanger();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
 }
