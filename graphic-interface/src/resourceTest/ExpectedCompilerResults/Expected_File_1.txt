@@ -1,0 +1,100 @@
+init
+new(x, entier, var, 0)
+push(10)
+new(y, entier, var, 0)
+push(false)
+new(b1, booléen, var, 0)
+new(b2, booléen, var, 0)
+push(11)
+new(somme, entier, meth, 0)
+goto(26)
+new(max, entier, var, 1)
+push(5)
+new(t, entier, var, 0)
+load(max)
+push(0)
+sup
+not
+if(22)
+load(max)
+inc(t)
+load(max)
+push(1)
+sub
+store(max)
+goto(14)
+load(t)
+swap
+pop
+swap
+return
+push(21)
+new(test, booléen, meth, 0)
+goto(28)
+new(b, entier, var, 2)
+new(a, entier, var, 1)
+load(a)
+load(b)
+sup
+swap
+return
+push(31)
+new(f, void, meth, 0)
+goto(45)
+new(z, entier, var, 1)
+load(y)
+load(z)
+mul
+store(x)
+load(x)
+load(z)
+div
+store(x)
+push(1)
+inc(x)
+push(0)
+swap
+return
+load(y)
+push(9)
+invoke(test)
+swap
+pop
+swap
+pop
+load(b1)
+load(b2)
+not
+or
+and
+if(53)
+push(1)
+inc(x)
+goto(58)
+push(2)
+invoke(somme)
+swap
+pop
+store(x)
+push(10)
+invoke(f)
+swap
+pop
+pop
+push(0)
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+swap
+pop
+pop
+jcstop

@@ -113,9 +113,13 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (modeRetrait) {
             memory.retirerDecl(node.identifier().value());
         } else {
-            node.expression().accept(this);
+            Object vexp = null;
+            if (node.expression() != null) { // vexp = omega
+                node.expression().accept(this);
+                vexp = evals.pop();
+            }
             memory.declVar(node.identifier().value(),
-                    evals.pop(),
+                    vexp,
                     SORTE.of(node.typeMeth().value())
             );
         }
@@ -141,9 +145,13 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (modeRetrait) {
             memory.retirerDecl(node.identifier().value());
         } else {
-            node.expression().accept(this);
+            Object vexp = null;
+            if (node.expression() != null) { // vexp = omega
+                node.expression().accept(this);
+                vexp = evals.pop();
+            }
             memory.declCst(node.identifier().value(),
-                    evals.pop(),
+                    vexp,
                     SORTE.of(node.type().value())
             );
         }
