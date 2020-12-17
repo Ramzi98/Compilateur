@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.is;
 public class ProjectExampleParserCompilerTest extends BaseTest{
     protected Compiler compiler;
 
+
     @Test
     public void Test_Class_1_Compiler_Parser() throws Exception {
         TestConstructor testConstructor = new TestConstructor("ProjectExample","1");
@@ -56,7 +57,6 @@ public class ProjectExampleParserCompilerTest extends BaseTest{
         compiler.compile();
 
         JCCPrinter jccPrinter = new JCCPrinter(compiler.jajaCodeNodes());
-
         assertThat(jccPrinter.toString(),is(getExpectedFile("Expected_File_quicksort")));
     }
 

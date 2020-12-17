@@ -89,10 +89,11 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
             return;
         }
         classeNode = (ClasseNode) listener.getRoot();
-        typeChecker = new TypeCheckerImpl(classeNode);
+
     }
 
     public void typeCheck() throws TypeCheckerException {
+        typeChecker = new TypeCheckerImpl(classeNode);
         typeChecker.typeCheck();
     }
 
@@ -161,9 +162,6 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         setBreakpoints();
         init(file);
         setMemory(memory);
-        if (memory == null){
-            System.out.println("nooooooo");
-        }
         build();
         try {
             typeCheck();
@@ -174,7 +172,7 @@ public class InterpreterMiniJajaModel implements MJJInterpreterListener{
         try {
             interpret(debug);
         } catch (Exception e) {
-            writeerror.execute(()->{error.appendText(e.getMessage());});
+            e.printStackTrace();
             return -1;
         }
         return 0;

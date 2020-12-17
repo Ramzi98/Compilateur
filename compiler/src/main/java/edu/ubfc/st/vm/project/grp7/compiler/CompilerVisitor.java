@@ -228,6 +228,29 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                     node.expression().accept(this);
                     ne = (int) stack.pop().values().toArray()[0];
                 }
+                else
+                {
+                    if(node.typeMeth().value() == TypeMethNode.TypeMeth.INT)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(0)
+                                .build();
+                        setNextNode(jcPushNode);
+                        ne = 1;
+                    }
+                    else if(node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
+                    {
+                        JcPushNode jcPushNode = JcPushNode.builder()
+                                .line(jajaCodeNodes.size() + 1)
+                                .column(1)
+                                .valeur(false)
+                                .build();
+                        setNextNode(jcPushNode);
+                        ne = 1;
+                    }
+                }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
             }
@@ -683,9 +706,6 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
         } else if (nodeIdent instanceof IdentNode) {
 
             MiniJajaNode nodeExp = node.expression();
-            h.put(node, n);
-            minijajaNodes.add(h);
-            stack.push(h);
             try {
                 nodeExp.accept(this);
                 int ne = (int) stack.pop().values().toArray()[0];
@@ -981,6 +1001,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                 niss = (int) stack.pop().values().toArray()[0];
             }
             node_update(node,ne + niss + 3,h);
+
 
             JcGotoNode jcGotoNode = JcGotoNode
                     .builder()
