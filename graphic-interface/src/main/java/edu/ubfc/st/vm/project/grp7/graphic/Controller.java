@@ -118,7 +118,7 @@ public class Controller implements Initializable{
     @FXML
     public void saveFile(ActionEvent actionEvent) {
         setCurrent();
-        fileModel.saveFile(currentArea,currentFile);
+        setCurrentFile(fileModel.saveFile(currentArea,currentFile));
     }
 
 
@@ -139,14 +139,14 @@ public class Controller implements Initializable{
     @FXML
     public void runCode(ActionEvent actionEvent) throws Exception {
         setCurrent();
-        fileModel.saveFile(currentArea,currentFile);
+        setCurrentFile(fileModel.saveFile(currentArea,currentFile));
         run(false);
     }
 
     @FXML
     private void runWithDebug(ActionEvent actionEvent) throws Exception {
         setCurrent();
-        fileModel.saveFile(currentArea,currentFile);
+        setCurrentFile(fileModel.saveFile(currentArea,currentFile));
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(()-> {
             run(true);

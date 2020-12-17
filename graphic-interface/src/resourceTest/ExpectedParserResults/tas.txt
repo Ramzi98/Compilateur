@@ -1,0 +1,222 @@
+ClassNode:
+  identifier:
+    IdentNode:
+      identifier: synonymie
+  decls:
+    DeclsNode:
+      decl:
+        VarNode:
+          identifier:
+            IdentNode:
+              identifier: taille
+          type:
+            TypeMethNode:
+              type: INT
+          expression:
+            NumberNode:
+              value: 512
+      decls:
+        DeclsNode:
+          decl:
+            ArrayNode:
+              identifier:
+                IdentNode:
+                  identifier: t
+              type:
+                TypeMethNode:
+                  type: INT
+              expression:
+                PlusNode:
+                  leftOperand:
+                    DivNode:
+                      leftOperand:
+                        IdentNode:
+                          identifier: taille
+                      rightOperand:
+                        NumberNode:
+                          value: 2
+                  rightOperand:
+                    NumberNode:
+                      value: 1
+          decls:
+            DeclsNode:
+              decl:
+                MethodNode:
+                  identifier:
+                    IdentNode:
+                      identifier: f
+                  typeMeth:
+                    TypeMethNode:
+                      type: VOID
+                  headers:
+                    HeadersNode:
+                      header:
+                        HeaderNode:
+                          identifier:
+                            IdentNode:
+                              identifier: x
+                          type:
+                            TypeNode:
+                              type: INT
+                  vars:
+                    VarsNode:
+                      var:
+                        ArrayNode:
+                          identifier:
+                            IdentNode:
+                              identifier: t1
+                          type:
+                            TypeMethNode:
+                              type: INT
+                          expression:
+                            subNode:
+                              leftOperand:
+                                DivNode:
+                                  leftOperand:
+                                    IdentNode:
+                                      identifier: taille
+                                  rightOperand:
+                                    MultNode:
+                                      leftOperand:
+                                        NumberNode:
+                                          value: 2
+                                      rightOperand:
+                                        IdentNode:
+                                          identifier: x
+                              rightOperand:
+                                NumberNode:
+                                  value: 1
+                  instrs:
+                    InstrsNode:
+                      instruction:
+                        AssignNode:
+                          identifier:
+                            ArrayItemNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: t1
+                              expression:
+                                IdentNode:
+                                  identifier: x
+                          expression:
+                            IdentNode:
+                              identifier: x
+              decls:
+                DeclsNode:
+                  decl:
+                    MethodNode:
+                      identifier:
+                        IdentNode:
+                          identifier: g
+                      typeMeth:
+                        TypeMethNode:
+                          type: VOID
+                      vars:
+                        VarsNode:
+                          var:
+                            ArrayNode:
+                              identifier:
+                                IdentNode:
+                                  identifier: t1
+                              type:
+                                TypeMethNode:
+                                  type: INT
+                              expression:
+                                DivNode:
+                                  leftOperand:
+                                    IdentNode:
+                                      identifier: taille
+                                  rightOperand:
+                                    NumberNode:
+                                      value: 2
+                      instrs:
+                        InstrsNode:
+                          instruction:
+                            AssignNode:
+                              identifier:
+                                ArrayItemNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: t1
+                                  expression:
+                                    NumberNode:
+                                      value: 1
+                              expression:
+                                NumberNode:
+                                  value: 1
+                  decls:
+                    DeclsNode:
+                      decl:
+                        MethodNode:
+                          identifier:
+                            IdentNode:
+                              identifier: pause
+                          typeMeth:
+                            TypeMethNode:
+                              type: VOID
+  main:
+    MainNode:
+      instrs:
+        InstrsNode:
+          instruction:
+            AppelINode:
+              identifier:
+                IdentNode:
+                  identifier: f
+              listexp:
+                ListExpNode:
+                  expression:
+                    NumberNode:
+                      value: 2
+          instrs:
+            InstrsNode:
+              instruction:
+                AppelINode:
+                  identifier:
+                    IdentNode:
+                      identifier: f
+                  listexp:
+                    ListExpNode:
+                      expression:
+                        NumberNode:
+                          value: 2
+              instrs:
+                InstrsNode:
+                  instruction:
+                    AppelINode:
+                      identifier:
+                        IdentNode:
+                          identifier: pause
+                  instrs:
+                    InstrsNode:
+                      instruction:
+                        AppelINode:
+                          identifier:
+                            IdentNode:
+                              identifier: f
+                          listexp:
+                            ListExpNode:
+                              expression:
+                                NumberNode:
+                                  value: 1
+                      instrs:
+                        InstrsNode:
+                          instruction:
+                            AppelINode:
+                              identifier:
+                                IdentNode:
+                                  identifier: pause
+                          instrs:
+                            InstrsNode:
+                              instruction:
+                                AppelINode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: g
+                              instrs:
+                                InstrsNode:
+                                  instruction:
+                                    AppelINode:
+                                      identifier:
+                                        IdentNode:
+                                          identifier: pause

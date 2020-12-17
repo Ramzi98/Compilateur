@@ -39,10 +39,10 @@ public class FileModel {
     }
 
 
-    public void saveFile(CodeArea codeArea, String currentFile) {
+    public String saveFile(CodeArea codeArea, String currentFile) {
         if (codeArea.getText().trim() != "" && codeArea.getText().length() != 0) {
-            if (currentFile == null) {
-                saveFileAs(codeArea);
+            if (currentFile == null || currentFile == "") {
+                currentFile=saveFileAs(codeArea);
             }
             File file = null;
             File newFile = null;
@@ -58,6 +58,7 @@ public class FileModel {
                 saveTextToFile(codeArea.getText(), newFile);
             }
         }
+        return currentFile;
     }
 
     private void saveTextToFile(String content, File file) {
@@ -80,12 +81,13 @@ public class FileModel {
         File selectedFile = null;
         try {
             selectedFile = fileChooser.showOpenDialog(new Stage());
-            currentFile = selectedFile.getAbsolutePath();
+
         } catch (Exception e){
             e.printStackTrace();
         }
 
         if (selectedFile != null) {
+            currentFile = selectedFile.getAbsolutePath();
             if (currentFile != selectedFile.getAbsolutePath() && currentFile != "" ) {
                 saveFile(codeArea, currentFile);
             }

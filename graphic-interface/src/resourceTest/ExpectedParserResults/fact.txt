@@ -1,0 +1,152 @@
+ClassNode:
+  identifier:
+    IdentNode:
+      identifier: factorielle
+  decls:
+    DeclsNode:
+      decl:
+        VarNode:
+          identifier:
+            IdentNode:
+              identifier: x
+          type:
+            TypeMethNode:
+              type: INT
+          expression:
+            NumberNode:
+              value: 7
+      decls:
+        DeclsNode:
+          decl:
+            MethodNode:
+              identifier:
+                IdentNode:
+                  identifier: pause
+              typeMeth:
+                TypeMethNode:
+                  type: VOID
+              vars:
+                VarsNode:
+                  var:
+                    VarNode:
+                      identifier:
+                        IdentNode:
+                          identifier: i
+                      type:
+                        TypeMethNode:
+                          type: INT
+          decls:
+            DeclsNode:
+              decl:
+                MethodNode:
+                  identifier:
+                    IdentNode:
+                      identifier: fact
+                  typeMeth:
+                    TypeMethNode:
+                      type: INT
+                  headers:
+                    HeadersNode:
+                      header:
+                        HeaderNode:
+                          identifier:
+                            IdentNode:
+                              identifier: x
+                          type:
+                            TypeNode:
+                              type: INT
+                  vars:
+                    VarsNode:
+                      var:
+                        VarNode:
+                          identifier:
+                            IdentNode:
+                              identifier: retour
+                          type:
+                            TypeMethNode:
+                              type: INT
+                  instrs:
+                    InstrsNode:
+                      instruction:
+                        IfNode:
+                          expression:
+                            EqualsNode:
+                              leftOperand:
+                                IdentNode:
+                                  identifier: x
+                              rightOperand:
+                                NumberNode:
+                                  value: 0
+                          trueInstrs:
+                            InstrsNode:
+                              instruction:
+                                AssignNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: retour
+                                  expression:
+                                    NumberNode:
+                                      value: 1
+                          falseInstrs:
+                            InstrsNode:
+                              instruction:
+                                AssignNode:
+                                  identifier:
+                                    IdentNode:
+                                      identifier: retour
+                                  expression:
+                                    MultNode:
+                                      leftOperand:
+                                        IdentNode:
+                                          identifier: x
+                                      rightOperand:
+                                        AppelENode:
+                                          identifier:
+                                            IdentNode:
+                                              identifier: fact
+                                          listexp:
+                                            ListExpNode:
+                                              expression:
+                                                subNode:
+                                                  leftOperand:
+                                                    IdentNode:
+                                                      identifier: x
+                                                  rightOperand:
+                                                    NumberNode:
+                                                      value: 1
+                      instrs:
+                        InstrsNode:
+                          instruction:
+                            RetrunNode:
+                              ret:
+                                IdentNode:
+                                  identifier: retour
+  main:
+    MainNode:
+      vars:
+        VarsNode:
+          var:
+            VarNode:
+              identifier:
+                IdentNode:
+                  identifier: res
+              type:
+                TypeMethNode:
+                  type: INT
+              expression:
+                AppelENode:
+                  identifier:
+                    IdentNode:
+                      identifier: fact
+                  listexp:
+                    ListExpNode:
+                      expression:
+                        IdentNode:
+                          identifier: x
+      instrs:
+        InstrsNode:
+          instruction:
+            AppelINode:
+              identifier:
+                IdentNode:
+                  identifier: pause
