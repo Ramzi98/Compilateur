@@ -74,6 +74,7 @@ public class Controller implements Initializable{
         folderTreeView.getSelectionModel().selectedItemProperty().addListener(
             (v, oldValue, newValue) -> {
             saveFile(null);
+            selectTabPan(tabMiniJaja);
             File f2 = new File(getPathFromTree(v.getValue().toString()));
             if (f2 != null) {
                 try {
@@ -82,10 +83,10 @@ public class Controller implements Initializable{
                     InputStreamReader lecture = new InputStreamReader(flux);
                     BufferedReader buff = new BufferedReader(lecture);
                     String ligne;
-                    currentArea.clear();
+                    codeAreaMiniJaja.clear();
                     while ((ligne = buff.readLine()) != null) {
-                        currentArea.appendText(ligne);
-                        currentArea.appendText(System.getProperty("line.separator"));
+                        codeAreaMiniJaja.appendText(ligne);
+                        codeAreaMiniJaja.appendText(System.getProperty("line.separator"));
                     }
                     buff.close();
                 }
@@ -99,7 +100,8 @@ public class Controller implements Initializable{
     @FXML
     public void openFile(ActionEvent actionEvent) {
         setCurrent();
-        setCurrentFile(fileModel.openFile(currentArea));
+        setCurrentFile(fileModel.openFile(codeAreaMiniJaja));
+        selectTabPan(tabMiniJaja);
     }
 
     @FXML

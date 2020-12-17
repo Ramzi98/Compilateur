@@ -745,4 +745,125 @@ public class JJCInterpreterVisitorTest {
         orderedCalls.verify(memory).echanger();
         orderedCalls.verify(nextNode).accept(jjcVisitor);
     }
+
+    @Test
+    public void visitSTOP() throws Exception {
+        JcStopNode jcStop = JcStopNode.builder()
+                .line(15)
+                .column(1)
+                .build();
+
+        jcStop.accept(jjcVisitor);
+
+        verify(controller).debug(15);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void visitReturn__notIntegerMemoryTop__throwException() throws Exception {
+        Object addr = null;
+        JcReturnNode jcReturn = JcReturnNode.builder()
+                .next(nextNode)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet top = new Quadruplet(null, addr, OBJ.CST, null);
+        when(memory.depiler()).thenReturn(top);
+
+        jcReturn.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void visitReturn__notIntegerInBounds__throwException() throws Exception {
+        Object addr = 15;
+        JcReturnNode jcReturn = JcReturnNode.builder()
+                .next(nextNode)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet top = new Quadruplet(null, addr, OBJ.CST, null);
+        when(memory.depiler()).thenReturn(top);
+        when(nodes.size()).thenReturn(10);
+
+        jcReturn.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory, nodes);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(nodes).size();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitReturn__thenChangeAddr() throws Exception {
+        Object addr = 6;
+        JcReturnNode jcReturn = JcReturnNode.builder()
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet top = new Quadruplet(null, addr, OBJ.CST, null);
+        when(memory.depiler()).thenReturn(top);
+        doReturn(nextNode).when(nodes).get((int)addr);
+        when(nodes.size()).thenReturn(10);
+
+        jcReturn.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory, nodes);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(nodes).size();
+        orderedCalls.verify(memory).popContext();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+
+/*
+    @Test(expected = IllegalStateException.class)
+    public void visitSTORE__butMemoryError__thenThrowException() throws Exception {
+        JcStoreNode jcStore = JcStoreNode.builder()
+                .next(nextNode)
+                .identifier("id")
+                .line(6)
+                .column(1)
+                .build();
+
+        doThrow(new IllegalAccessException("exception")).when(memory).affecterVal("id", anyInt());
+
+        jcStore.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(memory).affecterVal("id", 5);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitSTORE() throws Exception {
+        JcStoreNode jcStore = JcStoreNode.builder()
+                .next(nextNode)
+                .identifier("id")
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet quad = new Quadruplet(null, 5, OBJ.VAR, SORTE.INT);
+        when(memory.depiler()).thenReturn(quad);
+
+        jcStore.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(memory).affecterVal("id", 5);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+    */
 }

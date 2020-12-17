@@ -64,11 +64,20 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (!(i.val() instanceof Integer && v.val() instanceof Integer)) {
             jjcError(node, "ainc tab index or value aren't integers");
         }
-        Object val = memory.valT(node.identifier(), (int) i.val());
+        Object val = null;
+        try {
+            val = memory.valT(node.identifier(), (int) i.val());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
         if (!(val instanceof Integer)) {
             jjcError(node, "ainc tab isn't embedding integers");
         }
-        memory.affecterValT(node.identifier(), (int) i.val(), (int) v.val() + (int) val);
+        try {
+            memory.affecterValT(node.identifier(), (int) i.val(), (int) v.val() + (int) val);
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
 
         n++;
         node.next().accept(this);
@@ -82,7 +91,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (!(i.val() instanceof Integer)) {
             jjcError(node, "aload tab index isn't an integer");
         }
-        Object val = memory.val(node.identifier());
+        Object val = null;
+        try {
+            val = memory.val(node.identifier());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
         memory.empiler(new Quadruplet(null, val, OBJ.CST, null));
 
         n++;
@@ -115,7 +129,11 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         if (!(i.val() instanceof Integer)) {
             jjcError(node, "astore tab index isn't an integer");
         }
-        memory.affecterValT(node.identifier(), (int) i.val(), v.val());
+        try {
+            memory.affecterValT(node.identifier(), (int) i.val(), v.val());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
 
         n++;
         node.next().accept(this);
@@ -198,7 +216,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     public void visit(JcIncNode node) throws Exception {
         debug(node);
         Quadruplet quad = memory.depiler();
-        Object val = memory.val(node.identifier());
+        Object val = null;
+        try {
+            val = memory.val(node.identifier());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
         if (!(val instanceof Integer && quad.val() instanceof Integer)) {
             jjcError(node, "inc an invalid type");
         }
@@ -213,7 +236,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     public void visit(JcInvokeNode node) throws Exception {
         debug(node);
         memory.empiler(new Quadruplet(null, n + 1, OBJ.CST, null));
-        int next = (int) memory.val(node.identifier());
+        int next = 0;
+        try {
+            next = (int) memory.val(node.identifier());
+        } catch (IllegalAccessException e) {
+            jjcError(node, e.getMessage());
+        }
 
         if (next < 0 || next >= nodes.size()) {
             jjcError(node, "invoke destination out of range");
@@ -284,7 +312,11 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
         String ident = node.identifier();
         JcNewarrayNode.Type type = node.type();
         Quadruplet quad = memory.depiler();
-        memory.declTab(ident, quad.val(), SORTE.of(type));
+        try {
+            memory.declTab(ident, quad.val(), SORTE.of(type));
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
 
         n++;
         node.next().accept(this);
@@ -335,7 +367,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcNotNode node) throws Exception {
         debug(node);
-        Quadruplet quad = memory.depiler();
+        Quadruplet quad = null;
+        try {
+            quad = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
         if (!(quad.val() instanceof Boolean)) {
             jjcError(node, "Expression of not is not a boolean");
         }
@@ -350,8 +387,18 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcOrNode node) throws Exception {
         debug(node);
-        Quadruplet rhs = memory.depiler();
-        Quadruplet lhs = memory.depiler();
+        Quadruplet rhs = null;
+        try {
+            rhs = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
+        Quadruplet lhs = null;
+        try {
+            lhs = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
         if (rhs.id() != null || lhs.id() != null ||
                 !(rhs.val() instanceof Boolean) || !(lhs.val() instanceof Boolean)) {
             jjcError(node, "the last elements of memory are invalid");
@@ -397,7 +444,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcReturnNode node) throws Exception {
         debug(node);
-        Quadruplet quad = memory.depiler();
+        Quadruplet quad = null;
+        try {
+            quad = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
         if (!(quad.val() instanceof Integer)) {
             jjcError(node, "return parameter isn't an integer");
         }
@@ -422,8 +474,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcStoreNode node) throws Exception {
         debug(node);
-        Quadruplet quad = memory.depiler();
-        memory.affecterVal(node.identifier(), quad.val());
+        try {
+            Quadruplet quad = memory.depiler();
+            memory.affecterVal(node.identifier(), quad.val());
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
 
         n++;
         node.next().accept(this);
@@ -448,8 +504,18 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcSupNode node) throws Exception {
         debug(node);
-        Quadruplet rhs = memory.depiler();
-        Quadruplet lhs = memory.depiler();
+        Quadruplet rhs = null;
+        try {
+            rhs = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
+        Quadruplet lhs = null;
+        try {
+            lhs = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
         checkValidIntegers(node, lhs, rhs);
 
         boolean newVal = ((int) lhs.val()) > ((int) rhs.val());
@@ -472,7 +538,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcWriteNode node) throws Exception {
         debug(node);
-        Quadruplet quad = memory.depiler();
+        Quadruplet quad = null;
+        try {
+            quad = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
 
         controller.write(quad.val().toString());
 
@@ -484,7 +555,12 @@ public class JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcWriteLnNode node) throws Exception {
         debug(node);
-        Quadruplet quad = memory.depiler();
+        Quadruplet quad = null;
+        try {
+            quad = memory.depiler();
+        } catch (Exception e) {
+            jjcError(node, e.getMessage());
+        }
 
         controller.writeLn(quad.val().toString());
 

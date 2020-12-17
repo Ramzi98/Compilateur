@@ -50,7 +50,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ClasseNode node) throws Exception {
         debug(node);
-        memory.declVar(node.identifier().value(), null, null);
+        try {
+            memory.declVar(node.identifier().value(), null, null);
+        } catch (Exception e) {
+            mjjError(node, e.getMessage());
+        }
         if (node.decls() != null ) {
             node.decls().accept(this);
         }
@@ -64,7 +68,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
         switchOffRetrait();
 
-        memory.retirerDecl(node.identifier().value());
+        try {
+            memory.retirerDecl(node.identifier().value());
+        } catch (Exception e) {
+            mjjError(node, e.getMessage());
+        }
     }
 
     private void debug(ASTNode node) throws InterruptedException {
@@ -111,17 +119,25 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(VarNode node) throws Exception {
         debug(node);
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         } else {
             Object vexp = null;
             if (node.expression() != null) { // vexp = omega
                 node.expression().accept(this);
                 vexp = evals.pop();
             }
-            memory.declVar(node.identifier().value(),
-                    vexp,
-                    SORTE.of(node.typeMeth().value())
-            );
+            try {
+                memory.declVar(node.identifier().value(),
+                        vexp,
+                        SORTE.of(node.typeMeth().value())
+                );
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -129,13 +145,21 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(ArrayNode node) throws Exception {
         debug(node);
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         } else {
             node.expression().accept(this);
-            memory.declTab(node.identifier().value(),
-                    evals.pop(),
-                    SORTE.of(node.typeMeth().value())
-            );
+            try {
+                memory.declTab(node.identifier().value(),
+                        evals.pop(),
+                        SORTE.of(node.typeMeth().value())
+                );
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -143,17 +167,25 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(CstNode node) throws Exception {
         debug(node);
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         } else {
             Object vexp = null;
             if (node.expression() != null) { // vexp = omega
                 node.expression().accept(this);
                 vexp = evals.pop();
             }
-            memory.declCst(node.identifier().value(),
-                    vexp,
-                    SORTE.of(node.type().value())
-            );
+            try {
+                memory.declCst(node.identifier().value(),
+                        vexp,
+                        SORTE.of(node.type().value())
+                );
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -161,10 +193,18 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(MethodNode node) throws Exception {
         debug(node);
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         } else {
             Quadruplet quad = new Quadruplet(node.identifier().value(), node, OBJ.METH, SORTE.of(node.typeMeth().value()));
-            memory.empiler(quad);
+            try {
+                memory.empiler(quad);
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -203,7 +243,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(HeaderNode node) throws Exception {
         if (modeRetrait) {
-            memory.retirerDecl(node.identifier().value());
+            try {
+                memory.retirerDecl(node.identifier().value());
+            } catch (Exception e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -222,10 +266,18 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (node.identifier() instanceof ArrayItemNode) { // affectationT
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
             tab.expression().accept(this);  // process index
-            memory.affecterValT(tab.identifier().value(), (int) evals.pop(), evals.pop());
+            try {
+                memory.affecterValT(tab.identifier().value(), (int) evals.pop(), evals.pop());
+            } catch (IllegalAccessException e) {
+                mjjError(node, e.getMessage());
+            }
         } else { // affectation
             IdentNode ident = (IdentNode) node.identifier();
-            memory.affecterVal(ident.value(), evals.pop());
+            try {
+                memory.affecterVal(ident.value(), evals.pop());
+            } catch (IllegalAccessException e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -241,7 +293,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         } else { // somme
             IdentNode ident = (IdentNode) node.identifier();
             ident.accept(this);     // Val(i,m)
-            memory.affecterVal(ident.value(), (int) evals.pop() + (int) evals.pop());
+            try {
+                memory.affecterVal(ident.value(), (int) evals.pop() + (int) evals.pop());
+            } catch (IllegalAccessException e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -252,11 +308,19 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
             ArrayItemNode tab = (ArrayItemNode) node.identifier();
             tab.identifier().accept(this);  // Val(i,m)
             tab.expression().accept(this);  // process index
-            memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + 1);
+            try {
+                memory.affecterValT(tab.identifier().value(), (int) evals.pop(), (int) evals.pop() + 1);
+            } catch (IllegalAccessException e) {
+                mjjError(node, e.getMessage());
+            }
         } else { // incrément
             IdentNode ident = (IdentNode) node.identifier();
             ident.accept(this);     // Val(i,m)
-            memory.affecterVal(ident.value(), (int) evals.pop() + 1);
+            try {
+                memory.affecterVal(ident.value(), (int) evals.pop() + 1);
+            } catch (IllegalAccessException e) {
+                mjjError(node, e.getMessage());
+            }
         }
     }
 
@@ -264,9 +328,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     public void visit(AppelINode node) throws Exception {
         Object meth = memory.val(node.identifier().value());
         if (!(meth instanceof MethodNode)) {
-            throw new IllegalStateException(
-                    "Expecting the memory to peek a METHOD but got " + meth.getClass().getSimpleName()+ "at line : ["+node.line()+";"+node.column()+"]"
-            );
+            mjjError(node, "Expecting the memory to peek a METHOD but got " + meth.getClass().getSimpleName());
         }
         MethodNode method = (MethodNode) meth;
         memory.pushContext(node.identifier().value());
@@ -286,7 +348,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         if (method.headers() != null) {
             method.headers().accept(this);
         }
-
+        switchOffRetrait();
         memory.popContext();
     }
 
@@ -450,7 +512,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
         int opl = (int)evals.pop();
         int opr = (int)evals.pop();
         if (opr == 0){
-            throw new IllegalStateException("Division by zero at line : ["+node.line()+";"+node.column()+"]");
+            mjjError(node, "Division by zero");
         }
         evals.push(opl/opr);
     }
@@ -466,7 +528,7 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
 
         Object ret = memory.classVar(null);
         if (ret == null) {
-            throw new IllegalStateException("Class Var must be non-null after an appelE  at line : ["+node.line()+";"+node.column()+"]");
+            mjjError(node, "Class Var must be non-null after an appelE");
         }
         evals.push(ret);
     }
@@ -484,7 +546,12 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(ArrayItemNode node) throws Exception {
         node.expression().accept(this);
-        Object e = memory.valT(node.identifier().value(), (int) evals.pop());
+        Object e = null;
+        try {
+            e = memory.valT(node.identifier().value(), (int) evals.pop());
+        } catch (IllegalAccessException ex) {
+            mjjError(node, ex.getMessage());
+        }
         evals.push(e);
     }
 
@@ -496,5 +563,11 @@ public class MiniJajaInterpreterVisitor extends MiniJajaASTVisitor {
     @Override
     public void visit(TypeNode node) throws Exception {
         throw new RuntimeException("TypeNode is't supposed to be visited during MJJ Interpretation");
+    }
+
+    private static void mjjError(ASTNode node, String message) {
+        throw new IllegalStateException(
+                String.format("%s at [%d ; %d]", message, node.line(), node.column())
+        );
     }
 }
