@@ -76,8 +76,6 @@ public class SymbolDictionnary {
         HashMap<String, Integer> currentScope = symbols.get(scopes.get(top));
         if (currentScope.entrySet().parallelStream().anyMatch(e -> e.getKey().equals(ident))){
             currentScope.remove(ident);
-        }else{
-            throw new IllegalArgumentException("The value does not exist.");
         }
     }
 
