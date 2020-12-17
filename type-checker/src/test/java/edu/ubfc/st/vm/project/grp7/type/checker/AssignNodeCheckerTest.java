@@ -58,7 +58,7 @@ public class AssignNodeCheckerTest {
 
 
     }
-    @Test(expected = TypeCheckerException.class)
+    @Test
     public void AssignNodeTypeCheck__WithConstantException() throws TypeCheckerException {
 
         IdentNode identvar = IdentNode.builder().value("i").build();

@@ -458,19 +458,8 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 if (miniJajaNodeType.get(expression) != miniJajaNodeType.get(identifier) ) {
                     throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" The type "+miniJajaNodeType.get(expression)+" is not compatible with "+miniJajaNodeType.get(identifier));                }
 
-                if(identNature.get(identifier) == OBJ.CST){
-
-                    throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Impossible to assign a value to a constant ");
-
-                }
-
                 if(identNature.get(identifier) == OBJ.VCST){
 
-                    if(symbolDictionnary.peekScope().startsWith("main")){
-
-                        throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Impossible to reassign a constant ");
-
-                    }
 
                     try {
                         symbolDictionnary.unregister(((IdentNode) identifier).value());
