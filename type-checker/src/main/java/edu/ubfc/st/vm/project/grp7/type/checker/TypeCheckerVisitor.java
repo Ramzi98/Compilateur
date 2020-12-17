@@ -204,7 +204,9 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(pass == Pass.FIRST_PASS) {
             try {
                 typeNode.accept(this);
-                expression.accept(this);
+                if(expression != null) {
+                    expression.accept(this);
+                }
             }catch(Exception e){
                 throw new TypeCheckerException(e);
             }

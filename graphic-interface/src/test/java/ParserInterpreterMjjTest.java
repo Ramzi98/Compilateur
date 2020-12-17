@@ -47,9 +47,6 @@ public class ParserInterpreterMjjTest extends BaseTest {
 
 
 
-
-    /*
-
     @Test
     public void parserInterpreterMjj__1__Test() throws Exception {
 
@@ -64,7 +61,6 @@ public class ParserInterpreterMjjTest extends BaseTest {
     }
 
 
-     */
 
 
     @Test
