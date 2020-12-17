@@ -164,7 +164,7 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcGotoNode node) throws Exception {
         debug(node);
-        n = node.adresse();
+        n = node.adresse() - 1;
         if (n < 0 || n >= nodes.size()) {
            jjcError(node, "goto destination out of range");
         }
@@ -182,7 +182,7 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
         }
 
         if ((boolean)exp.val()) {
-            n = node.adresse();
+            n = node.adresse() - 1;
             if (n < 0 || n >= nodes.size()) {
                 jjcError(node, "if destination out of range");
             }
@@ -298,20 +298,23 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
         JcNewNode.Type type = node.type();
         int depth = node.depth();
         Quadruplet quad;
-        switch (sorte) {
-            case VAR:
-                memory.identVal(ident, SORTE.of(type), depth);
-                break;
-            case CST:
-                quad = memory.depiler();
-                memory.declCst(ident, quad.val(), SORTE.of(type));
-                break;
-            case METH:
-                quad = memory.depiler();
-                memory.declMeth(ident, quad.val(), SORTE.of(type));
-                break;
+        try {
+            switch (sorte) {
+                case VAR:
+                    memory.identVal(ident, SORTE.of(type), depth);
+                    break;
+                case CST:
+                    quad = memory.depiler();
+                    memory.declCst(ident, quad.val(), SORTE.of(type));
+                    break;
+                case METH:
+                    quad = memory.depiler();
+                    memory.declMeth(ident, quad.val(), SORTE.of(type));
+                    break;
+            }
+        } catch (IllegalStateException e) {
+            jjcError(node, e.getMessage());
         }
-
         n++;
         node.next().accept(this);
     }
@@ -382,7 +385,6 @@ public class  JJCInterpreterVisitor extends JajaCodeASTVisitor {
     @Override
     public void visit(JcPushNode node) throws Exception {
         debug(node);
-        memory.toString();
         memory.empiler(new Quadruplet(null, node.valeur(), OBJ.CST, null));
         n++;
         node.next().accept(this);

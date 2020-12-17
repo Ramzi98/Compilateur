@@ -689,4 +689,44 @@ public class JJCInterpreterVisitorTest {
         orderedCalls.verify(memory).affecterVal(id, 6);
         orderedCalls.verify(nextNode).accept(jjcVisitor);
     }
+
+    @Test
+    public void visitPOP() throws Exception {
+        JcPopNode jcPop = JcPopNode.builder()
+                .next(nextNode)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet val = new Quadruplet(null, 1, OBJ.CST, SORTE.INT);
+        when(memory.depiler()).thenReturn(val);
+
+        jcPop.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).depiler();
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
+
+    @Test
+    public void visitPUSH() throws Exception {
+        Object value = 1;
+        JcPushNode jcPush = JcPushNode.builder()
+                .next(nextNode)
+                .valeur(value)
+                .line(6)
+                .column(1)
+                .build();
+
+        Quadruplet val = new Quadruplet(null, value, OBJ.CST, null);
+        when(memory.depiler()).thenReturn(val);
+
+        jcPush.accept(jjcVisitor);
+
+        InOrder orderedCalls = inOrder(controller, nextNode, memory);
+        orderedCalls.verify(controller).debug(6);
+        orderedCalls.verify(memory).empiler(val);
+        orderedCalls.verify(nextNode).accept(jjcVisitor);
+    }
 }
