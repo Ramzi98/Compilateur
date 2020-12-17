@@ -88,11 +88,6 @@ public class SymbolDictionnaryTest  {
         symbolDictionnary.register("",1);
     }
 
-    @Test(expected = IllegalArgumentException.class )
-    public void noRegistered(){
-        symbolDictionnary.unregister("i");
-    }
-
     @Test
     public void dontFindInGlobalScope(){
         Assert.assertEquals(symbolDictionnary.find("i"),-1);

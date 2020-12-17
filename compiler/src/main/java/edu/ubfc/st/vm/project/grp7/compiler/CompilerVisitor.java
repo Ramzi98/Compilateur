@@ -238,6 +238,7 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                                 .valeur(0)
                                 .build();
                         setNextNode(jcPushNode);
+                        ne = 1;
                     }
                     else if(node.typeMeth().value() == TypeMethNode.TypeMeth.BOOLEAN)
                     {
@@ -247,8 +248,8 @@ public class CompilerVisitor extends MiniJajaASTVisitor {
                                 .valeur(false)
                                 .build();
                         setNextNode(jcPushNode);
+                        ne = 1;
                     }
-                    ne = 1;
                 }
             } catch (Exception e) {
                 throw new IllFormedNodeException(e.toString());
