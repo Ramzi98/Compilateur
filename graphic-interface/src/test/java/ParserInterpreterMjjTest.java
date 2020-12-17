@@ -16,7 +16,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 public class ParserInterpreterMjjTest extends BaseTest {
-
     private MiniJajaInterpreterVisitor mjjVisitor;
     private Memory memory;
     private MJJInterpreterController controller;
