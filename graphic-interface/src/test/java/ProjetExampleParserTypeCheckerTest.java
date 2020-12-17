@@ -88,5 +88,4 @@ public class ProjetExampleParserTypeCheckerTest extends BaseTest {
         typeChecker.typeCheck();
     }
 
-
 }

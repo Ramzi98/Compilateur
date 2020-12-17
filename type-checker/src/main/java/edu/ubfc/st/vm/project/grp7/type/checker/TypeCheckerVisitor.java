@@ -246,7 +246,7 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
                 symbolDictionnary.register(identifier.value(), "global" , indice++);
 
             } catch (Exception e) {
-                throw new TypeCheckerException(e);
+                throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" "+e);
             }
 
 
@@ -260,7 +260,6 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
         if(!existReturn(instrs) && miniJajaNodeType.get(typeNode) != SORTE.OMEGA){
 
             throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" This method needs a return statement");
-
 
         }
 
@@ -596,10 +595,13 @@ public class TypeCheckerVisitor extends MiniJajaASTVisitor {
 
         MiniJajaNode expression = node.ret();
 
-        if(currentscope.startsWith("global") || currentscope.startsWith("main")){
+        if(currentscope.startsWith("main")){
 
-            throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Can't return something outside of the methode scope");
+            throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Can't return something in main method");
 
+        }else if(currentscope.startsWith("global"))
+        {
+            throw new TypeCheckerException(node.line(),node.column(),"line : "+node.line()+" column : "+node.column()+" Can't return something in global scope");
         }
 
         try {
