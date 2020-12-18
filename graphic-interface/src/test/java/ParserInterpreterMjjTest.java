@@ -65,14 +65,43 @@ public class ParserInterpreterMjjTest extends BaseTest {
 
     @Test
     public void parserInterpreterMjj__Synonymie__Test() throws Exception {
-    /*
         TestConstructor testConstructor = new TestConstructor("ProjectExample","synonymie");
         parser = testConstructor.getParser();
         walker.walk(listener, parser.classe());
 
         ClasseNode classeNode = (ClasseNode) listener.getRoot();
         classeNode.accept(mjjVisitor);
-        assertThat(memory.depiler().toString(),is("<i, 4, var, int>"));*/
+    }
+/*
+    @Test
+    public void parserInterpreterMjj__Fact__Test() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("ProjectExample","fact");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.classe());
+
+        ClasseNode classeNode = (ClasseNode) listener.getRoot();
+        classeNode.accept(mjjVisitor);
+    }
+ */
+/*
+    @Test
+    public void parserInterpreterMjj__quickSort__Test() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("ProjectExample","quicksort");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.classe());
+
+        ClasseNode classeNode = (ClasseNode) listener.getRoot();
+        classeNode.accept(mjjVisitor);
+    }
+*/
+    @Test
+    public void parserInterpreterMjj__tas__Test() throws Exception {
+        TestConstructor testConstructor = new TestConstructor("ProjectExample","tas");
+        parser = testConstructor.getParser();
+        walker.walk(listener, parser.classe());
+
+        ClasseNode classeNode = (ClasseNode) listener.getRoot();
+        classeNode.accept(mjjVisitor);
     }
 
 }
