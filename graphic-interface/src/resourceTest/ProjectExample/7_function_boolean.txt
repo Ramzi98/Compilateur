@@ -1,0 +1,14 @@
+class C {
+	main{
+		int i = 0;
+		int print;
+		int T[10];
+		while(10 > i){
+			T[i] = i+1;
+			print = T[i];
+			write( "current value of T : "); writeln(print); 
+			i++;
+			write( "current value of i : "); writeln(i); 
+		};
+	}
+}

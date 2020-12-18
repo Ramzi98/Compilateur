@@ -1,0 +1,10 @@
+class C {
+	boolean vrai = true;
+	boolean faux = false;
+	
+	main{
+		if ( !(vrai && vrai && faux) ){ writeln("Expression (vrai && vrai && faux) is false");};
+		if (!(vrai && vrai && faux) && vrai){ writeln("Expression (!(vrai && vrai && faux) && vrai) is true");};
+		if (!(vrai && !vrai) && vrai){ writeln("Expression (vrai && ! vrai) is false");};
+		}
+}

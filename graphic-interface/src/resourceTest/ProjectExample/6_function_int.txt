@@ -1,0 +1,21 @@
+class C{
+	int add6(int number){
+		int resultat = number + 6;
+		return resultat;
+	};
+	
+	int return6(){	
+		return 6;
+	};
+	
+	main{
+		int i = add6(6);
+		int j = return6();
+		write("i : ");writeln(i);
+		write("j : ");writeln(j);
+		i = add6(i);
+		j = return6()+i;
+		write("i : ");writeln(i);
+		write("j : ");writeln(j);
+	}
+}

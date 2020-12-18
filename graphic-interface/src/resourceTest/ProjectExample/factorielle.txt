@@ -1,0 +1,15 @@
+class C{
+	int fact(int number){
+		int result;
+		if(0 > number){
+			return number;
+		};
+		result = fact(number -1);
+		return result;
+	};
+
+	main{
+		int factorielle = fact(5);
+		write(factorielle);
+	}
+}
