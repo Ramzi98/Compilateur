@@ -1,14 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
-import org.reactfx.Subscription;
 
-import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.regex.Matcher;
 
 public interface Pattern {

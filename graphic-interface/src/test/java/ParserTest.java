@@ -1,11 +1,7 @@
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DeclsNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MethodNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.tool.yaml.MiniJajaAstToYamlVisitor;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 
 public class ParserTest extends BaseTest{

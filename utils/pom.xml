@@ -4,9 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+    <parent>
+        <groupId>edu.ubfc.st.vm.project.grp7</groupId>
+        <artifactId>vm-project</artifactId>
+        <version>2.0</version>
+    </parent>
+
     <artifactId>utils</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <name>Utilitaires</name>
+    <description>ressources utiles dans plusieurs modules</description>
+
     <build>
         <plugins>
             <plugin>
@@ -19,7 +28,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <name>Utilitaires</name>
-    <description>ressources utiles dans plusieurs modules</description>
 </project>

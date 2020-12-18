@@ -3,18 +3,18 @@ package edu.ubfc.st.vm.project.grp7.tool.yaml;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import edu.ubfc.st.vm.project.grp7.ast.ASTNode;
-
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
-import edu.ubfc.st.vm.project.grp7.ast.visitor.ASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
-
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import java.io.*;
 
 public class MiniJajaAstToYamlVisitorTest {
     private MiniJajaAstToYamlVisitor visitor;

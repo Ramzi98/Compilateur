@@ -1,9 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.HeadersNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ListExpNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarsNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.HeadersNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.InstrsNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ListExpNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.VarsNode;
 
 public class IDEMemory implements Memory {
     private final Stack stack;

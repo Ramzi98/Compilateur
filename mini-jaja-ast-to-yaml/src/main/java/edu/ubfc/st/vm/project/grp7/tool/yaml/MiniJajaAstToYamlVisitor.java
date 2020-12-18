@@ -2,8 +2,8 @@ package edu.ubfc.st.vm.project.grp7.tool.yaml;
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 
 import java.io.IOException;
 

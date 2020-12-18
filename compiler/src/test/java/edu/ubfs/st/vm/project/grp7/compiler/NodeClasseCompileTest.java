@@ -1,20 +1,16 @@
 package edu.ubfs.st.vm.project.grp7.compiler;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
-import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcGotoNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcIfNode;
-import edu.ubfc.st.vm.project.grp7.compiler.CompilerException;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcGotoNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcIfNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;

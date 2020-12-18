@@ -1,6 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

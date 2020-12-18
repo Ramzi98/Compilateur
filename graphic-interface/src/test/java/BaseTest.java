@@ -1,7 +1,5 @@
-import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
-import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaListenerImpl;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaParser;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Before;
 

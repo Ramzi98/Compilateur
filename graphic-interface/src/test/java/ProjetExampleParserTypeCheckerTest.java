@@ -1,4 +1,4 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
 import org.junit.Test;

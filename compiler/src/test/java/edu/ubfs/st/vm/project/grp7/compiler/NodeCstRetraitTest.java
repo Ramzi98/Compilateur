@@ -2,10 +2,10 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
-import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerException;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 import org.junit.Before;
 import org.junit.Test;
 

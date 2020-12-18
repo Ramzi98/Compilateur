@@ -1,9 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreter;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterController;
-import edu.ubfc.st.vm.project.grp7.jaja.code.interpreter.JJCInterpreterListener;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jjc.interpreter.JJCInterpreter;
+import edu.ubfc.st.vm.project.grp7.jjc.interpreter.JJCInterpreterController;
+import edu.ubfc.st.vm.project.grp7.jjc.interpreter.JJCInterpreterListener;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;

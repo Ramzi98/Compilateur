@@ -1,9 +1,11 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.memory.*;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaASTVisitor;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.memory.OBJ;
+import edu.ubfc.st.vm.project.grp7.memory.SORTE;
+import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaASTVisitor;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -1,15 +1,9 @@
-import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
-import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
-import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.DeclsNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.InstrsNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.MethodNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.DeclsNode;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ParserTypeCheckerTest extends BaseTest {

@@ -1,22 +1,15 @@
-import edu.ubfc.st.vm.project.grp7.memory.IDEMemory;
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreterVisitor;
-import edu.ubfc.st.vm.project.grp7.tool.yaml.MiniJajaAstToYamlVisitor;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MJJInterpreterController;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MJJInterpreterListener;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MiniJajaInterpreterVisitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Spy;
 
-import java.io.OutputStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 

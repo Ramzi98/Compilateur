@@ -111,7 +111,7 @@ public class HeapTest {
         heap.affecterTas(8, 0, 3);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void affecterTas__SuperiorIndex__throwException() {
         heap.affecterTas(refBoolean20, 20, true);
     }

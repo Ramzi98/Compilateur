@@ -3,10 +3,12 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.HeaderNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.IdentNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.TypeNode;
 import org.junit.Before;
 import org.junit.Test;
 
