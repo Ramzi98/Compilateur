@@ -107,13 +107,19 @@ public class Controller implements Initializable{
     @FXML
     public void openFolder(ActionEvent actionEvent) {
         TreeItem<File> root = fileModel.openFolder();
-        folderTreeView.setRoot(root);
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
     @FXML
     public void saveFileAs(ActionEvent actionEvent) {
         setCurrent();
         setCurrentFile(fileModel.saveFileAs(currentArea));
+        TreeItem<File> root = fileModel.refresh();
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
 
@@ -121,6 +127,10 @@ public class Controller implements Initializable{
     public void saveFile(ActionEvent actionEvent) {
         setCurrent();
         setCurrentFile(fileModel.saveFile(currentArea,currentFile));
+        TreeItem<File> root = fileModel.refresh();
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
 
