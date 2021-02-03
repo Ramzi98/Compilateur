@@ -1,0 +1,7 @@
+class Exception {
+	main{
+		//int i = 0/0;
+		int T[1];
+		T[1] = 0;
+	}
+}

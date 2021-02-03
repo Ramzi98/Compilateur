@@ -1,10 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.BooleanNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.OrNode;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

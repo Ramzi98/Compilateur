@@ -1,4 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
+
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -12,7 +13,9 @@ import org.reactfx.Subscription;
 import java.io.*;
 import java.net.URL;
 import java.time.Duration;
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -107,13 +110,19 @@ public class Controller implements Initializable{
     @FXML
     public void openFolder(ActionEvent actionEvent) {
         TreeItem<File> root = fileModel.openFolder();
-        folderTreeView.setRoot(root);
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
     @FXML
     public void saveFileAs(ActionEvent actionEvent) {
         setCurrent();
         setCurrentFile(fileModel.saveFileAs(currentArea));
+        TreeItem<File> root = fileModel.refresh();
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
 
@@ -121,6 +130,10 @@ public class Controller implements Initializable{
     public void saveFile(ActionEvent actionEvent) {
         setCurrent();
         setCurrentFile(fileModel.saveFile(currentArea,currentFile));
+        TreeItem<File> root = fileModel.refresh();
+        if (root != null) {
+            folderTreeView.setRoot(root);
+        }
     }
 
 

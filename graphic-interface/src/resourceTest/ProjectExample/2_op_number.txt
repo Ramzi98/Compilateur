@@ -1,0 +1,38 @@
+class C {
+	main{
+		int i = 6;
+		int j = 7;
+		int addition ;
+		int substraction ;
+		int multiplication ; 
+		int division ; 	
+		int increment ; 
+		int addToNumber ;
+		
+		addition = i + j;//6+7 = 13
+		write("add : ");
+		writeln(addition);
+
+		substraction = (i - j);//6-7 = -1
+		write("sub : ");
+		writeln(substraction);
+
+		multiplication = i * j;//6*7 = 42
+		write("mul : ");
+		writeln(multiplication);
+
+		division = i / j;//6/7 = 0
+		write("div : ");
+		writeln(division);
+		
+		i++;//6+1 = 7
+		increment = i;
+		write("increment : ");
+		writeln(increment);
+		
+		addToNumber += i+j;//0 + 7+7= 14
+		write("addToNumber : ");
+		writeln(addToNumber);
+		
+	}
+}

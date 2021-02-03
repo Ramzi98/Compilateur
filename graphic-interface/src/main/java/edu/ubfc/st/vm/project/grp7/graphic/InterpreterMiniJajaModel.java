@@ -1,14 +1,14 @@
 package edu.ubfc.st.vm.project.grp7.graphic;
 
 import edu.ubfc.st.vm.project.grp7.memory.Memory;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterController;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MJJInterpreterListener;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.interpreter.MiniJajaInterpreter;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.ASTParsingException;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaListenerImpl;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MJJInterpreterController;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MJJInterpreterListener;
+import edu.ubfc.st.vm.project.grp7.mjj.interpreter.MiniJajaInterpreter;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.ASTParsingException;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaLexer;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaListenerImpl;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaParser;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeChecker;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerException;
 import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;

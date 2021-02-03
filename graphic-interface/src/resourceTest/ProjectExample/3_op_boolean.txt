@@ -1,0 +1,30 @@
+class C {
+	main{
+		boolean b1 = 1==1;
+		boolean b2 = 1==2;
+		boolean b3 = 1>2;
+		boolean b4 = 2>1;
+		boolean b5 = 1>1;
+		boolean b6 = !true ;
+		boolean b7 = !false ;
+		boolean b8 = true && true;
+		boolean b9 = true && false;
+		boolean b10 = false && false;
+		boolean b11 = true || true;
+		boolean b12 = true || false;
+		boolean b13 = false || false;
+		write("b1 is "); writeln(b1);// 1==1 => true
+		write("b2 is "); writeln(b2);// 1==2 => false
+		write("b3 is "); writeln(b3);// 1>2 => false
+		write("b4 is "); writeln(b4);// 2>1 => true
+		write("b5 is "); writeln(b5);// 1>1 => false
+		write("b6 is "); writeln(b6);// !true	=> false
+		write("b7 is "); writeln(b7);//  !false	=> true
+		write("b8 is "); writeln(b8);//  true && true	=> true
+		write("b9 is "); writeln(b9);//  true && false	=> false
+		write("b10 is "); writeln(b10);//  false && false => false
+		write("b11 is "); writeln(b11);//  true || true	=> true
+		write("b12 is "); writeln(b12);//  true || false => true
+		write("b13 is "); writeln(b13);//  false || false => false
+	}
+}

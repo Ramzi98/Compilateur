@@ -1,17 +1,13 @@
 import edu.ubfc.st.vm.project.grp7.compiler.Compiler;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerImpl;
 import edu.ubfc.st.vm.project.grp7.compiler.printer.JCCPrinter;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.ClasseNode;
-import edu.ubfc.st.vm.project.grp7.type.checker.TypeCheckerImpl;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.ClasseNode;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

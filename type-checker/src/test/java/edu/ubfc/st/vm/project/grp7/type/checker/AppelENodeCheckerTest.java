@@ -1,6 +1,6 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.*;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.*;
 import org.junit.Test;
 
 

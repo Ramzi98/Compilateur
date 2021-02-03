@@ -1,7 +1,5 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewNode;
-
 public enum OBJ {
     CST {
         @Override

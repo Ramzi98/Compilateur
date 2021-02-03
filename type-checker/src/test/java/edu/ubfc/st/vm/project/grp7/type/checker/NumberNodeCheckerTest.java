@@ -1,7 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.memory.SORTE;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.NumberNode;
 import org.junit.Before;
 import org.junit.Test;
 

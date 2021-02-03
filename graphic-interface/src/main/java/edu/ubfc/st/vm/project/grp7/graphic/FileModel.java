@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 public class FileModel {
     private CodeArea miniJaja;
     private CodeArea jajaCode;
+    private File dir = null;
 
     public FileModel(CodeArea miniJaja,CodeArea jajaCode){
         this.miniJaja = miniJaja;
@@ -138,5 +139,13 @@ public class FileModel {
         return null;
     }
 
+    public TreeItem<File> refresh(){
+        if (dir != null){
+            FolderTreeView treeView = new FolderTreeView(dir);
+            TreeItem<File> root = treeView.tree;
+            return root;
+        }
+        return null;
+    }
 
 }

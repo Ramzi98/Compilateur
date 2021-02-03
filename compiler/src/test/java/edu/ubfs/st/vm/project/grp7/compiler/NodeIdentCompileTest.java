@@ -3,12 +3,10 @@ package edu.ubfs.st.vm.project.grp7.compiler;
 import edu.ubfc.st.vm.project.grp7.ast.Breakpoint;
 import edu.ubfc.st.vm.project.grp7.ast.IllFormedNodeException;
 import edu.ubfc.st.vm.project.grp7.compiler.CompilerVisitor;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcInitNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcLoadNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcInitNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.IdentNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +16,6 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 public class NodeIdentCompileTest {

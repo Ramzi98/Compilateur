@@ -1,7 +1,7 @@
 package edu.ubfc.st.vm.project.grp7.compiler;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.JajaCodeNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.MiniJajaNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.JajaCodeNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.MiniJajaNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

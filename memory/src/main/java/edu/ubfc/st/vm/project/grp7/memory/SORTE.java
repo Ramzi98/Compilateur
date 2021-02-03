@@ -1,9 +1,9 @@
 package edu.ubfc.st.vm.project.grp7.memory;
 
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewNode;
-import edu.ubfc.st.vm.project.grp7.jaja.code.ast.node.JcNewarrayNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcNewNode;
+import edu.ubfc.st.vm.project.grp7.jjc.ast.node.JcNewarrayNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.TypeMethNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.TypeNode;
 
 public enum SORTE {
     INT{

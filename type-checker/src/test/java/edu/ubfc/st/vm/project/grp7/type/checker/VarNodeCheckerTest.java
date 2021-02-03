@@ -1,10 +1,10 @@
 package edu.ubfc.st.vm.project.grp7.type.checker;
 
 import edu.ubfc.st.vm.project.grp7.memory.SymbolDictionnary;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.IdentNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.NumberNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.TypeMethNode;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.ast.node.VarNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.IdentNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.NumberNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.TypeMethNode;
+import edu.ubfc.st.vm.project.grp7.mjj.ast.node.VarNode;
 import org.junit.Before;
 import org.junit.Test;
 

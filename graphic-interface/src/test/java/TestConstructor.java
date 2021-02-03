@@ -1,5 +1,5 @@
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaLexer;
-import edu.ubfc.st.vm.project.grp7.mini.jaja.parser.MiniJajaParser;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaLexer;
+import edu.ubfc.st.vm.project.grp7.mjj.parser.MiniJajaParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
